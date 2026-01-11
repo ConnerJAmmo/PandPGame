@@ -1,5 +1,4 @@
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlayerCont : MonoBehaviour
@@ -25,7 +24,7 @@ public class PlayerCont : MonoBehaviour
     [Header("---- Tools ----")]
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
-    [SerializeField] Transform shootPos;
+    
 
     int jumpCount;
     int wallJumpCount;
@@ -159,7 +158,7 @@ public class PlayerCont : MonoBehaviour
     {
         shootTimer = 0;
 
-        Instantiate(bullet, shootPos.position, transform.rotation);
+        Instantiate(bullet, transform.position, transform.rotation);
     }
 
 }
