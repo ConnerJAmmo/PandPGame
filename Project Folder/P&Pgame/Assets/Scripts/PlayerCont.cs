@@ -6,7 +6,7 @@ public class PlayerCont : MonoBehaviour
     [SerializeField] CharacterController controller;
 
     [SerializeField] LayerMask ignoreLayer;
-
+//
 [Header("---- Stats ----")]
 [Range(1,10)][SerializeField] int HP;
     [Range(1,10)][SerializeField] int speed;
