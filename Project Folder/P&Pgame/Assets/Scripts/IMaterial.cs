@@ -1,9 +1,10 @@
 using UnityEngine;
 
 public interface IMaterial
-{ 
+{
+    int giveMaterial();
 
-    int materialDamage(int amount);
+    void materialDamage(int amount);
 
     string materialType();
 }
