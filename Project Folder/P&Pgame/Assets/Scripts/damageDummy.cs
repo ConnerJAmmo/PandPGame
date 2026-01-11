@@ -4,7 +4,7 @@ using System.Collections;
 public class damageDummy : MonoBehaviour, IDamage
 {
     [SerializeField] Material material;
-    [SerializeField] int HP;
+    [Range (1,10)][SerializeField] int HP;
 
     Color colorOrig;
 
