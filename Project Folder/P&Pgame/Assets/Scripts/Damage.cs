@@ -1,17 +1,13 @@
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Damage : MonoBehaviour
+public class damage : MonoBehaviour
 {
-    enum damageType
-    {
-        moving,
-        stationary,
-        DOT,
-        homing
-    }
+    enum damageType { moving, stationary, DOT }
 
-    [SerializeField] damageType Type;
+    [Header("Stats")]
+    [SerializeField] damageType type;
     [SerializeField] Rigidbody rb;
 
     [SerializeField] int damageAmount;
@@ -20,12 +16,13 @@ public class Damage : MonoBehaviour
     [SerializeField] int destroyTime;
     [SerializeField] GameObject hitEffect;
 
-    bool isDamaging;
+    //bool isDamaging;
+    private Dictionary<IDamage, float> damageCooldowns = new Dictionary<IDamage, float>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (Type == damageType.moving)
+        if(type == damageType.moving)
         {
             rb.linearVelocity = transform.forward * speed;
             Destroy(gameObject, destroyTime);
@@ -34,39 +31,57 @@ public class Damage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.isTrigger) //not activated by another trigger
+        if (other.isTrigger)
+        {
             return;
+        }
 
         IDamage dmg = other.GetComponent<IDamage>();
-        if (dmg != null && Type != damageType.DOT)
+
+        if(dmg != null && type != damageType.DOT)
         {
-            dmg.TakeDamage(damageAmount);
+            dmg.takeDamage(damageAmount);
         }
 
-        if(Type == damageType.moving) 
-        { 
-            Destroy(gameObject); 
+        if(type == damageType.moving)
+        {
+            Destroy(gameObject);
         }
-
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.isTrigger) return;
-
-        IDamage dmg = other.GetComponent <IDamage>();
-        if (dmg != null && Type == damageType.DOT && !isDamaging)
+        /*
+        if (other.isTrigger)
         {
-            StartCoroutine(damageOther(dmg));
+            return;
+        }
+        */
+
+        IDamage dmg = other.GetComponent<IDamage>();
+        if (dmg == null)
+        {
+            dmg = other.GetComponentInParent<IDamage>();
+        }
+
+        if (dmg != null && type == damageType.DOT)
+        {
+            //StartCoroutine(damageOther(dmg));
+            if (!damageCooldowns.ContainsKey(dmg) || Time.time >= damageCooldowns[dmg])
+            {
+                dmg.takeDamage(damageAmount);
+                damageCooldowns[dmg] = Time.time + damageRate;
+            }
         }
     }
-
-    IEnumerator damageOther(IDamage d)
+    /*
+    IEnumerator damageOther (IDamage d)
     {
         isDamaging = true;
-        d.TakeDamage(damageAmount);
+        d.takeDamage(damageAmount);
         yield return new WaitForSeconds(damageRate);
         isDamaging = false;
     }
+    */
 
 }
