@@ -28,7 +28,7 @@ public class damage : MonoBehaviour
     [SerializeField] int damageAmount;
 
     [Header("Hit Rules")]
-    [SerializeField] LayerMask layersAbleToHit;
+    /*[SerializeField] LayerMask layersAbleToHit;*/
     [SerializeField] bool destroyOnHit = true;
     [SerializeField] bool createHitEffect = true;
     [SerializeField] GameObject hitEffectPrefab;
@@ -83,10 +83,10 @@ public class damage : MonoBehaviour
             return;
 
         // Layer check (prevent arrows from hitting towers, ground, etc)
-        if ((layersAbleToHit.value & (1 << other.gameObject.layer)) == 0) // using bitwise to check if the layer hit is included in the allowed layers
+        /*if ((layersAbleToHit.value & (1 << other.gameObject.layer)) == 0) // using bitwise to check if the layer hit is included in the allowed layers
         {
             return;
-        }
+        }*/
 
 
         IDamage dmg = other.GetComponent<IDamage>();
@@ -110,6 +110,7 @@ public class damage : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+            Destroy(gameObject);
         }
         else
         {
