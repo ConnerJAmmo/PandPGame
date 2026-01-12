@@ -22,16 +22,16 @@ public class PlayerCont : MonoBehaviour, IStore
      [Range(1,2)][SerializeField] float wallCheckDis;
     [Header("---- Physics ----")]
     [Range(1,100)][SerializeField] int gravity;
+    [Header("---- Resources ----")]
+    [Range(1,4)][SerializeField] float mineRate;
+    [Range(5,15)][SerializeField] int mineDist;
+    [Range(1,4)][SerializeField] int mineDamage;
+    [SerializeField] int woodCount;
+    [SerializeField] int stoneCount;
     [Header("---- Tools ----")]
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
-    [SerializeField] float mineRate;
-    [SerializeField] int mineDist;
-    [SerializeField] int mineDamage;
     [SerializeField] Transform shootPos;
-    [SerializeField] int woodCount;
-    [SerializeField] int stoneCount;
-    
 
     int jumpCount;
     int wallJumpCount;
@@ -98,7 +98,7 @@ public class PlayerCont : MonoBehaviour, IStore
             Debug.Log("shoot");
             shoot();
         }
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire2") && mineTimer >= mineRate)
         {
             mine();
         }

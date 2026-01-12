@@ -1022,7 +1022,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 34f2736a9cf42c14b886c07b6a7ba1f2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2022,7 +2022,7 @@ MonoBehaviour:
   mineRate: 1
   mineDist: 10
   mineDamage: 1
-  shootPos: {fileID: 0}
+  shootPos: {fileID: 1858227056}
   woodCount: 0
   stoneCount: 0
 --- !u!1 &1946438395
