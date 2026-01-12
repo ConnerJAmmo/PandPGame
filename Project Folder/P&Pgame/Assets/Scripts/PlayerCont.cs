@@ -24,6 +24,7 @@ public class PlayerCont : MonoBehaviour
     [Header("---- Tools ----")]
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
+    [SerializeField] Transform spawnPoint;
     
 
     int jumpCount;
@@ -157,8 +158,7 @@ public class PlayerCont : MonoBehaviour
     void shoot()
     {
         shootTimer = 0;
-
-        Instantiate(bullet, transform.position, transform.rotation);
+        Instantiate(bullet, spawnPoint.position, transform.rotation);
     }
 
 }
