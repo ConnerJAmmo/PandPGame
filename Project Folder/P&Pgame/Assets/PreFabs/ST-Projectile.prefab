@@ -44,15 +44,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 7983933263039930371}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c113206b5cab5144295aacd303187065, type: 3}
+  m_Script: {fileID: 11500000, guid: 27036156c63734b4dae0ffd729776b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
   type: 0
   rb: {fileID: 6523923351571818312}
   damageAmount: 2
   damageRate: 0
-  speed: 75
-  destroyTime: 2
+  speed: 25
+  destroyTime: 3
   hitEffect: {fileID: 0}
 --- !u!135 &6370550118510818918
 SphereCollider:

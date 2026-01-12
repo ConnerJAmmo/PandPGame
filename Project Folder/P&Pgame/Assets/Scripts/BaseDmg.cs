@@ -12,13 +12,14 @@ public class baseDmg : MonoBehaviour, IDamage
     Color colorOrigin;
     float nextDamageTime;
 
-    private List<Collider> enemiesInRange = new List<Collider>();
+    [SerializeField] List<Collider> enemiesInRange = new List<Collider>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         colorOrigin = model.material.color;
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
@@ -49,7 +50,7 @@ public class baseDmg : MonoBehaviour, IDamage
 
     public void takeDamage(int amount)
     {
-        HP -= amount;
+        HP -= Mathf.Min(amount, 5);
         if (HP <= 0)
         {
             gameManager.instance.loseGame();

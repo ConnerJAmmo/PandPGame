@@ -1,6 +1,7 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
@@ -14,17 +15,17 @@ public class enemyAI : MonoBehaviour, IDamage
     [Header("Stats")]
     [Range(1, 10)] [SerializeField] int HP;
     [Range(0, 2)] [SerializeField] float shootRate;
-    [Range(1, 10)] [SerializeField] int faceTargetSpeed;
+    [Range(1, 1000)] [SerializeField] int faceTargetSpeed;
     [Range(1, 1000)][SerializeField] int shootDist;
 
     Color colorOrigin;
     float shootTimer;
-    Vector3 playerDir;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        colorOrigin = model.material.color;
+        colorOrigin = model.material.color; 
+        agent.updateRotation = false;
         gameManager.instance.updateGameGoal(1);
     }
 
@@ -32,8 +33,6 @@ public class enemyAI : MonoBehaviour, IDamage
     void Update()
     {
         shootTimer += Time.deltaTime;
-
-        playerDir = (gameManager.instance.player.transform.position - transform.position);
 
         agent.SetDestination(gameManager.instance.baseTower.transform.position);
 
@@ -54,8 +53,13 @@ public class enemyAI : MonoBehaviour, IDamage
 
     void faceTarget()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, transform.position.y, playerDir.z));
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+        Vector3 centerOfMass = gameManager.instance.player.transform.GetComponent<Collider>().bounds.center;
+        Vector3 direction = centerOfMass - transform.position;
+        if (direction.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.deltaTime * faceTargetSpeed);
+        }
     }
     
     void Shoot()

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6370550118510818918}
   - component: {fileID: 2928761932176433362}
   - component: {fileID: 6523923351571818312}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7983933263039930371}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c113206b5cab5144295aacd303187065, type: 3}
+  m_Script: {fileID: 11500000, guid: 27036156c63734b4dae0ffd729776b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
   type: 0
