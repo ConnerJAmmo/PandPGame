@@ -596,7 +596,7 @@ MonoBehaviour:
   bullet: {fileID: 7983933263039930371, guid: 64ff0178b2825c64188e5290e122b2ce, type: 3}
   ignoreLayer:
     serializedVersion: 2
-    m_Bits: 832
+    m_Bits: 320
   HP: 10
   shootRate: 1
   faceTargetSpeed: 60
