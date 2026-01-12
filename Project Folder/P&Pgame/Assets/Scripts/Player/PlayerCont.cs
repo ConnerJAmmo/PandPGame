@@ -1,4 +1,4 @@
-using System.Xml.Schema;
+using JetBrains.Annotations;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -27,12 +27,13 @@ public class PlayerCont : MonoBehaviour, IStore
     [Range(1,4)][SerializeField] float mineRate;
     [Range(5,15)][SerializeField] int mineDist;
     [Range(1,4)][SerializeField] int mineDamage;
-    [SerializeField] int woodCount;
-    [SerializeField] int stoneCount;
+    [SerializeField] public int woodCount;
+    [SerializeField] public int stoneCount;
     [Header("---- Tools ----")]
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
     [SerializeField] Transform shootPos;
+    [SerializeField] GameObject STTower;
 
     int jumpCount;
     int wallJumpCount;
@@ -96,12 +97,15 @@ public class PlayerCont : MonoBehaviour, IStore
         }
         if(Input.GetButtonDown("Fire1") && shootTimer >= shootRate)
         {
-            Debug.Log("shoot");
             shoot();
         }
         if (Input.GetButtonDown("Fire2") && mineTimer >= mineRate)
         {
             mine();
+        }
+        if(Input.GetButtonDown("z"))
+        {
+            SpawnTower();
         }
     }
 
@@ -239,5 +243,13 @@ public class PlayerCont : MonoBehaviour, IStore
         }
 
             return total;
+    void SpawnTower()
+    {
+        if(woodCount >= 5)
+        {
+            Instantiate(STTower, transform.position, transform.rotation);
+            woodCount = woodCount - 5;
+        }
+        else return;
     }
 }
