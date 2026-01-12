@@ -554,9 +554,9 @@ GameObject:
   - component: {fileID: 5176413034140770952}
   - component: {fileID: 3277883484427461079}
   - component: {fileID: 8487568275813152691}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -592,15 +592,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::enemyAI
   model: {fileID: 7676505847823512034}
   agent: {fileID: 7969592130271090367}
+  desination: {x: 0, y: 0, z: 0}
+  target: {fileID: 0}
   shootPos: {fileID: 6117923829966638359}
   bullet: {fileID: 7983933263039930371, guid: 64ff0178b2825c64188e5290e122b2ce, type: 3}
   ignoreLayer:
     serializedVersion: 2
-    m_Bits: 832
+    m_Bits: 0
   HP: 10
   shootRate: 1
   faceTargetSpeed: 60
-  shootDist: 100
+  shootDist: 200
 --- !u!195 &7969592130271090367
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -609,7 +611,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6859242621026319637}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -1372625422
   m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 16
