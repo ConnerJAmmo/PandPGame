@@ -1,3 +1,4 @@
+using System.Xml.Schema;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -222,5 +223,21 @@ public class PlayerCont : MonoBehaviour, IStore
         }
 
         return finalAmount;
+    }
+
+    public int displayMaterial(string type)
+    {
+        int total = 0;
+
+        if (type == "Wood")
+        {
+            total = woodCount;
+        }
+        else if (type == "Stone")
+        {
+            total = stoneCount;
+        }
+
+            return total;
     }
 }
