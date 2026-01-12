@@ -1,43 +1,49 @@
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class gameManager : MonoBehaviour
 {
     public static gameManager instance;
 
+    [Header("Menus")]
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
-    [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuWin;
+    [SerializeField] GameObject menuLose;
 
-    public bool isPause;
+    public bool isPaused;
     public GameObject player;
-    public PlayerCont playerScript;
+    public GameObject baseTower;
+    public playerControler playerScript;
 
-    float timeScaleOrig;
+    float timeScaleOrigin;
 
+    int gameGoalCount;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         instance = this;
-        timeScaleOrig = Time.timeScale;
+        timeScaleOrigin = Time.timeScale;
 
         player = GameObject.FindWithTag("Player");
-        playerScript = player.GetComponent<PlayerCont>();
+        playerScript = player.GetComponent<playerControler>();
+
+        baseTower = GameObject.FindWithTag("Base");
     }
 
-    
+    // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Cancel"))
+        if(UnityEngine.Input.GetButtonDown("Cancel")) 
         {
             if (menuActive == null)
             {
-                statePause();
-                menuActive = menuPause;
-                menuActive.SetActive(true);
+                setMenu(menuPause);
             }
-            else if (menuActive == menuPause) 
+            else if(menuActive == menuPause)
             {
-                 stateUnpause();
+                stateUnpause();
             }
         }
     }
@@ -52,7 +58,7 @@ public class gameManager : MonoBehaviour
 
     public void statePause()
     {
-        isPause = true;
+        isPaused = true;
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -60,8 +66,8 @@ public class gameManager : MonoBehaviour
 
     public void stateUnpause()
     {
-        isPause = false;
-        Time.timeScale = timeScaleOrig;
+        isPaused = false;
+        Time.timeScale = timeScaleOrigin;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(false);
@@ -70,10 +76,28 @@ public class gameManager : MonoBehaviour
 
     public void youLose()
     {
-        newMenu(menuLose);
+        setMenu(menuLose);
     }
-    public void youWin()
+
+    public void updateGameGoal(int amount)
     {
-        newMenu (menuWin);
+        gameGoalCount += amount;
+        if (gameGoalCount <= 0)
+        {
+            setMenu(menuWin);
+        }
     }
+
+    public void loseGame()
+    {
+        setMenu(menuLose);
+    }
+
+    void setMenu(GameObject menu)
+    {
+        statePause();
+        menuActive = menu;
+        menuActive.SetActive(true);
+    }
+
 }
