@@ -53,7 +53,7 @@ public class baseDmg : MonoBehaviour, IDamage
         HP -= Mathf.Min(amount, 5);
         if (HP <= 0)
         {
-            gameManager.instance.loseGame();
+            gameManager.instance.youLose();
             Destroy(gameObject);
         }
         else

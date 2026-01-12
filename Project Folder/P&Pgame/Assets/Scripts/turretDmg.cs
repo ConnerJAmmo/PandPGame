@@ -96,7 +96,7 @@ public class turretDmg : MonoBehaviour, IDamage
         HP -= amount;
         if (HP <= 0)
         {
-            gameManager.instance.loseGame();
+            gameManager.instance.youLose();
             Destroy(gameObject);
         }
         else
