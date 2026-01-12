@@ -1,34 +1,79 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class Damage : MonoBehaviour
+public class damage : MonoBehaviour
 {
     enum damageType
     {
         moving,
         stationary,
-        DOT,
-        homing
+        DOT
+        //comment 
     }
 
-    [SerializeField] damageType Type;
+
+    [Header("Type")]
+    [SerializeField] damageType Type = damageType.moving;
+
+    [Header("Projectile Movement")]
     [SerializeField] Rigidbody rb;
+    [SerializeField] float lifeTime = 5f;
+    [SerializeField] float speed; //change speed to a float for better accuracy
 
-    [SerializeField] int damageAmount;
+    [Header("DOT Settings (Only if we are using DOT)")]
     [SerializeField] float damageRate;
-    [SerializeField] int speed;
-    [SerializeField] int destroyTime;
-    [SerializeField] GameObject hitEffect;
 
-    bool isDamaging;
+    [Header("Damage")]
+    [SerializeField] int damageAmount;
+
+    [Header("Hit Rules")]
+    [SerializeField] LayerMask layersAbleToHit;
+    [SerializeField] bool destroyOnHit = true;
+    [SerializeField] bool createHitEffect = true;
+    [SerializeField] GameObject hitEffectPrefab;
+    [SerializeField] int destroyTime;
+
+    // This is just a variable to hold all of our DOT victims if we have more than one DOT zone
+    private readonly HashSet<IDamage> dotVictims = new HashSet<IDamage>();
+
+    //bool isDamaging;
+
+    void Reset() // This is only used in the editor not during gameplay
+                 // It is the same as hitting the 3 dots in the inspector and clicking reset
+    {
+        // We will use this to Auto-setup our component and make sure it work
+        // This will find the Collider on the gameObject and force it to be a trigger
+        var col = GetComponent<Collider>();
+        col.isTrigger = true;
+
+        // This just turns gravity off on Rigidbodies and make sure physics is active
+        rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.useGravity = false;
+            rb.isKinematic = false;
+        }
+
+    }
+
+    void Awake()
+    {
+        var col = GetComponent<Collider>();
+        col.isTrigger = true;
+    }
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (Type == damageType.moving)
+        if (rb != null)
         {
             rb.linearVelocity = transform.forward * speed;
-            Destroy(gameObject, destroyTime);
+        }
+        if (lifeTime > 0f)
+        {
+            Destroy(gameObject, lifeTime);
         }
     }
 
@@ -37,36 +82,79 @@ public class Damage : MonoBehaviour
         if (other.isTrigger) //not activated by another trigger
             return;
 
+        // Layer check (prevent arrows from hitting towers, ground, etc)
+        if ((layersAbleToHit.value & (1 << other.gameObject.layer)) == 0) // using bitwise to check if the layer hit is included in the allowed layers
+        {
+            return;
+        }
+
+
         IDamage dmg = other.GetComponent<IDamage>();
-        if (dmg != null && Type != damageType.DOT)
+        if (dmg != null) // && Type != damageType.DOT
+        {
+            dmg = other.GetComponentInParent<IDamage>();
+        }
+
+        if (dmg == null)
+        {
+            return;
+        }
+
+        if (Type == damageType.moving)
         {
             dmg.takeDamage(damageAmount);
+
+            DoHitFX(other.ClosestPoint(transform.position));
+
+            if (destroyOnHit)
+            {
+                Destroy(gameObject);
+            }
         }
-
-        if(Type == damageType.moving) 
-        { 
-            Destroy(gameObject); 
-        }
-
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.isTrigger) return;
-
-        IDamage dmg = other.GetComponent <IDamage>();
-        if (dmg != null && Type == damageType.DOT && !isDamaging)
+        else
         {
-            StartCoroutine(damageOther(dmg));
+            // DOT type starts ticking while object inside
+            if (!dotVictims.Contains(dmg))
+            {
+                dotVictims.Add(dmg);
+                StartCoroutine(DotDamage(dmg));
+            }
         }
+
     }
 
-    IEnumerator damageOther(IDamage d)
+    private void OnTriggerExit(Collider other)
     {
-        isDamaging = true;
-        d.takeDamage(damageAmount);
-        yield return new WaitForSeconds(damageRate);
-        isDamaging = false;
+        if (Type != damageType.DOT) return;
+
+        IDamage dmg = other.GetComponent<IDamage>();
+        if (dmg == null) // && Type == damageType.DOT && !isDamaging
+        {
+            dmg = other.GetComponentInParent<IDamage>();
+        }
+        if (dmg != null)
+            dotVictims.Remove(dmg);
     }
+
+    IEnumerator DotDamage(IDamage target) // Timer function DOT type
+    {
+        while (dotVictims.Contains(target))
+        {
+            target.takeDamage(damageAmount);
+            yield return new WaitForSeconds(damageRate);
+        }
+
+    }
+
+    void DoHitFX(Vector3 point) // This is our function to spawn the effects where our arrow hit
+    {
+        if (!createHitEffect || hitEffectPrefab == null)
+        {
+            return;
+        }
+
+        Instantiate(hitEffectPrefab, point, Quaternion.identity);
+    }
+
 
 }
