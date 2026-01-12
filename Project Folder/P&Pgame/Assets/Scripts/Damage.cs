@@ -2,14 +2,14 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Damage : MonoBehaviour
+public class damage : MonoBehaviour
 {
     enum damageType
     {
         moving,
         stationary,
         DOT
-        
+        //comment 
     }
 
 
@@ -54,7 +54,7 @@ public class Damage : MonoBehaviour
             rb.useGravity = false;
             rb.isKinematic = false;
         }
-    
+
     }
 
     void Awake()
@@ -100,7 +100,7 @@ public class Damage : MonoBehaviour
             return;
         }
 
-        if(Type == damageType.moving) 
+        if (Type == damageType.moving)
         {
             dmg.takeDamage(damageAmount);
 
@@ -127,7 +127,7 @@ public class Damage : MonoBehaviour
     {
         if (Type != damageType.DOT) return;
 
-        IDamage dmg = other.GetComponent <IDamage>();
+        IDamage dmg = other.GetComponent<IDamage>();
         if (dmg == null) // && Type == damageType.DOT && !isDamaging
         {
             dmg = other.GetComponentInParent<IDamage>();
@@ -143,14 +143,14 @@ public class Damage : MonoBehaviour
             target.takeDamage(damageAmount);
             yield return new WaitForSeconds(damageRate);
         }
-        
+
     }
 
     void DoHitFX(Vector3 point) // This is our function to spawn the effects where our arrow hit
     {
         if (!createHitEffect || hitEffectPrefab == null)
         {
-            return; 
+            return;
         }
 
         Instantiate(hitEffectPrefab, point, Quaternion.identity);
