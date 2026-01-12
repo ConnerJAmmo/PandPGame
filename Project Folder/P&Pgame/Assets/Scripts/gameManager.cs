@@ -12,8 +12,10 @@ public class gameManager : MonoBehaviour
     public bool isPause;
     public GameObject player;
     public PlayerCont playerScript;
+     public GameObject baseTower;
 
     float timeScaleOrig;
+    int gameGoalCount;
 
     void Awake()
     {
@@ -22,6 +24,8 @@ public class gameManager : MonoBehaviour
 
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerCont>();
+
+        baseTower = GameObject.FindWithTag("Base");
     }
 
     
@@ -72,8 +76,12 @@ public class gameManager : MonoBehaviour
     {
         newMenu(menuLose);
     }
-    public void youWin()
+    public void updateGameGoal(int amount)
     {
-        newMenu (menuWin);
+        gameGoalCount += amount;
+        if (gameGoalCount <= 0)
+        {
+            newMenu(menuWin);
+        }
     }
 }
