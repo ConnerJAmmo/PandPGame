@@ -40,7 +40,7 @@ public class Damage : MonoBehaviour
         IDamage dmg = other.GetComponent<IDamage>();
         if (dmg != null && Type != damageType.DOT)
         {
-            dmg.TakeDamage(damageAmount);
+            dmg.takeDamage(damageAmount);
         }
 
         if(Type == damageType.moving) 
@@ -64,7 +64,7 @@ public class Damage : MonoBehaviour
     IEnumerator damageOther(IDamage d)
     {
         isDamaging = true;
-        d.TakeDamage(damageAmount);
+        d.takeDamage(damageAmount);
         yield return new WaitForSeconds(damageRate);
         isDamaging = false;
     }
