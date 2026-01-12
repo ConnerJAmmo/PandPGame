@@ -595,9 +595,13 @@ MonoBehaviour:
   agent: {fileID: 7969592130271090367}
   shootPos: {fileID: 6117923829966638359}
   bullet: {fileID: 0}
-  HP: 50
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  HP: 10
   shootRate: 1
   faceTargetSpeed: 1
+  shootDist: 1
 --- !u!195 &7969592130271090367
 NavMeshAgent:
   m_ObjectHideFlags: 0

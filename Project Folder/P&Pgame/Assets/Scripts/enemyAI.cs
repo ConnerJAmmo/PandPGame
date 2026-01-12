@@ -9,11 +9,13 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject bullet;
+    [SerializeField] LayerMask ignoreLayer;
 
     [Header("Stats")]
-    [Range(1, 100)] [SerializeField] int HP;
-    [Range(0.1f, 10)] [SerializeField] float shootRate;
+    [Range(1, 10)] [SerializeField] int HP;
+    [Range(0, 2)] [SerializeField] float shootRate;
     [Range(1, 10)] [SerializeField] int faceTargetSpeed;
+    [Range(1, 1000)][SerializeField] int shootDist;
 
     Color colorOrigin;
     float shootTimer;
@@ -31,18 +33,22 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         shootTimer += Time.deltaTime;
 
-        playerDir = gameManager.instance.player.transform.position - transform.position;
+        playerDir = (gameManager.instance.player.transform.position - transform.position);
 
-        agent.SetDestination(gameManager.instance.player.transform.position);
+        agent.SetDestination(gameManager.instance.baseTower.transform.position);
 
-        if(agent.remainingDistance <= agent.stoppingDistance)
+        Debug.DrawRay(shootPos.position, transform.forward * shootDist, Color.red);
+
+        faceTarget();
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(shootPos.position, transform.forward, out hit, shootDist, ~ignoreLayer) && shootTimer >= shootRate)
         {
-            faceTarget();
-        }
-
-        if(shootTimer >= shootRate)
-        {
-            Shoot();
+            if (hit.collider.CompareTag("Player"))
+            {
+                Shoot();
+            }
         }
     }
 

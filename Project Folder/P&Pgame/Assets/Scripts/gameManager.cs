@@ -13,7 +13,8 @@ public class gameManager : MonoBehaviour
 
     public bool isPaused;
     public GameObject player;
-    public playerController playerScript;
+    public GameObject baseTower;
+    public playerControler playerScript;
 
     float timeScaleOrigin;
 
@@ -26,7 +27,9 @@ public class gameManager : MonoBehaviour
         timeScaleOrigin = Time.timeScale;
 
         player = GameObject.FindWithTag("Player");
-        playerScript = player.GetComponent<playerController>();
+        playerScript = player.GetComponent<playerControler>();
+
+        baseTower = GameObject.FindWithTag("Base");
     }
 
     // Update is called once per frame
@@ -77,7 +80,10 @@ public class gameManager : MonoBehaviour
         }
     }
 
-
+    public void loseGame()
+    {
+        setMenu(menuLose);
+    }
 
     void setMenu(GameObject menu)
     {

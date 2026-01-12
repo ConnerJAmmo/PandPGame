@@ -143,27 +143,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1640587495626268123}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6675d51851c924741a5ee33157806a35, type: 3}
+  m_Script: {fileID: 11500000, guid: 14263b8093968c54780ad9f7dba57f4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCont
-  controller: {fileID: 0}
+  controller: {fileID: 2223923911877593812}
   ignoreLayer:
     serializedVersion: 2
-    m_Bits: 0
-  HP: 1
-  speed: 1
-  slopeSlideSpeed: 1
-  sprintMod: 2
+    m_Bits: 8
+  HP: 10
+  speed: 5
+  sprintMod: 3
   jumpSpeed: 8
-  jumpMax: 1
-  wallJumpSpeed: 8
-  wallJumpPush: 1
-  wallJumpMax: 1
-  wallCheckDis: 1
-  gravity: 1
-  bullet: {fileID: 0}
-  shootRate: 0
-  shootPos: {fileID: 0}
+  jumpMax: 2
+  gravity: 35
+  shootDamage: 1
+  shootDist: 150
+  shootRate: 0.5
 --- !u!143 &2223923911877593812
 CharacterController:
   m_ObjectHideFlags: 0
