@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6370550118510818918}
   - component: {fileID: 2928761932176433362}
   - component: {fileID: 6523923351571818312}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: ST-Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,13 +47,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27036156c63734b4dae0ffd729776b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
-  type: 0
+  Type: 0
   rb: {fileID: 6523923351571818312}
-  damageAmount: 1
+  lifeTime: 5
+  speed: 60
   damageRate: 0
-  speed: 25
+  damageAmount: 2
+  destroyOnHit: 1
+  createHitEffect: 1
+  hitEffectPrefab: {fileID: 0}
   destroyTime: 3
-  hitEffect: {fileID: 0}
 --- !u!135 &6370550118510818918
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -73,7 +76,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!96 &2928761932176433362
 TrailRenderer:
