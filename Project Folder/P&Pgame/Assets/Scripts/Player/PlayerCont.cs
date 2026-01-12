@@ -1,12 +1,13 @@
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class PlayerCont : MonoBehaviour
+public class PlayerCont : MonoBehaviour, IStore
 {
     [SerializeField] CharacterController controller;
 
     [SerializeField] LayerMask ignoreLayer;
-//
+
 [Header("---- Stats ----")]
 [Range(1,10)][SerializeField] int HP;
     [Range(1,10)][SerializeField] int speed;
@@ -24,7 +25,12 @@ public class PlayerCont : MonoBehaviour
     [Header("---- Tools ----")]
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
-    [SerializeField] Transform spawnPoint;
+    [SerializeField] float mineRate;
+    [SerializeField] int mineDist;
+    [SerializeField] int mineDamage;
+    [SerializeField] Transform shootPos;
+    [SerializeField] int woodCount;
+    [SerializeField] int stoneCount;
     
 
     int jumpCount;
@@ -34,6 +40,7 @@ public class PlayerCont : MonoBehaviour
     bool wasGrounded;
     private float _groundRayDis = 1;
     float shootTimer;
+    float mineTimer;
     private RaycastHit slopeHit; 
 
     int HPOrig;
@@ -58,6 +65,7 @@ public class PlayerCont : MonoBehaviour
     {
         wasGrounded = controller.isGrounded; //storing this at the top to prevent walljumping off the ground
         shootTimer += Time.deltaTime;
+        mineTimer += Time.deltaTime;
         moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
         controller.Move(moveDir * speed * Time.deltaTime);
         jump();
@@ -89,6 +97,10 @@ public class PlayerCont : MonoBehaviour
         {
             Debug.Log("shoot");
             shoot();
+        }
+        if (Input.GetButtonDown("Fire2"))
+        {
+            mine();
         }
     }
 
@@ -158,7 +170,57 @@ public class PlayerCont : MonoBehaviour
     void shoot()
     {
         shootTimer = 0;
-        Instantiate(bullet, spawnPoint.position, transform.rotation);
+
+        Instantiate(bullet, shootPos.position, transform.rotation);
     }
 
+    void mine()
+    {
+        mineTimer = 0;
+
+        RaycastHit hit;
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, mineDist, ~ignoreLayer))
+        {
+            
+
+            IMaterial mat = hit.collider.GetComponent <IMaterial>();
+            
+            if (mat != null)
+            {
+                string matType = mat.materialType();
+                int matAmount = mat.materialDamage(mineDamage);
+
+                if (matType == "Wood")
+                {
+                    woodCount = woodCount + matAmount;
+                }
+                else if (matType == "Stone")
+                {
+                    stoneCount = stoneCount + matAmount;
+                }
+            }
+        }
+    }
+
+    public int grabMaterial(int amount, string type)
+    {
+        int finalAmount = 0;
+
+        if(type == "Wood")
+        {
+            if (woodCount >= amount)
+            {
+                finalAmount = finalAmount + woodCount;
+            }
+        }
+        else if (type == "Stone")
+        {
+            if (stoneCount >= amount)
+            {
+                finalAmount = finalAmount + stoneCount;
+            }
+        }
+
+        return finalAmount;
+    }
 }

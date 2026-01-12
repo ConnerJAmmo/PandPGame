@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class materialFunctions : MonoBehaviour//, IMaterial
+public class materialFunctions : MonoBehaviour, IMaterial
 {
     enum materialSelect { Wood, Stone }
 
