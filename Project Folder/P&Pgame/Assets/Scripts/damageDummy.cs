@@ -24,8 +24,15 @@ public class damageDummy : MonoBehaviour, IDamage
         
     }
 
-    public void takeDamage(int amount)
+    IEnumerator flashRed()
     {
+        material.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        material.color = colorOrig;
+    }
+
+    public void takeDamage(int amount)
+    { 
         HP -= amount;
 
         if (HP <= 0)
@@ -36,12 +43,5 @@ public class damageDummy : MonoBehaviour, IDamage
         {
             StartCoroutine(flashRed());
         }
-    }
-
-    IEnumerator flashRed()
-    {
-        material.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        material.color = colorOrig;
     }
 }
