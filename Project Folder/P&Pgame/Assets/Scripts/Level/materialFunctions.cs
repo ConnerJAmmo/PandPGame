@@ -30,7 +30,7 @@ public class materialFunctions : MonoBehaviour, IMaterial
     {
         if (totalMaterial <= amount)
         {
-            amount = amount - totalMaterial;
+            amount = 0 + totalMaterial;
             Destroy(gameObject);
         }
         else
