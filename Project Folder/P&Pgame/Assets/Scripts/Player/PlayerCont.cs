@@ -6,11 +6,9 @@ using UnityEngine;
 public class PlayerCont : MonoBehaviour, IStore
 {
     [SerializeField] CharacterController controller;
-
     [SerializeField] LayerMask ignoreLayer;
-
 [Header("---- Stats ----")]
-[Range(1,10)][SerializeField] int HP;
+    [Range(1,10)][SerializeField] int HP;
     [Range(1,10)][SerializeField] int speed;
     [Range(1,10)][SerializeField] int slopeSlideSpeed;
     [Range(2,5)][SerializeField] int sprintMod;
@@ -20,7 +18,7 @@ public class PlayerCont : MonoBehaviour, IStore
     [Range(8,20)][SerializeField] int wallJumpSpeed;
     [Range(1,4)][SerializeField] int wallJumpPush;
     [Range(1,4)][SerializeField] int wallJumpMax;
-     [Range(1,2)][SerializeField] float wallCheckDis;
+    [Range(1,2)][SerializeField] float wallCheckDis;
     [Header("---- Physics ----")]
     [Range(1,100)][SerializeField] int gravity;
     [Header("---- Resources ----")]
@@ -44,7 +42,6 @@ public class PlayerCont : MonoBehaviour, IStore
     float shootTimer;
     float mineTimer;
     private RaycastHit slopeHit; 
-
     int HPOrig;
    UnityEngine.Vector3 moveDir;
    UnityEngine.Vector3 playerVel;
