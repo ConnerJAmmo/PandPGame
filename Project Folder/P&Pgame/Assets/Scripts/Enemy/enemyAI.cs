@@ -8,6 +8,8 @@ public class enemyAI : MonoBehaviour, IDamage
     [Header("Components")]
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] Vector3 desination;
+    [SerializeField] Transform target;
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject bullet;
     [SerializeField] LayerMask ignoreLayer;
@@ -35,6 +37,7 @@ public class enemyAI : MonoBehaviour, IDamage
         shootTimer += Time.deltaTime;
 
         agent.SetDestination(gameManager.instance.baseTower.transform.position);
+        desination = gameManager.instance.baseTower.transform.position;
 
         Debug.DrawRay(shootPos.position, transform.forward * shootDist, Color.red);
 
@@ -46,6 +49,7 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             if (hit.collider.CompareTag("Player"))
             {
+                target = hit.transform;
                 Shoot();
             }
         }

@@ -7,12 +7,13 @@ public class baseDmg : MonoBehaviour, IDamage
 {
     [Header("Stats")]
     [SerializeField] Renderer model;
+    [SerializeField] int numEnemies;
     [Range(1, 1000)][SerializeField] int HP;
 
     Color colorOrigin;
     float nextDamageTime;
 
-    [SerializeField] List<Collider> enemiesInRange = new List<Collider>();
+    private List<Collider> enemiesInRange = new List<Collider>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -39,6 +40,8 @@ public class baseDmg : MonoBehaviour, IDamage
     void Update()
     {
         enemiesInRange.RemoveAll(enemy => enemy == null);
+
+        numEnemies = enemiesInRange.Count;
 
         if (enemiesInRange.Count > 0 && Time.time >= nextDamageTime)
         {
