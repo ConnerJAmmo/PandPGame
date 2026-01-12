@@ -48,9 +48,17 @@ public class gameManager : MonoBehaviour
         }
     }
 
+    public void newMenu(GameObject menu)
+    {
+        statePause();
+        menuActive = menu;
+        menuActive.SetActive(true );
+
+    }
+
     public void statePause()
     {
-        isPaused = true;
+        isPause = true;
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
