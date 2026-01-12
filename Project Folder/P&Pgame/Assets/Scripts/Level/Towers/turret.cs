@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class turretDmg : MonoBehaviour, IDamage
+public class turretDmg : MonoBehaviour//, IDamage
 {
     [Header("Stats")]
     [SerializeField] Renderer model;
+    [SerializeField] int numEnemies;
     [Range(1, 1000)][SerializeField] int HP;
     [SerializeField] Transform shootPos;
     [SerializeField] Transform turret;
@@ -21,7 +22,7 @@ public class turretDmg : MonoBehaviour, IDamage
     float shootTimer;
     [SerializeField] Collider target;
 
-    [SerializeField] List<Collider> enemiesInRange = new List<Collider>();
+    private List<Collider> enemiesInRange = new List<Collider>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -50,6 +51,7 @@ public class turretDmg : MonoBehaviour, IDamage
     {
         shootTimer += Time.deltaTime;
         Debug.DrawRay(shootPos.position, shootPos.forward * shootDist, Color.red);
+        numEnemies = enemiesInRange.Count;
 
         if (enemiesInRange.Count > 0)
         {
@@ -91,6 +93,7 @@ public class turretDmg : MonoBehaviour, IDamage
         Instantiate(bullet, shootPos.position, turret.rotation);
     }
 
+    /*
     public void takeDamage(int amount)
     {
         HP -= amount;
@@ -112,5 +115,5 @@ public class turretDmg : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrigin;
     }
-
+    */
 }
