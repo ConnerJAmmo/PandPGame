@@ -243,6 +243,8 @@ public class PlayerCont : MonoBehaviour, IStore
         }
 
             return total;
+    }
+
     void SpawnTower()
     {
         if(woodCount >= 5)
