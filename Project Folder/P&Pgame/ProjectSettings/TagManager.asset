@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Base
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -12,8 +14,8 @@ TagManager:
   - Water
   - UI
   - Player Bullet
-  - Emeny
-  - Emeny Bullet
+  - Enemy
+  - Enemy Bullet
   - 
   - 
   - 
