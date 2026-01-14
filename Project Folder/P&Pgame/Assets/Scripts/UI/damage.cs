@@ -28,12 +28,15 @@ public class damage : MonoBehaviour
     [SerializeField] int damageAmount;
 
     [Header("Hit Rules")]
-    /*[SerializeField] LayerMask layersAbleToHit;*/
     [SerializeField] bool destroyOnHit = true;
     [SerializeField] bool createHitEffect = true;
     [SerializeField] GameObject hitEffectPrefab;
-    [SerializeField] int destroyTime;
+    //[SerializeField] int destroyTime;
 
+    [Header("Layer Rules")]
+    [SerializeField] LayerMask damageLayers;
+    [SerializeField] LayerMask blockLayers; // Walls, Terrain, Ground, 
+ 
     // This is just a variable to hold all of our DOT victims if we have more than one DOT zone
     private readonly HashSet<IDamage> dotVictims = new HashSet<IDamage>();
 
@@ -45,14 +48,15 @@ public class damage : MonoBehaviour
         // We will use this to Auto-setup our component and make sure it work
         // This will find the Collider on the gameObject and force it to be a trigger
         var col = GetComponent<Collider>();
-        col.isTrigger = true;
+        if (col) col.isTrigger = true;
 
         // This just turns gravity off on Rigidbodies and make sure physics is active
         rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
             rb.useGravity = false;
-            rb.isKinematic = false;
+
+            rb.isKinematic = (Type != damageType.moving);
         }
 
     }
@@ -60,20 +64,24 @@ public class damage : MonoBehaviour
     void Awake()
     {
         var col = GetComponent<Collider>();
-        col.isTrigger = true;
+        if (col) col.isTrigger = true;
     }
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (rb != null)
+        if (Type == damageType.moving)
         {
-            rb.linearVelocity = transform.forward * speed;
-        }
-        if (lifeTime > 0f)
-        {
-            Destroy(gameObject, lifeTime);
+            if (rb != null)
+            {
+                rb.linearVelocity = transform.forward * speed;
+            }
+
+            if (lifeTime > 0f)
+            {
+                Destroy(gameObject, lifeTime);
+            }
         }
     }
 
@@ -82,15 +90,25 @@ public class damage : MonoBehaviour
         if (other.isTrigger) //not activated by another trigger
             return;
 
-        // Layer check (prevent arrows from hitting towers, ground, etc)
-        /*if ((layersAbleToHit.value & (1 << other.gameObject.layer)) == 0) // using bitwise to check if the layer hit is included in the allowed layers
+        int otherLayerMask = 1 << other.gameObject.layer;
+
+        if ((blockLayers.value &  otherLayerMask) != 0)
         {
+            DoHitFX(other.ClosestPoint(transform.position));
+
+            if (Type == damageType.moving)
+                Destroy(gameObject);
+
             return;
-        }*/
+        }
+
+        // If is not a damageable layer ignore it
+        if ((damageLayers.value & otherLayerMask) == 0)
+            return;
 
 
         IDamage dmg = other.GetComponent<IDamage>();
-        if (dmg != null) // && Type != damageType.DOT
+        if (dmg == null)
         {
             dmg = other.GetComponentInParent<IDamage>();
         }
@@ -100,19 +118,19 @@ public class damage : MonoBehaviour
             return;
         }
 
-        if (Type == damageType.moving)
+        if (Type == damageType.moving || Type == damageType.stationary)
         {
             dmg.takeDamage(damageAmount);
 
             DoHitFX(other.ClosestPoint(transform.position));
 
-            if (destroyOnHit)
+            if (Type == damageType.moving && destroyOnHit)
             {
                 Destroy(gameObject);
             }
-            Destroy(gameObject);
+            
         }
-        else
+        else if (Type == damageType.DOT)
         {
             // DOT type starts ticking while object inside
             if (!dotVictims.Contains(dmg))
