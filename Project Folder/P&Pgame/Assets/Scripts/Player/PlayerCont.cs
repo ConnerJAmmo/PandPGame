@@ -247,6 +247,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
 
     void SpawnTower()
     {
+        Vector3 towerFloor;
         if(woodCount >= 5)
         {
             Instantiate(STTower, transform.position, transform.rotation);
