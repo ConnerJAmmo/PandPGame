@@ -12,6 +12,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
 
     [SerializeField] TMP_Text gameGoalCountText;
+    [SerializeField] TMP_Text woodCountText;
+    [SerializeField] TMP_Text stoneCountText;
 
     public bool isPause;
     public GameObject player;
@@ -33,6 +35,8 @@ public class gameManager : MonoBehaviour
         playerScript = player.GetComponent<PlayerCont>();
 
         baseTower = GameObject.FindWithTag("Base");
+
+        updateResourcesUI();
     }
 
     
@@ -86,9 +90,21 @@ public class gameManager : MonoBehaviour
     public void updateGameGoal(int amount)
     {
         gameGoalCount += amount;
+        gameGoalCountText.text = gameGoalCount.ToString("F0");
         if (gameGoalCount <= 0)
         {
             newMenu(menuWin);
         }
+    }
+
+    public void updateResourcesUI()
+    {
+       if (playerScript == null)
+        {
+            return;
+        }
+
+        woodCountText.text = playerScript.woodCount.ToString("F0");
+        stoneCountText.text = playerScript.stoneCount.ToString("F0");
     }
 }

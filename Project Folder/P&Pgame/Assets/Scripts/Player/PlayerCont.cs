@@ -1,6 +1,4 @@
-using JetBrains.Annotations;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
+
 using UnityEngine;
 using System.Collections;
 
@@ -178,7 +176,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
     {
         shootTimer = 0;
 
-        Instantiate(bullet, shootPos.position, transform.rotation);
+        Instantiate(bullet, shootPos.position, shootPos.rotation);
         
     }
 
@@ -195,16 +193,23 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
             
             if (mat != null)
             {
+                bool changed = false;
                 string matType = mat.materialType();
                 int matAmount = mat.materialDamage(mineDamage);
 
                 if (matType == "Wood")
                 {
                     woodCount = woodCount + matAmount;
+                    changed = true;
                 }
                 else if (matType == "Stone")
                 {
                     stoneCount = stoneCount + matAmount;
+                    changed = true;
+                }
+                if (changed)
+                {
+                    gameManager.instance.updateResourcesUI();
                 }
             }
         }
@@ -250,11 +255,12 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
 
     void SpawnTower()
     {
-        Vector3 towerFloor;
+        
         if(woodCount >= 5)
         {
             Instantiate(STTower, transform.position, transform.rotation);
             woodCount = woodCount - 5;
+            gameManager.instance.updateResourcesUI();
         }
         else return;
     }

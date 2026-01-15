@@ -1601,6 +1601,10 @@ PrefabInstance:
       propertyPath: playerHPBar
       value: 
       objectReference: {fileID: 3610974749922083603}
+    - target: {fileID: 5206664767390647142, guid: 2972446603a3bae4f8c4d3c614020e13, type: 3}
+      propertyPath: gameGoalCountText
+      value: 
+      objectReference: {fileID: 2003602484}
     - target: {fileID: 5698643034766523553, guid: 2972446603a3bae4f8c4d3c614020e13, type: 3}
       propertyPath: m_Name
       value: UI Variant
