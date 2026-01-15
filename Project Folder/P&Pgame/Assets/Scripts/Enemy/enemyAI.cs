@@ -15,7 +15,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] LayerMask ignoreLayer;
 
     [Header("Stats")]
-    [Range(1, 10)] [SerializeField] int HP;
+    [Range(1, 25)] [SerializeField] int HP;
     [Range(0, 2)] [SerializeField] float shootRate;
     [Range(1, 1000)] [SerializeField] int faceTargetSpeed;
     [Range(1, 1000)][SerializeField] int shootDist;
@@ -36,8 +36,8 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         shootTimer += Time.deltaTime;
 
-        agent.SetDestination(gameManager.instance.baseTower.transform.position);
         desination = gameManager.instance.baseTower.transform.position;
+        agent.SetDestination(desination);
 
         Debug.DrawRay(shootPos.position, transform.forward * shootDist, Color.red);
 

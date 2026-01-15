@@ -52,13 +52,13 @@ MonoBehaviour:
   lifeTime: 5
   speed: 60
   damageRate: 0
-  damageAmount: 2
+  damageAmount: 1
   destroyOnHit: 1
   createHitEffect: 1
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 136
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
