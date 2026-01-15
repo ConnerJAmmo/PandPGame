@@ -4217,12 +4217,28 @@ PrefabInstance:
       value: Player Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7393485338391432276, guid: b9ad1d1c34dd6b540b0e7a7e33a452fa, type: 3}
+      propertyPath: HP
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7393485338391432276, guid: b9ad1d1c34dd6b540b0e7a7e33a452fa, type: 3}
+      propertyPath: speed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7393485338391432276, guid: b9ad1d1c34dd6b540b0e7a7e33a452fa, type: 3}
       propertyPath: STTower
       value: 
       objectReference: {fileID: 1401014823036408, guid: 5040fa77b88ce334da2f3a5ef8e1c20c, type: 3}
     - target: {fileID: 7393485338391432276, guid: b9ad1d1c34dd6b540b0e7a7e33a452fa, type: 3}
+      propertyPath: AOETower
+      value: 
+      objectReference: {fileID: 1361402013487122, guid: 1606b58cd193aa243a22595a9230cc03, type: 3}
+    - target: {fileID: 7393485338391432276, guid: b9ad1d1c34dd6b540b0e7a7e33a452fa, type: 3}
       propertyPath: jumpSpeed
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7393485338391432276, guid: b9ad1d1c34dd6b540b0e7a7e33a452fa, type: 3}
+      propertyPath: wallJumpMax
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7393485338391432276, guid: b9ad1d1c34dd6b540b0e7a7e33a452fa, type: 3}
       propertyPath: wallJumpSpeed
