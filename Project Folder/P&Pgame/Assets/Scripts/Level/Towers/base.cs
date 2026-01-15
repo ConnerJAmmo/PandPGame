@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class baseDmg : MonoBehaviour, IDamage
+public class baseDmg : MonoBehaviour//, IDamage
 {
     [Header("Stats")]
     [SerializeField] Renderer model;
