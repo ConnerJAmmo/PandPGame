@@ -56,7 +56,12 @@ MonoBehaviour:
   destroyOnHit: 1
   createHitEffect: 1
   hitEffectPrefab: {fileID: 0}
-  destroyTime: 3
+  damageLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  blockLayers:
+    serializedVersion: 2
+    m_Bits: 3584
 --- !u!135 &6370550118510818918
 SphereCollider:
   m_ObjectHideFlags: 0
