@@ -22,6 +22,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     Color colorOrigin;
     float shootTimer;
+    bool targetAquired = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,26 +32,51 @@ public class enemyAI : MonoBehaviour, IDamage
         gameManager.instance.updateGameGoal(1);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            targetAquired = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            targetAquired = false;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         shootTimer += Time.deltaTime;
 
-        agent.SetDestination(gameManager.instance.baseTower.transform.position);
         desination = gameManager.instance.baseTower.transform.position;
+        agent.SetDestination(desination);
 
         Debug.DrawRay(shootPos.position, transform.forward * shootDist, Color.red);
 
-        faceTarget();
-
-        RaycastHit hit;
-
-        if (Physics.Raycast(shootPos.position, transform.forward, out hit, shootDist, ~ignoreLayer) && shootTimer >= shootRate)
+        if (targetAquired)
         {
-            if (hit.collider.CompareTag("Player"))
+            faceTarget();
+
+            if (shootTimer >= shootRate)
             {
-                target = hit.transform;
                 Shoot();
+            }
+        }
+        else
+        {
+            Vector3 moveDirection = agent.steeringTarget - transform.position;
+            moveDirection.y = 0; // Keep the agent upright
+
+            if (moveDirection.magnitude > 0.1f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+                // Smoothly rotate towards the movement direction
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
             }
         }
     }

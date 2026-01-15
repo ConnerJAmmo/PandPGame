@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4930691851182074}
   - component: {fileID: 33599152738070450}
   - component: {fileID: 23024684552693346}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Base_MachineGun_L01_Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 4795219791600268}
   - component: {fileID: 1799378621916752799}
   - component: {fileID: 3282921932890155406}
-  - component: {fileID: 4873661408662348376}
+  - component: {fileID: 4914385419011594062}
   m_Layer: 0
   m_Name: ST-Tower
   m_TagString: Untagged
@@ -124,6 +124,7 @@ Transform:
   m_Children:
   - {fileID: 4024196668781704}
   - {fileID: 4877050138446582}
+  - {fileID: 713955016720631541}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1799378621916752799
@@ -139,6 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::turretDmg
   model: {fileID: 23411862511571598}
+  numEnemies: 0
   HP: 1
   shootPos: {fileID: 6538746864205256547}
   turret: {fileID: 4877050138446582}
@@ -149,7 +151,6 @@ MonoBehaviour:
   shootRate: 2
   shootDist: 20
   target: {fileID: 0}
-  enemiesInRange: []
 --- !u!136 &3282921932890155406
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -173,27 +174,33 @@ CapsuleCollider:
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!135 &4873661408662348376
-SphereCollider:
+--- !u!54 &4914385419011594062
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1401014823036408}
-  m_Material: {fileID: 0}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 10
-  m_Center: {x: 0, y: 0, z: 0}
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1589316105556366
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,7 +212,7 @@ GameObject:
   - component: {fileID: 4877050138446582}
   - component: {fileID: 33162234213751724}
   - component: {fileID: 23411862511571598}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Turret_MachineGun_L01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -297,7 +304,7 @@ GameObject:
   - component: {fileID: 4024196668781704}
   - component: {fileID: 33547097576749248}
   - component: {fileID: 23502624491662810}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Base_MachineGun_L01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -388,7 +395,7 @@ GameObject:
   - component: {fileID: 4104818651648934}
   - component: {fileID: 33214187930424904}
   - component: {fileID: 23374357788599828}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Turret_MachineGun_L01_Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -478,7 +485,7 @@ GameObject:
   - component: {fileID: 6538746864205256547}
   - component: {fileID: 8194088958868088641}
   - component: {fileID: 4597924385126154505}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: POS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -528,4 +535,66 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &4934555698911287129
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 713955016720631541}
+  - component: {fileID: 673346529682996532}
+  - component: {fileID: 1280823837537173487}
+  m_Layer: 0
+  m_Name: Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &713955016720631541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4934555698911287129}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4795219791600268}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &673346529682996532
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4934555698911287129}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!135 &1280823837537173487
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4934555698911287129}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}

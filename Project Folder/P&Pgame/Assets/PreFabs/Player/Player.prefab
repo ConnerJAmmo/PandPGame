@@ -234,8 +234,10 @@ MonoBehaviour:
   stoneCount: 0
   bullet: {fileID: 4359745504029842998, guid: a9bbf3c614848ec4bbc9c1a5fd8ea286, type: 3}
   shootRate: 1
-  shootPos: {fileID: 0}
-  STTower: {fileID: 0}
+  shootPos: {fileID: 5184510716425187040}
+  STTower: {fileID: 1401014823036408, guid: 5040fa77b88ce334da2f3a5ef8e1c20c, type: 3}
+  shootDist: 100
+  shootDamage: 1
 --- !u!23 &6909547586635812801
 MeshRenderer:
   m_ObjectHideFlags: 0

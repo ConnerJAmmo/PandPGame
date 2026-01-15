@@ -1,6 +1,3 @@
-using JetBrains.Annotations;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using System.Collections;
 
@@ -178,7 +175,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
     {
         shootTimer = 0;
 
-        Instantiate(bullet, shootPos.position, transform.rotation);
+        Instantiate(bullet, shootPos.position, shootPos.rotation);
         
     }
 
