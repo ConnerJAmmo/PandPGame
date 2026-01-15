@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4510397271394200587}
   - component: {fileID: 5883670834108571384}
   m_Layer: 0
-  m_Name: Map Terraim
+  m_Name: Map Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
