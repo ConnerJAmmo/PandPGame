@@ -2,12 +2,13 @@ using JetBrains.Annotations;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using System.Collections;
 
-public class PlayerCont : MonoBehaviour, IStore
+public class PlayerCont : MonoBehaviour, IStore, IDamage
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
-[Header("---- Stats ----")]
+    [Header("---- Stats ----")]
     [Range(1,10)][SerializeField] int HP;
     [Range(1,10)][SerializeField] int speed;
     [Range(1,10)][SerializeField] int slopeSlideSpeed;
@@ -33,6 +34,9 @@ public class PlayerCont : MonoBehaviour, IStore
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject STTower;
 
+    [SerializeField] int shootDist;
+    [SerializeField] int shootDamage;
+
     int jumpCount;
     int wallJumpCount;
     RaycastHit wallJumpHit;
@@ -51,6 +55,7 @@ public class PlayerCont : MonoBehaviour, IStore
     void Start()
     {
         HPOrig = HP;
+        updatePlayerUI();
     }
 
     // Update is called once per frame
@@ -174,6 +179,7 @@ public class PlayerCont : MonoBehaviour, IStore
         shootTimer = 0;
 
         Instantiate(bullet, shootPos.position, transform.rotation);
+        
     }
 
     void mine()
@@ -251,4 +257,30 @@ public class PlayerCont : MonoBehaviour, IStore
         }
         else return;
     }
+
+    public void takeDamage(int amount)
+    {
+        HP -= amount;
+        updatePlayerUI();
+        StartCoroutine(flashDamage());
+
+        if (HP <= 0)
+        {
+            gameManager.instance.youLose();
+        }
+
+    }
+
+    public void updatePlayerUI()
+    {
+        gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+    }
+
+    IEnumerator flashDamage()
+    {
+        gameManager.instance.damageFlash.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        gameManager.instance.damageFlash.SetActive(false);
+    }
+    
 }

@@ -227,9 +227,15 @@ MonoBehaviour:
   wallJumpMax: 2
   wallCheckDis: 2
   gravity: 35
+  mineRate: 1
+  mineDist: 5
+  mineDamage: 1
+  woodCount: 0
+  stoneCount: 0
   bullet: {fileID: 4359745504029842998, guid: a9bbf3c614848ec4bbc9c1a5fd8ea286, type: 3}
   shootRate: 1
-  spawnPoint: {fileID: 4388233603527997269}
+  shootPos: {fileID: 0}
+  STTower: {fileID: 0}
 --- !u!23 &6909547586635812801
 MeshRenderer:
   m_ObjectHideFlags: 0

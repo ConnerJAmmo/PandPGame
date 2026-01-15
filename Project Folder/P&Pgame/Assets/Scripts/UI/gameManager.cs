@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class gameManager : MonoBehaviour
 {
@@ -12,7 +13,10 @@ public class gameManager : MonoBehaviour
     public bool isPause;
     public GameObject player;
     public PlayerCont playerScript;
-     public GameObject baseTower;
+    public GameObject baseTower;
+
+    public Image playerHPBar;
+    public GameObject damageFlash;
 
     float timeScaleOrig;
     int gameGoalCount;

@@ -76,7 +76,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         HP -= amount;
 
-        if(HP < 0) 
+        if(HP <= 0) 
         {
             gameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);
