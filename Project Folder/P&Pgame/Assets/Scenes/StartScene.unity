@@ -175,6 +175,10 @@ PrefabInstance:
       propertyPath: m_AgentTypeID
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8795489549108747264, guid: 18a4495349916914c800d5c81dea5789, type: 3}
+      propertyPath: m_Radius
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1027,6 +1031,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6097880192208175810, guid: da7a35b649d80ae468a5870ac44c2240, type: 3}
   m_PrefabInstance: {fileID: 1646828262}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &563873058 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8033510000184652267, guid: b9ad1d1c34dd6b540b0e7a7e33a452fa, type: 3}
+  m_PrefabInstance: {fileID: 1913658451}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &567192708
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1305,6 +1314,10 @@ PrefabInstance:
     - target: {fileID: 7969592130271090367, guid: 18a4495349916914c800d5c81dea5789, type: 3}
       propertyPath: m_AgentTypeID
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8795489549108747264, guid: 18a4495349916914c800d5c81dea5789, type: 3}
+      propertyPath: m_Radius
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3008,6 +3021,10 @@ PrefabInstance:
       propertyPath: m_AgentTypeID
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8795489549108747264, guid: 18a4495349916914c800d5c81dea5789, type: 3}
+      propertyPath: m_Radius
+      value: 18.6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3096,6 +3113,10 @@ PrefabInstance:
     - target: {fileID: 7969592130271090367, guid: 18a4495349916914c800d5c81dea5789, type: 3}
       propertyPath: m_AgentTypeID
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8795489549108747264, guid: 18a4495349916914c800d5c81dea5789, type: 3}
+      propertyPath: m_Radius
+      value: 15.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3769,6 +3790,10 @@ PrefabInstance:
       value: Enemy (5)
       objectReference: {fileID: 0}
     - target: {fileID: 7340712634118204420, guid: 18a4495349916914c800d5c81dea5789, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 563873058}
+    - target: {fileID: 7340712634118204420, guid: 18a4495349916914c800d5c81dea5789, type: 3}
       propertyPath: shootDist
       value: 100
       objectReference: {fileID: 0}
@@ -3787,6 +3812,10 @@ PrefabInstance:
     - target: {fileID: 7969592130271090367, guid: 18a4495349916914c800d5c81dea5789, type: 3}
       propertyPath: m_AgentTypeID
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8795489549108747264, guid: 18a4495349916914c800d5c81dea5789, type: 3}
+      propertyPath: m_Radius
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4103,6 +4132,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7393485338391432276, guid: b9ad1d1c34dd6b540b0e7a7e33a452fa, type: 3}
+      propertyPath: shootRate
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7393485338391432276, guid: b9ad1d1c34dd6b540b0e7a7e33a452fa, type: 3}
       propertyPath: wallJumpMax
       value: 3
       objectReference: {fileID: 0}
@@ -4349,6 +4382,10 @@ PrefabInstance:
     - target: {fileID: 7969592130271090367, guid: 18a4495349916914c800d5c81dea5789, type: 3}
       propertyPath: m_AgentTypeID
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8795489549108747264, guid: 18a4495349916914c800d5c81dea5789, type: 3}
+      propertyPath: m_Radius
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
