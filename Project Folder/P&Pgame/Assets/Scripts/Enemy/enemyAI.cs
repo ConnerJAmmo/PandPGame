@@ -15,13 +15,14 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] LayerMask ignoreLayer;
 
     [Header("Stats")]
-    [Range(1, 10)] [SerializeField] int HP;
+    [Range(1, 25)] [SerializeField] int HP;
     [Range(0, 2)] [SerializeField] float shootRate;
     [Range(1, 1000)] [SerializeField] int faceTargetSpeed;
     [Range(1, 1000)][SerializeField] int shootDist;
 
     Color colorOrigin;
     float shootTimer;
+    bool targetAquired = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,26 +32,51 @@ public class enemyAI : MonoBehaviour, IDamage
         gameManager.instance.updateGameGoal(1);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            targetAquired = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            targetAquired = false;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         shootTimer += Time.deltaTime;
 
-        agent.SetDestination(gameManager.instance.baseTower.transform.position);
         desination = gameManager.instance.baseTower.transform.position;
+        agent.SetDestination(desination);
 
         Debug.DrawRay(shootPos.position, transform.forward * shootDist, Color.red);
 
-        faceTarget();
-
-        RaycastHit hit;
-
-        if (Physics.Raycast(shootPos.position, transform.forward, out hit, shootDist, ~ignoreLayer) && shootTimer >= shootRate)
+        if (targetAquired)
         {
-            if (hit.collider.CompareTag("Player"))
+            faceTarget();
+
+            if (shootTimer >= shootRate)
             {
-                target = hit.transform;
                 Shoot();
+            }
+        }
+        else
+        {
+            Vector3 moveDirection = agent.steeringTarget - transform.position;
+            moveDirection.y = 0; // Keep the agent upright
+
+            if (moveDirection.magnitude > 0.1f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+                // Smoothly rotate towards the movement direction
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
             }
         }
     }
@@ -76,7 +102,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         HP -= amount;
 
-        if(HP < 0) 
+        if(HP <= 0) 
         {
             gameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);

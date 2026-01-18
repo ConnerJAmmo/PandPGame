@@ -1,14 +1,14 @@
-using JetBrains.Annotations;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine;
 
-public class PlayerCont : MonoBehaviour, IStore
+using UnityEngine;
+using System.Collections;
+//using NUnit.Framework;
+
+public class PlayerCont : MonoBehaviour, IStore, IDamage
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
-[Header("---- Stats ----")]
-    [Range(1,10)][SerializeField] int HP;
+    [Header("---- Stats ----")]
+    [Range(1,100)][SerializeField] int HP;
     [Range(1,10)][SerializeField] int speed;
     [Range(1,10)][SerializeField] int slopeSlideSpeed;
     [Range(2,5)][SerializeField] int sprintMod;
@@ -32,6 +32,10 @@ public class PlayerCont : MonoBehaviour, IStore
     [SerializeField] float shootRate;
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject STTower;
+    [SerializeField] GameObject AOETower;
+
+    [SerializeField] int shootDist;
+    [SerializeField] int shootDamage;
 
     int jumpCount;
     int wallJumpCount;
@@ -46,11 +50,13 @@ public class PlayerCont : MonoBehaviour, IStore
    UnityEngine.Vector3 moveDir;
    UnityEngine.Vector3 playerVel;
    UnityEngine.Vector3 slideVel;
+   UnityEngine.Vector3 PlayerBodyPos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         HPOrig = HP;
+        updatePlayerUI();
     }
 
     // Update is called once per frame
@@ -69,6 +75,7 @@ public class PlayerCont : MonoBehaviour, IStore
         controller.Move(moveDir * speed * Time.deltaTime);
         jump();
         controller.Move(playerVel * Time.deltaTime);
+        PlayerBodyPos = transform.position + Vector3.down;
       
         if(OnSteepSlope())
         {
@@ -92,6 +99,7 @@ public class PlayerCont : MonoBehaviour, IStore
             }
             playerVel.y -= gravity * Time.deltaTime;
         }
+
         if(Input.GetButtonDown("Fire1") && shootTimer >= shootRate)
         {
             shoot();
@@ -102,7 +110,17 @@ public class PlayerCont : MonoBehaviour, IStore
         }
         if(Input.GetButtonDown("z"))
         {
-            SpawnTower();
+            if(wasGrounded)
+            {
+                SpawnSTTower();
+            }
+        }
+        if(Input.GetButtonDown("x"))
+        {
+            if(wasGrounded)
+            {
+                SpawnAOETower();
+            }
         }
     }
 
@@ -173,7 +191,8 @@ public class PlayerCont : MonoBehaviour, IStore
     {
         shootTimer = 0;
 
-        Instantiate(bullet, shootPos.position, transform.rotation);
+        Instantiate(bullet, shootPos.position, shootPos.rotation);
+        
     }
 
     void mine()
@@ -189,16 +208,23 @@ public class PlayerCont : MonoBehaviour, IStore
             
             if (mat != null)
             {
+                bool changed = false;
                 string matType = mat.materialType();
                 int matAmount = mat.materialDamage(mineDamage);
 
                 if (matType == "Wood")
                 {
                     woodCount = woodCount + matAmount;
+                    changed = true;
                 }
                 else if (matType == "Stone")
                 {
                     stoneCount = stoneCount + matAmount;
+                    changed = true;
+                }
+                if (changed)
+                {
+                    gameManager.instance.updateResourcesUI();
                 }
             }
         }
@@ -238,17 +264,53 @@ public class PlayerCont : MonoBehaviour, IStore
         {
             total = stoneCount;
         }
-
             return total;
     }
 
-    void SpawnTower()
+    void SpawnSTTower()
     {
+        
         if(woodCount >= 5)
         {
-            Instantiate(STTower, transform.position, transform.rotation);
+            Instantiate(STTower, PlayerBodyPos, transform.rotation);
             woodCount = woodCount - 5;
+            gameManager.instance.updateResourcesUI();
         }
         else return;
     }
+    void SpawnAOETower()
+    {
+        if(stoneCount >= 5)
+        {
+            Instantiate(AOETower, PlayerBodyPos, transform.rotation);
+            stoneCount = stoneCount - 5;
+        }
+        else return;
+    }
+
+    public void takeDamage(int amount)
+    {
+        HP -= amount;
+        updatePlayerUI();
+        StartCoroutine(flashDamage());
+
+        if (HP <= 0)
+        {
+            gameManager.instance.youLose();
+        }
+
+    }
+
+    public void updatePlayerUI()
+    {
+        gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+    }
+
+    IEnumerator flashDamage()
+    {
+        gameManager.instance.damageFlash.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        gameManager.instance.damageFlash.SetActive(false);
+    }
+    
 }
