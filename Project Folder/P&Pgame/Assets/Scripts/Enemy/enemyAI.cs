@@ -132,6 +132,10 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         shootTimer = 0;
         Instantiate(bullet, shootPos.position, shootPos.rotation);
+        foreach (var trail in bullet.GetComponentsInChildren<TrailRenderer>())
+        {
+            trail.Clear();
+        }
     }
 
     public void takeDamage(int amount)

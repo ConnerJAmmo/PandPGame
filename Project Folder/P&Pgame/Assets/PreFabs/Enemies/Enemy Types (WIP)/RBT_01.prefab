@@ -1397,7 +1397,7 @@ MonoBehaviour:
   desination: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
   shootPos: {fileID: 1282471459520118422}
-  bullet: {fileID: 7983933263039930371, guid: 31685311af4a0ea4d9ab1162389bd8f6, type: 3}
+  bullet: {fileID: 7983933263039930371, guid: b2cc5e6c018b75f468c0514221c66867, type: 3}
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 0

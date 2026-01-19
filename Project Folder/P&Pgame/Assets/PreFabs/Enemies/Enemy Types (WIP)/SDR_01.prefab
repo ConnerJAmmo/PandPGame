@@ -335,7 +335,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
   m_LocalPosition: {x: 10.167482, y: 0, z: 39.90646}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1.7, y: 1.5, z: 1.7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3159144319904555343}
@@ -362,7 +362,7 @@ MonoBehaviour:
   desination: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
   shootPos: {fileID: 3816564590866830280}
-  bullet: {fileID: 7983933263039930371, guid: 31685311af4a0ea4d9ab1162389bd8f6, type: 3}
+  bullet: {fileID: 7983933263039930371, guid: da205e21de67a394292a483c8e9ad79c, type: 3}
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 0
