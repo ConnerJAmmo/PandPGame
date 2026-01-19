@@ -8,7 +8,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
     [Header("---- Stats ----")]
-    [Range(1,100)][SerializeField] int HP;
+    [Range(1,100)][SerializeField] public int HP;
     [Range(1,10)][SerializeField] int speed;
     [Range(1,10)][SerializeField] int slopeSlideSpeed;
     [Range(2,5)][SerializeField] int sprintMod;
@@ -46,7 +46,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
     float shootTimer;
     float mineTimer;
     private RaycastHit slopeHit; 
-    int HPOrig;
+    public int HPOrig;
    UnityEngine.Vector3 moveDir;
    UnityEngine.Vector3 playerVel;
    UnityEngine.Vector3 slideVel;
@@ -56,6 +56,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
     void Start()
     {
         HPOrig = HP;
+        gameManager.instance.SetHPOirgUI();
         updatePlayerUI();
     }
 
@@ -304,6 +305,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
     public void updatePlayerUI()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+        gameManager.instance.SetHPUI();
     }
 
     IEnumerator flashDamage()

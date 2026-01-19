@@ -30,6 +30,7 @@ public class enemyAI : MonoBehaviour, IDamage
         colorOrigin = model.material.color; 
         agent.updateRotation = false;
         gameManager.instance.updateGameGoal(1);
+        gameManager.instance.SetGameGoalOirgUI();
     }
 
     private void OnTriggerEnter(Collider other)
