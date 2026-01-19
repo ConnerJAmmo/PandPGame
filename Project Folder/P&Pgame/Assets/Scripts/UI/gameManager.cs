@@ -11,7 +11,13 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuWin;
 
-    [SerializeField] TMP_Text gameGoalCountText;
+    [SerializeField] TMP_Text playerHPText;
+    [SerializeField] TMP_Text playerHPTextOrig;
+    [SerializeField] TMP_Text gameGoalText;
+    [SerializeField] TMP_Text gameGoalTextOrig;
+    [SerializeField] TMP_Text waveCountText;
+    [SerializeField] TMP_Text waveCountTextOrig;
+    [SerializeField] TMP_Text goldCountText;
     [SerializeField] TMP_Text woodCountText;
     [SerializeField] TMP_Text stoneCountText;
 
@@ -19,12 +25,16 @@ public class gameManager : MonoBehaviour
     public GameObject player;
     public PlayerCont playerScript;
     public GameObject baseTower;
+    public int startingGold;
 
     public Image playerHPBar;
     public GameObject damageFlash;
 
     float timeScaleOrig;
+    int goldCount;
     int gameGoalCount;
+    int gameGoalCountOrig;
+
 
     void Awake()
     {
@@ -33,6 +43,13 @@ public class gameManager : MonoBehaviour
 
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerCont>();
+
+        UpdateGold(startingGold);
+        goldCountText.text = goldCount.ToString("F0");
+
+        SetWaveCountUI(5);
+
+        SetActiveWaveUI(1);
 
         baseTower = GameObject.FindWithTag("Base");
 
@@ -55,6 +72,39 @@ public class gameManager : MonoBehaviour
                  stateUnpause();
             }
         }
+    }
+
+    public void SetGameGoalOirgUI()
+    {
+        gameGoalCountOrig = gameGoalCount;
+        gameGoalTextOrig.text = gameGoalCountOrig.ToString("F0");
+    }
+
+    public void SetHPOirgUI()
+    {
+        playerHPTextOrig.text = playerScript.HPOrig.ToString("F0");
+    }
+
+    public void SetHPUI()
+    {
+        playerHPText.text = playerScript.HP.ToString("F0");
+    }
+
+    public void SetWaveCountUI(int waveCounts)
+    {
+        waveCountTextOrig.text = waveCounts.ToString("F0");
+    }
+
+    public void SetActiveWaveUI(int wave)
+    {
+        waveCountText.text = wave.ToString("F0");
+    }
+
+
+    public void UpdateGold(int amount)
+    {
+        goldCount += amount;
+        goldCountText.text = goldCount.ToString("F0");
     }
 
     public void newMenu(GameObject menu)
@@ -90,7 +140,7 @@ public class gameManager : MonoBehaviour
     public void updateGameGoal(int amount)
     {
         gameGoalCount += amount;
-        gameGoalCountText.text = gameGoalCount.ToString("F0");
+        gameGoalText.text = gameGoalCount.ToString("F0");
         if (gameGoalCount <= 0)
         {
             newMenu(menuWin);
