@@ -56,7 +56,7 @@ public class enemyAI : MonoBehaviour, IDamage
         desination = gameManager.instance.baseTower.transform.position;
         agent.SetDestination(desination);
 
-        Debug.DrawRay(shootPos.position, transform.forward * shootDist, Color.red);
+        Debug.DrawRay(transform.position, transform.forward * shootDist, Color.blue);
 
         if (targetAquired)
         {
@@ -83,19 +83,55 @@ public class enemyAI : MonoBehaviour, IDamage
 
     void faceTarget()
     {
+        // 1. Calculate the base direction to the target's center
+        Vector3 targetCenter = gameManager.instance.player.transform.GetComponent<Collider>().bounds.center;
+        Vector3 fullDirection = targetCenter - transform.position;
+
+        if (fullDirection.sqrMagnitude > 0.01f)
+        {
+            // --- HORIZONTAL ROTATION (Main Model) ---
+            // Flatten the direction by removing the Y difference
+            Vector3 horizontalDirection = new Vector3(fullDirection.x, 0, fullDirection.z);
+            if (horizontalDirection != Vector3.zero)
+            {
+                Quaternion horizontalRot = Quaternion.LookRotation(horizontalDirection);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, horizontalRot, Time.deltaTime * faceTargetSpeed);
+            }
+
+            // --- VERTICAL ROTATION (shootPos) ---
+            if (shootPos != null)
+            {
+                // Direction from shootPos specifically to the target
+                Vector3 relativeDir = targetCenter - shootPos.position;
+
+                // LookRotation towards the target, but keep shootPos upright relative to parent
+                Quaternion verticalRot = Quaternion.LookRotation(relativeDir);
+
+                // Smoothly rotate the shootPos
+                shootPos.rotation = Quaternion.RotateTowards(shootPos.rotation, verticalRot, Time.deltaTime * faceTargetSpeed);
+
+                Debug.DrawRay(shootPos.position, shootPos.forward * shootDist, Color.red);
+            }
+        }
+    }
+
+    /*
+    void faceTarget()
+    {
         Vector3 centerOfMass = gameManager.instance.player.transform.GetComponent<Collider>().bounds.center;
         Vector3 direction = centerOfMass - transform.position;
         if (direction.sqrMagnitude > 0.01f)
         {
-            Quaternion targetRot = Quaternion.LookRotation(direction);
+            Quaternion targetRot = Quaternion.LookRotation(direction, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.deltaTime * faceTargetSpeed);
         }
     }
-    
+    */
+
     void Shoot()
     {
         shootTimer = 0;
-        Instantiate(bullet, shootPos.position, transform.rotation);
+        Instantiate(bullet, shootPos.position, shootPos.rotation);
     }
 
     public void takeDamage(int amount)
