@@ -24,6 +24,8 @@ public class enemyAI : MonoBehaviour, IDamage
     float shootTimer;
     bool targetAquired = false;
 
+    private WaveSpawner waveSpawner;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -31,6 +33,7 @@ public class enemyAI : MonoBehaviour, IDamage
         agent.updateRotation = false;
         gameManager.instance.updateGameGoal(1);
         gameManager.instance.SetGameGoalOirgUI();
+        waveSpawner = GetComponentInParent<WaveSpawner>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -146,6 +149,7 @@ public class enemyAI : MonoBehaviour, IDamage
         if(HP <= 0) 
         {
             gameManager.instance.updateGameGoal(-1);
+            waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
             Destroy(gameObject);
         }
         else

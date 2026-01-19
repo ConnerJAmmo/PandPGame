@@ -1660,7 +1660,7 @@ GameObject:
   - component: {fileID: 3290474649241634639}
   - component: {fileID: 5126704323108525598}
   - component: {fileID: 2479953679506302982}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BEM_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
