@@ -21,12 +21,14 @@ public class turretDmg : MonoBehaviour//, IDamage
     float nextDamageTime;
     float shootTimer;
     [SerializeField] Collider target;
+    Quaternion forward;
 
     private List<Collider> enemiesInRange = new List<Collider>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        forward = Quaternion.LookRotation(turret.transform.forward);
         colorOrigin = model.material.color;
     }
 
@@ -51,24 +53,29 @@ public class turretDmg : MonoBehaviour//, IDamage
     {
         shootTimer += Time.deltaTime;
         Debug.DrawRay(shootPos.position, shootPos.forward * shootDist, Color.red);
+
+        // 1. Clean the list first
+        enemiesInRange.RemoveAll(enemy => enemy == null);
         numEnemies = enemiesInRange.Count;
 
         if (enemiesInRange.Count > 0)
         {
-            enemiesInRange.RemoveAll(enemy => enemy == null);
+            faceTarget();
 
-            if (enemiesInRange.Count > 0)
+            if (shootTimer >= shootRate)
             {
-                faceTarget();
-
-                if (shootTimer >= shootRate)
-                {
-                    Shoot();
-                }
+                // Optional: Only shoot if the turret is actually pointing at the target
+                Shoot();
             }
         }
+        else
+        {
+            // 2. Rotate the TURRET back to forward, not the whole object
+            turret.rotation = Quaternion.Slerp(turret.rotation, forward, Time.deltaTime * 2);
+        }
     }
-    
+
+
     void faceTarget()
     {
         target = enemiesInRange[0];

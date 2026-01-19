@@ -56,7 +56,12 @@ MonoBehaviour:
   destroyOnHit: 1
   createHitEffect: 1
   hitEffectPrefab: {fileID: 0}
-  destroyTime: 5
+  damageLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  blockLayers:
+    serializedVersion: 2
+    m_Bits: 3584
 --- !u!136 &4614170496407192721
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -129,11 +134,11 @@ TrailRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Time: 0.25
+  m_Time: 0.05
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.1
+    widthMultiplier: 0.03
     widthCurve:
       serializedVersion: 2
       m_Curve:
