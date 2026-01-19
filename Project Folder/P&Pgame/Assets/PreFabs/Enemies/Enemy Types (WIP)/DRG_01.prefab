@@ -4606,7 +4606,7 @@ GameObject:
   - component: {fileID: 3860411116311545315}
   - component: {fileID: 6650487272091330161}
   - component: {fileID: 1011345925133868797}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DRG_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}

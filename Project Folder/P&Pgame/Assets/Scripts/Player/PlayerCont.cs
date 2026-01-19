@@ -101,11 +101,11 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
             playerVel.y -= gravity * Time.deltaTime;
         }
 
-        if(Input.GetButtonDown("Fire1") && shootTimer >= shootRate)
+        if(Input.GetButton("Fire1") && shootTimer >= shootRate)
         {
             shoot();
         }
-        if (Input.GetButtonDown("Fire2") && mineTimer >= mineRate)
+        if (Input.GetButton("Fire2") && mineTimer >= mineRate)
         {
             mine();
         }

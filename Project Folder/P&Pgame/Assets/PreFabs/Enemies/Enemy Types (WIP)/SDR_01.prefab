@@ -318,7 +318,7 @@ GameObject:
   - component: {fileID: 8088949498270211718}
   - component: {fileID: 3045527711049135204}
   - component: {fileID: 5172594780851160477}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SDR_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1355,7 +1355,7 @@ GameObject:
   - component: {fileID: 2206653471322338591}
   - component: {fileID: 6463496212823209678}
   - component: {fileID: 2181994416561400455}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RBT_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
