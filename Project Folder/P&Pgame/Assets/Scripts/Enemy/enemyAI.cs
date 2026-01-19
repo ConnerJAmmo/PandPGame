@@ -30,6 +30,7 @@ public class enemyAI : MonoBehaviour, IDamage
         colorOrigin = model.material.color; 
         agent.updateRotation = false;
         gameManager.instance.updateGameGoal(1);
+        gameManager.instance.SetGameGoalOirgUI();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -132,6 +133,10 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         shootTimer = 0;
         Instantiate(bullet, shootPos.position, shootPos.rotation);
+        foreach (var trail in bullet.GetComponentsInChildren<TrailRenderer>())
+        {
+            trail.Clear();
+        }
     }
 
     public void takeDamage(int amount)
