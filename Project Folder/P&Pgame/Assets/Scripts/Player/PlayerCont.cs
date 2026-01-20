@@ -65,6 +65,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
     {
         Movement();
         sprint();
+        UpdateHints();
     }
 
      void Movement()
@@ -123,6 +124,54 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
                 SpawnAOETower();
             }
         }
+    }
+
+    void UpdateHints()
+    {
+        // Place hints for placing
+        string placeHint = "";
+
+        if (wasGrounded)
+        {
+            bool canST = woodCount >= 5;
+            bool canAOE = stoneCount >= 5;
+
+            if (canST) placeHint += "Press Z to place ST Turret (5 Wood)\n";
+            if (canAOE) placeHint += "Press X to place AOE Turret (5 Stone)\n";
+        }
+
+        string mineHint = GetMineHint(); // I created separate method for minehint
+
+        string final = "";
+
+        if (!string.IsNullOrEmpty(mineHint))
+        {
+            final += mineHint + '\n';
+        }
+        
+        if (!string.IsNullOrEmpty(final))
+        {
+            final += placeHint;
+        }
+
+        gameManager.instance.SetHint(final.Trim());
+    }
+
+    string GetMineHint()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, mineDist, ~ignoreLayer)
+        {
+            IMaterial mat = hit.collider.GetComponent<IMaterial>();
+            if (mat != null)
+            {
+                string type = mat.materialType();
+                return $"Press E to mine {type}";
+            }
+        }
+
+        return "";
     }
 
     void jump()
@@ -285,6 +334,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
         {
             Instantiate(AOETower, PlayerBodyPos, transform.rotation);
             stoneCount = stoneCount - 5;
+            gameManager.instance.updateResourcesUI();
         }
         else return;
     }
