@@ -13,28 +13,31 @@ public class gameManager : MonoBehaviour
 
     [SerializeField] TMP_Text playerHPText;
     [SerializeField] TMP_Text playerHPTextOrig;
-    [SerializeField] TMP_Text gameGoalText;
-    [SerializeField] TMP_Text gameGoalTextOrig;
+    [SerializeField] TMP_Text enemyCountText;
+    [SerializeField] TMP_Text enemyCountTextOrig;
     [SerializeField] TMP_Text waveCountText;
     [SerializeField] TMP_Text waveCountTextOrig;
     [SerializeField] TMP_Text goldCountText;
     [SerializeField] TMP_Text woodCountText;
     [SerializeField] TMP_Text stoneCountText;
+    [SerializeField] TMP_Text hintText;
 
     public bool isPause;
+    public bool waveActive;
     public GameObject player;
     public PlayerCont playerScript;
     public GameObject baseTower;
     public int startingGold;
+    public int enemyCount;
+    public int enemyCountOrig;
 
     public Image playerHPBar;
     public GameObject damageFlash;
 
     float timeScaleOrig;
     int goldCount;
-    int gameGoalCount;
-    int gameGoalCountOrig;
 
+    public GameObject waveSpawner;
 
     void Awake()
     {
@@ -47,9 +50,9 @@ public class gameManager : MonoBehaviour
         UpdateGold(startingGold);
         goldCountText.text = goldCount.ToString("F0");
 
-        SetWaveCountUI(5);
-
-        SetActiveWaveUI(1);
+        waveSpawner = GameObject.FindWithTag("WaveSpawner");
+        SetWaveCountUI(0);
+        SetActiveWaveUI(0);
 
         baseTower = GameObject.FindWithTag("Base");
 
@@ -74,10 +77,16 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    public void SetGameGoalOirgUI()
+    public void updateEnemyCountTotal(int amount)
     {
-        gameGoalCountOrig = gameGoalCount;
-        gameGoalTextOrig.text = gameGoalCountOrig.ToString("F0");
+        enemyCountOrig += amount;
+        enemyCountTextOrig.text = enemyCountOrig.ToString("F0");
+    }
+
+    public void updateEnemyCount(int amount)
+    {
+        enemyCount += amount;
+        enemyCountText.text = enemyCount.ToString("F0");
     }
 
     public void SetHPOirgUI()
@@ -142,15 +151,6 @@ public class gameManager : MonoBehaviour
     {
         newMenu(menuLose);
     }
-    public void updateGameGoal(int amount)
-    {
-        gameGoalCount += amount;
-        gameGoalText.text = gameGoalCount.ToString("F0");
-        if (gameGoalCount <= 0)
-        {
-            newMenu(menuWin);
-        }
-    }
 
     public void updateResourcesUI()
     {
@@ -161,5 +161,18 @@ public class gameManager : MonoBehaviour
 
         woodCountText.text = playerScript.woodCount.ToString("F0");
         stoneCountText.text = playerScript.stoneCount.ToString("F0");
+    }
+
+    public void SetHint(string msg)
+    {
+        if (!hintText) return;
+
+        hintText.text = msg;
+        hintText.gameObject.SetActive(!string.IsNullOrEmpty(msg));
+    }
+
+    public void ClearHint()
+    {
+        SetHint("");
     }
 }
