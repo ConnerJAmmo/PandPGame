@@ -502,12 +502,12 @@ MonoBehaviour:
   desination: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
   shootPos: {fileID: 6640107793589919657}
-  bullet: {fileID: 7983933263039930371, guid: 731cfe65b6f1bb14fb06a92ab5060a4e, type: 3}
+  bullet: {fileID: 811445109454079216, guid: 29f08eec12a312c4ba15e5f8c16a50e2, type: 3}
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 0
   HP: 10
-  shootRate: 1
+  shootRate: 1.5
   faceTargetSpeed: 75
   shootDist: 50
 --- !u!195 &3342687552874800466

@@ -367,7 +367,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   HP: 15
-  shootRate: 0.5
+  shootRate: 1
   faceTargetSpeed: 75
   shootDist: 50
 --- !u!195 &1937492436525799501
