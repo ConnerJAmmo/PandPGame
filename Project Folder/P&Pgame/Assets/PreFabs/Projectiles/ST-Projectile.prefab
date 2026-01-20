@@ -52,9 +52,16 @@ MonoBehaviour:
   lifeTime: 5
   speed: 60
   damageRate: 0
+  leavesDotZone: 0
+  dotZonePrefab: {fileID: 0}
   damageAmount: 1
   destroyOnHit: 1
   createHitEffect: 1
+  groundedHitEffect: 0
+  groundCheckDistance: 10
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
