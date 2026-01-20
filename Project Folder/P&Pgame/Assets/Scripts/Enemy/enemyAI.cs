@@ -20,17 +20,22 @@ public class enemyAI : MonoBehaviour, IDamage
     [Range(1, 1000)] [SerializeField] int faceTargetSpeed;
     [Range(1, 1000)][SerializeField] int shootDist;
 
+    int maxHP;
     Color colorOrigin;
     float shootTimer;
     bool targetAquired = false;
+
+    private WaveSpawner waveSpawner;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         colorOrigin = model.material.color; 
         agent.updateRotation = false;
-        gameManager.instance.updateGameGoal(1);
-        gameManager.instance.SetGameGoalOirgUI();
+        gameManager.instance.updateEnemyCount(1);
+        gameManager.instance.updateEnemyCountTotal(1);
+        waveSpawner = GetComponentInParent<WaveSpawner>();
+        maxHP = HP;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -116,23 +121,14 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
-    /*
-    void faceTarget()
-    {
-        Vector3 centerOfMass = gameManager.instance.player.transform.GetComponent<Collider>().bounds.center;
-        Vector3 direction = centerOfMass - transform.position;
-        if (direction.sqrMagnitude > 0.01f)
-        {
-            Quaternion targetRot = Quaternion.LookRotation(direction, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.deltaTime * faceTargetSpeed);
-        }
-    }
-    */
-
     void Shoot()
     {
         shootTimer = 0;
         Instantiate(bullet, shootPos.position, shootPos.rotation);
+        foreach (var trail in bullet.GetComponentsInChildren<TrailRenderer>())
+        {
+            trail.Clear();
+        }
     }
 
     public void takeDamage(int amount)
@@ -141,7 +137,9 @@ public class enemyAI : MonoBehaviour, IDamage
 
         if(HP <= 0) 
         {
-            gameManager.instance.updateGameGoal(-1);
+            gameManager.instance.updateEnemyCount(-1);
+            waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
+            gameManager.instance.UpdateGold(maxHP);
             Destroy(gameObject);
         }
         else

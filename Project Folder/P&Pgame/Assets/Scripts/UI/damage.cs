@@ -24,12 +24,19 @@ public class damage : MonoBehaviour
     [Header("DOT Settings (Only if we are using DOT)")]
     [SerializeField] float damageRate;
 
+    [Header("Projectile DOT Settings")]
+    [SerializeField] bool leavesDotZone = false;
+    [SerializeField] GameObject dotZonePrefab; // A prefab with this script set to "DOT"
+
     [Header("Damage")]
     [SerializeField] int damageAmount;
 
     [Header("Hit Rules")]
     [SerializeField] bool destroyOnHit = true;
     [SerializeField] bool createHitEffect = true;
+    [SerializeField] bool groundedHitEffect = false;
+    public float groundCheckDistance = 10f; // Max distance to look for ground
+    public LayerMask groundLayer; // Layer filter for the ground
     [SerializeField] GameObject hitEffectPrefab;
     //[SerializeField] int destroyTime;
 
@@ -92,9 +99,14 @@ public class damage : MonoBehaviour
 
         int otherLayerMask = 1 << other.gameObject.layer;
 
-        if ((blockLayers.value &  otherLayerMask) != 0)
+        if ((blockLayers.value & otherLayerMask) != 0)
         {
-            DoHitFX(other.ClosestPoint(transform.position));
+            Vector3 hitPoint = GetSafeContactPoint(other);
+
+            // Before destroying the arrow, spawn the DOT zone if enabled
+            HandleProjectileImpact(hitPoint);
+
+            DoHitFX(hitPoint);
 
             if (Type == damageType.moving)
                 Destroy(gameObject);
@@ -122,22 +134,51 @@ public class damage : MonoBehaviour
         {
             dmg.takeDamage(damageAmount);
 
-            DoHitFX(other.ClosestPoint(transform.position));
+            Vector3 hitPoint = GetSafeContactPoint(other);
+            HandleProjectileImpact(hitPoint); // Spawn DOT on the enemy if needed
+
+            DoHitFX(hitPoint);
 
             if (Type == damageType.moving && destroyOnHit)
-            {
                 Destroy(gameObject);
-            }
-            
         }
         else if (Type == damageType.DOT)
         {
-            // DOT type starts ticking while object inside
             if (!dotVictims.Contains(dmg))
             {
                 dotVictims.Add(dmg);
                 StartCoroutine(DotDamage(dmg));
             }
+        }
+    }
+
+    Vector3 GetSafeContactPoint(Collider other)
+    {
+        // Check if it's a mesh collider that is NOT convex
+        if (other is MeshCollider meshCol && !meshCol.convex)
+        {
+            return other.ClosestPointOnBounds(transform.position);
+        }
+        return other.ClosestPoint(transform.position);
+    }
+
+    void HandleProjectileImpact(Vector3 point)
+    {
+        if (Type == damageType.moving && leavesDotZone && dotZonePrefab != null)
+        {
+            Vector3 spawnPos = point;
+
+            // Optionally use the same grounding logic as the FX for the DOT zone
+            if (groundedHitEffect)
+            {
+                Vector3 rayStart = point + Vector3.up * 0.1f;
+                if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, groundCheckDistance, groundLayer))
+                {
+                    spawnPos = hit.point;
+                }
+            }
+
+            Instantiate(dotZonePrefab, spawnPos, Quaternion.identity);
         }
 
     }
@@ -172,7 +213,20 @@ public class damage : MonoBehaviour
             return;
         }
 
-        Instantiate(hitEffectPrefab, point, Quaternion.identity);
+        Vector3 spawnPosition = point;
+
+        // If grounded is enabled, cast a ray down to find the floor
+        if (groundedHitEffect)
+        {
+            // Start slightly above the hit point to ensure it doesn't start "inside" the floor
+            Vector3 rayStart = point + Vector3.up * 0.1f;
+            if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, groundCheckDistance, groundLayer))
+            {
+                spawnPosition = hit.point;
+            }
+        }
+
+        Instantiate(hitEffectPrefab, spawnPosition, Quaternion.identity);
     }
 
 
