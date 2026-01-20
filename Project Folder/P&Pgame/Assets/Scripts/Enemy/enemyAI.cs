@@ -20,6 +20,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [Range(1, 1000)] [SerializeField] int faceTargetSpeed;
     [Range(1, 1000)][SerializeField] int shootDist;
 
+    int maxHP;
     Color colorOrigin;
     float shootTimer;
     bool targetAquired = false;
@@ -34,6 +35,7 @@ public class enemyAI : MonoBehaviour, IDamage
         gameManager.instance.updateGameGoal(1);
         gameManager.instance.SetGameGoalOirgUI();
         waveSpawner = GetComponentInParent<WaveSpawner>();
+        maxHP = HP;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -150,6 +152,7 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             gameManager.instance.updateGameGoal(-1);
             waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
+            gameManager.instance.UpdateGold(maxHP);
             Destroy(gameObject);
         }
         else

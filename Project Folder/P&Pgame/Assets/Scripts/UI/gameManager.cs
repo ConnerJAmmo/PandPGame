@@ -107,6 +107,11 @@ public class gameManager : MonoBehaviour
         goldCountText.text = goldCount.ToString("F0");
     }
 
+    public int GetGold()
+    {
+        return goldCount;
+    }
+
     public void newMenu(GameObject menu)
     {
         statePause();
