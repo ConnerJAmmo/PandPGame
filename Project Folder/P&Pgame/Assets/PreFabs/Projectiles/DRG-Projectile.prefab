@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2130707793970569041}
   - component: {fileID: 2130707793970569043}
   - component: {fileID: 2130707793970569040}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: fire1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4847,7 +4847,7 @@ GameObject:
   - component: {fileID: 3806039596526897749}
   - component: {fileID: 3806039596526897739}
   - component: {fileID: 3806039596526897748}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FX_Smoke_14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9683,7 +9683,7 @@ GameObject:
   - component: {fileID: 3806039596594972656}
   - component: {fileID: 3806039596594972662}
   - component: {fileID: 3806039596594972663}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: fire1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14519,7 +14519,7 @@ GameObject:
   - component: {fileID: 3806039597038410502}
   - component: {fileID: 3806039597038410500}
   - component: {fileID: 3806039597038410501}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: pati1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19364,7 +19364,7 @@ GameObject:
   - component: {fileID: 3806039597857766770}
   - component: {fileID: 3806039597857766768}
   - component: {fileID: 3806039597857766769}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: fire2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24203,7 +24203,7 @@ GameObject:
   - component: {fileID: 3806039598199004522}
   - component: {fileID: 3806039598199004523}
   - component: {fileID: 7008355407370004553}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DRG-Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24260,7 +24260,7 @@ MonoBehaviour:
   hitEffectPrefab: {fileID: 4251143904839232136, guid: 33a081cd4f2c3bb479fc2f27d3b69c93, type: 3}
   damageLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 4104
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584

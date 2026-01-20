@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - WaveSpawner
   - Boss
+  - Turret
   layers:
   - Default
   - TransparentFX

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33740621241518712}
   - component: {fileID: 23323348776332894}
   - component: {fileID: 4310609271506399311}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: SuperTower_Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 4077699854114446}
   - component: {fileID: 33449366773859118}
   - component: {fileID: 23907703121831592}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: SuperTower_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 4653676635904452}
   - component: {fileID: 33893351752034420}
   - component: {fileID: 23800299404229580}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: SuperTower_Turret_Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,7 +306,7 @@ GameObject:
   - component: {fileID: 4155116733015018}
   - component: {fileID: 33975969962593690}
   - component: {fileID: 23572225617698052}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: SuperTower_Base_Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -397,7 +397,7 @@ GameObject:
   - component: {fileID: 3022004300490857641}
   - component: {fileID: 7398763321509813127}
   - component: {fileID: 6571158170677568975}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Base-Tower
   m_TagString: Base
   m_Icon: {fileID: 0}

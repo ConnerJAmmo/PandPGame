@@ -22,7 +22,7 @@ public class turretDmg : MonoBehaviour, IDamage
     [SerializeField] float scanAngle = 45f;
 
     Color colorOrigin;
-    float nextDamageTime;
+    Material dynamicMat; // Store the unique instance material
     float shootTimer;
     [SerializeField] Collider target;
     Quaternion forward;
@@ -33,7 +33,8 @@ public class turretDmg : MonoBehaviour, IDamage
     void Start()
     {
         forward = Quaternion.LookRotation(turret.transform.forward);
-        colorOrigin = model.material.color;
+        dynamicMat = model.material;
+        colorOrigin = dynamicMat.color;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -98,26 +99,30 @@ public class turretDmg : MonoBehaviour, IDamage
         Instantiate(bullet, shootPos.position, turret.rotation);
     }
 
-    
     public void takeDamage(int amount)
     {
         HP -= amount;
+
+        // Debug to prove it's this specific instance
+        Debug.Log($"{gameObject.name} took {amount} damage. HP left: {HP}");
+
         if (HP <= 0)
         {
             Destroy(gameObject);
         }
         else
         {
-            StopAllCoroutines();
+            // Stop only the flash coroutine to prevent color getting stuck
+            StopCoroutine(flashRed());
             StartCoroutine(flashRed());
         }
     }
 
     IEnumerator flashRed()
     {
-        model.material.color = Color.red;
+        dynamicMat.color = Color.red;
         yield return new WaitForSeconds(0.1f);
-        model.material.color = colorOrigin;
+        dynamicMat.color = colorOrigin;
     }
-    
 }
+

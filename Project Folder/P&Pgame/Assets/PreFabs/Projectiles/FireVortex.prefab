@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3265134807058368676}
   - component: {fileID: 3265134807058368679}
   - component: {fileID: 3265134807058368678}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: fire1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4850,7 +4850,7 @@ GameObject:
   - component: {fileID: 4251143904839232143}
   - component: {fileID: 3823943064845041122}
   - component: {fileID: 7312789357972473750}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FireVortex
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4905,7 +4905,7 @@ MonoBehaviour:
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 4104
   blockLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -9771,7 +9771,7 @@ GameObject:
   - component: {fileID: 4251143905628850580}
   - component: {fileID: 4251143905628850586}
   - component: {fileID: 4251143905628850587}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: pati1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14616,7 +14616,7 @@ GameObject:
   - component: {fileID: 6011007379901957068}
   - component: {fileID: 6011007379901957066}
   - component: {fileID: 6011007379901957069}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: fireRing1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

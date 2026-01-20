@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4641205055848048}
   - component: {fileID: 33132401124457190}
   - component: {fileID: 23922229023592226}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Turret_RocketTower_L01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,9 +104,9 @@ GameObject:
   - component: {fileID: 3215188512552848863}
   - component: {fileID: 899537935904901051}
   - component: {fileID: 7539443543783141499}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: AOE-Tower
-  m_TagString: Untagged
+  m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 4309134107868596}
   - component: {fileID: 33204005548639728}
   - component: {fileID: 23179631451262318}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Turret_RocketTower_L01_Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,7 +306,7 @@ GameObject:
   - component: {fileID: 4974969529068622}
   - component: {fileID: 33597105645618386}
   - component: {fileID: 23371150277749972}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Base_RocketTower_L01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -397,7 +397,7 @@ GameObject:
   - component: {fileID: 4328830473342980}
   - component: {fileID: 33185725649570680}
   - component: {fileID: 23702907709009150}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Base_RocketTower_L01_Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +487,7 @@ GameObject:
   - component: {fileID: 8002402376234877727}
   - component: {fileID: 6406176271486699721}
   - component: {fileID: 1582392675688455606}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: POS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 3816611184841435514}
   - component: {fileID: 592628657646906331}
   - component: {fileID: 3522355481436094993}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}

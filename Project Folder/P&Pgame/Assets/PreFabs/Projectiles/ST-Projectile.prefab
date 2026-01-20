@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6370550118510818918}
   - component: {fileID: 2928761932176433362}
   - component: {fileID: 6523923351571818312}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: ST-Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,17 +139,17 @@ TrailRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Time: 0.05
+  m_Time: 0.1
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.05
+    widthMultiplier: 0.5
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.4878049
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0

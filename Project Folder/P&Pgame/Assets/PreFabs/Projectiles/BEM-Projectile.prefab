@@ -251,7 +251,7 @@ MonoBehaviour:
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 4104
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
@@ -600,7 +600,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6593821956937633186}
   - component: {fileID: 618312525416099660}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BEM-Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -719,7 +719,7 @@ MonoBehaviour:
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 4104
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584

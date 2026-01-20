@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 811445109114025374}
   - component: {fileID: 811445109114025373}
   - component: {fileID: 1885123415218704415}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: pati1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5005,7 +5005,7 @@ GameObject:
   - component: {fileID: -5675757702356698031}
   - component: {fileID: 174487184047537235}
   - component: {fileID: -7663441426539666406}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ALN-Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5065,7 +5065,7 @@ MonoBehaviour:
   dotZonePrefab: {fileID: 0}
   damageAmount: 2
   destroyOnHit: 1
-  createHitEffect: 1
+  createHitEffect: 0
   groundedHitEffect: 0
   groundCheckDistance: 10
   groundLayer:
@@ -5074,7 +5074,7 @@ MonoBehaviour:
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 4104
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584

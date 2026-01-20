@@ -9,14 +9,15 @@ public class baseDmg : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [Range(1, 1000)][SerializeField] int HP = 1000;
 
-    Color colorOrigin;
-    float nextDamageTime;
+    Color colorOrigin; 
+    Material dynamicMat; // Store the unique instance material
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        colorOrigin = model.material.color;
+        dynamicMat = model.material;
+        colorOrigin = dynamicMat.color;
     }
 
     // Update is called once per frame
@@ -28,6 +29,10 @@ public class baseDmg : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+
+        // Debugging to verify the instance is taking damage
+        Debug.Log($"{gameObject.name} (Base) took damage! Remaining HP: {HP}");
+
         if (HP <= 0)
         {
             gameManager.instance.youLose();
@@ -35,16 +40,18 @@ public class baseDmg : MonoBehaviour, IDamage
         }
         else
         {
-            StopAllCoroutines();
+            // Stop the specific flash routine so colors don't get stuck
+            StopCoroutine("flashRed");
             StartCoroutine(flashRed());
         }
     }
 
     IEnumerator flashRed()
     {
-        model.material.color = Color.red;
+        // Use the dynamicMat reference
+        dynamicMat.color = Color.red;
         yield return new WaitForSeconds(0.1f);
-        model.material.color = colorOrigin;
+        dynamicMat.color = colorOrigin;
     }
 
 }

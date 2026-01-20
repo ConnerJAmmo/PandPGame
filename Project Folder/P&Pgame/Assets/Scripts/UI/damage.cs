@@ -185,6 +185,7 @@ public class damage : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        Debug.Log("Bullet touched: " + other.gameObject.name + " on layer: " + LayerMask.LayerToName(other.gameObject.layer));
         if (Type != damageType.DOT) return;
 
         IDamage dmg = other.GetComponent<IDamage>();
