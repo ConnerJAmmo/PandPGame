@@ -7,46 +7,61 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
+    
     [Header("---- Stats ----")]
-    [Range(1,100)][SerializeField] public int HP;
-    [Range(1,10)][SerializeField] int speed;
-    [Range(1,10)][SerializeField] int slopeSlideSpeed;
-    [Range(2,5)][SerializeField] int sprintMod;
+    [Range(1,100)] [SerializeField] public int HP;
+    [Range(1,10)]  [SerializeField] int speed;
+    [Range(1,10)]  [SerializeField] int slopeSlideSpeed;
+    [Range(2,5)]   [SerializeField] int sprintMod;
+    
     [Header("---- Jump ----")]
-    [Range(8,20)][SerializeField] int jumpSpeed;
-    [Range(1,4)][SerializeField] int jumpMax;
-    [Range(8,20)][SerializeField] int wallJumpSpeed;
-    [Range(1,4)][SerializeField] int wallJumpPush;
-    [Range(1,4)][SerializeField] int wallJumpMax;
-    [Range(1,2)][SerializeField] float wallCheckDis;
+    [Range(8,20)] [SerializeField] int jumpSpeed;
+    [Range(1,4)]  [SerializeField] int jumpMax;
+    [Range(8,20)] [SerializeField] int wallJumpSpeed;
+    [Range(1,4)]  [SerializeField] int wallJumpPush;
+    [Range(1,4)]  [SerializeField] int wallJumpMax;
+    [Range(1,2)]  [SerializeField] float wallCheckDis;
+    
     [Header("---- Physics ----")]
     [Range(1,100)][SerializeField] int gravity;
+    
     [Header("---- Resources ----")]
-    [Range(1,4)][SerializeField] float mineRate;
-    [Range(5,15)][SerializeField] int mineDist;
-    [Range(1,4)][SerializeField] int mineDamage;
+    [Range(1,4)]  [SerializeField] float mineRate;
+    [Range(5,15)] [SerializeField] int mineDist;
+    [Range(1,4)]  [SerializeField] int mineDamage;
+
     [SerializeField] public int woodCount;
     [SerializeField] public int stoneCount;
+    
     [Header("---- Tools ----")]
     [SerializeField] GameObject bullet;
-    [SerializeField] float shootRate;
-    [SerializeField] Transform shootPos;
     [SerializeField] GameObject STTower;
     [SerializeField] GameObject AOETower;
+    [SerializeField] Transform shootPos;
+    [SerializeField] float shootRate;
 
     [SerializeField] int shootDist;
     [SerializeField] int shootDamage;
 
     int jumpCount;
     int wallJumpCount;
+
     RaycastHit wallJumpHit;
+
     bool wallJumpPosib;
     bool wasGrounded;
+    bool showSTHint = true;
+    bool showAOEHint = true;
+
     private float _groundRayDis = 1;
+
     float shootTimer;
     float mineTimer;
+
     private RaycastHit slopeHit; 
+
     public int HPOrig;
+
    UnityEngine.Vector3 moveDir;
    UnityEngine.Vector3 playerVel;
    UnityEngine.Vector3 slideVel;
@@ -131,37 +146,31 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
         // Place hints for placing
         string placeHint = "";
 
-        if (wasGrounded)
-        {
-            bool canST = woodCount >= 5;
-            bool canAOE = stoneCount >= 5;
+        // how many can we place
+        int stRemaining = woodCount / 5;
+        int aoeRemaining = stoneCount / 5;
 
-            if (canST) placeHint += "Press Z to place ST Turret (5 Wood)\n";
-            if (canAOE) placeHint += "Press X to place AOE Turret (5 Stone)\n";
-        }
+        // This will make our hints stay while we can afford them
+        if (wasGrounded && stRemaining > 0)
+            placeHint += $"Press Z to place ST Turret ({stRemaining} remaining)\n";
+        if (wasGrounded && aoeRemaining > 0)
+            placeHint += $"Press X to place AOE Turret ({aoeRemaining} remaining)\n";
 
         string mineHint = GetMineHint(); // I created separate method for minehint
 
-        string final = "";
-
         if (!string.IsNullOrEmpty(mineHint))
         {
-            final += mineHint + '\n';
-        }
-        
-        if (!string.IsNullOrEmpty(final))
-        {
-            final += placeHint;
+            placeHint += mineHint + '\n';
         }
 
-        gameManager.instance.SetHint(final.Trim());
+        gameManager.instance.SetHint(placeHint.Trim());
     }
 
     string GetMineHint()
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, mineDist, ~ignoreLayer)
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, mineDist, ~ignoreLayer))
         {
             IMaterial mat = hit.collider.GetComponent<IMaterial>();
             if (mat != null)
@@ -325,6 +334,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
             Instantiate(STTower, PlayerBodyPos, transform.rotation);
             woodCount = woodCount - 5;
             gameManager.instance.updateResourcesUI();
+
+            showSTHint = false; // Hides Z key display after use
         }
         else return;
     }
@@ -335,6 +346,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
             Instantiate(AOETower, PlayerBodyPos, transform.rotation);
             stoneCount = stoneCount - 5;
             gameManager.instance.updateResourcesUI();
+
+            showSTHint = false; // Hides X key display after use
+
         }
         else return;
     }

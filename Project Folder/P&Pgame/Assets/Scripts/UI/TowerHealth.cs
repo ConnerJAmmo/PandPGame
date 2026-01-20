@@ -9,10 +9,10 @@ public class TowerHealth : MonoBehaviour, IDamage
 
     [Header("World UI")]
     [SerializeField] GameObject healthBarPrefab; // World - space canvas prefab, not regular
-    [SerializeField] Vector3 barOffset = new Vector3(0, 2.2f, 0);
+    [SerializeField] Vector3 barOffset = new Vector3(0, 3f, 0);
 
     Transform barRoot;
-    Image fillImage;
+    TowerHealthBarUI ui;
     Camera cam;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,10 +23,11 @@ public class TowerHealth : MonoBehaviour, IDamage
 
         if (healthBarPrefab != null)
         {
-            var barObject = Instantiate(healthBarPrefab, transform.position + barOffset, Quaternion.identity);
+            var barObject = Instantiate(healthBarPrefab, transform);
+            barObject.transform.localPosition = barOffset;
 
             // Just incase the fill is an image child
-            fillImage = barObject.GetComponentInChildren<Image>();
+            ui = barObject.GetComponent<TowerHealthBarUI>();
             updateBar();
         }
     }
@@ -61,7 +62,7 @@ public class TowerHealth : MonoBehaviour, IDamage
 
     void updateBar()
     {
-        if (fillImage)
-            fillImage.fillAmount = (float)HP / maxHP;
+        if (ui != null && ui.fillImage != null)
+            ui.fillImage.fillAmount = (float)HP / maxHP;
     }
 }
