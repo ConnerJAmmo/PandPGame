@@ -20,6 +20,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text goldCountText;
     [SerializeField] TMP_Text woodCountText;
     [SerializeField] TMP_Text stoneCountText;
+    [SerializeField] TMP_Text hintText;
 
     public bool isPause;
     public GameObject player;
@@ -156,5 +157,18 @@ public class gameManager : MonoBehaviour
 
         woodCountText.text = playerScript.woodCount.ToString("F0");
         stoneCountText.text = playerScript.stoneCount.ToString("F0");
+    }
+
+    public void SetHint(string msg)
+    {
+        if (!hintText) return;
+
+        hintText.text = msg;
+        hintText.gameObject.SetActive(!string.IsNullOrEmpty(msg));
+    }
+
+    public void ClearHint()
+    {
+        SetHint("");
     }
 }
