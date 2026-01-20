@@ -10395,6 +10395,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6593821956937633186}
+  - component: {fileID: 5587588029466726774}
   m_Layer: 8
   m_Name: SDR-Projectile
   m_TagString: Untagged
@@ -10420,6 +10421,18 @@ Transform:
   - {fileID: 4708402637432411337}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5587588029466726774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983933263039930371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d33d10c94cf940947b77f3a92f80d531, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CleanupParent
 --- !u!1 &8480807756846634570
 GameObject:
   m_ObjectHideFlags: 0

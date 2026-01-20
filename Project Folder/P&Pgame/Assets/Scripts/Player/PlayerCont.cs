@@ -291,7 +291,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
 
     public void takeDamage(int amount)
     {
-        HP -= amount;
+        //HP -= amount;
         updatePlayerUI();
         StartCoroutine(flashDamage());
 
