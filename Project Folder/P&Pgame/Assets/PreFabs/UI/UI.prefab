@@ -529,7 +529,7 @@ GameObject:
   - component: {fileID: 8421147346616650980}
   - component: {fileID: 5970835409264408519}
   m_Layer: 5
-  m_Name: Tatal HP
+  m_Name: Total HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -982,21 +982,22 @@ MonoBehaviour:
   menuWin: {fileID: 6371128092889544959}
   playerHPText: {fileID: 7162992802464339489}
   playerHPTextOrig: {fileID: 5970835409264408519}
-  gameGoalText: {fileID: 8451279233193473396}
-  gameGoalTextOrig: {fileID: 41460915528957706}
+  enemyCountText: {fileID: 8451279233193473396}
+  enemyCountTextOrig: {fileID: 41460915528957706}
   waveCountText: {fileID: 7386068719253061187}
   waveCountTextOrig: {fileID: 7658280854330968703}
   goldCountText: {fileID: 5845721004861157996}
   woodCountText: {fileID: 5634043664771990033}
   stoneCountText: {fileID: 7901850168636796584}
   isPause: 0
+  waveActive: 0
   player: {fileID: 0}
   playerScript: {fileID: 0}
   baseTower: {fileID: 0}
   startingGold: 0
+  enemyCount: 0
   playerHPBar: {fileID: 4107971312589825995}
   damageFlash: {fileID: 5020949460976203812}
-  waveCount: 1
 --- !u!1 &1465993974241681941
 GameObject:
   m_ObjectHideFlags: 0

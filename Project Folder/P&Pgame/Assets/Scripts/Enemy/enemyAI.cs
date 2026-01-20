@@ -31,8 +31,8 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         colorOrigin = model.material.color; 
         agent.updateRotation = false;
-        gameManager.instance.updateGameGoal(1);
-        gameManager.instance.SetGameGoalOirgUI();
+        gameManager.instance.updateEnemyCount(1);
+        gameManager.instance.updateEnemyCountTotal(1);
         waveSpawner = GetComponentInParent<WaveSpawner>();
     }
 
@@ -119,19 +119,6 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
-    /*
-    void faceTarget()
-    {
-        Vector3 centerOfMass = gameManager.instance.player.transform.GetComponent<Collider>().bounds.center;
-        Vector3 direction = centerOfMass - transform.position;
-        if (direction.sqrMagnitude > 0.01f)
-        {
-            Quaternion targetRot = Quaternion.LookRotation(direction, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.deltaTime * faceTargetSpeed);
-        }
-    }
-    */
-
     void Shoot()
     {
         shootTimer = 0;
@@ -148,8 +135,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
         if(HP <= 0) 
         {
-            gameManager.instance.updateGameGoal(-1);
-            waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
+            gameManager.instance.updateEnemyCount(-1);
             Destroy(gameObject);
         }
         else
