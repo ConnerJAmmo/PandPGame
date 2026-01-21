@@ -8,9 +8,10 @@ public class enemyAI : MonoBehaviour, IDamage
 {
     [Header("Components")]
     [SerializeField] Renderer model;
-    [SerializeField] NavMeshAgent agent;
+    [SerializeField] public NavMeshAgent agent;
+    [SerializeField] public Rigidbody body;
     [SerializeField] GameObject target;
-    [SerializeField] Transform shootPos;
+    [SerializeField] public Transform shootPos;
     [SerializeField] Transform headPos;
     [SerializeField] GameObject bullet;
     [SerializeField] LayerMask ignoreLayer;

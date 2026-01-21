@@ -4657,6 +4657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::enemyAI
   model: {fileID: 4656301829543214305}
   agent: {fileID: 6728203352098554522}
+  body: {fileID: 1011345925133868797}
   target: {fileID: 0}
   shootPos: {fileID: 5048306828572419944}
   headPos: {fileID: 3925539388988733992}

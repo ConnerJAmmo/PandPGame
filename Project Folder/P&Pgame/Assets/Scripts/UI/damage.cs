@@ -19,7 +19,7 @@ public class damage : MonoBehaviour
     [Header("Projectile Movement")]
     [SerializeField] Rigidbody rb;
     [SerializeField] float lifeTime = 5f;
-    [SerializeField] float speed; //change speed to a float for better accuracy
+    [SerializeField] public float speed; //change speed to a float for better accuracy
 
     [Header("DOT Settings (Only if we are using DOT)")]
     [SerializeField] float damageRate;
