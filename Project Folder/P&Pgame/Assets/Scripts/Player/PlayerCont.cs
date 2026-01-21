@@ -32,7 +32,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
 
     [SerializeField] public int woodCount;
     [SerializeField] public int stoneCount;
-    
+    [SerializeField] public int goldCount;
     [Header("---- Tools ----")]
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject STTower;
@@ -90,6 +90,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
         mineTimer += Time.deltaTime;
         moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
         controller.Move(moveDir * speed * Time.deltaTime);
+        goldCount = gameManager.instance.GetGold();
         jump();
         controller.Move(playerVel * Time.deltaTime);
         PlayerBodyPos = transform.position + Vector3.down;
@@ -329,10 +330,11 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
     void SpawnSTTower()
     {
         
-        if(woodCount >= 5)
+        if(woodCount >= 5 && goldCount >= 5)
         {
             Instantiate(STTower, PlayerBodyPos, transform.rotation);
             woodCount = woodCount - 5;
+            gameManager.instance.UpdateGold(-5);
             gameManager.instance.updateResourcesUI();
 
             showSTHint = false; // Hides Z key display after use
@@ -341,9 +343,10 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
     }
     void SpawnAOETower()
     {
-        if(stoneCount >= 5)
+        if(stoneCount >= 5 && goldCount >= 5)
         {
             Instantiate(AOETower, PlayerBodyPos, transform.rotation);
+            gameManager.instance.UpdateGold(-5);
             stoneCount = stoneCount - 5;
             gameManager.instance.updateResourcesUI();
 
