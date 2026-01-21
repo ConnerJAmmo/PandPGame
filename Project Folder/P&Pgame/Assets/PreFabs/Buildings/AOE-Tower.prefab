@@ -143,7 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::turretDmg
   model: {fileID: 23922229023592226}
   numEnemies: 0
-  HP: 1
+  HP: 57
   shootPos: {fileID: 8002402376234877727}
   turret: {fileID: 4641205055848048}
   bullet: {fileID: 7983933263039930371, guid: 000cce08b3da8654abd394e3d8182131, type: 3}
@@ -151,7 +151,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   shootRate: 2
-  shootDist: 15
+  shootDist: 20
+  scanSpeed: 2
+  scanAngle: 45
   target: {fileID: 0}
 --- !u!136 &899537935904901051
 CapsuleCollider:
@@ -596,5 +598,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 15
+  m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
