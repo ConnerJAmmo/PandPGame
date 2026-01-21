@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Data;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -7,7 +8,7 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private GameObject spawnPoint;
 
     public Wave[] waves;
-
+    [SerializeField] private GameObject[] waveTemplates;
     public int currentWaveIndex = 0;
 
     private bool readyToCountDown;
@@ -55,6 +56,16 @@ public class WaveSpawner : MonoBehaviour
             yield return new WaitForSeconds(waves[currentWaveIndex].timeToNextEnemy);
         }
     }
+
+    public void SpawnNextWave()
+    {
+        if (currentWaveIndex >= waveTemplates.Length) return;
+
+        // 1. Instantiate the entire container at the spawner's location
+        GameObject waveInstance = Instantiate(waveTemplates[currentWaveIndex], transform.position, Quaternion.identity);
+
+        currentWaveIndex++;
+    }
 }
 
 [System.Serializable]
@@ -66,4 +77,3 @@ public class Wave
 
     [HideInInspector] public int enemiesLeft;
 }
-

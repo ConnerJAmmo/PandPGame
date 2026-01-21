@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7983933263039930371}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 1.5, z: -4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -50,15 +50,22 @@ MonoBehaviour:
   Type: 0
   rb: {fileID: 6523923351571818312}
   lifeTime: 5
-  speed: 60
+  speed: 20
   damageRate: 0
+  leavesDotZone: 0
+  dotZonePrefab: {fileID: 0}
   damageAmount: 1
   destroyOnHit: 1
   createHitEffect: 1
+  groundedHitEffect: 0
+  groundCheckDistance: 10
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
-    m_Bits: 136
+    m_Bits: 128
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
