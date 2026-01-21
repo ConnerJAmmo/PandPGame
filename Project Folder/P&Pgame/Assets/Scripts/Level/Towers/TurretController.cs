@@ -185,14 +185,22 @@ public class TurretController : MonoBehaviour, IDamage
 
     void Shoot()
     {
+        Debug.DrawRay(shootPos.position, turret.forward * 5f, Color.yellow, 2f);
         shootTimer = 0;
         GameObject newBulletGO = Instantiate(bulletPrefab, shootPos.position, turret.rotation);
         Rigidbody bulletRB = newBulletGO.GetComponent<Rigidbody>();
 
         if (bulletRB != null)
         {
-            // Set the velocity using the speed from the ScriptableObject
-            bulletRB.linearVelocity = turret.forward * projectileData.Speed; // Use the SO directly
+            // 1. Ensure the bullet isn't fighting itself
+            bulletRB.linearVelocity = Vector3.zero;
+            bulletRB.angularVelocity = Vector3.zero;
+
+            Vector3 force = turret.forward * projectileData.Speed;
+            Debug.Log($"Firing with Force: {force} | Turret Forward: {turret.forward}");
+            bulletRB.AddForce(force, ForceMode.VelocityChange);
+            // 2. Apply speed directly using VelocityChange to ignore mass
+            //bulletRB.AddForce(turret.forward * projectileData.Speed, ForceMode.VelocityChange);
         }
     }
 
@@ -222,4 +230,5 @@ public class TurretController : MonoBehaviour, IDamage
         dynamicMat.color = colorOrigin;
     }
 }
+
 

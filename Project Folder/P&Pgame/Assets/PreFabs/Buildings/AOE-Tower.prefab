@@ -101,6 +101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4182109551995616}
+  - component: {fileID: 8497347533726309431}
   - component: {fileID: 899537935904901051}
   - component: {fileID: 7539443543783141499}
   m_Layer: 12
@@ -128,6 +129,30 @@ Transform:
   - {fileID: 3816611184841435514}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8497347533726309431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361402013487122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbc0a4cf76808814f8d506f84abd6cc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TurretController
+  model: {fileID: 23922229023592226}
+  numEnemies: 0
+  HP: 1000
+  shootPos: {fileID: 8002402376234877727}
+  turret: {fileID: 4641205055848048}
+  bulletPrefab: {fileID: 7983933263039930371, guid: 000cce08b3da8654abd394e3d8182131, type: 3}
+  projectileData: {fileID: 11400000, guid: 96095b43057052849b6738cafe81fd07, type: 2}
+  shootRate: 1
+  shootDist: 20
+  scanSpeed: 0.5
+  scanAngle: 45
+  target: {fileID: 0}
 --- !u!136 &899537935904901051
 CapsuleCollider:
   m_ObjectHideFlags: 0
