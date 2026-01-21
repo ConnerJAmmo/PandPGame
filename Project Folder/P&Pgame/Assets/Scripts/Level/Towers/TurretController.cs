@@ -187,7 +187,16 @@ public class TurretController : MonoBehaviour, IDamage
     {
         Debug.DrawRay(shootPos.position, turret.forward * 5f, Color.yellow, 2f);
         shootTimer = 0;
+
+        // Instantiate the bullet with the CombinedBulletScript attached
         GameObject newBulletGO = Instantiate(bulletPrefab, shootPos.position, turret.rotation);
+        Collider[] bulletColliders = newBulletGO.GetComponentsInChildren<Collider>();
+
+        foreach (var bulletCol in bulletColliders)
+        {
+            Physics.IgnoreCollision(bulletCol, GetComponent<Collider>());
+        }
+
         Rigidbody bulletRB = newBulletGO.GetComponent<Rigidbody>();
 
         if (bulletRB != null)
@@ -196,11 +205,10 @@ public class TurretController : MonoBehaviour, IDamage
             bulletRB.linearVelocity = Vector3.zero;
             bulletRB.angularVelocity = Vector3.zero;
 
-            Vector3 force = turret.forward * projectileData.Speed;
-            Debug.Log($"Firing with Force: {force} | Turret Forward: {turret.forward}");
-            bulletRB.AddForce(force, ForceMode.VelocityChange);
-            // 2. Apply speed directly using VelocityChange to ignore mass
-            //bulletRB.AddForce(turret.forward * projectileData.Speed, ForceMode.VelocityChange);
+            // Apply speed directly using VelocityChange to ignore mass
+            bulletRB.AddForce(turret.forward * projectileData.Speed, ForceMode.VelocityChange);
+
+            Debug.Log($"Firing with Force: {turret.forward * projectileData.Speed} | Turret Forward: {turret.forward}");
         }
     }
 
