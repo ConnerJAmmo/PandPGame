@@ -7,7 +7,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
-    
+
     [Header("---- Stats ----")]
     [Range(1,100)] [SerializeField] public int HP;
     [Range(1,10)]  [SerializeField] int speed;
@@ -42,6 +42,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
 
     [SerializeField] int shootDist;
     [SerializeField] int shootDamage;
+
 
     int jumpCount;
     int wallJumpCount;
@@ -371,8 +372,17 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
 
     public void updatePlayerUI()
     {
-        gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
-        gameManager.instance.SetHPUI();
+        if (HP > 0)
+        {
+            gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+            gameManager.instance.SetHPUI();
+        }
+        else if (HP < 0)
+        {
+            HP = 0;
+            gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+            gameManager.instance.SetHPUI();
+        }
     }
 
     IEnumerator flashDamage()
