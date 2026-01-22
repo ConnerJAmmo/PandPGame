@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using bullet.fx.pack;
 
 public class damageDummy : MonoBehaviour, IDamage
 {
@@ -7,10 +8,6 @@ public class damageDummy : MonoBehaviour, IDamage
     [Range (1,10)][SerializeField] int HP;
 
     Color colorOrig;
-
-    
-
-   
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,9 +28,9 @@ public class damageDummy : MonoBehaviour, IDamage
         material.color = colorOrig;
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(float amount, DamageType type)
     { 
-        HP -= amount;
+        HP -= (int) amount;
 
         if (HP <= 0)
         {

@@ -10074,7 +10074,7 @@ GameObject:
   - component: {fileID: 8826799141855450179}
   - component: {fileID: 6997535294146073574}
   - component: {fileID: 4390332094214072105}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: R_EYE_LASER
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10112,7 +10112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
   Type: 0
-  rb: {fileID: 4390332094214072105}
+  Rigidbody: {fileID: 4390332094214072105}
   lifeTime: 5
   speed: 5
   damageRate: 0
@@ -10129,10 +10129,17 @@ MonoBehaviour:
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 4104
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
+  enableVisualEffects: 0
+  BulletEffectType: 0
+  EndPosiotionBullet: {fileID: 0}
+  BulletTrailMaterial: {fileID: 0}
+  Fire2Effect: {fileID: 0}
+  Fire3Effect: {fileID: 0}
+  meshType: 0
 --- !u!135 &6997535294146073574
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -10388,7 +10395,7 @@ GameObject:
   - component: {fileID: 4606128609272226383}
   - component: {fileID: 7162709057209188364}
   - component: {fileID: 196707428477247005}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_EYE_LASER
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10426,7 +10433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
   Type: 0
-  rb: {fileID: 196707428477247005}
+  Rigidbody: {fileID: 196707428477247005}
   lifeTime: 5
   speed: 5
   damageRate: 0
@@ -10443,10 +10450,17 @@ MonoBehaviour:
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 4104
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
+  enableVisualEffects: 0
+  BulletEffectType: 0
+  EndPosiotionBullet: {fileID: 0}
+  BulletTrailMaterial: {fileID: 0}
+  Fire2Effect: {fileID: 0}
+  Fire3Effect: {fileID: 0}
+  meshType: 0
 --- !u!135 &7162709057209188364
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -10700,7 +10714,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6593821956937633186}
   - component: {fileID: 5888356799533954683}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RBT-Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

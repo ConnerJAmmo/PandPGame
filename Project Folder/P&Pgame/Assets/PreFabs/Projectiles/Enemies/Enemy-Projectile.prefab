@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 6370550118510818918}
   - component: {fileID: 2928761932176433362}
   - component: {fileID: 6523923351571818312}
-  m_Layer: 6
-  m_Name: AOE-Projectile
+  m_Layer: 8
+  m_Name: Enemy-Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,9 +48,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
   Type: 0
-  rb: {fileID: 6523923351571818312}
+  Rigidbody: {fileID: 6523923351571818312}
   lifeTime: 5
-  speed: 20
+  speed: 10
   damageRate: 0
   leavesDotZone: 0
   dotZonePrefab: {fileID: 0}
@@ -65,10 +65,17 @@ MonoBehaviour:
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 4104
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
+  enableVisualEffects: 0
+  BulletEffectType: 0
+  EndPosiotionBullet: {fileID: 0}
+  BulletTrailMaterial: {fileID: 0}
+  Fire2Effect: {fileID: 0}
+  Fire3Effect: {fileID: 0}
+  meshType: 0
 --- !u!135 &6370550118510818918
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -88,7 +95,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 20
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!96 &2928761932176433362
 TrailRenderer:
@@ -139,11 +146,11 @@ TrailRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Time: 0.1
+  m_Time: 0.025
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.1
+    widthMultiplier: 0.05
     widthCurve:
       serializedVersion: 2
       m_Curve:

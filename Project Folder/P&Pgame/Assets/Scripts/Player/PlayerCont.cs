@@ -1,6 +1,7 @@
 
 using UnityEngine;
 using System.Collections;
+using bullet.fx.pack;
 using System.Collections.Generic;
 //using NUnit.Framework;
 
@@ -376,9 +377,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         else return;
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(float amount, DamageType type)
     {
-        //HP -= amount;
+        HP -= (int) amount;
         updatePlayerUI();
         StartCoroutine(flashDamage());
 
