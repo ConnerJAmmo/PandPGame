@@ -269,7 +269,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
 
         shootTimer = 0;
 
-        Instantiate(bullet, shootPos.position, shootPos.rotation);
+       
+        Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
+       
         
     }
 
