@@ -98,10 +98,16 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             // Default target is the Base
             target = gameManager.instance.baseTower;
+
+            if (target == null)
+            {
+                agent.isStopped = true;
+                return;
+            }
             agent.SetDestination(target.transform.position);
 
             // PRIORITY 2: BASE (Check if base is in range before turrets)
-            if (baseInTrigger)
+            if (baseInTrigger && target != null)
             {
                 // If the base is right here, focus it
                 faceTarget(target.GetComponent<Collider>());

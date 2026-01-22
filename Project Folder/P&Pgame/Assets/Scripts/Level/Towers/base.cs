@@ -8,17 +8,27 @@ public class baseDmg : MonoBehaviour, IDamage
 {
     [Header("Stats")]
     [SerializeField] Renderer model;
-    [Range(1, 1000)][SerializeField] int HP = 1000;
+    [Range(1, 1000)][SerializeField] int maxHP = 1000;
+    int hp;
 
+    [Header("Tower Health Bar")]
+    [SerializeField] TowerHealth bar;
+    
     Color colorOrigin; 
     Material dynamicMat; // Store the unique instance material
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        hp = maxHP;
+
         dynamicMat = model.material;
         colorOrigin = dynamicMat.color;
+
+        if (!bar) bar = GetComponent<TowerHealth>();
+        if (bar) bar.updateBar(1f);
     }
 
     // Update is called once per frame
@@ -29,12 +39,17 @@ public class baseDmg : MonoBehaviour, IDamage
 
     public void takeDamage(float amount, DamageType type)
     {
-        HP -= (int) amount;
+        hp -= (int) amount;
+        if (hp < 0)
+            hp = 0;
+
+        if (bar) bar.updateBar((float)hp / maxHP);
+        
 
         // Debugging to verify the instance is taking damage
-        Debug.Log($"{gameObject.name} (Base) took damage! Remaining HP: {HP}");
-
-        if (HP <= 0)
+        Debug.Log($"{gameObject.name} (Base) took damage! Remaining HP: {hp}");
+        Debug.Log("Basedmg hit by: " + type);
+        if (hp <= 0)
         {
             gameManager.instance.youLose();
             Destroy(gameObject);
@@ -44,6 +59,7 @@ public class baseDmg : MonoBehaviour, IDamage
             // Stop the specific flash routine so colors don't get stuck
             StopCoroutine("flashRed");
             StartCoroutine(flashRed());
+            
         }
     }
 

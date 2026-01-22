@@ -171,15 +171,8 @@ namespace bullet.fx.pack
             // If it hits a block layer, handle impact, FX, and set for deletion
             if ((blockLayers.value & otherLayerMask) != 0)
             {
-                Vector3 hitPoint;
-                if (other is MeshCollider meshCol && !meshCol.convex)
-                {
-                    hitPoint = other.ClosestPointOnBounds(transform.position);
-                }
-                else
-                {
-                    hitPoint = other.ClosestPoint(transform.position);
-                }
+                Vector3 hitPoint = other.ClosestPointOnBounds(transform.position); ;
+                
                 DoHitFX(hitPoint);
                 if (Type == DamageType.moving && destroyOnHit)
                 {
