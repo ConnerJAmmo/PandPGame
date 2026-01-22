@@ -57,12 +57,12 @@ MonoBehaviour:
   damageAmount: 1
   destroyOnHit: 1
   createHitEffect: 1
-  groundedHitEffect: 0
+  groundedHitEffect: 1
   groundCheckDistance: 10
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
-  hitEffectPrefab: {fileID: 0}
+    m_Bits: 1024
+  hitEffectPrefab: {fileID: 842728999832923776, guid: 4131349b8b5025846a9ecb06b7eb2d73, type: 3}
   damageLayers:
     serializedVersion: 2
     m_Bits: 128
