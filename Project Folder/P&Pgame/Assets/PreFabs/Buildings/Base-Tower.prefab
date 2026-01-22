@@ -395,6 +395,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4958392881172934}
   - component: {fileID: 3022004300490857641}
+  - component: {fileID: 9175986808450551291}
   - component: {fileID: 7398763321509813127}
   - component: {fileID: 6571158170677568975}
   m_Layer: 12
@@ -434,7 +435,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::baseDmg
   model: {fileID: 23323348776332894}
-  HP: 1000
+  maxHP: 100
+  bar: {fileID: 9175986808450551291}
+--- !u!114 &9175986808450551291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759168881962760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1d61416ea247544db3d8745b4c69f7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TowerHealth
+  healthBarPrefab: {fileID: 2896110935354759472, guid: 14e713d9097c1c14ca3c85643d02d981, type: 3}
+  barOffset: {x: 0, y: 5.15, z: 0}
 --- !u!136 &7398763321509813127
 CapsuleCollider:
   m_ObjectHideFlags: 0
