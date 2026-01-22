@@ -124,20 +124,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1759168881962760, guid: 8783eb54851880d40b91a59c4ac5bbc7, type: 3}
   m_PrefabInstance: {fileID: 1661098878}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &76283730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 76283729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1d61416ea247544db3d8745b4c69f7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TowerHealth
-  healthBarPrefab: {fileID: 2896110935354759472, guid: 14e713d9097c1c14ca3c85643d02d981, type: 3}
-  barOffset: {x: 0, y: 5.15, z: 0}
 --- !u!1 &82873656 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6079901626847767107, guid: e8de2c659a0504d4180ea7d3ccef36bc, type: 3}
@@ -308,14 +294,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaveSpawner
       objectReference: {fileID: 0}
-    - target: {fileID: 3551249246838891559, guid: 2fdfdc9f991b59a48892815a9e6f4ebb, type: 3}
-      propertyPath: waveTemplates.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3551249246838891559, guid: 2fdfdc9f991b59a48892815a9e6f4ebb, type: 3}
-      propertyPath: 'waveTemplates.Array.data[0]'
-      value: 
-      objectReference: {fileID: 8408084925663972404, guid: 7643e174fdeec404e8af84f12bd70d9a, type: 3}
     - target: {fileID: 6829189607914598776, guid: 2fdfdc9f991b59a48892815a9e6f4ebb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 147.6179
@@ -711,25 +689,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3022004300490857641, guid: 8783eb54851880d40b91a59c4ac5bbc7, type: 3}
-      propertyPath: HP
-      value: 91
-      objectReference: {fileID: 0}
-    - target: {fileID: 3022004300490857641, guid: 8783eb54851880d40b91a59c4ac5bbc7, type: 3}
-      propertyPath: bar
-      value: 
-      objectReference: {fileID: 76283730}
-    - target: {fileID: 3022004300490857641, guid: 8783eb54851880d40b91a59c4ac5bbc7, type: 3}
-      propertyPath: maxHP
-      value: 100
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1759168881962760, guid: 8783eb54851880d40b91a59c4ac5bbc7, type: 3}
-      insertIndex: 2
-      addedObject: {fileID: 76283730}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8783eb54851880d40b91a59c4ac5bbc7, type: 3}
 --- !u!1001 &2020604602
 PrefabInstance:
