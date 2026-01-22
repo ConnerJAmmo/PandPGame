@@ -1,3 +1,4 @@
+using bullet.fx.pack;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,9 +46,15 @@ public class TowerHealth : MonoBehaviour, IDamage
             barRoot.forward = cam.transform.forward;
     }
 
-    public void takeDamage(int amount)
+    void updateBar()
     {
-        HP -= amount;
+        if (ui != null && ui.fillImage != null)
+            ui.fillImage.fillAmount = (float)HP / maxHP;
+    }
+
+    public void takeDamage(float amount, DamageType type)
+    {
+        HP -= (int) amount;
         if (HP < 0) HP = 0;
 
         updateBar();
@@ -58,11 +65,5 @@ public class TowerHealth : MonoBehaviour, IDamage
 
             Destroy(gameObject);
         }
-    }
-
-    void updateBar()
-    {
-        if (ui != null && ui.fillImage != null)
-            ui.fillImage.fillAmount = (float)HP / maxHP;
     }
 }
