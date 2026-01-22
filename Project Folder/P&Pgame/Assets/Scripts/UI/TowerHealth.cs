@@ -22,7 +22,6 @@ public class TowerHealth : MonoBehaviour
     {
         cam = Camera.main;
 
-        Debug.Log($"TowerHealth UI: ui null? {ui == null}, fill null? {(ui != null && ui.fillImage == null)}");
 
         if (healthBarPrefab != null)
         {
@@ -34,6 +33,8 @@ public class TowerHealth : MonoBehaviour
             ui = barObject.GetComponentInChildren<TowerHealthBarUI>();
             
         }
+        
+
     }
 
     // Update is called once per frame
