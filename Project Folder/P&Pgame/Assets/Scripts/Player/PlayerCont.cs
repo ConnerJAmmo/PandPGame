@@ -1,6 +1,7 @@
 
 using UnityEngine;
 using System.Collections;
+using bullet.fx.pack;
 //using NUnit.Framework;
 
 public class PlayerCont : MonoBehaviour, IStore, IDamage
@@ -356,9 +357,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
         else return;
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(float amount, DamageType type)
     {
-        //HP -= amount;
+        HP -= (int) amount;
         updatePlayerUI();
         StartCoroutine(flashDamage());
 
@@ -381,5 +382,4 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
         yield return new WaitForSeconds(0.1f);
         gameManager.instance.damageFlash.SetActive(false);
     }
-    
 }

@@ -4935,7 +4935,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1172121621612101578}
-  - component: {fileID: 7799734885716921718}
   - component: {fileID: 9105014199218495270}
   - component: {fileID: 4310103106848085619}
   - component: {fileID: 2682524172966446791}
@@ -4966,25 +4965,6 @@ Transform:
   - {fileID: 142770639892229489}
   m_Father: {fileID: 6593821956937633186}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &7799734885716921718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3436738694649671092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6dabc09576a40c47bf2cf37b8d62c2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::bullet.fx.pack.CombinedBulletScript
-  Rigidbody: {fileID: 8106760643228328183}
-  BulletEffectType: 0
-  EndPosiotionBullet: {fileID: 3360786239013066748}
-  BulletTrailMaterial: {fileID: 2100000, guid: cf6917fc065af13468d7d051a191c5d2, type: 2}
-  Fire2Effect: {fileID: 1415196100137707039}
-  Fire3Effect: {fileID: 1521433013919272532}
-  meshType: 0
 --- !u!114 &9105014199218495270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4998,7 +4978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
   Type: 0
-  rb: {fileID: 8106760643228328183}
+  Rigidbody: {fileID: 8106760643228328183}
   lifeTime: 5
   speed: 20
   damageRate: 0
@@ -5019,6 +4999,13 @@ MonoBehaviour:
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
+  enableVisualEffects: 1
+  BulletEffectType: 0
+  EndPosiotionBullet: {fileID: 3360786239013066748}
+  BulletTrailMaterial: {fileID: 2100000, guid: cf6917fc065af13468d7d051a191c5d2, type: 2}
+  Fire2Effect: {fileID: 1415196100137707039}
+  Fire3Effect: {fileID: 1521433013919272532}
+  meshType: 0
 --- !u!33 &4310103106848085619
 MeshFilter:
   m_ObjectHideFlags: 0

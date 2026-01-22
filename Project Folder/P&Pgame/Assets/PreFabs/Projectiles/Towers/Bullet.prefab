@@ -4967,7 +4967,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6593821956937633186}
   - component: {fileID: 3809576464979544195}
-  - component: {fileID: 2847131693423990347}
   - component: {fileID: 5411549269498725013}
   - component: {fileID: 1101004356673394875}
   - component: {fileID: 5069472616247798498}
@@ -5010,7 +5009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
   Type: 0
-  rb: {fileID: 5069472616247798498}
+  Rigidbody: {fileID: 5069472616247798498}
   lifeTime: 5
   speed: 20
   damageRate: 0
@@ -5031,19 +5030,7 @@ MonoBehaviour:
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
---- !u!114 &2847131693423990347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7983933263039930371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6dabc09576a40c47bf2cf37b8d62c2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::bullet.fx.pack.CombinedBulletScript
-  Rigidbody: {fileID: 5069472616247798498}
+  enableVisualEffects: 1
   BulletEffectType: 0
   EndPosiotionBullet: {fileID: 3360786239013066748}
   BulletTrailMaterial: {fileID: 2100000, guid: cf6917fc065af13468d7d051a191c5d2, type: 2}

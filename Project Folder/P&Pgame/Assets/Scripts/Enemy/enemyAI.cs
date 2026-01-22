@@ -1,3 +1,4 @@
+using bullet.fx.pack;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -207,15 +208,15 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(float amount, DamageType type)
     {
-        HP -= amount;
+        HP -= (int) amount;
 
         if(HP <= 0) 
         {
             gameManager.instance.updateEnemyCount(-1);
             gameManager.instance.UpdateGold(maxHP);
-            
+            Destroy(gameObject);
         }
         else
         {
@@ -229,5 +230,4 @@ public class enemyAI : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrigin;
     }
-
 }

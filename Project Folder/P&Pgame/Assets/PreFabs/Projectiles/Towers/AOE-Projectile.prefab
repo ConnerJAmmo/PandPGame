@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
   Type: 0
-  rb: {fileID: 2295269352217828208}
+  Rigidbody: {fileID: 2295269352217828208}
   lifeTime: 5
   speed: 20
   damageRate: 0
@@ -243,7 +243,7 @@ MonoBehaviour:
   groundCheckDistance: 10
   groundLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 0
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
@@ -251,6 +251,13 @@ MonoBehaviour:
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
+  enableVisualEffects: 0
+  BulletEffectType: 0
+  EndPosiotionBullet: {fileID: 0}
+  BulletTrailMaterial: {fileID: 0}
+  Fire2Effect: {fileID: 0}
+  Fire3Effect: {fileID: 0}
+  meshType: 0
 --- !u!136 &2233450729429257502
 CapsuleCollider:
   m_ObjectHideFlags: 0

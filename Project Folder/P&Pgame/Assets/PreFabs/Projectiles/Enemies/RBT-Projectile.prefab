@@ -10112,7 +10112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
   Type: 0
-  rb: {fileID: 4390332094214072105}
+  Rigidbody: {fileID: 4390332094214072105}
   lifeTime: 5
   speed: 5
   damageRate: 0
@@ -10133,6 +10133,13 @@ MonoBehaviour:
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
+  enableVisualEffects: 0
+  BulletEffectType: 0
+  EndPosiotionBullet: {fileID: 0}
+  BulletTrailMaterial: {fileID: 0}
+  Fire2Effect: {fileID: 0}
+  Fire3Effect: {fileID: 0}
+  meshType: 0
 --- !u!135 &6997535294146073574
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -10426,7 +10433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
   Type: 0
-  rb: {fileID: 196707428477247005}
+  Rigidbody: {fileID: 196707428477247005}
   lifeTime: 5
   speed: 5
   damageRate: 0
@@ -10447,6 +10454,13 @@ MonoBehaviour:
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
+  enableVisualEffects: 0
+  BulletEffectType: 0
+  EndPosiotionBullet: {fileID: 0}
+  BulletTrailMaterial: {fileID: 0}
+  Fire2Effect: {fileID: 0}
+  Fire3Effect: {fileID: 0}
+  meshType: 0
 --- !u!135 &7162709057209188364
 SphereCollider:
   m_ObjectHideFlags: 0

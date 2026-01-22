@@ -5057,7 +5057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
   Type: 0
-  rb: {fileID: -7663441426539666406}
+  Rigidbody: {fileID: -7663441426539666406}
   lifeTime: 10
   speed: 10
   damageRate: 0
@@ -5078,6 +5078,13 @@ MonoBehaviour:
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
+  enableVisualEffects: 0
+  BulletEffectType: 0
+  EndPosiotionBullet: {fileID: 0}
+  BulletTrailMaterial: {fileID: 0}
+  Fire2Effect: {fileID: 0}
+  Fire3Effect: {fileID: 0}
+  meshType: 0
 --- !u!135 &-5675757702356698031
 SphereCollider:
   m_ObjectHideFlags: 0

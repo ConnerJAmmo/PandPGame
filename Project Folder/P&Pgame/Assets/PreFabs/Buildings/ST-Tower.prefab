@@ -54,7 +54,6 @@ MonoBehaviour:
   shootPos: {fileID: 9208101140879082685}
   turret: {fileID: 6602286807472022352}
   bulletPrefab: {fileID: 7983933263039930371, guid: b849c2537d18ba444b85126fe550440b, type: 3}
-  projectileData: {fileID: 11400000, guid: 6807e9cf582021d44a8782ed9be0159e, type: 2}
   shootRate: 1
   shootDist: 20
   scanSpeed: 0.5

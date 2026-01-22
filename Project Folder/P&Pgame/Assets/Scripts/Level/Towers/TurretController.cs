@@ -3,57 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Threading.Tasks;
-
-[CreateAssetMenu(fileName = "New Projectile Data", menuName = "Turret/Projectile Data")]
-public class ProjectileData : ScriptableObject
-{
-    public float Speed = 20f;
-    public int DamageAmount = 10;
-    // Add other shared data here if needed (e.g., AoE radius)
-}
-
-[RequireComponent(typeof(Rigidbody))]
-public class Projectile : MonoBehaviour
-{
-    [SerializeField] public ProjectileData Data; // Link your SO asset here
-    private Rigidbody rb;
-    private bool hasCollided = false;
-
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-        rb.useGravity = false; // Start flying straight
-
-        // Remove the complex mesh/trail code for simplicity, 
-        // or move it into a helper function if you need it later.
-
-        // Manage lifetime (basic deletion after 5 seconds)
-        // This simulates the async deletion logic from the PDF script
-        StartCoroutine(HandleDeletionAfterTime(5f));
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (hasCollided) return;
-        hasCollided = true;
-        rb.useGravity = true; // Drop after collision
-
-        // Handle the damage logic here or via the damage script
-        // collision.gameObject.GetComponent<IDamage>()?.takeDamage(Data.DamageAmount);
-
-        // This is where your AoE turret might use a different method if needed
-        if (Data.DamageAmount > 0)
-        {
-            // Call damage logic (if you want the damage script on the bullet itself, keep it there)
-        }
-    }
-
-    IEnumerator HandleDeletionAfterTime(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        Destroy(gameObject);
-    }
-}
+using bullet.fx.pack;
 
 public class TurretController : MonoBehaviour, IDamage
 {
@@ -63,8 +13,7 @@ public class TurretController : MonoBehaviour, IDamage
     [Range(1, 1000)][SerializeField] int HP = 1000;
     [SerializeField] Transform shootPos;
     [SerializeField] Transform turret; 
-    [SerializeField] GameObject bulletPrefab; // Reference the prefab with the Projectile script
-    [SerializeField] ProjectileData projectileData; // Reference the ScriptableObject directly here
+    [SerializeField] GameObject bulletPrefab;
 
     [Range(0, 5)][SerializeField] float shootRate;
     [Range(1, 1000)][SerializeField] int shootDist;
@@ -87,16 +36,16 @@ public class TurretController : MonoBehaviour, IDamage
     {
         forward = Quaternion.LookRotation(turret.transform.forward);
         dynamicMat = model.material;
-        colorOrigin = dynamicMat.color;
-
-        if (projectileData != null)
+        colorOrigin = dynamicMat.color; 
+        
+        damage dmgScript = bulletPrefab.GetComponentInChildren<damage>();
+        if (dmgScript != null)
         {
-            bulletSpeed = projectileData.Speed;
+            bulletSpeed = dmgScript.speed;
         }
         else
         {
-            Debug.LogError("ProjectileData asset not assigned!");
-            bulletSpeed = 20f; // Default if missing
+            Debug.LogError("Damage script missing on prefab at Start!", this);
         }
     }
 
@@ -159,16 +108,18 @@ public class TurretController : MonoBehaviour, IDamage
         if (agent != null) enemyVelocity = agent.velocity;
         else if (rb != null) enemyVelocity = rb.linearVelocity;
 
-        // 2. Calculate Lead Aim
-        float distance = Vector3.Distance(targetPoint, shootPos.position);
+        Vector3 predictedPoint = targetPoint; // Start with the current target point
+        int iterations = 2; // 2 or 3 iterations usually provides sufficient accuracy
 
-        // Avoid division by zero if bulletSpeed isn't set
-        float travelTime = distance / (bulletSpeed > 0 ? bulletSpeed : 100f);
+        for (int i = 0; i < iterations; i++)
+        {
+            float distanceToPredicted = Vector3.Distance(predictedPoint, shootPos.position);
+            float iterateTime = distanceToPredicted / (bulletSpeed > 0 ? bulletSpeed : 100f);
 
-        // 3. The Predicted Position
-        Vector3 predictedPoint = targetPoint + (enemyVelocity * travelTime);
+            // Recalculate the predicted point based on the new travel time
+            predictedPoint = targetPoint + (enemyVelocity * iterateTime);
+        }
 
-        // 4. Calculate direction to the PREDICTED point
         Vector3 fullDirection = predictedPoint - shootPos.position;
 
         if (fullDirection.sqrMagnitude > 0.01f)
@@ -189,7 +140,8 @@ public class TurretController : MonoBehaviour, IDamage
         shootTimer = 0;
 
         // Instantiate the bullet with the CombinedBulletScript attached
-        GameObject newBulletGO = Instantiate(bulletPrefab, shootPos.position, turret.rotation);
+        GameObject newBulletGO = Instantiate(bulletPrefab, shootPos.position, turret.rotation); 
+
         Collider[] bulletColliders = newBulletGO.GetComponentsInChildren<Collider>();
 
         foreach (var bulletCol in bulletColliders)
@@ -206,15 +158,15 @@ public class TurretController : MonoBehaviour, IDamage
             bulletRB.angularVelocity = Vector3.zero;
 
             // Apply speed directly using VelocityChange to ignore mass
-            bulletRB.AddForce(turret.forward * projectileData.Speed, ForceMode.VelocityChange);
+            bulletRB.AddForce(turret.forward * bulletSpeed, ForceMode.VelocityChange);
 
-            Debug.Log($"Firing with Force: {turret.forward * projectileData.Speed} | Turret Forward: {turret.forward}");
+            Debug.Log($"Firing with Force: {turret.forward * bulletSpeed} | Turret Forward: {turret.forward}");
         }
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(float amount, DamageType type)
     {
-        HP -= amount;
+        HP -= (int) amount;
 
         // Debug to prove it's this specific instance
         Debug.Log($"{gameObject.name} took {amount} damage. HP left: {HP}");
@@ -238,5 +190,3 @@ public class TurretController : MonoBehaviour, IDamage
         dynamicMat.color = colorOrigin;
     }
 }
-
-

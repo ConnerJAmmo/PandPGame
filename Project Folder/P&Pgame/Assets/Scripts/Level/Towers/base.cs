@@ -1,3 +1,4 @@
+using bullet.fx.pack;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,9 +27,9 @@ public class baseDmg : MonoBehaviour, IDamage
 
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(float amount, DamageType type)
     {
-        HP -= amount;
+        HP -= (int) amount;
 
         // Debugging to verify the instance is taking damage
         Debug.Log($"{gameObject.name} (Base) took damage! Remaining HP: {HP}");
@@ -53,5 +54,4 @@ public class baseDmg : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.1f);
         dynamicMat.color = colorOrigin;
     }
-
 }

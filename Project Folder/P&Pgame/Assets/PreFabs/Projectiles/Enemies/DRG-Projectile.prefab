@@ -24243,13 +24243,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
   Type: 0
-  rb: {fileID: 7008355407370004553}
+  Rigidbody: {fileID: 7008355407370004553}
   lifeTime: 5
   speed: 20
-  damageRate: 0
+  damageRate: 1
   leavesDotZone: 1
   dotZonePrefab: {fileID: 4251143904839232136, guid: 33a081cd4f2c3bb479fc2f27d3b69c93, type: 3}
-  damageAmount: 5
+  damageAmount: 1
   destroyOnHit: 1
   createHitEffect: 1
   groundedHitEffect: 1
@@ -24264,6 +24264,13 @@ MonoBehaviour:
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
+  enableVisualEffects: 0
+  BulletEffectType: 0
+  EndPosiotionBullet: {fileID: 0}
+  BulletTrailMaterial: {fileID: 0}
+  Fire2Effect: {fileID: 0}
+  Fire3Effect: {fileID: 0}
+  meshType: 0
 --- !u!135 &1891537024987071722
 SphereCollider:
   m_ObjectHideFlags: 0
