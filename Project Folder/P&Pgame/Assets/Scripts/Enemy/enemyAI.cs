@@ -1,4 +1,6 @@
+using bullet.fx.pack;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
@@ -7,10 +9,11 @@ public class enemyAI : MonoBehaviour, IDamage
 {
     [Header("Components")]
     [SerializeField] Renderer model;
-    [SerializeField] NavMeshAgent agent;
-    [SerializeField] Vector3 desination;
-    [SerializeField] Transform target;
-    [SerializeField] Transform shootPos;
+    [SerializeField] public NavMeshAgent agent;
+    [SerializeField] public Rigidbody body;
+    [SerializeField] GameObject target;
+    [SerializeField] public Transform shootPos;
+    [SerializeField] Transform headPos;
     [SerializeField] GameObject bullet;
     [SerializeField] LayerMask ignoreLayer;
 
@@ -19,13 +22,19 @@ public class enemyAI : MonoBehaviour, IDamage
     [Range(0, 2)] [SerializeField] float shootRate;
     [Range(1, 1000)] [SerializeField] int faceTargetSpeed;
     [Range(1, 1000)][SerializeField] int shootDist;
+    [Range(0, 360)][SerializeField] int FOV = 90;
+    [SerializeField] int numTurrets;
 
     int maxHP;
     Color colorOrigin;
     float shootTimer;
-    bool targetAquired = false;
+    Vector3 playerDir;
+    float angleToPlayer;
+    bool playerInTrigger = false;
+    bool baseInTrigger = false;
 
     private WaveSpawner waveSpawner;
+    private List<Collider> turretsInRange = new List<Collider>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -42,7 +51,15 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         if (other.CompareTag("Player"))
         {
-            targetAquired = true;
+            playerInTrigger = true;
+        }
+        else if (other.CompareTag("Turret"))
+        {
+            turretsInRange.Add(other);
+        }
+        else if (other.CompareTag("Base"))
+        {
+            baseInTrigger = true;
         }
     }
 
@@ -50,7 +67,15 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         if (other.CompareTag("Player"))
         {
-            targetAquired = false;
+            playerInTrigger = false;
+        }
+        else if (other.CompareTag("Turret"))
+        {
+            turretsInRange.Remove(other);
+        }
+        else if (other.CompareTag("Base"))
+        {
+            baseInTrigger = false;
         }
     }
 
@@ -58,39 +83,97 @@ public class enemyAI : MonoBehaviour, IDamage
     void Update()
     {
         shootTimer += Time.deltaTime;
-
-        desination = gameManager.instance.baseTower.transform.position;
-        agent.SetDestination(desination);
-
         Debug.DrawRay(transform.position, transform.forward * shootDist, Color.blue);
 
-        if (targetAquired)
-        {
-            faceTarget();
+        // Clean up list
+        turretsInRange.RemoveAll(t => t == null);
+        numTurrets = turretsInRange.Count;
 
-            if (shootTimer >= shootRate)
-            {
-                Shoot();
-            }
+        // PRIORITY 1: PLAYER (Check CanSeePlayer first as it handles its own movement/shooting)
+        if (playerInTrigger && CanSeePlayer())
+        {
+            // Logic handled inside CanSeePlayer()
         }
         else
         {
-            Vector3 moveDirection = agent.steeringTarget - transform.position;
-            moveDirection.y = 0; // Keep the agent upright
+            // Default target is the Base
+            target = gameManager.instance.baseTower;
 
-            if (moveDirection.magnitude > 0.1f)
+            if (target == null)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-                // Smoothly rotate towards the movement direction
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
+                agent.isStopped = true;
+                return;
+            }
+            agent.SetDestination(target.transform.position);
+
+            // PRIORITY 2: BASE (Check if base is in range before turrets)
+            if (baseInTrigger && target != null)
+            {
+                // If the base is right here, focus it
+                faceTarget(target.GetComponent<Collider>());
+
+                if (shootTimer >= shootRate)
+                {
+                    Shoot();
+                }
+            }
+            // PRIORITY 3: TURRETS (Only shoot turrets if base is NOT in range)
+            else if (turretsInRange.Count > 0)
+            {
+                faceTarget(turretsInRange[0]);
+
+                if (shootTimer >= shootRate)
+                {
+                    Shoot();
+                }
+            }
+            // PRIORITY 4: MOVEMENT (Just walk toward base if nothing is in range)
+            else
+            {
+                Vector3 moveDirection = agent.steeringTarget - transform.position;
+                moveDirection.y = 0;
+
+                if (moveDirection.magnitude > 0.1f)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
+                }
             }
         }
     }
 
-    void faceTarget()
+    bool CanSeePlayer()
+    {
+        playerDir = (gameManager.instance.player.transform.position - headPos.position);
+        angleToPlayer = Vector3.Angle(playerDir, transform.forward);
+
+        RaycastHit hit;
+        if (Physics.Raycast(headPos.position, playerDir, out hit))
+        {
+            if (angleToPlayer <= FOV && hit.collider.CompareTag("Player"))
+            {
+                target = gameManager.instance.player;
+                agent.SetDestination(target.transform.position);
+
+                faceTarget(target.transform.GetComponent<Collider>());
+
+                if (shootTimer >= shootRate)
+                {
+                    Shoot();
+                }
+
+                return true;
+            }
+
+        }
+
+        return false;
+    }
+
+    void faceTarget(Collider other)
     {
         // 1. Calculate the base direction to the target's center
-        Vector3 targetCenter = gameManager.instance.player.transform.GetComponent<Collider>().bounds.center;
+        Vector3 targetCenter = other.bounds.center;
         Vector3 fullDirection = targetCenter - transform.position;
 
         if (fullDirection.sqrMagnitude > 0.01f)
@@ -131,9 +214,9 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(float amount, DamageType type)
     {
-        HP -= amount;
+        HP -= (int) amount;
 
         if(HP <= 0) 
         {
@@ -154,5 +237,4 @@ public class enemyAI : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrigin;
     }
-
 }

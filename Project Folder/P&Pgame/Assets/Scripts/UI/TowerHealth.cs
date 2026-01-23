@@ -1,11 +1,13 @@
+using bullet.fx.pack;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TowerHealth : MonoBehaviour, IDamage
+public class TowerHealth : MonoBehaviour
 {
-    [Header("Stats")]
-    [SerializeField] int maxHP = 200;
-    int HP;
+    
+    // I removed all the HP code and the IDamage implementation because some build
+    // the base script and added it to the base and both script was implemnting TakeDamage
+    // So this script is for UI tower health only
 
     [Header("World UI")]
     [SerializeField] GameObject healthBarPrefab; // World - space canvas prefab, not regular
@@ -18,51 +20,37 @@ public class TowerHealth : MonoBehaviour, IDamage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        HP = maxHP;
         cam = Camera.main;
+
 
         if (healthBarPrefab != null)
         {
             var barObject = Instantiate(healthBarPrefab, transform);
-            barObject.transform.localPosition = barOffset;
+            barRoot = barObject.transform;
+            barRoot.localPosition = barOffset;
 
             // Just incase the fill is an image child
-            ui = barObject.GetComponent<TowerHealthBarUI>();
-            updateBar();
+            ui = barObject.GetComponentInChildren<TowerHealthBarUI>();
+            
         }
+        
+
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        if (!barRoot) return;
-
-        // and this is to make sure it follows position
-        barRoot.position = transform.position + barOffset;
-
-        // make sure the healthBar always faces canera
-        if (cam)
-            barRoot.forward = cam.transform.forward;
+        if (!barRoot || !cam) return;
+        barRoot.forward = cam.transform.forward;
+        
+            
     }
 
-    public void takeDamage(int amount)
-    {
-        HP -= amount;
-        if (HP < 0) HP = 0;
-
-        updateBar();
-
-        if (HP <= 0)
-        {
-            gameManager.instance.youLose();
-
-            Destroy(gameObject);
-        }
-    }
-
-    void updateBar()
+    public void updateBar(float normalized)
     {
         if (ui != null && ui.fillImage != null)
-            ui.fillImage.fillAmount = (float)HP / maxHP;
+            ui.fillImage.fillAmount = Mathf.Clamp01(normalized);
     }
+
+   
 }

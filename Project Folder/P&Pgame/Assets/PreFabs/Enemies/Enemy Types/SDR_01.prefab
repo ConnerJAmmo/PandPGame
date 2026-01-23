@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4512844326127759179}
   - component: {fileID: 1794649280644673187}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SK_Soldier_Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3282596488072715761}
   - component: {fileID: 7094598091967197192}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SK_Soldier_Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,7 +193,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5248924528907180995}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Weapon_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1532778891244370722}
   - component: {fileID: 3611443526125388718}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,7 +283,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4435960409422502001}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WeaponGrip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -316,7 +316,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1343790587197283647}
   - component: {fileID: 7157662571016617118}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Weapon_Rifle_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 8274414706080713416}
   - component: {fileID: 54507451741871495}
   - component: {fileID: 5021022719307804728}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TriggerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -475,9 +475,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::enemyAI
   model: {fileID: 7094598091967197192}
   agent: {fileID: 9052755601253055299}
-  desination: {x: 0, y: 0, z: 0}
+  body: {fileID: 4941573064728150775}
   target: {fileID: 0}
   shootPos: {fileID: 3287296512665573264}
+  headPos: {fileID: 3282596488072715761}
   bullet: {fileID: 7983933263039930371, guid: da205e21de67a394292a483c8e9ad79c, type: 3}
   ignoreLayer:
     serializedVersion: 2
@@ -486,6 +487,8 @@ MonoBehaviour:
   shootRate: 1
   faceTargetSpeed: 75
   shootDist: 50
+  FOV: 90
+  numTurrets: 0
 --- !u!195 &9052755601253055299
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -557,7 +560,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!1 &6151137594920048989
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,7 +570,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3287296512665573264}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ShootFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -599,7 +602,7 @@ GameObject:
   m_Component:
   - component: {fileID: 530842805663992769}
   - component: {fileID: 2044508438986577320}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Weapon_Rifle_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -692,7 +695,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3155319911527717372}
   - component: {fileID: 7337499798627384434}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SK_Soldier_Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
