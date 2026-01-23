@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 1799378621916752799}
   - component: {fileID: 3282921932890155406}
   - component: {fileID: 4914385419011594062}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: ST-Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}

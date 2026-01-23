@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 3215188512552848863}
   - component: {fileID: 899537935904901051}
   - component: {fileID: 7539443543783141499}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: AOE-Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
