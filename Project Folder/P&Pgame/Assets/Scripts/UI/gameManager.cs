@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class gameManager : MonoBehaviour
+public class gameManager : MonoBehaviour, goldManage
 {
     public static gameManager instance;
 
@@ -52,7 +52,7 @@ public class gameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerCont>();
 
-        UpdateGold(startingGold);
+        addGold(startingGold);
         goldCountText.text = goldCount.ToString("F0");
 
         waveSpawner = GameObject.FindWithTag("WaveSpawner");
@@ -116,12 +116,6 @@ public class gameManager : MonoBehaviour
         waveCountText.text = wave.ToString("F0");
     }
 
-
-    public void UpdateGold(int amount)
-    {
-        goldCount += amount;
-        goldCountText.text = goldCount.ToString("F0");
-    }
 
     public int GetGold()
     {
@@ -215,5 +209,17 @@ public class gameManager : MonoBehaviour
     public void ClearHint()
     {
         SetHint("");
+    }
+
+    public void addGold(int gold)
+    {
+        goldCount += gold;
+        goldCountText.text = goldCount.ToString("F0");
+    }
+
+    public void removeGold(int gold)
+    {
+        goldCount -= gold;
+        goldCountText.text = goldCount.ToString("F0");
     }
 }

@@ -335,7 +335,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
         {
             Instantiate(STTower, PlayerBodyPos, transform.rotation);
             woodCount = woodCount - 5;
-            gameManager.instance.UpdateGold(-5);
+            gameManager.instance.removeGold(-5);
             gameManager.instance.updateResourcesUI();
 
             showSTHint = false; // Hides Z key display after use
@@ -347,7 +347,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
         if(stoneCount >= 5 && goldCount >= 5)
         {
             Instantiate(AOETower, PlayerBodyPos, transform.rotation);
-            gameManager.instance.UpdateGold(-5);
+            gameManager.instance.removeGold(-5);
             stoneCount = stoneCount - 5;
             gameManager.instance.updateResourcesUI();
 
