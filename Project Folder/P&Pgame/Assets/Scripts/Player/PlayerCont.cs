@@ -9,7 +9,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
-    
+
     [Header("---- Stats ----")]
     [Range(1,100)] [SerializeField] public int HP;
     [Range(1,10)]  [SerializeField] int speed;
@@ -355,7 +355,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         {
             Instantiate(STTower, PlayerBodyPos, transform.rotation);
             woodCount = woodCount - 5;
-            gameManager.instance.UpdateGold(-5);
+            gameManager.instance.removeGold(-5);
             gameManager.instance.updateResourcesUI();
 
             showSTHint = false; // Hides Z key display after use
@@ -367,7 +367,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         if(stoneCount >= 5 && goldCount >= 5)
         {
             Instantiate(AOETower, PlayerBodyPos, transform.rotation);
-            gameManager.instance.UpdateGold(-5);
+            gameManager.instance.removeGold(-5);
             stoneCount = stoneCount - 5;
             gameManager.instance.updateResourcesUI();
 
@@ -392,8 +392,17 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
 
     public void updatePlayerUI()
     {
-        gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
-        gameManager.instance.SetHPUI();
+        if (HP > 0)
+        {
+            gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+            gameManager.instance.SetHPUI();
+        }
+        else if (HP < 0)
+        {
+            HP = 0;
+            gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+            gameManager.instance.SetHPUI();
+        }
     }
 
     IEnumerator flashDamage()

@@ -221,7 +221,8 @@ public class enemyAI : MonoBehaviour, IDamage
         if(HP <= 0) 
         {
             gameManager.instance.updateEnemyCount(-1);
-            gameManager.instance.UpdateGold(maxHP);
+            waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
+            gameManager.instance.addGold(maxHP);
             Destroy(gameObject);
         }
         else
