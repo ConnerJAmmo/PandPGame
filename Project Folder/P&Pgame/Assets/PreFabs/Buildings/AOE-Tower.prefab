@@ -53,10 +53,13 @@ MonoBehaviour:
   HP: 1000
   shootPos: {fileID: 1483786942997479876}
   turret: {fileID: 814818969609971160}
-  bulletPrefab: {fileID: 7983933263039930371, guid: 000cce08b3da8654abd394e3d8182131, type: 3}
-  projectileData: {fileID: 11400000, guid: 5b5a5bfe74d79a149976ae5d1cc69084, type: 2}
-  shootRate: 1
+  bulletPrefab: {fileID: 7612802135244751355, guid: 507fb45323d1300469cd075216049836, type: 3}
+  shootRate: 2
   shootDist: 20
+  usePredictiveAiming: 1
+  useBurstFire: 0
+  timeBetweenShots: 0.1
+  shotsInBurst: 3
   scanSpeed: 0.5
   scanAngle: 45
   target: {fileID: 0}

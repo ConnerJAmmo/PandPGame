@@ -56,6 +56,10 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7983933263039930371, guid: b849c2537d18ba444b85126fe550440b, type: 3}
   shootRate: 1
   shootDist: 20
+  usePredictiveAiming: 0
+  useBurstFire: 1
+  timeBetweenShots: 0.1
+  shotsInBurst: 3
   scanSpeed: 0.5
   scanAngle: 45
   target: {fileID: 0}

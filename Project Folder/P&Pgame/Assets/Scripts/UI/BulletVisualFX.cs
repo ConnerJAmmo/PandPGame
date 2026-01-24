@@ -1,0 +1,453 @@
+using UnityEngine;
+using System.Collections;
+
+namespace bullet.fx.pack
+{
+    // Define your BulletEffectType enum here if it's not defined elsewhere
+    public enum BulletEffectType
+    {
+        Fire1,
+        Fire2,
+        Fire3
+    }
+
+    public class BulletVisualFX : MonoBehaviour
+    {
+        // --- Private variables for visuals ---
+        [SerializeField] private BulletEffectType currentBulletEffectType;
+        private Vector3 endPositionTrail;
+        private bool IsFlying = true;
+        private Material material;
+        private float fadeDuration = 1f;
+        private float timer = 0f;
+        private bool subjectToDeletion = false;
+
+        // Passed in from damage script:
+        private GameObject Fire2Effect, Fire3Effect, hitEffectPrefab;
+        private MeshType meshType;
+        private Transform EndPosiotionBullet;
+        private Material BulletTrailMaterial;
+        private bool createHitEffect, groundedHitEffect;
+        private float groundCheckDistance;
+        private LayerMask groundLayer;
+
+
+        public void SetFlying(bool flying) => IsFlying = flying;
+
+        public void StartVisualEffects(BulletEffectType effectType, Transform endPos, Material trailMat, GameObject f2, GameObject f3, MeshType mType, bool createFx, GameObject hitFx, bool groundedFx, float groundDist, LayerMask groundLyr)
+        {
+            // Assign passed in values
+            currentBulletEffectType = effectType;
+            EndPosiotionBullet = endPos;
+            BulletTrailMaterial = trailMat;
+            Fire2Effect = f2;
+            Fire3Effect = f3;
+            meshType = mType;
+            createHitEffect = createFx;
+            hitEffectPrefab = hitFx;
+            groundedHitEffect = groundedFx;
+            groundCheckDistance = groundDist;
+            groundLayer = groundLyr;
+
+            // Start of Visuals Logic (Opt-In) from damage.cs Start method
+            var customMesh = new Mesh();
+            customMesh.name = (meshType == MeshType.Bullet) ? "Bullet" : "Fire3DCylinder";
+
+            // Mesh generation logic from PDF pages 10-16
+            if (meshType == MeshType.Bullet)
+            {
+                customMesh.vertices = SetVerticesBullet();
+                customMesh.triangles = SetTrianglesBullet();
+                customMesh.uv = SetUVs(customMesh.vertices);
+            }
+            else // Cylinder
+            {
+                customMesh.vertices = SetVerticesCylinder();
+                customMesh.triangles = SetTrianglesCylinder();
+                customMesh.uv = SetUVs(customMesh.vertices);
+            }
+
+            // Assign mesh to component (assuming a MeshFilter exists or you add one)
+            var meshFilter = GetComponent<MeshFilter>();
+            if (meshFilter == null) meshFilter = gameObject.AddComponent<MeshFilter>();
+            meshFilter.mesh = customMesh;
+
+            // Start the trail coroutine
+            StartCoroutine(StartCreateBulletTrail());
+        }
+        private IEnumerator StartCreateBulletTrail()
+        {
+            while (IsFlying)
+            {
+                yield return new WaitForSeconds(0.02f);
+                CreateBulletTrail(EndPosiotionBullet.position, endPositionTrail);
+                endPositionTrail = EndPosiotionBullet.position;
+            }
+            yield break;
+        }
+
+        private void CreateBulletTrail(Vector3 start, Vector3 end)
+        {
+            GameObject trail = new GameObject("BulletTrail");
+            LineRenderer line = trail.AddComponent<LineRenderer>();
+            line.material = BulletTrailMaterial;
+        }
+
+        public void DoHitFX(Vector3 point, bool createHitEffect, GameObject hitEffectPrefab, bool groundedHitEffect, float groundCheckDistance, LayerMask groundLayer)
+        {
+            if (!createHitEffect || hitEffectPrefab == null)
+            {
+                return;
+            }
+            Vector3 spawnPosition = point;
+            if (groundedHitEffect)
+            {
+                Vector3 rayStart = point + Vector3.up * 0.1f;
+                if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, groundCheckDistance, groundLayer))
+                {
+                    spawnPosition = hit.point;
+                }
+            }
+            Instantiate(hitEffectPrefab, spawnPosition, Quaternion.identity);
+        }
+
+
+        // Method to initiate deletion via fade-out
+        public void InitiateDeletion()
+        {
+            subjectToDeletion = true;
+        }
+
+        // Handles the update loop logic for fading and deletion
+        public void HandleDeletionTimer()
+        {
+            if (subjectToDeletion)
+            {
+                timer += Time.deltaTime;
+                float fadeValue = Mathf.Clamp01(1f - (timer / fadeDuration));
+                if (material != null)
+                {
+                    material.SetFloat("_Fade", fadeValue);
+                }
+
+                // This is the correct check to see if the fade is complete
+                if (fadeValue <= 0)
+                {
+                    subjectToDeletion = false;
+                    Destroy(gameObject);
+                }
+            }
+        }
+
+        private Vector3[] SetVerticesBullet()
+        {
+            var coef = 0.4f;
+            var coef2 = 0.34f;
+            var coef3 = 0.24f;
+            var radiusMedium = Mathf.Cos(Mathf.PI / 4f);
+            var radiusMediumHalf = radiusMedium * 0.4f;
+            return new Vector3[] {
+                // Swapped from (X, Y, Z) to (X, Z, Y)
+                new Vector3(0, 0, -0.5f),
+                new Vector3(-0.4f * coef, 0, -0.5f),
+                new Vector3(-radiusMediumHalf * coef, radiusMediumHalf * coef, -0.5f),
+                new Vector3(0, 0.4f * coef, -0.5f),
+                new Vector3(radiusMediumHalf * coef, radiusMediumHalf * coef, -0.5f),
+                new Vector3(0.4f * coef, 0, -0.5f),
+                new Vector3(radiusMediumHalf * coef, -radiusMediumHalf * coef, -0.5f),
+                new Vector3(0, -0.4f * coef, -0.5f),
+                new Vector3(-radiusMediumHalf * coef, -radiusMediumHalf * coef, -0.5f),
+                new Vector3(-0.4f * coef, 0, -0.44f),
+                new Vector3(-radiusMediumHalf * coef, radiusMediumHalf * coef, -0.44f),
+                new Vector3(0, 0.4f * coef, -0.44f),
+                new Vector3(radiusMediumHalf * coef, radiusMediumHalf * coef, -0.44f),
+                new Vector3(0.4f * coef, 0, -0.44f),
+                new Vector3(radiusMediumHalf * coef, -radiusMediumHalf * coef, -0.44f),
+                new Vector3(0, -0.4f * coef, -0.44f),
+                new Vector3(-radiusMediumHalf * coef, -radiusMediumHalf * coef, -0.44f),
+                new Vector3(-0.4f * coef2, 0, -0.44f),
+                new Vector3(-radiusMediumHalf * coef2, radiusMediumHalf * coef2, -0.44f),
+                new Vector3(0, 0.4f * coef2, -0.44f),
+                new Vector3(radiusMediumHalf * coef2, radiusMediumHalf * coef2, -0.44f),
+                new Vector3(0.4f * coef2, 0, -0.44f),
+                new Vector3(radiusMediumHalf * coef2, -radiusMediumHalf * coef2, -0.44f),
+                new Vector3(0, -0.4f * coef2, -0.44f),
+                new Vector3(-radiusMediumHalf * coef2, -radiusMediumHalf * coef2, -0.44f),
+                new Vector3(-0.4f * coef2, 0, -0.40f),
+                new Vector3(-radiusMediumHalf * coef2, radiusMediumHalf * coef2, -0.40f),
+                new Vector3(0, 0.4f * coef2, -0.40f),
+                new Vector3(radiusMediumHalf * coef2, radiusMediumHalf * coef2, -0.40f),
+                new Vector3(0.4f * coef2, 0, -0.40f),
+                new Vector3(radiusMediumHalf * coef2, -radiusMediumHalf * coef2, -0.40f),
+                new Vector3(0, -0.4f * coef2, -0.40f),
+                new Vector3(-radiusMediumHalf * coef2, -radiusMediumHalf * coef2, -0.40f),
+                new Vector3(-0.4f * coef, 0, -0.40f),
+                new Vector3(-radiusMediumHalf * coef, radiusMediumHalf * coef, -0.40f),
+                new Vector3(0, 0.4f * coef, -0.40f),
+                new Vector3(radiusMediumHalf * coef, radiusMediumHalf * coef, -0.40f),
+                new Vector3(0.4f * coef, 0, -0.40f),
+                new Vector3(radiusMediumHalf * coef, -radiusMediumHalf * coef, -0.40f),
+                new Vector3(0, -0.4f * coef, -0.40f),
+                new Vector3(-radiusMediumHalf * coef, -radiusMediumHalf * coef, -0.40f),
+                new Vector3(-0.4f * coef, 0, 0.2f),
+                new Vector3(-radiusMediumHalf * coef, radiusMediumHalf * coef, 0.2f),
+                new Vector3(0, 0.4f * coef, 0.2f),
+                new Vector3(radiusMediumHalf * coef, radiusMediumHalf * coef, 0.2f),
+                new Vector3(0.4f * coef, 0, 0.2f),
+                new Vector3(radiusMediumHalf * coef, -radiusMediumHalf * coef, 0.2f),
+                new Vector3(0, -0.4f * coef, 0.2f),
+                new Vector3(-radiusMediumHalf * coef, -radiusMediumHalf * coef, 0.2f),
+                new Vector3(-0.4f * coef2, 0, 0.2f),
+                new Vector3(-radiusMediumHalf * coef2, radiusMediumHalf * coef2, 0.2f),
+                new Vector3(0, 0.4f * coef2, 0.2f),
+                new Vector3(radiusMediumHalf * coef2, radiusMediumHalf * coef2, 0.2f),
+                new Vector3(0.4f * coef2, 0, 0.2f),
+                new Vector3(radiusMediumHalf * coef2, -radiusMediumHalf * coef2, 0.2f),
+                new Vector3(0, -0.4f * coef2, 0.2f),
+                new Vector3(-radiusMediumHalf * coef2, -radiusMediumHalf * coef2, 0.2f),
+                new Vector3(-0.4f * coef2, 0, 0.3f),
+                new Vector3(-radiusMediumHalf * coef2, radiusMediumHalf * coef2, 0.3f),
+                new Vector3(0, 0.4f * coef2, 0.3f),
+                new Vector3(radiusMediumHalf * coef2, radiusMediumHalf * coef2, 0.3f),
+                new Vector3(0.4f * coef2, 0, 0.3f),
+                new Vector3(radiusMediumHalf * coef2, -radiusMediumHalf * coef2, 0.3f),
+                new Vector3(0, -0.4f * coef2, 0.3f),
+                new Vector3(-radiusMediumHalf * coef2, -radiusMediumHalf * coef2, 0.3f),
+                new Vector3(-0.4f * coef3, 0, 0.4f),
+                new Vector3(-radiusMediumHalf * coef3, radiusMediumHalf * coef3, 0.4f),
+                new Vector3(0, 0.4f * coef3, 0.4f),
+                new Vector3(radiusMediumHalf * coef3, radiusMediumHalf * coef3, 0.4f),
+                new Vector3(0.4f * coef3, 0, 0.4f),
+                new Vector3(radiusMediumHalf * coef3, -radiusMediumHalf * coef3, 0.4f),
+                new Vector3(0, -0.4f * coef3, 0.4f),
+                new Vector3(-radiusMediumHalf * coef3, -radiusMediumHalf * coef3, 0.4f),
+                new Vector3(0, 0, 0.5f)
+            };
+        }
+
+        private int[] SetTrianglesBullet()
+        {
+            return new int[] {
+                0, 2, 1,
+                0, 3, 2,
+                0, 4, 3,
+                0, 5, 4,
+                0, 6, 5,
+                0, 7, 6,
+                0, 8, 7,
+                0, 1, 8,
+                9, 1, 2,
+                9, 2, 10,
+                10, 2, 3,
+                10, 3, 11,
+                11, 3, 4,
+                11, 4, 12,
+                12, 4, 5,
+                12, 5, 13,
+                13, 5, 6,
+                13, 6, 14,
+                14, 6, 7,
+                14, 7, 15,
+                15, 7, 8,
+                15, 8, 16,
+                16, 8, 9,
+                9, 8, 1,
+                17, 9, 10,
+                17, 10, 18,
+                18, 10, 11,
+                18, 11, 19,
+                19, 11, 12,
+                19, 12, 20,
+                20, 12, 13,
+                20, 13, 21,
+                21, 13, 14,
+                21, 14, 22,
+                22, 14, 15,
+                22, 15, 23,
+                23, 15, 16,
+                23, 16, 24,
+                24, 16, 17,
+                17, 16, 9,
+                25, 17, 18,
+                25, 18, 26,
+                26, 18, 19,
+                26, 19, 27,
+                27, 19, 20,
+                27, 20, 28,
+                28, 20, 21,
+                28, 21, 29,
+                29, 21, 22,
+                29, 22, 30,
+                30, 22, 23,
+                30, 23, 31,
+                31, 23, 24,
+                31, 24, 32,
+                32, 24, 25,
+                25, 24, 17,
+                33, 25, 26,
+                33, 26, 34,
+                34, 26, 27,
+                34, 27, 35,
+                35, 27, 28,
+                35, 28, 36,
+                36, 28, 29,
+                36, 29, 37,
+                37, 29, 30,
+                37, 30, 38,
+                38, 30, 31,
+                38, 31, 39,
+                39, 31, 32,
+                39, 32, 40,
+                40, 32, 33,
+                33, 32, 25,
+                41, 33, 34,
+                41, 34, 42,
+                42, 34, 35,
+                42, 35, 43,
+                43, 35, 36,
+                43, 36, 44,
+                44, 36, 37,
+                44, 37, 45,
+                45, 37, 38,
+                45, 38, 46,
+                46, 38, 39,
+                46, 39, 47,
+                47, 39, 40,
+                47, 40, 48,
+                48, 40, 41,
+                41, 40, 33,
+                49, 41, 42,
+                49, 42, 50,
+                50, 42, 43,
+                50, 43, 51,
+                51, 43, 44,
+                51, 44, 52,
+                52, 44, 45,
+                52, 45, 53,
+                53, 45, 46,
+                53, 46, 54,
+                54, 46, 47,
+                54, 47, 55,
+                55, 47, 48,
+                55, 48, 56,
+                56, 48, 49,
+                49, 48, 41,
+                57, 49, 50,
+                57, 50, 58,
+                58, 50, 51,
+                58, 51, 59,
+                59, 51, 52,
+                59, 52, 60,
+                60, 52, 53,
+                60, 53, 61,
+                61, 53, 54,
+                61, 54, 62,
+                62, 54, 55,
+                62, 55, 63,
+                63, 55, 56,
+                63, 56, 64,
+                64, 56, 57,
+                57, 56, 49,
+                65, 57, 58,
+                65, 58, 66,
+                66, 58, 59,
+                66, 59, 67,
+                67, 59, 60,
+                67, 60, 68,
+                68, 60, 61,
+                68, 61, 69,
+                69, 61, 62,
+                69, 62, 70,
+                70, 62, 63,
+                70, 63, 71,
+                71, 63, 64,
+                71, 64, 72,
+                72, 64, 65,
+                65, 64, 57,
+                73, 65, 66,
+                73, 66, 67,
+                73, 67, 68,
+                73, 68, 69,
+                73, 69, 70,
+                73, 70, 71,
+                73, 71, 72,
+                73, 72, 65
+            };
+        }
+
+        private Vector3[] SetVerticesCylinder()
+        {
+            var coef = 0.3f;
+            var coef2 = 0.2f;
+            var radiusMedium = Mathf.Cos(Mathf.PI / 4f);
+            var radiusMediumHalf = radiusMedium * 0.4f;
+            return new Vector3[] {
+                // Swapped from (X, Y, Z) to (X, Z, Y)
+                new Vector3(-0.4f * coef2, 0, -2.5f),
+                new Vector3(-radiusMediumHalf * coef2, radiusMediumHalf * coef2, -2.5f),
+                new Vector3(0, 0.4f * coef2, -2.5f),
+                new Vector3(radiusMediumHalf * coef2, radiusMediumHalf * coef2, -2.5f),
+                new Vector3(0.4f * coef2, 0, -2.5f),
+                new Vector3(radiusMediumHalf * coef2, -radiusMediumHalf * coef2, -2.5f),
+                new Vector3(0, -0.4f * coef2, -2.5f),
+                new Vector3(-radiusMediumHalf * coef2, -radiusMediumHalf * coef2, -2.5f),
+                new Vector3(-0.4f * coef, 0, -0.5f),
+                new Vector3(-radiusMediumHalf * coef, radiusMediumHalf * coef, -0.5f),
+                new Vector3(0, 0.4f * coef, -0.5f),
+                new Vector3(radiusMediumHalf * coef, radiusMediumHalf * coef, -0.5f),
+                new Vector3(0.4f * coef, 0, -0.5f),
+                new Vector3(radiusMediumHalf * coef, -radiusMediumHalf * coef, -0.5f),
+                new Vector3(0, -0.4f * coef, -0.5f),
+                new Vector3(-radiusMediumHalf * coef, -radiusMediumHalf * coef, -0.5f)
+            };
+        }
+
+        private int[] SetTrianglesCylinder()
+        {
+            return new int[] {
+                8, 0, 1,
+                8, 1, 9,
+                9, 1, 2,
+                9, 2, 10,
+                10, 2, 3,
+                10, 3, 11,
+                11, 3, 4,
+                11, 4, 12,
+                12, 4, 5,
+                12, 5, 13,
+                13, 5, 6,
+                13, 6, 14,
+                14, 6, 7,
+                14, 7, 15,
+                15, 7, 8,
+                8, 7, 0
+            };
+        }
+
+        private Vector2[] SetUVs(Vector3[] vertices)
+        {
+            Vector2[] uvs = new Vector2[vertices.Length];
+            float height = 2.0f; // This logic might need review based on your new Z height
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                Vector3 vertex = vertices[i];
+                // Check vertex.z instead of vertex.y
+                if (vertex.z > 0)
+                {
+                    // Use vertex.z here too
+                    float u = Mathf.Atan2(vertex.z, vertex.x) / (2 * Mathf.PI);
+                    float v = (vertex.z + height * 0.5f) / height;
+                    uvs[i] = new Vector2(u, v);
+                }
+                else
+                {
+                    // Use vertex.z here too
+                    float u = Mathf.Atan2(vertex.z, vertex.x) / (2 * Mathf.PI);
+                    float v = (vertex.z + height * 0.5f) / height;
+                    uvs[i] = new Vector2(u, v);
+                }
+            }
+            return uvs;
+        }
+    }
+}

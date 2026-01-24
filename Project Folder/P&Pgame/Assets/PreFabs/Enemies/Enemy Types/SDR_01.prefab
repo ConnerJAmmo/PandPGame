@@ -479,7 +479,7 @@ MonoBehaviour:
   target: {fileID: 0}
   shootPos: {fileID: 3287296512665573264}
   headPos: {fileID: 3282596488072715761}
-  bullet: {fileID: 7983933263039930371, guid: da205e21de67a394292a483c8e9ad79c, type: 3}
+  bullet: {fileID: 6130758696010775384, guid: 28119d09ae998154aa25175f7ea43a72, type: 3}
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -488,6 +488,8 @@ MonoBehaviour:
   faceTargetSpeed: 75
   shootDist: 50
   FOV: 90
+  useBurstFire: 1
+  timeBetweenShots: 0.1
   numTurrets: 0
 --- !u!195 &9052755601253055299
 NavMeshAgent:
