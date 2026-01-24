@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class gameManager : MonoBehaviour
+public class gameManager : MonoBehaviour, goldManage
 {
     public static gameManager instance;
 
@@ -10,6 +10,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuWin;
+    [SerializeField] GameObject menuUpgrade;
 
     [SerializeField] TMP_Text playerHPText;
     [SerializeField] TMP_Text playerHPTextOrig;
@@ -21,6 +22,10 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text woodCountText;
     [SerializeField] TMP_Text stoneCountText;
     [SerializeField] TMP_Text hintText;
+
+
+    [SerializeField] int upgradedis;
+    [SerializeField] LayerMask towerLayer;
 
     public bool isPause;
     public bool waveActive;
@@ -47,7 +52,7 @@ public class gameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerCont>();
 
-        UpdateGold(startingGold);
+        addGold(startingGold);
         goldCountText.text = goldCount.ToString("F0");
 
         waveSpawner = GameObject.FindWithTag("WaveSpawner");
@@ -75,6 +80,8 @@ public class gameManager : MonoBehaviour
                  stateUnpause();
             }
         }
+
+        openTowerUpgradeMenu();
     }
 
     public void updateEnemyCountTotal(int amount)
@@ -110,12 +117,6 @@ public class gameManager : MonoBehaviour
     }
 
 
-    public void UpdateGold(int amount)
-    {
-        goldCount += amount;
-        goldCountText.text = goldCount.ToString("F0");
-    }
-
     public int GetGold()
     {
         return goldCount;
@@ -125,7 +126,7 @@ public class gameManager : MonoBehaviour
     {
         statePause();
         menuActive = menu;
-        menuActive.SetActive(true );
+        menuActive.SetActive(true);
 
     }
 
@@ -145,6 +146,40 @@ public class gameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(false);
         menuActive = null;
+    }
+
+    public void openUpgradeMenu()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void closeUpgradeMenu()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        menuActive.SetActive(false);
+        menuActive = null;
+    }
+
+    public void openTowerUpgradeMenu()
+    {
+        RaycastHit hit;
+
+        if (Input.GetButtonDown("Tower Upgrade Menu") && Physics.Raycast(Camera.main.transform.position, 
+            Camera.main.transform.forward, upgradedis, towerLayer))
+        {
+            if (gameManager.instance.menuActive == null)
+            {
+                openUpgradeMenu();
+                menuActive = menuUpgrade;
+                menuActive.SetActive(true);
+            }
+            else if (menuActive == menuUpgrade)
+            {
+                closeUpgradeMenu();
+            }
+        }
     }
 
     public void youLose()
@@ -174,5 +209,17 @@ public class gameManager : MonoBehaviour
     public void ClearHint()
     {
         SetHint("");
+    }
+
+    public void addGold(int gold)
+    {
+        goldCount += gold;
+        goldCountText.text = goldCount.ToString("F0");
+    }
+
+    public void removeGold(int gold)
+    {
+        goldCount -= gold;
+        goldCountText.text = goldCount.ToString("F0");
     }
 }
