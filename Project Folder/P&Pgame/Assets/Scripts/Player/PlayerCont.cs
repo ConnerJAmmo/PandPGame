@@ -1,13 +1,15 @@
 
 using UnityEngine;
 using System.Collections;
+using bullet.fx.pack;
+using System.Collections.Generic;
 //using NUnit.Framework;
 
-public class PlayerCont : MonoBehaviour, IStore, IDamage
+public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
-    
+
     [Header("---- Stats ----")]
     [Range(1,100)] [SerializeField] public int HP;
     [Range(1,10)]  [SerializeField] int speed;
@@ -38,11 +40,15 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
     [SerializeField] GameObject STTower;
     [SerializeField] GameObject AOETower;
     [SerializeField] Transform shootPos;
-    [SerializeField] float shootRate;
 
-    [SerializeField] int shootDist;
-    [SerializeField] int shootDamage;
+    [Header("Guns")]
+    [SerializeField] List<GunStats> gunList = new List<GunStats>();
+    [SerializeField] GameObject gunModel;
+    [SerializeField] public float shootRate;
+    [SerializeField] public int shootDist;
+    [SerializeField] public int shootDamage;
 
+    int gunListPos;
     int jumpCount;
     int wallJumpCount;
 
@@ -118,7 +124,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
             playerVel.y -= gravity * Time.deltaTime;
         }
 
-        if(Input.GetButton("Fire1") && shootTimer >= shootRate)
+        if(Input.GetButton("Fire1") && gunList.Count > 0 && gunList[gunListPos].ammoCur > 0 && shootTimer >= shootRate)
         {
             shoot();
         }
@@ -139,6 +145,17 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
             {
                 SpawnAOETower();
             }
+        }
+
+        SelectGun();
+        reload();
+    }
+
+    void reload()
+    {
+        if (Input.GetButtonDown("Reload") && gunList.Count > 0)
+        {
+            gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
         }
     }
 
@@ -249,9 +266,13 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
 
     void shoot()
     {
+        gunList[gunListPos].ammoCur--;
+
         shootTimer = 0;
 
-        Instantiate(bullet, shootPos.position, shootPos.rotation);
+       
+        Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
+       
         
     }
 
@@ -334,7 +355,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
         {
             Instantiate(STTower, PlayerBodyPos, transform.rotation);
             woodCount = woodCount - 5;
-            gameManager.instance.UpdateGold(-5);
+            gameManager.instance.removeGold(-5);
             gameManager.instance.updateResourcesUI();
 
             showSTHint = false; // Hides Z key display after use
@@ -346,7 +367,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
         if(stoneCount >= 5 && goldCount >= 5)
         {
             Instantiate(AOETower, PlayerBodyPos, transform.rotation);
-            gameManager.instance.UpdateGold(-5);
+            gameManager.instance.removeGold(-5);
             stoneCount = stoneCount - 5;
             gameManager.instance.updateResourcesUI();
 
@@ -356,9 +377,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
         else return;
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(int amount, DamageType type)
     {
-        //HP -= amount;
+        HP -= amount;
         updatePlayerUI();
         StartCoroutine(flashDamage());
 
@@ -371,8 +392,17 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
 
     public void updatePlayerUI()
     {
-        gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
-        gameManager.instance.SetHPUI();
+        if (HP > 0)
+        {
+            gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+            gameManager.instance.SetHPUI();
+        }
+        else if (HP < 0)
+        {
+            HP = 0;
+            gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+            gameManager.instance.SetHPUI();
+        }
     }
 
     IEnumerator flashDamage()
@@ -381,5 +411,37 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage
         yield return new WaitForSeconds(0.1f);
         gameManager.instance.damageFlash.SetActive(false);
     }
-    
+
+    public void getGunStats(GunStats gun)
+    {
+        gunList.Add(gun);
+        gunListPos = gunList.Count - 1;
+
+        ChangeGun();
+        
+    }
+
+    void ChangeGun()
+    {
+        shootDamage = gunList[gunListPos].shootDamage;
+        shootDist = gunList[gunListPos].shootDist;
+        shootRate = gunList[gunListPos].shootRate;
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].gunModel.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[gunListPos].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+
+    void SelectGun()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") >  0 && gunListPos < gunList.Count - 1)
+        {
+            gunListPos++;
+            ChangeGun() ;
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
+        {
+            gunListPos--;
+            ChangeGun();
+        }
+    }
 }
