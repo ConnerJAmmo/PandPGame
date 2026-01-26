@@ -5058,8 +5058,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::damage
   Type: 0
   Rigidbody: {fileID: -7663441426539666406}
-  lifeTime: 10
-  speed: 10
+  lifeTime: 5
+  speed: 5
   damageRate: 0
   leavesDotZone: 0
   dotZonePrefab: {fileID: 0}
@@ -5078,6 +5078,9 @@ MonoBehaviour:
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
+  enableHoming: 1
+  rotationSpeed: 100
+  target: {fileID: 0}
   enableVisualEffects: 0
   BulletEffectType: 0
   EndPosiotionBullet: {fileID: 0}

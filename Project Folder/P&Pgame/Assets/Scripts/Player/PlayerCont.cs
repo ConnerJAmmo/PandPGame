@@ -377,9 +377,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         else return;
     }
 
-    public void takeDamage(float amount, DamageType type)
+    public void takeDamage(int amount, DamageType type)
     {
-        HP -= (int) amount;
+        HP -= amount;
         updatePlayerUI();
         StartCoroutine(flashDamage());
 

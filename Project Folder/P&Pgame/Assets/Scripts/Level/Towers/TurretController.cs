@@ -16,7 +16,11 @@ public class TurretController : MonoBehaviour, IDamage
     [SerializeField] GameObject bulletPrefab;
 
     [Range(0, 5)][SerializeField] float shootRate;
-    [Range(1, 1000)][SerializeField] int shootDist;
+    [Range(1, 1000)][SerializeField] int shootDist; 
+    [SerializeField] private bool usePredictiveAiming = false;
+    [SerializeField] private bool useBurstFire = false; // Check this for burst fire turrets
+    [Range(0.01f, 0.5f)][SerializeField] float timeBetweenShots = 0.1f; // Delay between shots in a burst
+    [SerializeField] int shotsInBurst = 3; // Number of shots per burst
 
     [Header("Idle Scan Settings")]
     [SerializeField] float scanSpeed = 0.5f;
@@ -66,12 +70,12 @@ public class TurretController : MonoBehaviour, IDamage
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         shootTimer += Time.deltaTime;
-        Debug.DrawRay(shootPos.position, shootPos.forward * shootDist, Color.red);
         enemiesInRange.RemoveAll(enemy => enemy == null);
         numEnemies = enemiesInRange.Count;
+        Debug.DrawRay(shootPos.position, shootPos.forward * shootDist, Color.green, 0.1f);
 
         if (enemiesInRange.Count > 0)
         {
@@ -98,29 +102,50 @@ public class TurretController : MonoBehaviour, IDamage
 
     void faceTarget(Collider other)
     {
+        float currentBulletSpeed = (bulletSpeed > 0) ? bulletSpeed : 50f;
         Vector3 targetPoint = other.bounds.center;
+        Vector3 fullDirection;
 
-        // 1. Try to get velocity from NavMeshAgent or Rigidbody
-        Vector3 enemyVelocity = Vector3.zero;
-        NavMeshAgent agent = other.GetComponent<NavMeshAgent>();
-        Rigidbody rb = other.GetComponent<Rigidbody>();
-
-        if (agent != null) enemyVelocity = agent.velocity;
-        else if (rb != null) enemyVelocity = rb.linearVelocity;
-
-        Vector3 predictedPoint = targetPoint; // Start with the current target point
-        int iterations = 2; // 2 or 3 iterations usually provides sufficient accuracy
-
-        for (int i = 0; i < iterations; i++)
+        if (usePredictiveAiming)
         {
-            float distanceToPredicted = Vector3.Distance(predictedPoint, shootPos.position);
-            float iterateTime = distanceToPredicted / (bulletSpeed > 0 ? bulletSpeed : 100f);
+            Vector3 enemyVelocity = Vector3.zero;
+            NavMeshAgent agent = other.GetComponentInParent<NavMeshAgent>(); // Check parent/children hierarchy if needed
+            Rigidbody rb = other.GetComponentInParent<Rigidbody>(); // Check parent/children hierarchy if needed
 
-            // Recalculate the predicted point based on the new travel time
-            predictedPoint = targetPoint + (enemyVelocity * iterateTime);
+            if (agent != null)
+            {
+                enemyVelocity = agent.velocity * 0.8f;
+                enemyVelocity.y = 0;
+                bool isStillMoving = !agent.pathPending &&
+                         agent.remainingDistance > agent.stoppingDistance;
+
+                if (enemyVelocity.sqrMagnitude < 0.1f && isStillMoving)
+                {
+                    enemyVelocity = other.transform.forward * agent.speed;
+                }
+                else if (!isStillMoving)
+                {
+                    // If they've reached the stop, force velocity to zero 
+                    // to prevent "phantom" leading
+                    enemyVelocity = Vector3.zero;
+                }
+                //Debug.Log($"Enemy Velocity Magnitude: {enemyVelocity.magnitude} | Enemy Speed Parameter: {agent.speed}");
+            }
+            else if (rb != null)
+            {
+                // Note: Rigidbody linearVelocity might be better if you have a recent Unity version, otherwise use .velocity
+                enemyVelocity = rb.linearVelocity;
+            }
+            // Add a Debug statement here to see the calculated direction
+            Vector3 predictedDirection = CalculateInterceptionDirection(shootPos.position, currentBulletSpeed, targetPoint, enemyVelocity);
+            Debug.DrawRay(shootPos.position, predictedDirection * shootDist, Color.green, 0.1f);
+            fullDirection = predictedDirection;
         }
-
-        Vector3 fullDirection = predictedPoint - shootPos.position;
+        else
+        {
+            // Simple fallback: aim directly at the center of the target's bounds
+            fullDirection = targetPoint - shootPos.position;
+        }
 
         if (fullDirection.sqrMagnitude > 0.01f)
         {
@@ -129,18 +154,61 @@ public class TurretController : MonoBehaviour, IDamage
             turret.rotation = Quaternion.RotateTowards(
                 turret.rotation,
                 targetRotation,
-                Time.deltaTime * 100
+                Time.deltaTime * 450f
             );
         }
     }
 
+    // Helper function using analytical math to find the precise interception direction
+    Vector3 CalculateInterceptionDirection(Vector3 shootPos, float bulletSpeed, Vector3 targetPos, Vector3 targetVelocity)
+    {
+        Vector3 targetRelativePosition = targetPos - shootPos;
+        float t = 0f;
+
+        // Law of Cosines interception formula
+        float a = Vector3.Dot(targetVelocity, targetVelocity) - (bulletSpeed * bulletSpeed);
+        float b = 2f * Vector3.Dot(targetVelocity, targetRelativePosition);
+        float c = Vector3.Dot(targetRelativePosition, targetRelativePosition);
+
+        float determinant = b * b - 4f * a * c;
+
+        if (determinant > 0f)
+        {
+            float t1 = (-b + Mathf.Sqrt(determinant)) / (2f * a);
+            float t2 = (-b - Mathf.Sqrt(determinant)) / (2f * a);
+            t = Mathf.Max(t1, t2); // Use the positive time result
+        }
+        else
+        {
+            t = targetRelativePosition.magnitude / bulletSpeed; // Fallback to direct travel time
+        }
+
+        return (targetRelativePosition + targetVelocity * t).normalized;
+    }
+
     void Shoot()
     {
+        if (useBurstFire)
+        {
+            // If burst fire is enabled for this turret, start the coroutine
+            StartCoroutine(FireBurstRoutine());
+        }
+        else
+        {
+            // If not using burst fire, fire a single shot
+            shootTimer = 0; // Reset the timer immediately for the next single shot
+            FireProjectile();
+        }
+    }
+
+    // Helper method to handle the actual instantiation and physics setup of one bullet
+    void FireProjectile()
+    {
         Debug.DrawRay(shootPos.position, turret.forward * 5f, Color.yellow, 2f);
-        shootTimer = 0;
+        // shootTimer is handled by the main Shoot() wrapper or burst coroutine
 
         // Instantiate the bullet with the CombinedBulletScript attached
-        GameObject newBulletGO = Instantiate(bulletPrefab, shootPos.position, turret.rotation); 
+        GameObject newBulletGO = Instantiate(bulletPrefab, shootPos.position, turret.rotation);
 
         Collider[] bulletColliders = newBulletGO.GetComponentsInChildren<Collider>();
 
@@ -150,6 +218,10 @@ public class TurretController : MonoBehaviour, IDamage
         }
 
         Rigidbody bulletRB = newBulletGO.GetComponent<Rigidbody>();
+        if (bulletRB == null)
+        {
+            Debug.LogError("Failed to get Rigidbody component on " + newBulletGO.name);
+        }
 
         if (bulletRB != null)
         {
@@ -157,16 +229,35 @@ public class TurretController : MonoBehaviour, IDamage
             bulletRB.linearVelocity = Vector3.zero;
             bulletRB.angularVelocity = Vector3.zero;
 
+            Vector3 forceToApply = turret.forward * bulletSpeed; // Capture the final vector
+
+            // Log the speed used and the speed we thought we were using for prediction
+            //Debug.Log($"Applying Force: {forceToApply.magnitude} m/s | Predicted Speed: {bulletSpeed}");
             // Apply speed directly using VelocityChange to ignore mass
             bulletRB.AddForce(turret.forward * bulletSpeed, ForceMode.VelocityChange);
 
-            Debug.Log($"Firing with Force: {turret.forward * bulletSpeed} | Turret Forward: {turret.forward}");
+            // Debug.Log($"Firing with Force: {turret.forward * bulletSpeed} | Turret Forward: {turret.forward}");
         }
     }
 
-    public void takeDamage(float amount, DamageType type)
+    IEnumerator FireBurstRoutine()
     {
-        HP -= (int) amount;
+        shootTimer = 0; // Reset timer here to define delay between bursts
+
+        for (int i = 0; i < shotsInBurst; i++)
+        {
+            FireProjectile(); // Call the helper method to fire the shot
+
+            if (i < shotsInBurst - 1)
+            {
+                yield return new WaitForSeconds(timeBetweenShots);
+            }
+        }
+    }
+
+    public void takeDamage(int amount, DamageType type)
+    {
+        HP -= amount;
 
         // Debug to prove it's this specific instance
         Debug.Log($"{gameObject.name} took {amount} damage. HP left: {HP}");
