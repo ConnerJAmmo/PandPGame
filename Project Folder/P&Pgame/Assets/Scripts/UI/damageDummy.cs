@@ -28,9 +28,9 @@ public class damageDummy : MonoBehaviour, IDamage
         material.color = colorOrig;
     }
 
-    public void takeDamage(float amount, DamageType type)
+    public void takeDamage(int amount, DamageType type)
     { 
-        HP -= (int) amount;
+        HP -= amount;
 
         if (HP <= 0)
         {

@@ -23,6 +23,8 @@ public class enemyAI : MonoBehaviour, IDamage
     [Range(1, 1000)] [SerializeField] int faceTargetSpeed;
     [Range(1, 1000)][SerializeField] int shootDist;
     [Range(0, 360)][SerializeField] int FOV = 90;
+    [SerializeField] private bool useBurstFire = false;
+    [Range(0.01f, 0.5f)][SerializeField] float timeBetweenShots = 0.1f; // Delay between shots in a burst
     [SerializeField] int numTurrets;
 
     int maxHP;
@@ -206,17 +208,55 @@ public class enemyAI : MonoBehaviour, IDamage
 
     void Shoot()
     {
-        shootTimer = 0;
-        Instantiate(bullet, shootPos.position, shootPos.rotation);
-        foreach (var trail in bullet.GetComponentsInChildren<TrailRenderer>())
+        if (useBurstFire)
+        {
+            // If burst fire is enabled for this enemy, start the coroutine
+            StartCoroutine(FireBurstRoutine());
+        }
+        else
+        {
+            // If not using burst fire, fire a single shot exactly as before
+            shootTimer = 0; // Reset the timer immediately for the next single shot
+            FireProjectile(target.transform);
+        }
+    }
+
+    IEnumerator FireBurstRoutine()
+    {
+        shootTimer = 0; // Reset timer here to define delay between bursts
+
+        for (int i = 0; i < 3; i++)
+        {
+            FireProjectile(target.transform); // Call the helper method to fire the shot
+
+            if (i < 2)
+            {
+                yield return new WaitForSeconds(timeBetweenShots);
+            }
+        }
+    }
+
+
+    // Helper method to handle the actual instantiation of the bullet
+    void FireProjectile(Transform currentTarget)
+    {
+        GameObject bulletInstance = Instantiate(bullet, shootPos.position, shootPos.rotation);
+        damage bulletDamageScript = bulletInstance.GetComponent<damage>();
+
+        if (bulletDamageScript != null)
+        {
+            bulletDamageScript.target = currentTarget;
+        }
+
+        foreach (var trail in bulletInstance.GetComponentsInChildren<TrailRenderer>())
         {
             trail.Clear();
         }
     }
 
-    public void takeDamage(float amount, DamageType type)
+    public void takeDamage(int amount, DamageType type)
     {
-        HP -= (int) amount;
+        HP -= amount;
 
         if(HP <= 0) 
         {
