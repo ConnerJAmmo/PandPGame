@@ -217,7 +217,7 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             // If not using burst fire, fire a single shot exactly as before
             shootTimer = 0; // Reset the timer immediately for the next single shot
-            FireProjectile();
+            FireProjectile(target.transform);
         }
     }
 
@@ -227,7 +227,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
         for (int i = 0; i < 3; i++)
         {
-            FireProjectile(); // Call the helper method to fire the shot
+            FireProjectile(target.transform); // Call the helper method to fire the shot
 
             if (i < 2)
             {
@@ -238,14 +238,14 @@ public class enemyAI : MonoBehaviour, IDamage
 
 
     // Helper method to handle the actual instantiation of the bullet
-    void FireProjectile()
+    void FireProjectile(Transform currentTarget)
     {
         GameObject bulletInstance = Instantiate(bullet, shootPos.position, shootPos.rotation);
         damage bulletDamageScript = bulletInstance.GetComponent<damage>();
 
         if (bulletDamageScript != null)
         {
-            bulletDamageScript.target = gameManager.instance.player.transform;
+            bulletDamageScript.target = currentTarget;
         }
 
         foreach (var trail in bulletInstance.GetComponentsInChildren<TrailRenderer>())

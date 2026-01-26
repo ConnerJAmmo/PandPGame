@@ -54,14 +54,12 @@ namespace bullet.fx.pack
         [SerializeField] private bool enableVisualEffects = false; // Main opt-in flag
         [SerializeField] private BulletEffectType BulletEffectType;
         [SerializeField] private Transform EndPosiotionBullet;
-        [SerializeField] private Material BulletTrailMaterial;
         [SerializeField] private GameObject Fire2Effect;
         [SerializeField] private GameObject Fire3Effect;
         [SerializeField] private MeshType meshType;
 
         // --- Private variables for damage/logic (from original damage.cs) ---
         private readonly HashSet<IDamage> dotVictims = new HashSet<IDamage>();
-        private bool hasCollided = false; // Added to prevent multiple hits
 
         // Reference to the new visual component
         private BulletVisualFX visualFX;
@@ -94,18 +92,22 @@ namespace bullet.fx.pack
             {
                 if (Rigidbody != null)
                 {
+                    Rigidbody.isKinematic = false;
                     Rigidbody.linearVelocity = transform.forward * speed;
                 }
-                if (lifeTime > 0f)
-                {
-                    Destroy(gameObject, lifeTime); // Destroy after lifetime
-                }
+            }
+            
+            if (lifeTime > 0f)
+            {
+                Destroy(gameObject, lifeTime); // Destroy after lifetime
             }
 
             // Start visuals logic via delegation
             if (enableVisualEffects && visualFX != null)
             {
-                visualFX.StartVisualEffects(BulletEffectType, EndPosiotionBullet, BulletTrailMaterial, Fire2Effect, Fire3Effect, meshType, createHitEffect, hitEffectPrefab, groundedHitEffect, groundCheckDistance, groundLayer);
+                visualFX.StartVisualEffects(BulletEffectType, EndPosiotionBullet,
+                    Fire2Effect, Fire3Effect, meshType, createHitEffect, 
+                    hitEffectPrefab, groundedHitEffect, groundCheckDistance, groundLayer);
             }
         }
 
@@ -128,71 +130,43 @@ namespace bullet.fx.pack
         // --- OnTriggerEnter (from original damage.cs) ---
         private async void OnTriggerEnter(Collider other)
         {
-            if (other.isTrigger) return; // not activated by another trigger
-            int otherLayerMask = 1 << other.gameObject.layer;
-
-            // Set Rigidbody gravity to true and IsFlying to false upon any collision/trigger
-            if (Rigidbody != null) Rigidbody.useGravity = true;
+            // Set IsFlying to false upon any trigger/collision
             if (visualFX != null) visualFX.SetFlying(false);
 
-            // If it hits a block layer, handle impact, FX, and set for deletion
+            int otherLayerMask = 1 << other.gameObject.layer;
+            Vector3 hitPoint = GetSafeContactPoint(other);
+
+            // Check block layers first (walls, ground) - if it hits this, we do hit FX and despawn
             if ((blockLayers.value & otherLayerMask) != 0)
             {
-                Vector3 hitPoint = other.ClosestPointOnBounds(transform.position); ;
-                if (visualFX != null) visualFX.DoHitFX(hitPoint, createHitEffect, hitEffectPrefab, groundedHitEffect, groundCheckDistance, groundLayer);
+                if (visualFX != null) visualFX.DoHitFX(hitPoint, createHitEffect, hitEffectPrefab,
+                groundedHitEffect, groundCheckDistance, groundLayer);
                 if (Type == DamageType.moving && destroyOnHit)
                 {
-                    await Task.Delay(5000); // Wait for visual fade
-                    if (visualFX != null) visualFX.InitiateDeletion();
+                    // Removed the 5-second delay, destroy immediately
+                    Destroy(gameObject);
                 }
-                return;
+                return; // Exit the function if we hit a wall/blocker
             }
 
             // If is not a damageable layer ignore it
             if ((damageLayers.value & otherLayerMask) == 0)
                 return;
 
-            // Determine hit point for damageable object
-            Vector3 dmgHitPoint;
-            if (other is MeshCollider meshCol && !meshCol.convex)
-            {
-                dmgHitPoint = other.ClosestPointOnBounds(transform.position);
-            }
-            else
-            {
-                dmgHitPoint = other.ClosestPoint(transform.position);
-            }
-
-            // Call unified logic
-            HandleImpactLogic(other.gameObject, dmgHitPoint);
+            // If it is a damageable layer, call the unified logic
+            HandleImpactLogic(other.gameObject, hitPoint);
         }
 
-        // --- OnCollisionEnter (from original damage.cs) ---
-        private void OnCollisionEnter(Collision collision)
+        Vector3 GetSafeContactPoint(Collider other)
         {
-            // The hasCollided flag prevents multiple hits from the same fast-moving bullet
-            if (hasCollided) return;
-            hasCollided = true;
-            if (visualFX != null) visualFX.SetFlying(false);
-
-            int otherLayerMask = 1 << collision.gameObject.layer;
-
-            // Determine a safe hit point using the corrected logic for all collider types
-            Vector3 hitPoint = GetSafeContactPoint(collision.collider, collision.contacts[0].point);
-
-            // Check block layers first (walls, ground) - if it hits this, we do hit FX and despawn
-            if ((blockLayers.value & otherLayerMask) != 0)
+            // If it is a MeshCollider and not convex, use ClosestPointOnBounds
+            if (other is MeshCollider meshCol && !meshCol.convex)
             {
-                if (visualFX != null) visualFX.DoHitFX(hitPoint, createHitEffect, hitEffectPrefab, groundedHitEffect, groundCheckDistance, groundLayer);
-                if (Type == DamageType.moving && destroyOnHit)
-                {
-                    Destroy(gameObject);
-                }
-                return;
+                return other.ClosestPointOnBounds(transform.position);
             }
-
-            // Call unified logic
-            HandleImpactLogic(collision.gameObject, hitPoint);
+            // For all other supported colliders (Box, Sphere, Capsule, convex Mesh), use ClosestPoint.
+            // ClosestPointOnBounds works as a reliable fallback for any collider type.
+            return other.ClosestPointOnBounds(transform.position);
         }
 
         // --- Unified Impact Logic Method ---
@@ -204,10 +178,10 @@ namespace bullet.fx.pack
             {
                 dmg = other.GetComponentInParent<IDamage>();
             }
-
             if (dmg == null)
             {
-                // If we hit something non-damageable but didn't return via block layers, destroy immediately if moving
+                // If we hit something non-damageable but didn't return via block layers, destroy
+                // immediately if moving
                 if (Type == DamageType.moving && destroyOnHit)
                 {
                     Destroy(gameObject);
@@ -218,17 +192,21 @@ namespace bullet.fx.pack
             // Apply damage logic based on Type
             if (Type == DamageType.moving || Type == DamageType.stationary)
             {
+                // Check if the Rigidbody exists AND if the type is 'moving' before trying to set velocity
+                if (Rigidbody != null && Type == DamageType.moving)
+                {
+                    Rigidbody.linearVelocity = Vector3.zero;
+                    // Removed 'Rigidbody.isKinematic = true;' as it caused the error
+                }
+
                 dmg.takeDamage(damageAmount, DamageType.moving);
-
                 HandleProjectileImpact(hitPoint); // Spawn DOT on the enemy if needed
-
-                if (visualFX != null) visualFX.DoHitFX(hitPoint, createHitEffect, hitEffectPrefab, groundedHitEffect, groundCheckDistance, groundLayer);
-
+                if (visualFX != null) visualFX.DoHitFX(hitPoint, createHitEffect, hitEffectPrefab,
+                groundedHitEffect, groundCheckDistance, groundLayer);
                 if (Type == DamageType.moving && destroyOnHit)
                 {
-                    // Use async Task.Delay to wait for the visual effect fade before actual deletion
-                    await Task.Delay(5000);
-                    if (visualFX != null) visualFX.InitiateDeletion();
+                    // Removed the 5-second delay, destroy immediately
+                    Destroy(gameObject);
                 }
             }
             else if (Type == DamageType.DOT)

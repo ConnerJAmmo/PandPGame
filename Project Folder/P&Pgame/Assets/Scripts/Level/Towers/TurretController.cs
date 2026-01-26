@@ -70,12 +70,12 @@ public class TurretController : MonoBehaviour, IDamage
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         shootTimer += Time.deltaTime;
-        Debug.DrawRay(shootPos.position, shootPos.forward * shootDist, Color.red);
         enemiesInRange.RemoveAll(enemy => enemy == null);
         numEnemies = enemiesInRange.Count;
+        Debug.DrawRay(shootPos.position, shootPos.forward * shootDist, Color.green, 0.1f);
 
         if (enemiesInRange.Count > 0)
         {
@@ -102,20 +102,44 @@ public class TurretController : MonoBehaviour, IDamage
 
     void faceTarget(Collider other)
     {
+        float currentBulletSpeed = (bulletSpeed > 0) ? bulletSpeed : 50f;
         Vector3 targetPoint = other.bounds.center;
         Vector3 fullDirection;
 
         if (usePredictiveAiming)
         {
             Vector3 enemyVelocity = Vector3.zero;
-            float currentBulletSpeed = (bulletSpeed > 0) ? bulletSpeed : 100f;
-            Vector3 turretPosition = shootPos.position;
-            NavMeshAgent agent = other.GetComponent<NavMeshAgent>();
-            Rigidbody rb = other.GetComponent<Rigidbody>();
+            NavMeshAgent agent = other.GetComponentInParent<NavMeshAgent>(); // Check parent/children hierarchy if needed
+            Rigidbody rb = other.GetComponentInParent<Rigidbody>(); // Check parent/children hierarchy if needed
 
-            if (agent != null) enemyVelocity = agent.velocity;
-            else if (rb != null) enemyVelocity = rb.linearVelocity;
-            fullDirection = CalculateInterceptionDirection(shootPos.position, (bulletSpeed > 0) ? bulletSpeed : 100f, targetPoint, enemyVelocity);
+            if (agent != null)
+            {
+                enemyVelocity = agent.velocity * 0.8f;
+                enemyVelocity.y = 0;
+                bool isStillMoving = !agent.pathPending &&
+                         agent.remainingDistance > agent.stoppingDistance;
+
+                if (enemyVelocity.sqrMagnitude < 0.1f && isStillMoving)
+                {
+                    enemyVelocity = other.transform.forward * agent.speed;
+                }
+                else if (!isStillMoving)
+                {
+                    // If they've reached the stop, force velocity to zero 
+                    // to prevent "phantom" leading
+                    enemyVelocity = Vector3.zero;
+                }
+                //Debug.Log($"Enemy Velocity Magnitude: {enemyVelocity.magnitude} | Enemy Speed Parameter: {agent.speed}");
+            }
+            else if (rb != null)
+            {
+                // Note: Rigidbody linearVelocity might be better if you have a recent Unity version, otherwise use .velocity
+                enemyVelocity = rb.linearVelocity;
+            }
+            // Add a Debug statement here to see the calculated direction
+            Vector3 predictedDirection = CalculateInterceptionDirection(shootPos.position, currentBulletSpeed, targetPoint, enemyVelocity);
+            Debug.DrawRay(shootPos.position, predictedDirection * shootDist, Color.green, 0.1f);
+            fullDirection = predictedDirection;
         }
         else
         {
@@ -130,44 +154,36 @@ public class TurretController : MonoBehaviour, IDamage
             turret.rotation = Quaternion.RotateTowards(
                 turret.rotation,
                 targetRotation,
-                Time.deltaTime * 100
+                Time.deltaTime * 450f
             );
         }
     }
 
     // Helper function using analytical math to find the precise interception direction
-    private Vector3 CalculateInterceptionDirection(Vector3 origin, float projectileSpeed, Vector3 targetPos, Vector3 targetVel)
+    Vector3 CalculateInterceptionDirection(Vector3 shootPos, float bulletSpeed, Vector3 targetPos, Vector3 targetVelocity)
     {
-        Vector3 targetToOrigin = origin - targetPos;
-        float a = Vector3.Dot(targetVel, targetVel) - (projectileSpeed * projectileSpeed);
-        float b = 2f * Vector3.Dot(targetVel, targetToOrigin);
-        float c = Vector3.Dot(targetToOrigin, targetToOrigin);
+        Vector3 targetRelativePosition = targetPos - shootPos;
+        float t = 0f;
 
-        // Solve the quadratic equation for time 't'
-        float discriminant = b * b - 4f * a * c;
+        // Law of Cosines interception formula
+        float a = Vector3.Dot(targetVelocity, targetVelocity) - (bulletSpeed * bulletSpeed);
+        float b = 2f * Vector3.Dot(targetVelocity, targetRelativePosition);
+        float c = Vector3.Dot(targetRelativePosition, targetRelativePosition);
 
-        if (discriminant < 0)
+        float determinant = b * b - 4f * a * c;
+
+        if (determinant > 0f)
         {
-            // No real solutions, target cannot be intercepted (or is moving too fast for us)
-            // Fallback: just return direction to current target position
-            return (targetPos - origin).normalized;
+            float t1 = (-b + Mathf.Sqrt(determinant)) / (2f * a);
+            float t2 = (-b - Mathf.Sqrt(determinant)) / (2f * a);
+            t = Mathf.Max(t1, t2); // Use the positive time result
+        }
+        else
+        {
+            t = targetRelativePosition.magnitude / bulletSpeed; // Fallback to direct travel time
         }
 
-        float t1 = (-b + Mathf.Sqrt(discriminant)) / (2f * a);
-        float t2 = (-b - Mathf.Sqrt(discriminant)) / (2f * a);
-
-        // Choose the smallest positive time solution
-        float timeToImpact = Mathf.Max(t1, t2);
-
-        if (timeToImpact < 0)
-        {
-            // Both times are negative, the target is moving away or is already past
-            return (targetPos - origin).normalized;
-        }
-
-        // Calculate the future position
-        Vector3 interceptionPoint = targetPos + targetVel * timeToImpact;
-        return (interceptionPoint - origin).normalized;
+        return (targetRelativePosition + targetVelocity * t).normalized;
     }
 
     void Shoot()
@@ -202,6 +218,10 @@ public class TurretController : MonoBehaviour, IDamage
         }
 
         Rigidbody bulletRB = newBulletGO.GetComponent<Rigidbody>();
+        if (bulletRB == null)
+        {
+            Debug.LogError("Failed to get Rigidbody component on " + newBulletGO.name);
+        }
 
         if (bulletRB != null)
         {
@@ -209,6 +229,10 @@ public class TurretController : MonoBehaviour, IDamage
             bulletRB.linearVelocity = Vector3.zero;
             bulletRB.angularVelocity = Vector3.zero;
 
+            Vector3 forceToApply = turret.forward * bulletSpeed; // Capture the final vector
+
+            // Log the speed used and the speed we thought we were using for prediction
+            //Debug.Log($"Applying Force: {forceToApply.magnitude} m/s | Predicted Speed: {bulletSpeed}");
             // Apply speed directly using VelocityChange to ignore mass
             bulletRB.AddForce(turret.forward * bulletSpeed, ForceMode.VelocityChange);
 

@@ -26,7 +26,6 @@ namespace bullet.fx.pack
         private GameObject Fire2Effect, Fire3Effect, hitEffectPrefab;
         private MeshType meshType;
         private Transform EndPosiotionBullet;
-        private Material BulletTrailMaterial;
         private bool createHitEffect, groundedHitEffect;
         private float groundCheckDistance;
         private LayerMask groundLayer;
@@ -34,12 +33,11 @@ namespace bullet.fx.pack
 
         public void SetFlying(bool flying) => IsFlying = flying;
 
-        public void StartVisualEffects(BulletEffectType effectType, Transform endPos, Material trailMat, GameObject f2, GameObject f3, MeshType mType, bool createFx, GameObject hitFx, bool groundedFx, float groundDist, LayerMask groundLyr)
+        public void StartVisualEffects(BulletEffectType effectType, Transform endPos, GameObject f2, GameObject f3, MeshType mType, bool createFx, GameObject hitFx, bool groundedFx, float groundDist, LayerMask groundLyr)
         {
             // Assign passed in values
             currentBulletEffectType = effectType;
             EndPosiotionBullet = endPos;
-            BulletTrailMaterial = trailMat;
             Fire2Effect = f2;
             Fire3Effect = f3;
             meshType = mType;
@@ -71,26 +69,6 @@ namespace bullet.fx.pack
             var meshFilter = GetComponent<MeshFilter>();
             if (meshFilter == null) meshFilter = gameObject.AddComponent<MeshFilter>();
             meshFilter.mesh = customMesh;
-
-            // Start the trail coroutine
-            StartCoroutine(StartCreateBulletTrail());
-        }
-        private IEnumerator StartCreateBulletTrail()
-        {
-            while (IsFlying)
-            {
-                yield return new WaitForSeconds(0.02f);
-                CreateBulletTrail(EndPosiotionBullet.position, endPositionTrail);
-                endPositionTrail = EndPosiotionBullet.position;
-            }
-            yield break;
-        }
-
-        private void CreateBulletTrail(Vector3 start, Vector3 end)
-        {
-            GameObject trail = new GameObject("BulletTrail");
-            LineRenderer line = trail.AddComponent<LineRenderer>();
-            line.material = BulletTrailMaterial;
         }
 
         public void DoHitFX(Vector3 point, bool createHitEffect, GameObject hitEffectPrefab, bool groundedHitEffect, float groundCheckDistance, LayerMask groundLayer)
