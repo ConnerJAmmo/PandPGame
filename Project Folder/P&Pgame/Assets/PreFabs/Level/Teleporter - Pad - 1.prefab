@@ -79,8 +79,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b145937c6c29c74f8d6136be2e0bd9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTeleporter
-  destination: {fileID: 0}
-  destinationPoint: {fileID: 0}
+  padId: PadA
+  destinationPadId: PadB
+  destinationPoint: {fileID: 1891765844985339400}
   coolDown: 0.75
 --- !u!65 &7320146972390567622
 BoxCollider:
@@ -170,6 +171,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::teleportDisplay
   message: 'Teleport available: Going To Pad 2'
+--- !u!1 &1835422433659468466
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1891765844985339400}
+  m_Layer: 0
+  m_Name: 'SpawnPoint '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1891765844985339400
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835422433659468466}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4754849306770636235}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8202154640957977958
 GameObject:
   m_ObjectHideFlags: 0
@@ -14826,5 +14858,6 @@ Transform:
   - {fileID: 2836435901719594857}
   - {fileID: 624918533767560801}
   - {fileID: 4981796645671598171}
+  - {fileID: 1891765844985339400}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
