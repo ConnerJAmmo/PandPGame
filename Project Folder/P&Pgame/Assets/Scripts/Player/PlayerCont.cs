@@ -181,7 +181,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
             placeHint += mineHint + '\n';
         }
 
-        gameManager.instance.SetHint(placeHint.Trim());
+        gameManager.instance.SetBaseHint(placeHint.Trim());
     }
 
     string GetMineHint()
