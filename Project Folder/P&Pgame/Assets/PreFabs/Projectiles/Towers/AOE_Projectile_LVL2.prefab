@@ -24297,7 +24297,7 @@ GameObject:
   - component: {fileID: 7514003196846576461}
   - component: {fileID: 7594118811961230627}
   m_Layer: 6
-  m_Name: AOE-Projectile
+  m_Name: AOE_Projectile_LVL2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24313,8 +24313,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.75}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.99999994}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 315123230257226960}
   - {fileID: 7614576604712225207}
@@ -24332,21 +24332,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27036156c63734b4dae0ffd729776b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
-  Type: 0
-  Rigidbody: {fileID: 7594118811961230627}
-  lifeTime: 5
-  speed: 15
-  damageRate: 0
-  leavesDotZone: 1
-  dotZonePrefab: {fileID: 2972392977303283589, guid: a0f2d6967edfff549bf70fea700cc231, type: 3}
-  damageAmount: 1
-  destroyOnHit: 1
-  createHitEffect: 1
-  groundedHitEffect: 0
-  groundCheckDistance: 10
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  target: {fileID: 0}
+  dotZonePrefab: {fileID: 2972392977303283589, guid: 7e942e8b0fda75e45857667248273baf, type: 3}
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
@@ -24354,16 +24341,22 @@ MonoBehaviour:
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
+  type: 0
+  lifeTime: 3
+  speed: 10
+  damageAmount: 1
+  dotDamageRate: 0
+  leavesDotZone: 1
   enableHoming: 0
-  rotationSpeed: 100
-  target: {fileID: 0}
-  enableVisualEffects: 0
-  BulletEffectType: 0
-  EndPosiotionBullet: {fileID: 0}
-  BulletTrailMaterial: {fileID: 0}
-  Fire2Effect: {fileID: 0}
-  Fire3Effect: {fileID: 0}
+  createHitEffect: 0
+  groundedHitEffect: 0
+  destroyOnHit: 1
+  bulletProjectile: 0
+  bulletEffectType: 0
   meshType: 0
+  endPosition: {fileID: 0}
+  fireCylinder: {fileID: 0}
+  fireEffect: {fileID: 0}
 --- !u!136 &7514003196846576461
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -24383,8 +24376,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.75
+  m_Height: 2.25
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &7594118811961230627

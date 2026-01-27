@@ -4973,7 +4973,7 @@ GameObject:
   - component: {fileID: 2347675985546173430}
   - component: {fileID: 5069472616247798498}
   m_Layer: 6
-  m_Name: ST-Projectile
+  m_Name: ST_Projectile_LVL2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5022,21 +5022,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27036156c63734b4dae0ffd729776b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
-  Type: 0
-  Rigidbody: {fileID: 5069472616247798498}
-  lifeTime: 5
-  speed: 25
-  damageRate: 0
-  leavesDotZone: 0
+  target: {fileID: 0}
   dotZonePrefab: {fileID: 0}
-  damageAmount: 1
-  destroyOnHit: 1
-  createHitEffect: 1
-  groundedHitEffect: 0
-  groundCheckDistance: 10
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
@@ -5044,16 +5031,22 @@ MonoBehaviour:
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
+  type: 0
+  lifeTime: 1.5
+  speed: 20
+  damageAmount: 1
+  dotDamageRate: 0
+  leavesDotZone: 0
   enableHoming: 0
-  rotationSpeed: 100
-  target: {fileID: 0}
-  enableVisualEffects: 1
-  BulletEffectType: 0
-  EndPosiotionBullet: {fileID: 3360786239013066748}
-  BulletTrailMaterial: {fileID: 2100000, guid: cf6917fc065af13468d7d051a191c5d2, type: 2}
-  Fire2Effect: {fileID: 1415196100137707039}
-  Fire3Effect: {fileID: 1521433013919272532}
+  createHitEffect: 0
+  groundedHitEffect: 0
+  destroyOnHit: 1
+  bulletProjectile: 1
+  bulletEffectType: 0
   meshType: 0
+  endPosition: {fileID: 3360786239013066748}
+  fireCylinder: {fileID: 1415196100137707039}
+  fireEffect: {fileID: 1521433013919272532}
 --- !u!33 &5411549269498725013
 MeshFilter:
   m_ObjectHideFlags: 0

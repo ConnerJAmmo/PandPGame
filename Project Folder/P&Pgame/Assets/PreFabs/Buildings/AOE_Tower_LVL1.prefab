@@ -10,10 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4182109551995616}
   - component: {fileID: 8497347533726309431}
+  - component: {fileID: 5537083010433455168}
   - component: {fileID: 899537935904901051}
   - component: {fileID: 7539443543783141499}
+  - component: {fileID: 134687147014982408}
   m_Layer: 12
-  m_Name: AOE-Tower
+  m_Name: AOE_Tower_LVL1
   m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,21 +50,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc0a4cf76808814f8d506f84abd6cc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurretController
-  model: {fileID: 6312730747402279141}
   numEnemies: 0
-  HP: 1000
-  shootPos: {fileID: 1483786942997479876}
-  turret: {fileID: 814818969609971160}
+  target: {fileID: 0}
+  turret: {fileID: 8826290110879324668}
   bulletPrefab: {fileID: 7612802135244751355, guid: 507fb45323d1300469cd075216049836, type: 3}
-  shootRate: 2
-  shootDist: 25
-  usePredictiveAiming: 1
-  useBurstFire: 0
-  timeBetweenShots: 0.1
-  shotsInBurst: 3
+  HP: 25
+  range: 25
+  shotsPerBurst: 1
+  burstFireRate: 0
+  fireRate: 2
   scanSpeed: 0.5
   scanAngle: 45
-  target: {fileID: 0}
+  fireManager: {fileID: 5537083010433455168}
+--- !u!114 &5537083010433455168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361402013487122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cd37bca88970b94bb3a59f09e3936bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TurretFireManager
+  levelOneFirePoints:
+  - {fileID: 1483786942997479876}
+  levelTwoFirePoints: []
+  levelThreeFirePoints: []
+  turretLvl: 1
+  currentFirePointIndex: 0
 --- !u!136 &899537935904901051
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -113,6 +130,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!135 &134687147014982408
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361402013487122}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.8
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &588428997433313272
 GameObject:
   m_ObjectHideFlags: 0
