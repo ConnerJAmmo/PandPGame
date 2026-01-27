@@ -37,9 +37,9 @@ public class baseDmg : MonoBehaviour, IDamage
 
     }
 
-    public void takeDamage(float amount, DamageType type)
+    public void takeDamage(int amount, DamageType type)
     {
-        hp -= (int) amount;
+        hp -= amount;
         if (hp < 0)
             hp = 0;
 

@@ -44,9 +44,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     [Header("Guns")]
     [SerializeField] List<GunStats> gunList = new List<GunStats>();
     [SerializeField] GameObject gunModel;
-    [SerializeField] float shootRate;
-    [SerializeField] int shootDist;
-    [SerializeField] int shootDamage;
+    [SerializeField] public float shootRate;
+    [SerializeField] public int shootDist;
+    [SerializeField] public int shootDamage;
 
     int gunListPos;
     int jumpCount;
@@ -377,9 +377,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         else return;
     }
 
-    public void takeDamage(float amount, DamageType type)
+    public void takeDamage(int amount, DamageType type)
     {
-        HP -= (int) amount;
+        HP -= amount;
         updatePlayerUI();
         StartCoroutine(flashDamage());
 

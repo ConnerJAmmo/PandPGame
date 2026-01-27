@@ -10,7 +10,8 @@ public class gameManager : MonoBehaviour, goldManage
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuWin;
-    [SerializeField] GameObject menuUpgrade;
+    [SerializeField] GameObject menuTowerUpgrade;
+    [SerializeField] GameObject menuPlayerUpgrade;
 
     [SerializeField] TMP_Text playerHPText;
     [SerializeField] TMP_Text playerHPTextOrig;
@@ -35,12 +36,13 @@ public class gameManager : MonoBehaviour, goldManage
     public int startingGold;
     public int enemyCount;
     public int enemyCountOrig;
+    public int goldCount;
 
     public Image playerHPBar;
     public GameObject damageFlash;
 
     float timeScaleOrig;
-    int goldCount;
+    
 
     public GameObject waveSpawner;
 
@@ -81,7 +83,7 @@ public class gameManager : MonoBehaviour, goldManage
             }
         }
 
-        openTowerUpgradeMenu();
+        openPlayerUpgradeMenu();
     }
 
     public void updateEnemyCountTotal(int amount)
@@ -120,6 +122,7 @@ public class gameManager : MonoBehaviour, goldManage
     public int GetGold()
     {
         return goldCount;
+
     }
 
     public void newMenu(GameObject menu)
@@ -162,20 +165,19 @@ public class gameManager : MonoBehaviour, goldManage
         menuActive = null;
     }
 
-    public void openTowerUpgradeMenu()
-    {
-        RaycastHit hit;
+   
 
-        if (Input.GetButtonDown("Tower Upgrade Menu") && Physics.Raycast(Camera.main.transform.position, 
-            Camera.main.transform.forward, upgradedis, towerLayer))
+    public void openPlayerUpgradeMenu()
+    {
+        if (Input.GetButtonDown("Player Upgrade Menu"))
         {
-            if (gameManager.instance.menuActive == null)
+            if (menuActive == null)
             {
                 openUpgradeMenu();
-                menuActive = menuUpgrade;
+                menuActive = menuPlayerUpgrade;
                 menuActive.SetActive(true);
             }
-            else if (menuActive == menuUpgrade)
+            else if (menuActive == menuPlayerUpgrade)
             {
                 closeUpgradeMenu();
             }

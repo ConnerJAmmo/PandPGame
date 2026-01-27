@@ -3,6 +3,6 @@ using UnityEngine;
 
 public interface IDamage
 {
-    void takeDamage(float amount, DamageType type);
+    void takeDamage(int amount, DamageType type);
 }
 

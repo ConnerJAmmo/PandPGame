@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8497347533726309431}
   - component: {fileID: 899537935904901051}
   - component: {fileID: 7539443543783141499}
-  - component: {fileID: 816895078022734033}
   m_Layer: 12
   m_Name: AOE-Tower
   m_TagString: Turret
@@ -34,6 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6285756311504191230}
+  - {fileID: 517641145143171352}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8497347533726309431
@@ -53,10 +53,13 @@ MonoBehaviour:
   HP: 1000
   shootPos: {fileID: 1483786942997479876}
   turret: {fileID: 814818969609971160}
-  bulletPrefab: {fileID: 7983933263039930371, guid: 000cce08b3da8654abd394e3d8182131, type: 3}
-  projectileData: {fileID: 11400000, guid: 5b5a5bfe74d79a149976ae5d1cc69084, type: 2}
-  shootRate: 1
-  shootDist: 20
+  bulletPrefab: {fileID: 7612802135244751355, guid: 507fb45323d1300469cd075216049836, type: 3}
+  shootRate: 2
+  shootDist: 25
+  usePredictiveAiming: 1
+  useBurstFire: 0
+  timeBetweenShots: 0.1
+  shotsInBurst: 3
   scanSpeed: 0.5
   scanAngle: 45
   target: {fileID: 0}
@@ -110,27 +113,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &816895078022734033
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1361402013487122}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 20
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &588428997433313272
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,6 +415,59 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6059334429774980022
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 517641145143171352}
+  - component: {fileID: 2833853943019359215}
+  m_Layer: 1
+  m_Name: DetectRadius
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &517641145143171352
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059334429774980022}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4182109551995616}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &2833853943019359215
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059334429774980022}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 25
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8349531296711391858
 GameObject:
   m_ObjectHideFlags: 0
