@@ -42,6 +42,9 @@ public class gameManager : MonoBehaviour, goldManage
     public GameObject damageFlash;
 
     float timeScaleOrig;
+
+    string baseHint;
+    string interactionHint;
     
 
     public GameObject waveSpawner;
@@ -189,6 +192,11 @@ public class gameManager : MonoBehaviour, goldManage
         newMenu(menuLose);
     }
 
+    public void youWin()
+    {
+        newMenu(menuWin);
+    }
+
     public void updateResourcesUI()
     {
        if (playerScript == null)
@@ -200,17 +208,41 @@ public class gameManager : MonoBehaviour, goldManage
         stoneCountText.text = playerScript.stoneCount.ToString("F0");
     }
 
-    public void SetHint(string msg)
+    public void RefreshHint()
     {
         if (!hintText) return;
 
-        hintText.text = msg;
-        hintText.gameObject.SetActive(!string.IsNullOrEmpty(msg));
+        string final;
+        if(!string.IsNullOrEmpty(interactionHint))
+        { 
+            final = interactionHint; 
+        }else
+        {
+            final = baseHint;
+        }
+
+
+
+        hintText.text = final;
+        hintText.gameObject.SetActive(!string.IsNullOrEmpty(final));
     }
 
-    public void ClearHint()
+    public void ClearInteractionHint()
     {
-        SetHint("");
+        interactionHint = "";
+        RefreshHint();
+    }
+
+    public void SetInteractionHint(string msg)
+    {
+        interactionHint = msg; 
+        RefreshHint() ;
+    }
+
+    public void SetBaseHint(string msg)
+    {
+        baseHint = msg; 
+        RefreshHint() ;
     }
 
     public void addGold(int gold)

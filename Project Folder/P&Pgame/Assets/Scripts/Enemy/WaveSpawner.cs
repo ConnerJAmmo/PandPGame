@@ -12,6 +12,7 @@ public class WaveSpawner : MonoBehaviour
     public int currentWaveIndex = 0;
 
     private bool readyToCountDown;
+    private bool gameWon = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -40,8 +41,15 @@ public class WaveSpawner : MonoBehaviour
         
         if (waves[currentWaveIndex].enemiesLeft == 0)
         {
+            if (currentWaveIndex >= waves.Length -1)
+            {
+                gameManager.instance.youWin();
+            }
+            else
+            {
             readyToCountDown = true;
             currentWaveIndex++;
+            }
         }
     }
 
@@ -66,6 +74,8 @@ public class WaveSpawner : MonoBehaviour
 
         currentWaveIndex++;
     }
+
+    
 }
 
 [System.Serializable]
