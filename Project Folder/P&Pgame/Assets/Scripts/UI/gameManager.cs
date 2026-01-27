@@ -61,8 +61,7 @@ public class gameManager : MonoBehaviour, goldManage
         goldCountText.text = goldCount.ToString("F0");
 
         waveSpawner = GameObject.FindWithTag("WaveSpawner");
-        SetWaveCountUI(0);
-        SetActiveWaveUI(0);
+        SetActiveWaveUI(1);
 
         baseTower = GameObject.FindWithTag("Base");
 

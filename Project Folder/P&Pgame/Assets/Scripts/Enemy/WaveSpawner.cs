@@ -22,6 +22,8 @@ public class WaveSpawner : MonoBehaviour
         {
             waves[i].enemiesLeft = waves[i].enemies.Length;
         }
+
+        gameManager.instance.SetWaveCountUI(waves.Length);
     }
 
     // Update is called once per frame
@@ -67,6 +69,7 @@ public class WaveSpawner : MonoBehaviour
 
     public void SpawnNextWave()
     {
+        gameManager.instance.SetActiveWaveUI(currentWaveIndex + 1);
         if (currentWaveIndex >= waveTemplates.Length) return;
 
         // 1. Instantiate the entire container at the spawner's location
