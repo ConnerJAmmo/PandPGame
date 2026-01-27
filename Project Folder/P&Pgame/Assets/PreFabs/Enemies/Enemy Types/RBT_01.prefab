@@ -998,10 +998,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5813695176681686686}
-  - component: {fileID: 2168656573314572050}
   - component: {fileID: 8579709875100356518}
   m_Layer: 0
-  m_Name: TriggerArea
+  m_Name: DetectRadius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1022,14 +1021,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5501357065907556880}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2168656573314572050
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6739566029181675536}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!135 &8579709875100356518
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1392,19 +1383,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed6308d3e8efa574b962a2e4cd319b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::enemyAI
-  model: {fileID: 7252553101752652677}
-  agent: {fileID: 3588389157018784022}
-  desination: {x: 0, y: 0, z: 0}
+  numTurrets: 0
   target: {fileID: 0}
   shootPos: {fileID: 1282471459520118422}
+  headPos: {fileID: 7052530266879033111}
   bullet: {fileID: 7983933263039930371, guid: b2cc5e6c018b75f468c0514221c66867, type: 3}
-  ignoreLayer:
-    serializedVersion: 2
-    m_Bits: 0
   HP: 20
-  shootRate: 1.5
-  faceTargetSpeed: 75
-  shootDist: 100
+  FOV: 360
+  range: 100
+  shotsPerBurst: 1
+  burstFireRate: 0
+  fireRate: 2
 --- !u!195 &3588389157018784022
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1498,7 +1487,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!1 &7780851292774618702
 GameObject:
   m_ObjectHideFlags: 0

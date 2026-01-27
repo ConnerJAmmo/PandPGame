@@ -47,28 +47,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27036156c63734b4dae0ffd729776b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Damage
-  Type: 0
-  rb: {fileID: 3312275884751850685}
-  lifeTime: 5
-  speed: 10
-  damageRate: 0
-  leavesDotZone: 0
+  target: {fileID: 0}
   dotZonePrefab: {fileID: 0}
-  damageAmount: 1
-  destroyOnHit: 1
-  createHitEffect: 1
-  groundedHitEffect: 0
-  groundCheckDistance: 10
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  hitEffectPrefab: {fileID: 0}
+  hitEffectPrefab: {fileID: 842728999832923776, guid: 4131349b8b5025846a9ecb06b7eb2d73, type: 3}
   damageLayers:
     serializedVersion: 2
     m_Bits: 128
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
+  type: 0
+  lifeTime: 5
+  speed: 50
+  damageAmount: 1
+  dotDamageRate: 0
+  leavesDotZone: 0
+  enableHoming: 0
+  createHitEffect: 1
+  groundedHitEffect: 1
+  destroyOnHit: 1
+  bulletProjectile: 0
+  bulletEffectType: 0
+  meshType: 0
+  endPosition: {fileID: 0}
+  fireCylinder: {fileID: 0}
+  fireEffect: {fileID: 0}
 --- !u!136 &4614170496407192721
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -141,7 +144,7 @@ TrailRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Time: 0.05
+  m_Time: 0.02
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -163,7 +166,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.1, g: 0.1, b: 0.1, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -188,7 +191,7 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0

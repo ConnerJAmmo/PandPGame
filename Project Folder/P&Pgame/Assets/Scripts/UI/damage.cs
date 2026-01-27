@@ -1,233 +1,262 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-public class damage : MonoBehaviour
+namespace bullet.fx.pack
 {
-    enum damageType
+    // Enum to differentiate between the two potential mesh types (from visual script)
+    public enum MeshType { Bullet, Cylinder }
+    // Enum from the original damage script
+    public enum DamageType { moving, stationary, DOT }
+
+    // Main damage logic script
+    public sealed class damage : MonoBehaviour
     {
-        moving,
-        stationary,
-        DOT
-        //comment 
-    }
+        [Header("Debug")]
+        public Transform target;
 
+        [Header("Components")]
+        [SerializeField] public GameObject dotZonePrefab;
+        [SerializeField] public GameObject hitEffectPrefab;
+        [SerializeField] public LayerMask damageLayers;
+        [SerializeField] public LayerMask blockLayers;
 
-    [Header("Type")]
-    [SerializeField] damageType Type = damageType.moving;
+        [Header("Stats")]
+        [SerializeField] public DamageType type = DamageType.moving;
+        [SerializeField] public float lifeTime;
+        [SerializeField] public float speed;
+        [SerializeField] public int damageAmount;
+        [SerializeField] public float dotDamageRate;
+        [SerializeField] public bool leavesDotZone = false;
+        [SerializeField] public bool enableHoming = false;
+        [SerializeField] public bool createHitEffect = false;
+        [SerializeField] public bool groundedHitEffect = false;
+        [SerializeField] public bool destroyOnHit = true;
 
-    [Header("Projectile Movement")]
-    [SerializeField] Rigidbody rb;
-    [SerializeField] float lifeTime = 5f;
-    [SerializeField] float speed; //change speed to a float for better accuracy
+        [Header("Bullet Visuals")]
+        [SerializeField] public bool bulletProjectile = false;
+        [SerializeField] public BulletEffectType bulletEffectType;
+        [SerializeField] public MeshType meshType;
+        [SerializeField] public Transform endPosition;
+        [SerializeField] public GameObject fireCylinder;
+        [SerializeField] public GameObject fireEffect;
 
-    [Header("DOT Settings (Only if we are using DOT)")]
-    [SerializeField] float damageRate;
+        private float rotationSpeed = 450f;
+        private float groundCheckDistance = 10f;
+        private LayerMask groundLayer;
+        private BulletVisualFX visualFX;
+        private readonly HashSet<IDamage> dotVictims = new HashSet<IDamage>();
 
-    [Header("Projectile DOT Settings")]
-    [SerializeField] bool leavesDotZone = false;
-    [SerializeField] GameObject dotZonePrefab; // A prefab with this script set to "DOT"
-
-    [Header("Damage")]
-    [SerializeField] int damageAmount;
-
-    [Header("Hit Rules")]
-    [SerializeField] bool destroyOnHit = true;
-    [SerializeField] bool createHitEffect = true;
-    [SerializeField] bool groundedHitEffect = false;
-    public float groundCheckDistance = 10f; // Max distance to look for ground
-    public LayerMask groundLayer; // Layer filter for the ground
-    [SerializeField] GameObject hitEffectPrefab;
-    //[SerializeField] int destroyTime;
-
-    [Header("Layer Rules")]
-    [SerializeField] LayerMask damageLayers;
-    [SerializeField] LayerMask blockLayers; // Walls, Terrain, Ground, 
- 
-    // This is just a variable to hold all of our DOT victims if we have more than one DOT zone
-    private readonly HashSet<IDamage> dotVictims = new HashSet<IDamage>();
-
-    //bool isDamaging;
-
-    void Reset() // This is only used in the editor not during gameplay
-                 // It is the same as hitting the 3 dots in the inspector and clicking reset
-    {
-        // We will use this to Auto-setup our component and make sure it work
-        // This will find the Collider on the gameObject and force it to be a trigger
-        var col = GetComponent<Collider>();
-        if (col) col.isTrigger = true;
-
-        // This just turns gravity off on Rigidbodies and make sure physics is active
-        rb = GetComponent<Rigidbody>();
-        if (rb != null)
+        // Reset() method for editor auto-setup
+        void Reset()
         {
-            rb.useGravity = false;
-
-            rb.isKinematic = (Type != damageType.moving);
-        }
-
-    }
-
-    void Awake()
-    {
-        var col = GetComponent<Collider>();
-        if (col) col.isTrigger = true;
-    }
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        if (Type == damageType.moving)
-        {
-            if (rb != null)
+            var col = GetComponent<Collider>();
+            if (col) col.isTrigger = true;
+            if (GetComponent<Rigidbody>() != null)
             {
-                rb.linearVelocity = transform.forward * speed;
-            }
-
-            if (lifeTime > 0f)
-            {
-                Destroy(gameObject, lifeTime);
+                GetComponent<Rigidbody>().useGravity = false;
+                GetComponent<Rigidbody>().isKinematic = (type != DamageType.moving);
             }
         }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.isTrigger) //not activated by another trigger
-            return;
-
-        int otherLayerMask = 1 << other.gameObject.layer;
-
-        if ((blockLayers.value & otherLayerMask) != 0)
+        // Awake() method to ensure trigger is set at runtime
+        void Awake()
         {
-            Vector3 hitPoint = GetSafeContactPoint(other);
-
-            // Before destroying the arrow, spawn the DOT zone if enabled
-            HandleProjectileImpact(hitPoint);
-
-            DoHitFX(hitPoint);
-
-            if (Type == damageType.moving)
-                Destroy(gameObject);
-
-            return;
+            var col = GetComponent<Collider>();
+            if (col) col.isTrigger = true;
         }
 
-        // If is not a damageable layer ignore it
-        if ((damageLayers.value & otherLayerMask) == 0)
-            return;
-
-
-        IDamage dmg = other.GetComponent<IDamage>();
-        if (dmg == null)
+        void Start()
         {
-            dmg = other.GetComponentInParent<IDamage>();
-        }
+            visualFX = GetComponent<BulletVisualFX>();
 
-        if (dmg == null)
-        {
-            return;
-        }
-
-        if (Type == damageType.moving || Type == damageType.stationary)
-        {
-            dmg.takeDamage(damageAmount);
-
-            Vector3 hitPoint = GetSafeContactPoint(other);
-            HandleProjectileImpact(hitPoint); // Spawn DOT on the enemy if needed
-
-            DoHitFX(hitPoint);
-
-            if (Type == damageType.moving && destroyOnHit)
-                Destroy(gameObject);
-        }
-        else if (Type == damageType.DOT)
-        {
-            if (!dotVictims.Contains(dmg))
+            // Original Start logic from damage.cs for movement
+            if (type == DamageType.moving)
             {
-                dotVictims.Add(dmg);
-                StartCoroutine(DotDamage(dmg));
-            }
-        }
-    }
-
-    Vector3 GetSafeContactPoint(Collider other)
-    {
-        // Check if it's a mesh collider that is NOT convex
-        if (other is MeshCollider meshCol && !meshCol.convex)
-        {
-            return other.ClosestPointOnBounds(transform.position);
-        }
-        return other.ClosestPoint(transform.position);
-    }
-
-    void HandleProjectileImpact(Vector3 point)
-    {
-        if (Type == damageType.moving && leavesDotZone && dotZonePrefab != null)
-        {
-            Vector3 spawnPos = point;
-
-            // Optionally use the same grounding logic as the FX for the DOT zone
-            if (groundedHitEffect)
-            {
-                Vector3 rayStart = point + Vector3.up * 0.1f;
-                if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, groundCheckDistance, groundLayer))
+                if (GetComponent<Rigidbody>() != null)
                 {
-                    spawnPos = hit.point;
+                    GetComponent<Rigidbody>().isKinematic = false;
+                    GetComponent<Rigidbody>().linearVelocity = transform.forward * speed;
                 }
             }
-
-            Instantiate(dotZonePrefab, spawnPos, Quaternion.identity);
-        }
-
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (Type != damageType.DOT) return;
-
-        IDamage dmg = other.GetComponent<IDamage>();
-        if (dmg == null) // && Type == damageType.DOT && !isDamaging
-        {
-            dmg = other.GetComponentInParent<IDamage>();
-        }
-        if (dmg != null)
-            dotVictims.Remove(dmg);
-    }
-
-    IEnumerator DotDamage(IDamage target) // Timer function DOT type
-    {
-        while (dotVictims.Contains(target))
-        {
-            target.takeDamage(damageAmount);
-            yield return new WaitForSeconds(damageRate);
-        }
-
-    }
-
-    void DoHitFX(Vector3 point) // This is our function to spawn the effects where our arrow hit
-    {
-        if (!createHitEffect || hitEffectPrefab == null)
-        {
-            return;
-        }
-
-        Vector3 spawnPosition = point;
-
-        // If grounded is enabled, cast a ray down to find the floor
-        if (groundedHitEffect)
-        {
-            // Start slightly above the hit point to ensure it doesn't start "inside" the floor
-            Vector3 rayStart = point + Vector3.up * 0.1f;
-            if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, groundCheckDistance, groundLayer))
+            
+            if (lifeTime > 0f)
             {
-                spawnPosition = hit.point;
+                Destroy(gameObject, lifeTime); // Destroy after lifetime
+            }
+
+            // Start visuals logic via delegation
+            if (bulletProjectile && visualFX != null)
+            {
+                visualFX.StartVisualEffects(bulletEffectType, endPosition,
+                    fireCylinder, fireEffect, meshType, createHitEffect, 
+                    hitEffectPrefab, groundedHitEffect, groundCheckDistance, groundLayer);
             }
         }
 
-        Instantiate(hitEffectPrefab, spawnPosition, Quaternion.identity);
+        // FixedUpdate logic remains here as it deals with physics (homing)
+        void FixedUpdate()
+        {
+            if (visualFX != null) visualFX.HandleDeletionTimer();
+            if (!enableHoming || target == null || GetComponent<Rigidbody>() == null) return;
+            // Calculate the direction to the target
+            Vector3 directionToTarget = (target.position - transform.position).normalized;
+            // Calculate the rotation needed to face the target smoothly
+            Vector3 currentDirection = transform.forward;
+            Vector3 resultingDirection = Vector3.RotateTowards(currentDirection, directionToTarget,
+                rotationSpeed * Mathf.Deg2Rad * Time.deltaTime, 1f);
+            transform.rotation = Quaternion.LookRotation(resultingDirection);
+            // Maintain forward movement at the specified speed
+            GetComponent<Rigidbody>().linearVelocity = transform.forward * speed;
+        }
+
+        // --- OnTriggerEnter (from original damage.cs) ---
+        private async void OnTriggerEnter(Collider other)
+        {
+            // Set IsFlying to false upon any trigger/collision
+            if (visualFX != null) visualFX.SetFlying(false);
+
+            int otherLayerMask = 1 << other.gameObject.layer;
+            Vector3 hitPoint = GetSafeContactPoint(other);
+
+            // Check block layers first (walls, ground) - if it hits this, we do hit FX and despawn
+            if ((blockLayers.value & otherLayerMask) != 0)
+            {
+                if (visualFX != null) visualFX.DoHitFX(hitPoint, createHitEffect, hitEffectPrefab,
+                groundedHitEffect, groundCheckDistance, groundLayer);
+                if (type == DamageType.moving && destroyOnHit)
+                {
+                    // Removed the 5-second delay, destroy immediately
+                    Destroy(gameObject);
+                }
+                return; // Exit the function if we hit a wall/blocker
+            }
+
+            // If is not a damageable layer ignore it
+            if ((damageLayers.value & otherLayerMask) == 0)
+                return;
+
+            // If it is a damageable layer, call the unified logic
+            HandleImpactLogic(other.gameObject, hitPoint);
+        }
+
+        Vector3 GetSafeContactPoint(Collider other)
+        {
+            // If it is a MeshCollider and not convex, use ClosestPointOnBounds
+            if (other is MeshCollider meshCol && !meshCol.convex)
+            {
+                return other.ClosestPointOnBounds(transform.position);
+            }
+            // For all other supported colliders (Box, Sphere, Capsule, convex Mesh), use ClosestPoint.
+            // ClosestPointOnBounds works as a reliable fallback for any collider type.
+            return other.ClosestPointOnBounds(transform.position);
+        }
+
+        // --- Unified Impact Logic Method ---
+        private async void HandleImpactLogic(GameObject other, Vector3 hitPoint)
+        {
+            // Try to find the damage interface on the object or its parents
+            IDamage dmg = other.GetComponent<IDamage>();
+            if (dmg == null)
+            {
+                dmg = other.GetComponentInParent<IDamage>();
+            }
+            if (dmg == null)
+            {
+                // If we hit something non-damageable but didn't return via block layers, destroy
+                // immediately if moving
+                if (type == DamageType.moving && destroyOnHit)
+                {
+                    Destroy(gameObject);
+                }
+                return; // Exit the function if no target is found
+            }
+
+            // Apply damage logic based on Type
+            if (type == DamageType.moving || type == DamageType.stationary)
+            {
+                // Check if the Rigidbody exists AND if the type is 'moving' before trying to set velocity
+                if (GetComponent<Rigidbody>() != null && type == DamageType.moving)
+                {
+                    GetComponent<Rigidbody>() .linearVelocity = Vector3.zero;
+                }
+
+                dmg.takeDamage(damageAmount, DamageType.moving);
+                HandleProjectileImpact(hitPoint); // Spawn DOT on the enemy if needed
+                if (visualFX != null) visualFX.DoHitFX(hitPoint, createHitEffect, hitEffectPrefab,
+                groundedHitEffect, groundCheckDistance, groundLayer);
+                if (type == DamageType.moving && destroyOnHit)
+                {
+                    // Removed the 5-second delay, destroy immediately
+                    Destroy(gameObject);
+                }
+            }
+            else if (type == DamageType.DOT)
+            {
+                if (!dotVictims.Contains(dmg))
+                {
+                    dotVictims.Add(dmg);
+                    StartCoroutine(DotDamage(dmg));
+                }
+            }
+        }
+
+        // --- Remaining Damage-related helper methods ---
+        // OnTriggerExit logic (damage-related)
+        private void OnTriggerExit(Collider other)
+        {
+            if (type != DamageType.DOT) return;
+            IDamage dmg = other.GetComponent<IDamage>();
+            if (dmg == null) dmg = other.GetComponentInParent<IDamage>();
+            if (dmg != null) dotVictims.Remove(dmg);
+        }
+
+        // Handles spawning a persistent DOT zone on hit (damage-related logic)
+        void HandleProjectileImpact(Vector3 point)
+        {
+            if (type == DamageType.moving && leavesDotZone && dotZonePrefab != null)
+            {
+                Vector3 spawnPos = point;
+                if (groundedHitEffect)
+                {
+                    Vector3 rayStart = point + Vector3.up * 0.1f;
+                    if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, groundCheckDistance, groundLayer))
+                    {
+                        spawnPos = hit.point;
+                    }
+                }
+                Instantiate(dotZonePrefab, spawnPos, Quaternion.identity);
+            }
+        }
+
+        // The Coroutine for applying damage over time
+        IEnumerator DotDamage(IDamage target)
+        {
+            while (target != null && dotVictims.Contains(target))
+            {
+                if (target != null && !(target as UnityEngine.Object).Equals(null))
+                {
+                    target.takeDamage(damageAmount, DamageType.DOT);
+                }
+                else
+                {
+                    dotVictims.Remove(target);
+                    yield break;
+                }
+                yield return new WaitForSeconds(dotDamageRate);
+            }
+            if (target != null) dotVictims.Remove(target);
+        }
+
+        // Helper to get contact points correctly
+        Vector3 GetSafeContactPoint(Collider other, Vector3 defaultPoint)
+        {
+            if (other is MeshCollider meshCol && !meshCol.convex)
+            {
+                return other.ClosestPointOnBounds(transform.position);
+            }
+            return other.ClosestPoint(transform.position);
+        }
     }
-
-
 }
+

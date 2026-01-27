@@ -497,19 +497,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed6308d3e8efa574b962a2e4cd319b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::enemyAI
-  model: {fileID: 5959083100728295975}
-  agent: {fileID: 3342687552874800466}
-  desination: {x: 0, y: 0, z: 0}
+  numTurrets: 0
   target: {fileID: 0}
   shootPos: {fileID: 6640107793589919657}
+  headPos: {fileID: 4842511704334752023}
   bullet: {fileID: 811445109454079216, guid: 29f08eec12a312c4ba15e5f8c16a50e2, type: 3}
-  ignoreLayer:
-    serializedVersion: 2
-    m_Bits: 0
   HP: 10
-  shootRate: 1.5
-  faceTargetSpeed: 75
-  shootDist: 50
+  FOV: 180
+  range: 50
+  shotsPerBurst: 1
+  burstFireRate: 0
+  fireRate: 2
 --- !u!195 &3342687552874800466
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -603,7 +601,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!1 &2928961645678508980
 GameObject:
   m_ObjectHideFlags: 0
@@ -970,10 +968,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7642535328838185246}
-  - component: {fileID: 41023012027635839}
   - component: {fileID: 6662320050966697816}
   m_Layer: 0
-  m_Name: TriggerArea
+  m_Name: DetectRadius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -994,14 +991,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8838175441442499041}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &41023012027635839
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4350416980118725169}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!135 &6662320050966697816
 SphereCollider:
   m_ObjectHideFlags: 0
