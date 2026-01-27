@@ -79,7 +79,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b145937c6c29c74f8d6136be2e0bd9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTeleporter
-  destination: {fileID: 0}
+  padId: PadB
+  destinationPadId: PadA
   destinationPoint: {fileID: 0}
   coolDown: 0.75
 --- !u!65 &312030719912397267
