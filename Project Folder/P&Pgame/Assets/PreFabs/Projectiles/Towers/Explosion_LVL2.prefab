@@ -4851,7 +4851,7 @@ GameObject:
   - component: {fileID: 2972392977303283610}
   - component: {fileID: 618157938597917955}
   m_Layer: 6
-  m_Name: Explosion
+  m_Name: Explosion_LVL2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4889,21 +4889,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27036156c63734b4dae0ffd729776b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
-  Type: 2
-  Rigidbody: {fileID: 618157938597917955}
-  lifeTime: 1
-  speed: 0
-  damageRate: 1
-  leavesDotZone: 0
+  target: {fileID: 0}
   dotZonePrefab: {fileID: 0}
-  damageAmount: 1
-  destroyOnHit: 1
-  createHitEffect: 1
-  groundedHitEffect: 0
-  groundCheckDistance: 10
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
@@ -4911,13 +4898,22 @@ MonoBehaviour:
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
-  enableVisualEffects: 0
-  BulletEffectType: 0
-  EndPosiotionBullet: {fileID: 0}
-  BulletTrailMaterial: {fileID: 0}
-  Fire2Effect: {fileID: 0}
-  Fire3Effect: {fileID: 0}
+  type: 2
+  lifeTime: 0.5
+  speed: 0
+  damageAmount: 1
+  dotDamageRate: 0.5
+  leavesDotZone: 0
+  enableHoming: 0
+  createHitEffect: 0
+  groundedHitEffect: 0
+  destroyOnHit: 0
+  bulletProjectile: 0
+  bulletEffectType: 0
   meshType: 0
+  endPosition: {fileID: 0}
+  fireCylinder: {fileID: 0}
+  fireEffect: {fileID: 0}
 --- !u!198 &2972392977303283611
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -9669,7 +9665,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 5
+  m_Radius: 7.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!199 &2972392977303283610
 ParticleSystemRenderer:
@@ -9773,7 +9769,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0

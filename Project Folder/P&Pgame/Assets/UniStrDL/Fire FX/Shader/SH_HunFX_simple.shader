@@ -156,7 +156,7 @@ Shader "HunFX/SH_HunFX_simple"
 			}
 		}	
 	}
-	CustomEditor "ASEMaterialInspector"
+	//CustomEditor "ASEMaterialInspector"
 	
 	Fallback Off
 }
