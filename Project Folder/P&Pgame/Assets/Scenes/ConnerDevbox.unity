@@ -487,6 +487,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1212538593}
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+--- !u!114 &321753559 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 332623517535460532, guid: 45e14567d86e9c54fbf8b6b6ff6d0fba, type: 3}
+  m_PrefabInstance: {fileID: 664731607}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &436468416
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -851,6 +862,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI New_1.4.1
       objectReference: {fileID: 0}
+    - target: {fileID: 3171615446984292469, guid: 45e14567d86e9c54fbf8b6b6ff6d0fba, type: 3}
+      propertyPath: ammoCountText
+      value: 
+      objectReference: {fileID: 321753559}
     - target: {fileID: 6521336412091502390, guid: 45e14567d86e9c54fbf8b6b6ff6d0fba, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2025,9 +2040,33 @@ PrefabInstance:
       value: WaveSpawner
       objectReference: {fileID: 0}
     - target: {fileID: 3551249246838891559, guid: 2fdfdc9f991b59a48892815a9e6f4ebb, type: 3}
-      propertyPath: waves.Array.data[2].enemies.Array.size
+      propertyPath: waves.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3551249246838891559, guid: 2fdfdc9f991b59a48892815a9e6f4ebb, type: 3}
+      propertyPath: waves.Array.data[0].timeToNextWave
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3551249246838891559, guid: 2fdfdc9f991b59a48892815a9e6f4ebb, type: 3}
+      propertyPath: waves.Array.data[0].timeToNextEnemy
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3551249246838891559, guid: 2fdfdc9f991b59a48892815a9e6f4ebb, type: 3}
+      propertyPath: waves.Array.data[0].enemies.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3551249246838891559, guid: 2fdfdc9f991b59a48892815a9e6f4ebb, type: 3}
+      propertyPath: waves.Array.data[2].enemies.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3551249246838891559, guid: 2fdfdc9f991b59a48892815a9e6f4ebb, type: 3}
+      propertyPath: 'waves.Array.data[0].enemies.Array.data[0]'
+      value: 
+      objectReference: {fileID: 3021078662631160603, guid: 1c3183a058cf11a49bf18d0bc7e6feb7, type: 3}
+    - target: {fileID: 3551249246838891559, guid: 2fdfdc9f991b59a48892815a9e6f4ebb, type: 3}
+      propertyPath: 'waves.Array.data[0].enemies.Array.data[1]'
+      value: 
+      objectReference: {fileID: 3021078662631160603, guid: 1c3183a058cf11a49bf18d0bc7e6feb7, type: 3}
     - target: {fileID: 3551249246838891559, guid: 2fdfdc9f991b59a48892815a9e6f4ebb, type: 3}
       propertyPath: 'waves.Array.data[2].enemies.Array.data[0]'
       value: 

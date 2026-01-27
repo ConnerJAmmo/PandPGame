@@ -154,6 +154,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         if (Input.GetButtonDown("Reload") && gunList.Count > 0)
         {
             gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
+            gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
         }
     }
 
@@ -269,6 +270,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         shootTimer = 0;
        
         Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
+
+         gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
     }
 
     void mine()
@@ -424,6 +427,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[gunListPos].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+
+        gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
     }
 
     void SelectGun()
