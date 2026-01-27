@@ -192,6 +192,11 @@ public class gameManager : MonoBehaviour, goldManage
         newMenu(menuLose);
     }
 
+    public void youWin()
+    {
+        newMenu(menuWin);
+    }
+
     public void updateResourcesUI()
     {
        if (playerScript == null)
