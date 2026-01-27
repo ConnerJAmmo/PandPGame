@@ -7,60 +7,74 @@ using static UnityEngine.GraphicsBuffer;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
+    [Header("Debug")]
+    [SerializeField] public int numTurrets;
+    [SerializeField] public GameObject target;
+
     [Header("Components")]
-    [SerializeField] Renderer model;
-    [SerializeField] public NavMeshAgent agent;
-    [SerializeField] public Rigidbody body;
-    [SerializeField] GameObject target;
     [SerializeField] public Transform shootPos;
-    [SerializeField] Transform headPos;
-    [SerializeField] GameObject bullet;
-    [SerializeField] LayerMask ignoreLayer;
+    [SerializeField] public Transform headPos;
+    [SerializeField] public GameObject bullet;
 
     [Header("Stats")]
-    [Range(1, 25)] [SerializeField] int HP;
-    [Range(0, 2)] [SerializeField] float shootRate;
-    [Range(1, 1000)] [SerializeField] int faceTargetSpeed;
-    [Range(1, 1000)][SerializeField] int shootDist;
-    [Range(0, 360)][SerializeField] int FOV = 90;
-    [SerializeField] private bool useBurstFire = false;
-    [Range(0.01f, 0.5f)][SerializeField] float timeBetweenShots = 0.1f; // Delay between shots in a burst
-    [SerializeField] int numTurrets;
+    [Range(1, 25)] [SerializeField] public int HP;
+    [Range(0, 360)] [SerializeField] public int FOV;
 
-    int maxHP;
-    Color colorOrigin;
-    float shootTimer;
-    Vector3 playerDir;
-    float angleToPlayer;
-    bool playerInTrigger = false;
-    bool baseInTrigger = false;
+    [Header("Fire Settings")]
+    [Range(1, 1000)] [SerializeField] public int range;
+    [Range(1, 5)] [SerializeField] public int shotsPerBurst;
+    [Range(0, 2)] [SerializeField] public float burstFireRate;
+    [Range(0.01f, 2)] [SerializeField] public float fireRate;
 
+    private bool playerInTrigger;
+    private bool baseInTrigger;
+    private bool useBurstFire;
+    private int maxHP;
+    private float shootTimer;
+    private float angleToPlayer;
+    private Color colorOrigin;
+    private Vector3 playerDir;
+    private Material dynamicMat;
     private WaveSpawner waveSpawner;
     private List<Collider> turretsInRange = new List<Collider>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        colorOrigin = model.material.color; 
-        agent.updateRotation = false;
+        dynamicMat = GetComponentInChildren<Renderer>().material;
+        colorOrigin = dynamicMat.color;
+        GetComponent<NavMeshAgent>().updateRotation = false;
         gameManager.instance.updateEnemyCount(1);
         gameManager.instance.updateEnemyCountTotal(1);
         waveSpawner = GetComponentInParent<WaveSpawner>();
         maxHP = HP;
+        playerInTrigger = false;
+        baseInTrigger = false;
+        if (shotsPerBurst == 1)
+        {
+            useBurstFire = false;
+        }
+        else
+        {
+            useBurstFire = true;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Player Detected");
             playerInTrigger = true;
         }
         else if (other.CompareTag("Turret"))
         {
+            Debug.Log("Turret Detected");
             turretsInRange.Add(other);
         }
         else if (other.CompareTag("Base"))
         {
+            Debug.Log("Base Detected");
             baseInTrigger = true;
         }
     }
@@ -85,7 +99,7 @@ public class enemyAI : MonoBehaviour, IDamage
     void Update()
     {
         shootTimer += Time.deltaTime;
-        Debug.DrawRay(transform.position, transform.forward * shootDist, Color.blue);
+        Debug.DrawRay(transform.position, transform.forward * range, Color.blue);
 
         // Clean up list
         turretsInRange.RemoveAll(t => t == null);
@@ -103,10 +117,10 @@ public class enemyAI : MonoBehaviour, IDamage
 
             if (target == null)
             {
-                agent.isStopped = true;
+                GetComponent<NavMeshAgent>().isStopped = true;
                 return;
             }
-            agent.SetDestination(target.transform.position);
+            GetComponent<NavMeshAgent>().SetDestination(target.transform.position);
 
             // PRIORITY 2: BASE (Check if base is in range before turrets)
             if (baseInTrigger && target != null)
@@ -114,7 +128,7 @@ public class enemyAI : MonoBehaviour, IDamage
                 // If the base is right here, focus it
                 faceTarget(target.GetComponent<Collider>());
 
-                if (shootTimer >= shootRate)
+                if (shootTimer >= fireRate)
                 {
                     Shoot();
                 }
@@ -124,7 +138,7 @@ public class enemyAI : MonoBehaviour, IDamage
             {
                 faceTarget(turretsInRange[0]);
 
-                if (shootTimer >= shootRate)
+                if (shootTimer >= fireRate)
                 {
                     Shoot();
                 }
@@ -132,13 +146,13 @@ public class enemyAI : MonoBehaviour, IDamage
             // PRIORITY 4: MOVEMENT (Just walk toward base if nothing is in range)
             else
             {
-                Vector3 moveDirection = agent.steeringTarget - transform.position;
+                Vector3 moveDirection = GetComponent<NavMeshAgent>().steeringTarget - transform.position;
                 moveDirection.y = 0;
 
                 if (moveDirection.magnitude > 0.1f)
                 {
                     Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * GetComponent<NavMeshAgent>().angularSpeed);
                 }
             }
         }
@@ -155,11 +169,11 @@ public class enemyAI : MonoBehaviour, IDamage
             if (angleToPlayer <= FOV && hit.collider.CompareTag("Player"))
             {
                 target = gameManager.instance.player;
-                agent.SetDestination(target.transform.position);
+                GetComponent<NavMeshAgent>().SetDestination(target.transform.position);
 
                 faceTarget(target.transform.GetComponent<Collider>());
 
-                if (shootTimer >= shootRate)
+                if (shootTimer >= fireRate)
                 {
                     Shoot();
                 }
@@ -186,7 +200,7 @@ public class enemyAI : MonoBehaviour, IDamage
             if (horizontalDirection != Vector3.zero)
             {
                 Quaternion horizontalRot = Quaternion.LookRotation(horizontalDirection);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, horizontalRot, Time.deltaTime * faceTargetSpeed);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, horizontalRot, Time.deltaTime * 450f);
             }
 
             // --- VERTICAL ROTATION (shootPos) ---
@@ -199,9 +213,9 @@ public class enemyAI : MonoBehaviour, IDamage
                 Quaternion verticalRot = Quaternion.LookRotation(relativeDir);
 
                 // Smoothly rotate the shootPos
-                shootPos.rotation = Quaternion.RotateTowards(shootPos.rotation, verticalRot, Time.deltaTime * faceTargetSpeed);
+                shootPos.rotation = Quaternion.RotateTowards(shootPos.rotation, verticalRot, Time.deltaTime * 450f);
 
-                Debug.DrawRay(shootPos.position, shootPos.forward * shootDist, Color.red);
+                Debug.DrawRay(shootPos.position, shootPos.forward * range, Color.red);
             }
         }
     }
@@ -225,13 +239,13 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         shootTimer = 0; // Reset timer here to define delay between bursts
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < shotsPerBurst; i++)
         {
             FireProjectile(target.transform); // Call the helper method to fire the shot
 
             if (i < 2)
             {
-                yield return new WaitForSeconds(timeBetweenShots);
+                yield return new WaitForSeconds(burstFireRate);
             }
         }
     }
@@ -273,8 +287,8 @@ public class enemyAI : MonoBehaviour, IDamage
 
     IEnumerator flashRed()
     {
-        model.material.color = Color.red;
+        dynamicMat.color = Color.red;
         yield return new WaitForSeconds(0.1f);
-        model.material.color = colorOrigin;
+        dynamicMat.color = colorOrigin;
     }
 }

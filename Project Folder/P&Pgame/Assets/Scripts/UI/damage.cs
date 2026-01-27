@@ -13,67 +13,50 @@ namespace bullet.fx.pack
     // Main damage logic script
     public sealed class damage : MonoBehaviour
     {
-        // --- Core Components & Damage Type (from original damage.cs) ---
-        [Header("Type (Legacy)")]
-        [SerializeField] DamageType Type = DamageType.moving;
-        [Header("Core Components")]
-        [SerializeField] private Rigidbody Rigidbody; // RB from visual script is used here
-        // --- Projectile Movement (from original damage.cs) ---
-        [Header("Projectile Movement")]
-        [SerializeField] float lifeTime = 5f;
+        [Header("Debug")]
+        public Transform target;
+
+        [Header("Components")]
+        [SerializeField] public GameObject dotZonePrefab;
+        [SerializeField] public GameObject hitEffectPrefab;
+        [SerializeField] public LayerMask damageLayers;
+        [SerializeField] public LayerMask blockLayers;
+
+        [Header("Stats")]
+        [SerializeField] public DamageType type = DamageType.moving;
+        [SerializeField] public float lifeTime;
         [SerializeField] public float speed;
-        // --- DOT Settings (Only if we are using DOT) (from original damage.cs) ---
-        [Header("DOT Settings (Only if we are using DOT)")]
-        [SerializeField] float damageRate;
-        // --- Projectile DOT Settings (from original damage.cs) ---
-        [Header("Projectile DOT Settings")]
-        [SerializeField] bool leavesDotZone = false;
-        [SerializeField] GameObject dotZonePrefab; // A prefab with this script set to "DOT"
-        // --- Damage (from original damage.cs) ---
-        [Header("Damage")]
-        [SerializeField] int damageAmount;
-        // --- Hit Rules (from original damage.cs) ---
-        [Header("Hit Rules")]
-        [SerializeField] bool destroyOnHit = true;
-        [SerializeField] bool createHitEffect = true;
-        [SerializeField] bool groundedHitEffect = false;
-        public float groundCheckDistance = 10f; // Max distance to look for ground
-        public LayerMask groundLayer; // Layer filter for the ground
-        [SerializeField] GameObject hitEffectPrefab;
-        // --- Layer Rules (from original damage.cs) ---
-        [Header("Layer Rules")]
-        [SerializeField] LayerMask damageLayers;
-        [SerializeField] LayerMask blockLayers; // Walls, Terrain, Ground
-        // --- Homing Settings (Opt-In) ---
-        [Header("Homing Settings")]
-        [SerializeField] private bool enableHoming = false; // Check this box for homing projectiles
-        [SerializeField] private float rotationSpeed = 100f; // How fast the bullet turns towards the target
-        public Transform target; // The target to follow
-        // --- Visual Effects (Opt-In Settings) - these fields are only to signal the visual script if enabled ---
-        [Header("Visual Effects (Opt-In Settings)")]
-        [SerializeField] private bool enableVisualEffects = false; // Main opt-in flag
-        [SerializeField] private BulletEffectType BulletEffectType;
-        [SerializeField] private Transform EndPosiotionBullet;
-        [SerializeField] private GameObject Fire2Effect;
-        [SerializeField] private GameObject Fire3Effect;
-        [SerializeField] private MeshType meshType;
+        [SerializeField] public int damageAmount;
+        [SerializeField] public float dotDamageRate;
+        [SerializeField] public bool leavesDotZone = false;
+        [SerializeField] public bool enableHoming = false;
+        [SerializeField] public bool createHitEffect = false;
+        [SerializeField] public bool groundedHitEffect = false;
+        [SerializeField] public bool destroyOnHit = true;
 
-        // --- Private variables for damage/logic (from original damage.cs) ---
-        private readonly HashSet<IDamage> dotVictims = new HashSet<IDamage>();
+        [Header("Bullet Visuals")]
+        [SerializeField] public bool bulletProjectile = false;
+        [SerializeField] public BulletEffectType bulletEffectType;
+        [SerializeField] public MeshType meshType;
+        [SerializeField] public Transform endPosition;
+        [SerializeField] public GameObject fireCylinder;
+        [SerializeField] public GameObject fireEffect;
 
-        // Reference to the new visual component
+        private float rotationSpeed = 450f;
+        private float groundCheckDistance = 10f;
+        private LayerMask groundLayer;
         private BulletVisualFX visualFX;
+        private readonly HashSet<IDamage> dotVictims = new HashSet<IDamage>();
 
         // Reset() method for editor auto-setup
         void Reset()
         {
             var col = GetComponent<Collider>();
             if (col) col.isTrigger = true;
-            Rigidbody = GetComponent<Rigidbody>();
-            if (Rigidbody != null)
+            if (GetComponent<Rigidbody>() != null)
             {
-                Rigidbody.useGravity = false;
-                Rigidbody.isKinematic = (Type != DamageType.moving);
+                GetComponent<Rigidbody>().useGravity = false;
+                GetComponent<Rigidbody>().isKinematic = (type != DamageType.moving);
             }
         }
         // Awake() method to ensure trigger is set at runtime
@@ -88,12 +71,12 @@ namespace bullet.fx.pack
             visualFX = GetComponent<BulletVisualFX>();
 
             // Original Start logic from damage.cs for movement
-            if (Type == DamageType.moving)
+            if (type == DamageType.moving)
             {
-                if (Rigidbody != null)
+                if (GetComponent<Rigidbody>() != null)
                 {
-                    Rigidbody.isKinematic = false;
-                    Rigidbody.linearVelocity = transform.forward * speed;
+                    GetComponent<Rigidbody>().isKinematic = false;
+                    GetComponent<Rigidbody>().linearVelocity = transform.forward * speed;
                 }
             }
             
@@ -103,10 +86,10 @@ namespace bullet.fx.pack
             }
 
             // Start visuals logic via delegation
-            if (enableVisualEffects && visualFX != null)
+            if (bulletProjectile && visualFX != null)
             {
-                visualFX.StartVisualEffects(BulletEffectType, EndPosiotionBullet,
-                    Fire2Effect, Fire3Effect, meshType, createHitEffect, 
+                visualFX.StartVisualEffects(bulletEffectType, endPosition,
+                    fireCylinder, fireEffect, meshType, createHitEffect, 
                     hitEffectPrefab, groundedHitEffect, groundCheckDistance, groundLayer);
             }
         }
@@ -115,7 +98,7 @@ namespace bullet.fx.pack
         void FixedUpdate()
         {
             if (visualFX != null) visualFX.HandleDeletionTimer();
-            if (!enableHoming || target == null || Rigidbody == null) return;
+            if (!enableHoming || target == null || GetComponent<Rigidbody>() == null) return;
             // Calculate the direction to the target
             Vector3 directionToTarget = (target.position - transform.position).normalized;
             // Calculate the rotation needed to face the target smoothly
@@ -124,7 +107,7 @@ namespace bullet.fx.pack
                 rotationSpeed * Mathf.Deg2Rad * Time.deltaTime, 1f);
             transform.rotation = Quaternion.LookRotation(resultingDirection);
             // Maintain forward movement at the specified speed
-            Rigidbody.linearVelocity = transform.forward * speed;
+            GetComponent<Rigidbody>().linearVelocity = transform.forward * speed;
         }
 
         // --- OnTriggerEnter (from original damage.cs) ---
@@ -141,7 +124,7 @@ namespace bullet.fx.pack
             {
                 if (visualFX != null) visualFX.DoHitFX(hitPoint, createHitEffect, hitEffectPrefab,
                 groundedHitEffect, groundCheckDistance, groundLayer);
-                if (Type == DamageType.moving && destroyOnHit)
+                if (type == DamageType.moving && destroyOnHit)
                 {
                     // Removed the 5-second delay, destroy immediately
                     Destroy(gameObject);
@@ -182,7 +165,7 @@ namespace bullet.fx.pack
             {
                 // If we hit something non-damageable but didn't return via block layers, destroy
                 // immediately if moving
-                if (Type == DamageType.moving && destroyOnHit)
+                if (type == DamageType.moving && destroyOnHit)
                 {
                     Destroy(gameObject);
                 }
@@ -190,26 +173,25 @@ namespace bullet.fx.pack
             }
 
             // Apply damage logic based on Type
-            if (Type == DamageType.moving || Type == DamageType.stationary)
+            if (type == DamageType.moving || type == DamageType.stationary)
             {
                 // Check if the Rigidbody exists AND if the type is 'moving' before trying to set velocity
-                if (Rigidbody != null && Type == DamageType.moving)
+                if (GetComponent<Rigidbody>() != null && type == DamageType.moving)
                 {
-                    Rigidbody.linearVelocity = Vector3.zero;
-                    // Removed 'Rigidbody.isKinematic = true;' as it caused the error
+                    GetComponent<Rigidbody>() .linearVelocity = Vector3.zero;
                 }
 
                 dmg.takeDamage(damageAmount, DamageType.moving);
                 HandleProjectileImpact(hitPoint); // Spawn DOT on the enemy if needed
                 if (visualFX != null) visualFX.DoHitFX(hitPoint, createHitEffect, hitEffectPrefab,
                 groundedHitEffect, groundCheckDistance, groundLayer);
-                if (Type == DamageType.moving && destroyOnHit)
+                if (type == DamageType.moving && destroyOnHit)
                 {
                     // Removed the 5-second delay, destroy immediately
                     Destroy(gameObject);
                 }
             }
-            else if (Type == DamageType.DOT)
+            else if (type == DamageType.DOT)
             {
                 if (!dotVictims.Contains(dmg))
                 {
@@ -223,7 +205,7 @@ namespace bullet.fx.pack
         // OnTriggerExit logic (damage-related)
         private void OnTriggerExit(Collider other)
         {
-            if (Type != DamageType.DOT) return;
+            if (type != DamageType.DOT) return;
             IDamage dmg = other.GetComponent<IDamage>();
             if (dmg == null) dmg = other.GetComponentInParent<IDamage>();
             if (dmg != null) dotVictims.Remove(dmg);
@@ -232,7 +214,7 @@ namespace bullet.fx.pack
         // Handles spawning a persistent DOT zone on hit (damage-related logic)
         void HandleProjectileImpact(Vector3 point)
         {
-            if (Type == DamageType.moving && leavesDotZone && dotZonePrefab != null)
+            if (type == DamageType.moving && leavesDotZone && dotZonePrefab != null)
             {
                 Vector3 spawnPos = point;
                 if (groundedHitEffect)
@@ -261,7 +243,7 @@ namespace bullet.fx.pack
                     dotVictims.Remove(target);
                     yield break;
                 }
-                yield return new WaitForSeconds(damageRate);
+                yield return new WaitForSeconds(dotDamageRate);
             }
             if (target != null) dotVictims.Remove(target);
         }

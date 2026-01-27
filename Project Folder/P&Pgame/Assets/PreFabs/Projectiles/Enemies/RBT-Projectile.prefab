@@ -10111,21 +10111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27036156c63734b4dae0ffd729776b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
-  Type: 0
-  Rigidbody: {fileID: 4390332094214072105}
-  lifeTime: 5
-  speed: 5
-  damageRate: 0
-  leavesDotZone: 0
   dotZonePrefab: {fileID: 0}
-  damageAmount: 1
-  destroyOnHit: 1
-  createHitEffect: 1
-  groundedHitEffect: 0
-  groundCheckDistance: 10
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
@@ -10133,13 +10119,23 @@ MonoBehaviour:
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
-  enableVisualEffects: 0
-  BulletEffectType: 0
-  EndPosiotionBullet: {fileID: 0}
-  BulletTrailMaterial: {fileID: 0}
-  Fire2Effect: {fileID: 0}
-  Fire3Effect: {fileID: 0}
+  type: 0
+  lifeTime: 5
+  speed: 20
+  damageAmount: 4
+  dotDamageRate: 0
+  leavesDotZone: 0
+  enableHoming: 0
+  createHitEffect: 0
+  groundedHitEffect: 0
+  destroyOnHit: 1
+  bulletProjectile: 0
+  bulletEffectType: 0
   meshType: 0
+  bulletEndPosition: {fileID: 0}
+  fire2Effect: {fileID: 0}
+  fire3Effect: {fileID: 0}
+  target: {fileID: 0}
 --- !u!135 &6997535294146073574
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -10432,21 +10428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27036156c63734b4dae0ffd729776b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
-  Type: 0
-  Rigidbody: {fileID: 196707428477247005}
-  lifeTime: 5
-  speed: 5
-  damageRate: 0
-  leavesDotZone: 0
   dotZonePrefab: {fileID: 0}
-  damageAmount: 1
-  destroyOnHit: 1
-  createHitEffect: 1
-  groundedHitEffect: 0
-  groundCheckDistance: 10
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
@@ -10454,13 +10436,23 @@ MonoBehaviour:
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
-  enableVisualEffects: 0
-  BulletEffectType: 0
-  EndPosiotionBullet: {fileID: 0}
-  BulletTrailMaterial: {fileID: 0}
-  Fire2Effect: {fileID: 0}
-  Fire3Effect: {fileID: 0}
+  type: 0
+  lifeTime: 5
+  speed: 20
+  damageAmount: 4
+  dotDamageRate: 0
+  leavesDotZone: 0
+  enableHoming: 0
+  createHitEffect: 0
+  groundedHitEffect: 0
+  destroyOnHit: 1
+  bulletProjectile: 0
+  bulletEffectType: 0
   meshType: 0
+  bulletEndPosition: {fileID: 0}
+  fire2Effect: {fileID: 0}
+  fire3Effect: {fileID: 0}
+  target: {fileID: 0}
 --- !u!135 &7162709057209188364
 SphereCollider:
   m_ObjectHideFlags: 0
