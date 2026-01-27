@@ -22,6 +22,7 @@ public class gameManager : MonoBehaviour, goldManage
     [SerializeField] TMP_Text goldCountText;
     [SerializeField] TMP_Text woodCountText;
     [SerializeField] TMP_Text stoneCountText;
+    [SerializeField] TMP_Text ammoCountText;
     [SerializeField] TMP_Text hintText;
 
 
@@ -61,8 +62,7 @@ public class gameManager : MonoBehaviour, goldManage
         goldCountText.text = goldCount.ToString("F0");
 
         waveSpawner = GameObject.FindWithTag("WaveSpawner");
-        SetWaveCountUI(0);
-        SetActiveWaveUI(0);
+        SetActiveWaveUI(1);
 
         baseTower = GameObject.FindWithTag("Base");
 
@@ -192,6 +192,11 @@ public class gameManager : MonoBehaviour, goldManage
         newMenu(menuLose);
     }
 
+    public void youWin()
+    {
+        newMenu(menuWin);
+    }
+
     public void updateResourcesUI()
     {
        if (playerScript == null)
@@ -250,5 +255,13 @@ public class gameManager : MonoBehaviour, goldManage
     {
         goldCount -= gold;
         goldCountText.text = goldCount.ToString("F0");
+    }
+
+    public void UpdateAmmoUI(int currentAmmo, int maxAmmo)
+    {
+        if (ammoCountText != null)
+        {
+            ammoCountText.text = currentAmmo.ToString() + " / " + maxAmmo.ToString();
+        }
     }
 }
