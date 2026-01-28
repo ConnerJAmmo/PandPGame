@@ -1746,7 +1746,7 @@ MonoBehaviour:
   bullet: {fileID: 7983933263039930371, guid: 75027b776d6373842a94bb2aaaf2c716, type: 3}
   texture: {fileID: 2100000, guid: f6d7477947acd22429da28396ae8b6fc, type: 2}
   HP: 5
-  FOV: 45
+  FOV: 90
   range: 25
   shotsPerBurst: 1
   burstFireRate: 0
