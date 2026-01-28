@@ -12,11 +12,12 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] public GameObject target;
 
     [Header("Components")]
+    [SerializeField] public float animTranSpeed;
+    [SerializeField] public Animator anim;
     [SerializeField] public Transform shootPos;
     [SerializeField] public Transform headPos;
     [SerializeField] public GameObject bullet;
-    [SerializeField] Animator anim;
-    [SerializeField] float animTranSpeed;
+    [SerializeField] public Material texture;
 
     [Header("Stats")]
     [Range(1, 25)] [SerializeField] public int HP;
@@ -43,7 +44,7 @@ public class enemyAI : MonoBehaviour, IDamage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        dynamicMat = GetComponentInChildren<Renderer>().material;
+        dynamicMat = texture;
         colorOrigin = dynamicMat.color;
         GetComponent<NavMeshAgent>().updateRotation = false;
         gameManager.instance.updateEnemyCount(1);
@@ -184,6 +185,7 @@ public class enemyAI : MonoBehaviour, IDamage
                 GetComponent<NavMeshAgent>().SetDestination(target.transform.position);
 
                 faceTarget(target.transform.GetComponent<Collider>());
+                Debug.Log("Player Seen");
 
                 if (shootTimer >= fireRate)
                 {

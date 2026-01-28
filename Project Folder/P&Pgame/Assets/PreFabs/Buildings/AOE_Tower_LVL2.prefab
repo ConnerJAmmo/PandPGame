@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4341187089283020534}
   - component: {fileID: 899537935904901051}
   - component: {fileID: 7539443543783141499}
-  - component: {fileID: 3877802405244254222}
   m_Layer: 12
   m_Name: AOE_Tower_LVL2
   m_TagString: Turret
@@ -34,8 +33,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5332093960468775919}
   - {fileID: 517641145143171352}
+  - {fileID: 5332093960468775919}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8497347533726309431
@@ -97,14 +96,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 1
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.7
-  m_Height: 5
+  m_Radius: 1
+  m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: 1.5, z: 0}
+  m_Center: {x: 0, y: 3.25, z: 0}
 --- !u!54 &7539443543783141499
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -132,27 +131,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &3877802405244254222
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1361402013487122}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.8
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5328679247439628807
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,6 +173,7 @@ GameObject:
   - component: {fileID: 5323585919128037535}
   - component: {fileID: 5298476223897327231}
   - component: {fileID: 5306853079037324429}
+  - component: {fileID: 2688215657034827192}
   m_Layer: 10
   m_Name: Base_RocketTower_L02
   m_TagString: Untagged
@@ -275,6 +254,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &2688215657034827192
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5328894293851399775}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8094221443455898865, guid: 2408ed45fe8d93148ae550672fa7dc0d, type: 3}
 --- !u!1 &5329112234887556657
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,6 +287,7 @@ GameObject:
   - component: {fileID: 5323790438857523983}
   - component: {fileID: 5298744939206406603}
   - component: {fileID: 5306579762705886341}
+  - component: {fileID: 6694428057052294834}
   m_Layer: 10
   m_Name: Turret_RocketTower_L02
   m_TagString: Untagged
@@ -369,6 +371,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6694428057052294834
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5329112234887556657}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4494469226554042336, guid: f1e802003ca54274c8d6416af634dc1e, type: 3}
 --- !u!1 &5329242755580172259
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,7 +694,7 @@ Transform:
   m_GameObject: {fileID: 6059334429774980022}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 3.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
