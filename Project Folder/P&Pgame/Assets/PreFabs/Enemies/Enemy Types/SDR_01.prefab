@@ -10,7 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4512844326127759179}
   - component: {fileID: 1794649280644673187}
-  m_Layer: 0
+  - component: {fileID: 202761376820036706}
+  - component: {fileID: 5024303288799395696}
+  - component: {fileID: 3664725840471445401}
+  m_Layer: 7
   m_Name: SK_Soldier_Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 619006633837122519}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5000011, y: 0.50000036, z: 0.49999964, w: -0.49999893}
-  m_LocalPosition: {x: 0, y: 1.0665514, z: -0.0000000024772304}
+  m_LocalPosition: {x: 0, y: 1.0665514, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -92,6 +95,53 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.39478835, y: -0.055331558, z: 0.0000008046627}
     m_Extent: {x: 0.567206, y: 0.3384009, z: 0.6884552}
   m_DirtyAABB: 0
+--- !u!64 &202761376820036706
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619006633837122519}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300008, guid: cfeff1d67ecb92245941b957cebd290e, type: 3}
+--- !u!33 &5024303288799395696
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619006633837122519}
+  m_Mesh: {fileID: 4300008, guid: cfeff1d67ecb92245941b957cebd290e, type: 3}
+--- !u!114 &3664725840471445401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619006633837122519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7e2a3268e8709b45943e279b1ad571e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinnedCollisionUpdater
+  updatesPerSecond: 5
+  detectionRadius: 40
+  detectionLayers:
+    serializedVersion: 2
+    m_Bits: 4104
 --- !u!1 &925591932585326887
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +152,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3282596488072715761}
   - component: {fileID: 7094598091967197192}
-  m_Layer: 0
+  - component: {fileID: 1160562993003404425}
+  - component: {fileID: 6709357619280031921}
+  - component: {fileID: 364295196302639326}
+  m_Layer: 7
   m_Name: SK_Soldier_Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,6 +237,53 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.39364445, y: 0.008824348, z: 0.000000074505806}
     m_Extent: {x: 0.17740639, y: 0.19346918, z: 0.13846613}
   m_DirtyAABB: 0
+--- !u!64 &1160562993003404425
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925591932585326887}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300010, guid: cfeff1d67ecb92245941b957cebd290e, type: 3}
+--- !u!33 &6709357619280031921
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925591932585326887}
+  m_Mesh: {fileID: 0}
+--- !u!114 &364295196302639326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925591932585326887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7e2a3268e8709b45943e279b1ad571e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinnedCollisionUpdater
+  updatesPerSecond: 5
+  detectionRadius: 40
+  detectionLayers:
+    serializedVersion: 2
+    m_Bits: 4104
 --- !u!1 &2154087132016672533
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,8 +347,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3282596488072715761}
-  - {fileID: 3155319911527717372}
   - {fileID: 4512844326127759179}
+  - {fileID: 3155319911527717372}
   - {fileID: 5248924528907180995}
   m_Father: {fileID: 2817444820568629089}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -372,7 +472,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8274414706080713416}
   - component: {fileID: 5021022719307804728}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: DetectRadius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -413,7 +513,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 50
+  m_Radius: 40
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6133480068816521511
 GameObject:
@@ -449,8 +549,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1532778891244370722}
   - {fileID: 8274414706080713416}
+  - {fileID: 1532778891244370722}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3351877374651842608
@@ -467,14 +567,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::enemyAI
   numTurrets: 0
   target: {fileID: 0}
+  animTranSpeed: 8
+  anim: {fileID: 3671806578688627475}
   shootPos: {fileID: 3287296512665573264}
   headPos: {fileID: 3282596488072715761}
   bullet: {fileID: 6130758696010775384, guid: 28119d09ae998154aa25175f7ea43a72, type: 3}
-  anim: {fileID: 3671806578688627475}
-  animTranSpeed: 8
+  texture: {fileID: 2100000, guid: eda028106e6673545a9aeab640c50688, type: 2}
   HP: 15
   FOV: 90
-  range: 50
+  range: 40
   shotsPerBurst: 3
   burstFireRate: 0.33
   fireRate: 1
@@ -515,14 +616,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.4
-  m_Height: 2.5
+  m_Height: 0.4
   m_Direction: 1
-  m_Center: {x: 0, y: 2, z: 0}
+  m_Center: {x: 0, y: 2.5, z: 0}
 --- !u!54 &4941573064728150775
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -706,7 +807,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3155319911527717372}
   - component: {fileID: 7337499798627384434}
-  m_Layer: 0
+  - component: {fileID: 7555667195211899633}
+  - component: {fileID: 4898315962116256863}
+  - component: {fileID: 5204208195185795463}
+  m_Layer: 7
   m_Name: SK_Soldier_Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -788,3 +892,50 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.41140884, y: 0.007928044, z: -0.0050857216}
     m_Extent: {x: 0.6760302, y: 0.2837049, z: 0.41879165}
   m_DirtyAABB: 0
+--- !u!64 &7555667195211899633
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7713593203180241891}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300006, guid: cfeff1d67ecb92245941b957cebd290e, type: 3}
+--- !u!33 &4898315962116256863
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7713593203180241891}
+  m_Mesh: {fileID: 4300006, guid: cfeff1d67ecb92245941b957cebd290e, type: 3}
+--- !u!114 &5204208195185795463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7713593203180241891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7e2a3268e8709b45943e279b1ad571e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinnedCollisionUpdater
+  updatesPerSecond: 5
+  detectionRadius: 40
+  detectionLayers:
+    serializedVersion: 2
+    m_Bits: 4104
