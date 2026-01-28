@@ -236,7 +236,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     private void WallCheck()
     {
         wallJumpPosib = Physics.Raycast(transform.position, transform.right, out wallJumpHit, wallCheckDis) ||
-        Physics.Raycast(transform.position, -transform.right, out wallJumpHit, wallCheckDis);
+                        Physics.Raycast(transform.position, -transform.right, out wallJumpHit, wallCheckDis) ||
+                        Physics.Raycast(transform.position, transform.forward, out wallJumpHit, wallCheckDis) ||
+                        Physics.Raycast(transform.position, -transform.forward, out wallJumpHit, wallCheckDis);
     }
 
     private bool OnSteepSlope()
@@ -269,15 +271,10 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         gunList[gunListPos].ammoCur--;
 
         shootTimer = 0;
-
-
-        Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
-
-
        
         Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
 
-         gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
+        gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
     }
 
     void mine()
@@ -435,6 +432,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[gunListPos].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+        gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
         gameManager.instance.SetGunNameText();
     }
 
