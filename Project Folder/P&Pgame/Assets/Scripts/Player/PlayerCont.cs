@@ -236,7 +236,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     private void WallCheck()
     {
         wallJumpPosib = Physics.Raycast(transform.position, transform.right, out wallJumpHit, wallCheckDis) ||
-        Physics.Raycast(transform.position, -transform.right, out wallJumpHit, wallCheckDis);
+                        Physics.Raycast(transform.position, -transform.right, out wallJumpHit, wallCheckDis) ||
+                        Physics.Raycast(transform.position, transform.forward, out wallJumpHit, wallCheckDis) ||
+                        Physics.Raycast(transform.position, -transform.forward, out wallJumpHit, wallCheckDis);
     }
 
     private bool OnSteepSlope()
