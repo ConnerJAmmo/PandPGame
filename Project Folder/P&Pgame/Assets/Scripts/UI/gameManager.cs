@@ -225,16 +225,17 @@ public class gameManager : MonoBehaviour, goldManage
                 stateUnpause();
             }
         }
-        else if (Input.GetButtonDown("Player Upgrade Menu") &&  playerScript.gunListPos == 0) {
-        
-            StartCoroutine(flashNeedGun());
-        }
+        //else
+        //{
+        //    StartCoroutine(flashNeedGun());
+        //}
+
     }
 
     IEnumerator flashNeedGun()
     {
         needGunText.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.5f);
         needGunText.SetActive(false);
     }
 
@@ -324,6 +325,14 @@ public class gameManager : MonoBehaviour, goldManage
     {
         int range = baseRange + (rangeLevel + rangePreLevel);
         return range;
+    }
+
+    public void UpdateAmmoUI(int currentAmmo, int maxAmmo)
+    {
+        if (ammoCountText != null)
+        {
+            ammoCountText.text = currentAmmo.ToString() + " / " + maxAmmo.ToString();
+        }
     }
 
     public void upgradePlayerShootDamage()
