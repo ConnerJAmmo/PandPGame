@@ -15,6 +15,8 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] public Transform shootPos;
     [SerializeField] public Transform headPos;
     [SerializeField] public GameObject bullet;
+    [SerializeField] Animator anim;
+    [SerializeField] float animTranSpeed;
 
     [Header("Stats")]
     [Range(1, 25)] [SerializeField] public int HP;
@@ -98,6 +100,8 @@ public class enemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+        locoAnim();
+
         shootTimer += Time.deltaTime;
         Debug.DrawRay(transform.position, transform.forward * range, Color.blue);
 
@@ -156,6 +160,14 @@ public class enemyAI : MonoBehaviour, IDamage
                 }
             }
         }
+    }
+
+    void locoAnim()
+    {
+        float agentSpeedCur = GetComponent<NavMeshAgent>().velocity.normalized.magnitude;
+        float agentSpeedAnim = anim.GetFloat("Speed");
+
+        anim.SetFloat("Speed", Mathf.MoveTowards(agentSpeedAnim, agentSpeedCur, Time.deltaTime * animTranSpeed));
     }
 
     bool CanSeePlayer()
@@ -229,8 +241,10 @@ public class enemyAI : MonoBehaviour, IDamage
         }
         else
         {
+            
             // If not using burst fire, fire a single shot exactly as before
             shootTimer = 0; // Reset the timer immediately for the next single shot
+            anim.SetTrigger("Shoot");
             FireProjectile(target.transform);
         }
     }
@@ -242,7 +256,7 @@ public class enemyAI : MonoBehaviour, IDamage
         for (int i = 0; i < shotsPerBurst; i++)
         {
             FireProjectile(target.transform); // Call the helper method to fire the shot
-
+            anim.SetTrigger("Shoot");
             if (i < 2)
             {
                 yield return new WaitForSeconds(burstFireRate);
