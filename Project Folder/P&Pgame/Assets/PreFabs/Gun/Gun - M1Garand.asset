@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Gun - M1Garand
   m_EditorClassIdentifier: Assembly-CSharp::GunStats
   gunModel: {fileID: 4698201593948852689, guid: 185ce04d44da342739f0bef843698e6c, type: 3}
+  gunName: M1 Grarand
   shootDist: 1200
+  shootDistOrig: 1200
   shootDamage: 15
+  shootDamageOrig: 15
   shootRate: 1.2
+  shootRateOrig: 1.2
   ammoCur: 5
   ammoMax: 5
   hitEffect: {fileID: 0}
