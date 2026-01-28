@@ -1,27 +1,22 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SkinnedCollisionUpdater : MonoBehaviour
 {
     private SkinnedMeshRenderer skinnedMeshRenderer;
     private MeshCollider meshCollider;
     private Mesh bakedMesh;
-    private Transform playerTransform;
 
     [Header("Settings")]
     [SerializeField] private float updatesPerSecond = 5f;
-    [SerializeField] private float detectionRadius = 50f; // Only bake if player is closer than this
-
+    [SerializeField] private float detectionRadius = 50f; // Only bake if target is closer than this
+    [SerializeField] private LayerMask detectionLayers;
     void Start()
     {
         skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
         meshCollider = GetComponent<MeshCollider>();
         bakedMesh = new Mesh();
-
-        // Find the player transform using the "Player" tag
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player != null) playerTransform = player.transform;
-
         StartCoroutine(UpdateColliderRoutine());
     }
 
@@ -31,20 +26,17 @@ public class SkinnedCollisionUpdater : MonoBehaviour
 
         while (true)
         {
-            if (playerTransform != null)
-            {
-                float distance = Vector3.Distance(transform.position, playerTransform.position);
+            bool targetNearby = Physics.CheckSphere(transform.position, detectionRadius, detectionLayers);
 
-                if (distance <= detectionRadius)
-                {
-                    UpdateCollider();
-                }
-                else
-                {
-                    // Optional: Disable collider when too far to save even more CPU
-                    if (meshCollider.enabled) meshCollider.enabled = false;
-                }
+            if (targetNearby)
+            {
+                UpdateCollider();
             }
+            else if (meshCollider.enabled)
+            {
+                meshCollider.enabled = false;
+            }
+
             yield return wait;
         }
     }
@@ -56,5 +48,12 @@ public class SkinnedCollisionUpdater : MonoBehaviour
         skinnedMeshRenderer.BakeMesh(bakedMesh, true);
         meshCollider.sharedMesh = null;
         meshCollider.sharedMesh = bakedMesh;
+    }
+
+    // Visualizes the detection range in the Editor
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 }

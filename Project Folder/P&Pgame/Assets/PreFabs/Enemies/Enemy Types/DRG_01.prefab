@@ -1860,7 +1860,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5874973580456144158}
-  - {fileID: 2485079249426242530}
   m_Father: {fileID: 9050110531170820380}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3685740824110281887
@@ -2809,12 +2808,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5176152467329211321}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.06286313, y: 9.216619e-11, z: -1.0455715e-10, w: 0.99802214}
+  m_LocalRotation: {x: 0.00000008195639, y: 9.855657e-11, z: -9.855637e-11, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25308278, y: 0.25308278, z: 0.25308284}
+  m_LocalScale: {x: 68.56274, y: 68.56274, z: 68.56275}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5582028114813547739}
+  m_Father: {fileID: 9050110531170820380}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &4656301829543214305
 SkinnedMeshRenderer:
@@ -3029,6 +3028,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkinnedCollisionUpdater
   updatesPerSecond: 5
   detectionRadius: 50
+  detectionLayers:
+    serializedVersion: 2
+    m_Bits: 4104
 --- !u!1 &5193892367816308663
 GameObject:
   m_ObjectHideFlags: 0
@@ -4638,7 +4640,7 @@ GameObject:
   - component: {fileID: 1011345925133868797}
   m_Layer: 7
   m_Name: DRG_01
-  m_TagString: Boss
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4657,6 +4659,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3348458742689736678}
+  - {fileID: 2485079249426242530}
   - {fileID: 5582028114813547739}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4686,11 +4689,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::enemyAI
   numTurrets: 0
   target: {fileID: 0}
+  animTranSpeed: 8
+  anim: {fileID: 3860411116311545315}
   shootPos: {fileID: 5048306828572419944}
   headPos: {fileID: 3925539388988733992}
   bullet: {fileID: 3806039598199004532, guid: b228b7bdcc5696f459b973ba416fed5a, type: 3}
-  anim: {fileID: 3860411116311545315}
-  animTranSpeed: 8
+  texture: {fileID: 2100000, guid: 35e5dafa6a479b74bad185881be745cd, type: 2}
   HP: 25
   FOV: 180
   range: 50

@@ -1040,7 +1040,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 100
+  m_Radius: 50
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6949752104101104387
 GameObject:
@@ -1378,7 +1378,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkinnedCollisionUpdater
   updatesPerSecond: 5
-  detectionRadius: 100
+  detectionRadius: 50
+  detectionLayers:
+    serializedVersion: 2
+    m_Bits: 4104
 --- !u!1 &7685119293748303842
 GameObject:
   m_ObjectHideFlags: 0
@@ -1432,14 +1435,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::enemyAI
   numTurrets: 0
   target: {fileID: 0}
+  animTranSpeed: 8
+  anim: {fileID: 2206653471322338591}
   shootPos: {fileID: 1282471459520118422}
   headPos: {fileID: 7052530266879033111}
   bullet: {fileID: 7983933263039930371, guid: b2cc5e6c018b75f468c0514221c66867, type: 3}
-  anim: {fileID: 2206653471322338591}
-  animTranSpeed: 8
+  texture: {fileID: 2100000, guid: 98ec97c496fac904a811768eda3cc3f2, type: 2}
   HP: 20
   FOV: 360
-  range: 100
+  range: 50
   shotsPerBurst: 1
   burstFireRate: 0
   fireRate: 2
