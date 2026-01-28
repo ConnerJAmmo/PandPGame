@@ -1,9 +1,7 @@
-
 using UnityEngine;
 using System.Collections;
 using bullet.fx.pack;
 using System.Collections.Generic;
-//using NUnit.Framework;
 
 public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
 {
@@ -157,6 +155,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         if (Input.GetButtonDown("Reload") && gunList.Count > 0)
         {
             gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
+            gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
         }
     }
 
@@ -170,9 +169,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         int aoeRemaining = stoneCount / 5;
 
         // This will make our hints stay while we can afford them
-        if (wasGrounded && stRemaining > 0)
+        if (wasGrounded && stRemaining > 0 && goldCount >= 5)
             placeHint += $"Press Z to place ST Turret ({stRemaining} remaining)\n";
-        if (wasGrounded && aoeRemaining > 0)
+        if (wasGrounded && aoeRemaining > 0 && goldCount >= 5)
             placeHint += $"Press X to place AOE Turret ({aoeRemaining} remaining)\n";
 
         string mineHint = GetMineHint(); // I created separate method for minehint
@@ -275,6 +274,10 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
 
 
+       
+        Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
+
+         gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
     }
 
     void mine()

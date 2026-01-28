@@ -36,6 +36,7 @@ public class gameManager : MonoBehaviour, goldManage
     [SerializeField] TMP_Text RangeLevelText;
     [SerializeField] TMP_Text woodCountText;
     [SerializeField] TMP_Text stoneCountText;
+    [SerializeField] TMP_Text ammoCountText;
     [SerializeField] TMP_Text hintText;
 
     [Header("Gun Upgrade Stats")]
@@ -88,8 +89,7 @@ public class gameManager : MonoBehaviour, goldManage
         goldCountText.text = goldCount.ToString("F0");
 
         waveSpawner = GameObject.FindWithTag("WaveSpawner");
-        SetWaveCountUI(0);
-        SetActiveWaveUI(0);
+        SetActiveWaveUI(1);
 
         baseTower = GameObject.FindWithTag("Base");
 
@@ -241,6 +241,11 @@ public class gameManager : MonoBehaviour, goldManage
     public void youLose()
     {
         newMenu(menuLose);
+    }
+
+    public void youWin()
+    {
+        newMenu(menuWin);
     }
 
     public void updateResourcesUI()
