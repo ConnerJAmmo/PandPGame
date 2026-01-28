@@ -21,6 +21,7 @@ public class pickupGuns : MonoBehaviour
             gun.ammoCur = gun.ammoMax;
             pick.getGunStats(gun);
             Destroy(gameObject);
+            gameManager.instance.UpdateAmmoUI(gun.ammoCur, gun.ammoMax);
         }
     }
 
