@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Globalization;
+using System.Collections;
+
 
 public class gameManager : MonoBehaviour, goldManage
 {
@@ -12,6 +15,7 @@ public class gameManager : MonoBehaviour, goldManage
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuTowerUpgrade;
     [SerializeField] GameObject menuPlayerUpgrade;
+    [SerializeField] GameObject needGunText;
 
     [SerializeField] TMP_Text playerHPText;
     [SerializeField] TMP_Text playerHPTextOrig;
@@ -20,11 +24,33 @@ public class gameManager : MonoBehaviour, goldManage
     [SerializeField] TMP_Text waveCountText;
     [SerializeField] TMP_Text waveCountTextOrig;
     [SerializeField] TMP_Text goldCountText;
+    [SerializeField] TMP_Text gunNameText;
+    [SerializeField] TMP_Text damageCostText;
+    [SerializeField] TMP_Text damageText;
+    [SerializeField] TMP_Text damageLevelText;
+    [SerializeField] TMP_Text fireRateCostText;
+    [SerializeField] TMP_Text fireRateText;
+    [SerializeField] TMP_Text fireRateLevelText;
+    [SerializeField] TMP_Text RangeCostText;
+    [SerializeField] TMP_Text RangeText;
+    [SerializeField] TMP_Text RangeLevelText;
     [SerializeField] TMP_Text woodCountText;
     [SerializeField] TMP_Text stoneCountText;
     [SerializeField] TMP_Text ammoCountText;
     [SerializeField] TMP_Text hintText;
 
+    [Header("Gun Upgrade Stats")]
+    [SerializeField] public int damageUpgradeCost;
+    [SerializeField] public int fireRateUpgradeCost;
+    [SerializeField] public int rangeUpgradeCost;
+    [SerializeField] int upgradeCostPreLevel;
+    [SerializeField] public int damageLevel;
+    [SerializeField] int damagePreLevel;
+    [SerializeField] public int fireRateLevel;
+    [SerializeField] float fireRatePreLevel;
+    [SerializeField] public int rangeLevel;
+    [SerializeField] int rangePreLevel;
+    [SerializeField] public int maxLevel;
 
     [SerializeField] int upgradedis;
     [SerializeField] LayerMask towerLayer;
@@ -58,6 +84,7 @@ public class gameManager : MonoBehaviour, goldManage
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerCont>();
 
+
         addGold(startingGold);
         goldCountText.text = goldCount.ToString("F0");
 
@@ -86,6 +113,9 @@ public class gameManager : MonoBehaviour, goldManage
             }
         }
 
+        SetDamageUpgradeText();
+        SetFireRateUpgradeText();
+        SetRangeUpgradeText();
         openPlayerUpgradeMenu();
     }
 
@@ -119,6 +149,31 @@ public class gameManager : MonoBehaviour, goldManage
     public void SetActiveWaveUI(int wave)
     {
         waveCountText.text = wave.ToString("F0");
+    }
+    public void SetGunNameText()
+    {
+        gunNameText.text = playerScript.gunName;
+    }
+
+
+    public void SetDamageUpgradeText()
+    {
+        damageCostText.text = damageUpgradeCost.ToString("F0");
+        damageText.text = gameManager.instance.playerScript.shootDamage.ToString("F0");
+        damageLevelText.text = damageLevel.ToString("F0");
+    }
+
+    public void SetFireRateUpgradeText()
+    {
+        fireRateCostText.text = fireRateUpgradeCost.ToString("F0");
+        fireRateText.text = gameManager.instance.playerScript.shootRate.ToString("F01");
+        fireRateLevelText.text = fireRateLevel.ToString("F0");
+    }
+    public void SetRangeUpgradeText()
+    {
+        RangeCostText.text = rangeUpgradeCost.ToString("F0");
+        RangeText.text = gameManager.instance.playerScript.shootDist.ToString("F0");
+        RangeLevelText.text = rangeLevel.ToString("F0");
     }
 
 
@@ -154,37 +209,33 @@ public class gameManager : MonoBehaviour, goldManage
         menuActive = null;
     }
 
-    public void openUpgradeMenu()
-    {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-    }
-
-    public void closeUpgradeMenu()
-    {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        menuActive.SetActive(false);
-        menuActive = null;
-    }
-
-   
-
     public void openPlayerUpgradeMenu()
     {
-        if (Input.GetButtonDown("Player Upgrade Menu"))
+        if (Input.GetButtonDown("Player Upgrade Menu") && playerScript.gunListPos > 0)
         {
             if (menuActive == null)
             {
-                openUpgradeMenu();
-                menuActive = menuPlayerUpgrade;
-                menuActive.SetActive(true);
+                newMenu(menuPlayerUpgrade);
+                SetDamageUpgradeText();
+                SetFireRateUpgradeText();
+                SetRangeUpgradeText();
             }
             else if (menuActive == menuPlayerUpgrade)
             {
-                closeUpgradeMenu();
+                stateUnpause();
             }
         }
+        else if (Input.GetButtonDown("Player Upgrade Menu") &&  playerScript.gunListPos == 0) {
+        
+            StartCoroutine(flashNeedGun());
+        }
+    }
+
+    IEnumerator flashNeedGun()
+    {
+        needGunText.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        needGunText.SetActive(false);
     }
 
     public void youLose()
@@ -257,11 +308,52 @@ public class gameManager : MonoBehaviour, goldManage
         goldCountText.text = goldCount.ToString("F0");
     }
 
-    public void UpdateAmmoUI(int currentAmmo, int maxAmmo)
+    public int upgradeDamage(int baseDamage)
     {
-        if (ammoCountText != null)
-        {
-            ammoCountText.text = currentAmmo.ToString() + " / " + maxAmmo.ToString();
-        }
+        int damage = baseDamage + (damageLevel + damagePreLevel);
+        return damage;
+    }
+
+    public float upgradeRate(float baseRate)
+    {
+        float rate = Mathf.Max(0.05f, baseRate - fireRatePreLevel);
+        return rate;
+    }
+
+    public int upgradeRange(int baseRange)
+    {
+        int range = baseRange + (rangeLevel + rangePreLevel);
+        return range;
+    }
+
+    public void upgradePlayerShootDamage()
+    {
+        gameManager.instance.playerScript.gunList[gameManager.instance.playerScript.gunListPos]
+                .shootDamage += upgradeDamage(gameManager.instance.playerScript.shootDamage);
+        damageLevel++;
+        removeGold(damageUpgradeCost);
+        damageUpgradeCost += upgradeCostPreLevel;
+        SetDamageUpgradeText();
+        gameManager.instance.playerScript.ChangeGun();
+    }
+    public void upgradePlayerShootRate()
+    {
+        gameManager.instance.playerScript.gunList[gameManager.instance.playerScript.gunListPos]
+                .shootRate += upgradeRate(gameManager.instance.playerScript.shootRate);
+        fireRateLevel++;
+        removeGold(fireRateUpgradeCost);
+        fireRateUpgradeCost += upgradeCostPreLevel;
+        SetFireRateUpgradeText();
+        gameManager.instance.playerScript.ChangeGun();
+    }
+    public void upgradePlayerShootRange()
+    {
+        gameManager.instance.playerScript.gunList[gameManager.instance.playerScript.gunListPos]
+                .shootDist += upgradeRange(gameManager.instance.playerScript.shootDist);
+        rangeLevel++;
+        removeGold(rangeUpgradeCost);
+        rangeUpgradeCost += upgradeCostPreLevel;
+        SetRangeUpgradeText();
+        gameManager.instance.playerScript.ChangeGun();
     }
 }

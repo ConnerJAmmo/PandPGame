@@ -9,6 +9,7 @@ TagManager:
   - WaveSpawner
   - Boss
   - Turret
+  - Guns
   layers:
   - Default
   - TransparentFX

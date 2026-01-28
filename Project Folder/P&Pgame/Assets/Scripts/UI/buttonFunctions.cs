@@ -21,4 +21,31 @@ public class buttonFunctions : MonoBehaviour
     Application.Quit();
 #endif
     }
+
+    public void UpgradeDamage()
+    {
+        if (gameManager.instance.damageLevel != gameManager.instance.maxLevel 
+            && gameManager.instance.goldCount >= gameManager.instance.damageUpgradeCost)
+        {
+            gameManager.instance.upgradePlayerShootDamage();
+        }
+    }
+
+    public void UpgradeFireRate()
+    {
+        if (gameManager.instance.fireRateLevel != gameManager.instance.maxLevel
+            && gameManager.instance.goldCount >= gameManager.instance.fireRateUpgradeCost)
+        {
+            gameManager.instance.upgradePlayerShootRate();
+        }
+    }
+
+    public void UpgradeRange()
+    {
+        if (gameManager.instance.rangeLevel != gameManager.instance.maxLevel
+            && gameManager.instance.goldCount >= gameManager.instance.rangeUpgradeCost)
+        {
+            gameManager.instance.upgradePlayerShootRange();
+        }
+    }
 }

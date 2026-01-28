@@ -5,6 +5,13 @@ public class pickupGuns : MonoBehaviour
 
     [SerializeField] GunStats gun;
 
+    private void Start()
+    {
+        gun.shootDamageOrig = gun.shootDamage;
+        gun.shootDistOrig = gun.shootDist;
+        gun.shootRateOrig = gun.shootRate;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         IPickup pick = other.GetComponent<IPickup>();
