@@ -172,6 +172,7 @@ public class enemyAI : MonoBehaviour, IDamage
                 GetComponent<NavMeshAgent>().SetDestination(target.transform.position);
 
                 faceTarget(target.transform.GetComponent<Collider>());
+                Debug.Log("Player Seen");
 
                 if (shootTimer >= fireRate)
                 {
