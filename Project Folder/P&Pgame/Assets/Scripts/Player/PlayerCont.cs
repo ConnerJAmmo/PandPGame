@@ -34,19 +34,19 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     [SerializeField] public int stoneCount;
     [SerializeField] public int goldCount;
     [Header("---- Tools ----")]
-    [SerializeField] GameObject bullet;
+    [SerializeField] public GameObject bullet;
     [SerializeField] GameObject STTower;
     [SerializeField] GameObject AOETower;
-    [SerializeField] Transform shootPos;
+    [SerializeField] public Transform shootPos;
 
     [Header("Guns")]
-    [SerializeField] List<GunStats> gunList = new List<GunStats>();
-    [SerializeField] GameObject gunModel;
+    [SerializeField] public List<GunStats> gunList = new List<GunStats>();
+    [SerializeField] public GameObject gunModel;
     [SerializeField] public float shootRate;
     [SerializeField] public int shootDist;
     [SerializeField] public int shootDamage;
+    public string gunName;
 
-    int gunListPos;
     int jumpCount;
     int wallJumpCount;
 
@@ -59,7 +59,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
 
     private float _groundRayDis = 1;
 
-    float shootTimer;
+    public int gunListPos;
+    public float shootTimer;
     float mineTimer;
 
     private RaycastHit slopeHit; 
@@ -87,7 +88,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         UpdateHints();
     }
 
-     void Movement()
+    void Movement()
     {
         wasGrounded = controller.isGrounded; //storing this at the top to prevent walljumping off the ground
         shootTimer += Time.deltaTime;
@@ -268,6 +269,11 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         gunList[gunListPos].ammoCur--;
 
         shootTimer = 0;
+
+
+        Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
+
+
        
         Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
 
@@ -416,27 +422,28 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         gunListPos = gunList.Count - 1;
 
         ChangeGun();
-        
+
     }
 
-    void ChangeGun()
+    public void ChangeGun()
     {
         shootDamage = gunList[gunListPos].shootDamage;
         shootDist = gunList[gunListPos].shootDist;
         shootRate = gunList[gunListPos].shootRate;
+        gunName = gunList[gunListPos].gunName;
+
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[gunListPos].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
-
-        gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
+        gameManager.instance.SetGunNameText();
     }
 
     void SelectGun()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") >  0 && gunListPos < gunList.Count - 1)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count - 1)
         {
             gunListPos++;
-            ChangeGun() ;
+            ChangeGun();
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
         {

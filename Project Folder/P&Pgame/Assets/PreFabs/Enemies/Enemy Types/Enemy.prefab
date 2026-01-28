@@ -653,19 +653,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed6308d3e8efa574b962a2e4cd319b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::enemyAI
-  model: {fileID: 7676505847823512034}
-  agent: {fileID: 7969592130271090367}
-  desination: {x: 0, y: 0, z: 0}
+  numTurrets: 0
   target: {fileID: 0}
   shootPos: {fileID: 6117923829966638359}
+  headPos: {fileID: 0}
   bullet: {fileID: 7983933263039930371, guid: 64ff0178b2825c64188e5290e122b2ce, type: 3}
-  ignoreLayer:
-    serializedVersion: 2
-    m_Bits: 0
   HP: 10
-  shootRate: 1
-  faceTargetSpeed: 60
-  shootDist: 50
+  FOV: 0
+  range: 1
+  shotsPerBurst: 1
+  burstFireRate: 0
+  fireRate: 0.01
 --- !u!195 &7969592130271090367
 NavMeshAgent:
   m_ObjectHideFlags: 0

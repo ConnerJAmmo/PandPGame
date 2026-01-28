@@ -109,16 +109,6 @@ PrefabInstance:
       insertIndex: 1
       addedObject: {fileID: 6948989546191199149}
   m_SourcePrefab: {fileID: 100100000, guid: 18a4495349916914c800d5c81dea5789, type: 3}
---- !u!137 &5964491149778084228 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 7676505847823512034, guid: 18a4495349916914c800d5c81dea5789, type: 3}
-  m_PrefabInstance: {fileID: 4057264413923692646}
-  m_PrefabAsset: {fileID: 0}
---- !u!195 &6257718343324649177 stripped
-NavMeshAgent:
-  m_CorrespondingSourceObject: {fileID: 7969592130271090367, guid: 18a4495349916914c800d5c81dea5789, type: 3}
-  m_PrefabInstance: {fileID: 4057264413923692646}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7457574704736333171 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6859242621026319637, guid: 18a4495349916914c800d5c81dea5789, type: 3}
@@ -136,17 +126,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed6308d3e8efa574b962a2e4cd319b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::enemyAI
-  model: {fileID: 5964491149778084228}
-  agent: {fileID: 6257718343324649177}
+  numTurrets: 0
+  target: {fileID: 0}
   shootPos: {fileID: 7829920491842198897}
+  headPos: {fileID: 0}
   bullet: {fileID: 7983933263039930371, guid: 64ff0178b2825c64188e5290e122b2ce, type: 3}
-  ignoreLayer:
-    serializedVersion: 2
-    m_Bits: 320
   HP: 1
-  shootRate: 0
-  faceTargetSpeed: 1
-  shootDist: 1
+  FOV: 0
+  range: 1
+  shotsPerBurst: 1
+  burstFireRate: 0
+  fireRate: 0.01
 --- !u!4 &7829920491842198897 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6117923829966638359, guid: 18a4495349916914c800d5c81dea5789, type: 3}
