@@ -502,6 +502,8 @@ MonoBehaviour:
   shootPos: {fileID: 6640107793589919657}
   headPos: {fileID: 4842511704334752023}
   bullet: {fileID: 811445109454079216, guid: 29f08eec12a312c4ba15e5f8c16a50e2, type: 3}
+  anim: {fileID: 2750212073280840834}
+  animTranSpeed: 8
   HP: 10
   FOV: 180
   range: 50

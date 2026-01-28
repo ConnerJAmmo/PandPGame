@@ -292,6 +292,7 @@ GameObject:
   - component: {fileID: 6909547586635812801}
   - component: {fileID: 4743043633096635335}
   - component: {fileID: 4206666397110022022}
+  - component: {fileID: 5340648704404576875}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -463,3 +464,15 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5340648704404576875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6079901626847767107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a2ee1717a1e7d041a2872972b52ca5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::teleportAllowed

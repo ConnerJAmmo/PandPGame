@@ -1,9 +1,7 @@
-
 using UnityEngine;
 using System.Collections;
 using bullet.fx.pack;
 using System.Collections.Generic;
-//using NUnit.Framework;
 
 public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
 {
@@ -36,19 +34,19 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     [SerializeField] public int stoneCount;
     [SerializeField] public int goldCount;
     [Header("---- Tools ----")]
-    [SerializeField] GameObject bullet;
+    [SerializeField] public GameObject bullet;
     [SerializeField] GameObject STTower;
     [SerializeField] GameObject AOETower;
-    [SerializeField] Transform shootPos;
+    [SerializeField] public Transform shootPos;
 
     [Header("Guns")]
-    [SerializeField] List<GunStats> gunList = new List<GunStats>();
-    [SerializeField] GameObject gunModel;
+    [SerializeField] public List<GunStats> gunList = new List<GunStats>();
+    [SerializeField] public GameObject gunModel;
     [SerializeField] public float shootRate;
     [SerializeField] public int shootDist;
     [SerializeField] public int shootDamage;
+    public string gunName;
 
-    int gunListPos;
     int jumpCount;
     int wallJumpCount;
 
@@ -61,7 +59,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
 
     private float _groundRayDis = 1;
 
-    float shootTimer;
+    public int gunListPos;
+    public float shootTimer;
     float mineTimer;
 
     private RaycastHit slopeHit; 
@@ -89,7 +88,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         UpdateHints();
     }
 
-     void Movement()
+    void Movement()
     {
         wasGrounded = controller.isGrounded; //storing this at the top to prevent walljumping off the ground
         shootTimer += Time.deltaTime;
@@ -156,6 +155,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         if (Input.GetButtonDown("Reload") && gunList.Count > 0)
         {
             gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
+            gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
         }
     }
 
@@ -169,9 +169,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         int aoeRemaining = stoneCount / 5;
 
         // This will make our hints stay while we can afford them
-        if (wasGrounded && stRemaining > 0)
+        if (wasGrounded && stRemaining > 0 && goldCount >= 5)
             placeHint += $"Press Z to place ST Turret ({stRemaining} remaining)\n";
-        if (wasGrounded && aoeRemaining > 0)
+        if (wasGrounded && aoeRemaining > 0 && goldCount >= 5)
             placeHint += $"Press X to place AOE Turret ({aoeRemaining} remaining)\n";
 
         string mineHint = GetMineHint(); // I created separate method for minehint
@@ -181,7 +181,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
             placeHint += mineHint + '\n';
         }
 
-        gameManager.instance.SetHint(placeHint.Trim());
+        gameManager.instance.SetBaseHint(placeHint.Trim());
     }
 
     string GetMineHint()
@@ -236,7 +236,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     private void WallCheck()
     {
         wallJumpPosib = Physics.Raycast(transform.position, transform.right, out wallJumpHit, wallCheckDis) ||
-        Physics.Raycast(transform.position, -transform.right, out wallJumpHit, wallCheckDis);
+                        Physics.Raycast(transform.position, -transform.right, out wallJumpHit, wallCheckDis) ||
+                        Physics.Raycast(transform.position, transform.forward, out wallJumpHit, wallCheckDis) ||
+                        Physics.Raycast(transform.position, -transform.forward, out wallJumpHit, wallCheckDis);
     }
 
     private bool OnSteepSlope()
@@ -269,11 +271,10 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         gunList[gunListPos].ammoCur--;
 
         shootTimer = 0;
-
        
         Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
-       
-        
+
+        gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
     }
 
     void mine()
@@ -418,25 +419,29 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         gunListPos = gunList.Count - 1;
 
         ChangeGun();
-        
+
     }
 
-    void ChangeGun()
+    public void ChangeGun()
     {
         shootDamage = gunList[gunListPos].shootDamage;
         shootDist = gunList[gunListPos].shootDist;
         shootRate = gunList[gunListPos].shootRate;
+        gunName = gunList[gunListPos].gunName;
+
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[gunListPos].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+        gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
+        gameManager.instance.SetGunNameText();
     }
 
     void SelectGun()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") >  0 && gunListPos < gunList.Count - 1)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count - 1)
         {
             gunListPos++;
-            ChangeGun() ;
+            ChangeGun();
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
         {
