@@ -56,6 +56,16 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     [SerializeField] float hurtAudVol;
     [SerializeField] AudioClip[] reloadAud;
     [SerializeField] float reloadAudVol;
+    [SerializeField] AudioClip[] mineWoodAud;
+    [SerializeField] float mineWoodVol;
+    [SerializeField] AudioClip[] mineSteelAud;
+    [SerializeField] float mineSteelAudVol;
+    [SerializeField] AudioClip[] mined5Aud;
+    [SerializeField] float mined5AudVol;
+    [SerializeField] AudioClip[] gunSelectUpAud;
+    [SerializeField] float gunSelectUpAudVol;
+    [SerializeField] AudioClip[] gunSelectDownAud;
+    [SerializeField] float gunSelectDownAudVol;
 
     [Header("--------------------------")]
     public string gunName;
@@ -314,11 +324,13 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
                 if (matType == "Wood")
                 {
                     woodCount = woodCount + matAmount;
+                    aud.PlayOneShot(mineWoodAud[0], mineWoodVol);
                     changed = true;
                 }
                 else if (matType == "Stone")
                 {
                     stoneCount = stoneCount + matAmount;
+                    aud.PlayOneShot(mineSteelAud[0], mineSteelAudVol);
                     changed = true;
                 }
                 if (changed)
@@ -338,6 +350,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
             if (woodCount >= amount)
             {
                 finalAmount = finalAmount + woodCount;
+                
             }
         }
         else if (type == "Stone")
@@ -345,6 +358,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
             if (stoneCount >= amount)
             {
                 finalAmount = finalAmount + stoneCount;
+              
             }
         }
 
@@ -371,10 +385,11 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         
         if(woodCount >= 5 && goldCount >= 5)
         {
-            Instantiate(STTower, PlayerBodyPos, transform.rotation);
+            Instantiate(STTower, new Vector3(PlayerBodyPos.x + 2, PlayerBodyPos.y, PlayerBodyPos.z - 3), transform.rotation);
             woodCount = woodCount - 5;
             gameManager.instance.removeGold(-5);
             gameManager.instance.updateResourcesUI();
+            aud.PlayOneShot(mined5Aud[0], mined5AudVol);
 
             showSTHint = false; // Hides Z key display after use
         }
@@ -392,10 +407,11 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     {
         if(stoneCount >= 5 && goldCount >= 5)
         {
-            Instantiate(AOETower, PlayerBodyPos, transform.rotation);
+            Instantiate(AOETower, new Vector3(PlayerBodyPos.x + 2, PlayerBodyPos.y, PlayerBodyPos.z - 3), transform.rotation);
             gameManager.instance.removeGold(-5);
             stoneCount = stoneCount - 5;
             gameManager.instance.updateResourcesUI();
+            aud.PlayOneShot(mined5Aud[0], mined5AudVol);
 
             showSTHint = false; // Hides X key display after use
 
@@ -470,11 +486,13 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count - 1)
         {
             gunListPos++;
+            aud.PlayOneShot(gunSelectUpAud[0], gunSelectUpAudVol);
             ChangeGun();
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
         {
             gunListPos--;
+            aud.PlayOneShot(gunSelectDownAud[0], gunSelectDownAudVol);
             ChangeGun();
         }
     }
