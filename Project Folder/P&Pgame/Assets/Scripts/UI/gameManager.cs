@@ -69,6 +69,9 @@ public class gameManager : MonoBehaviour, goldManage
     public GameObject damageFlash;
 
     float timeScaleOrig;
+    int initialDamageUpgradeCost = 10;
+    int initalFireRateUpgradeCost = 10;
+    int initialRangeUpgradeCost = 10;
 
     string baseHint;
     string interactionHint;
@@ -84,7 +87,13 @@ public class gameManager : MonoBehaviour, goldManage
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerCont>();
 
+        damageLevel = 0;
+        fireRateLevel = 0;
+        rangeLevel = 0;
 
+        damageUpgradeCost = initialDamageUpgradeCost;
+        fireRateUpgradeCost = initalFireRateUpgradeCost;
+        rangeUpgradeCost = initialRangeUpgradeCost;
         addGold(startingGold);
         goldCountText.text = goldCount.ToString("F0");
 
@@ -211,7 +220,7 @@ public class gameManager : MonoBehaviour, goldManage
 
     public void openPlayerUpgradeMenu()
     {
-        if (Input.GetButtonDown("Player Upgrade Menu") && playerScript.gunListPos > 0)
+        if (Input.GetButtonDown("Player Upgrade Menu"))
         {
             if (menuActive == null)
             {
@@ -348,7 +357,7 @@ public class gameManager : MonoBehaviour, goldManage
     public void upgradePlayerShootRate()
     {
         gameManager.instance.playerScript.gunList[gameManager.instance.playerScript.gunListPos]
-                .shootRate += upgradeRate(gameManager.instance.playerScript.shootRate);
+                .shootRate -= upgradeRate(gameManager.instance.playerScript.shootRate);
         fireRateLevel++;
         removeGold(fireRateUpgradeCost);
         fireRateUpgradeCost += upgradeCostPreLevel;

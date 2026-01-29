@@ -20,13 +20,13 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     [Range(8,20)] [SerializeField] int wallJumpSpeed;
     [Range(1,4)]  [SerializeField] int wallJumpPush;
     [Range(1,4)]  [SerializeField] int wallJumpMax;
-    [Range(1,2)]  [SerializeField] float wallCheckDis;
+    [SerializeField] float wallCheckDis;
     
     [Header("---- Physics ----")]
     [Range(1,100)][SerializeField] int gravity;
     
     [Header("---- Resources ----")]
-    [Range(1,4)]  [SerializeField] float mineRate;
+    [SerializeField] float mineRate;
     [Range(5,15)] [SerializeField] int mineDist;
     [Range(1,4)]  [SerializeField] int mineDamage;
 
@@ -236,7 +236,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     private void WallCheck()
     {
         wallJumpPosib = Physics.Raycast(transform.position, transform.right, out wallJumpHit, wallCheckDis) ||
-        Physics.Raycast(transform.position, -transform.right, out wallJumpHit, wallCheckDis);
+                        Physics.Raycast(transform.position, -transform.right, out wallJumpHit, wallCheckDis) ||
+                        Physics.Raycast(transform.position, transform.forward, out wallJumpHit, wallCheckDis) ||
+                        Physics.Raycast(transform.position, -transform.forward, out wallJumpHit, wallCheckDis);
     }
 
     private bool OnSteepSlope()
@@ -269,15 +271,10 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         gunList[gunListPos].ammoCur--;
 
         shootTimer = 0;
-
-
-        Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
-
-
        
         Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
 
-         gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
+        gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
     }
 
     void mine()
@@ -366,6 +363,14 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         }
         else return;
     }
+
+    public void resetGunStats()
+    {
+        gunList[gunListPos].shootDist = gunList[gunListPos].shootDistOrig;
+        gunList[gunListPos].shootDamage = gunList[gunListPos].shootDamageOrig;
+        gunList[gunListPos].shootRate = gunList[gunListPos].shootRateOrig;
+        
+    }
     void SpawnAOETower()
     {
         if(stoneCount >= 5 && goldCount >= 5)
@@ -431,10 +436,14 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         shootDist = gunList[gunListPos].shootDist;
         shootRate = gunList[gunListPos].shootRate;
         gunName = gunList[gunListPos].gunName;
+        gunList[gunListPos].damageLevel = gameManager.instance.damageLevel;
+        gunList[gunListPos].DistLevel = gameManager.instance.rangeLevel;
+        gunList[gunListPos].fireRateLevel = gameManager.instance.fireRateLevel;
 
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[gunListPos].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+        gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
         gameManager.instance.SetGunNameText();
     }
 

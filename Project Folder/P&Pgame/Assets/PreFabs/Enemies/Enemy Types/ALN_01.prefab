@@ -481,8 +481,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4508730990042378169}
   - {fileID: 7642535328838185246}
+  - {fileID: 4508730990042378169}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8936347873949211202
@@ -499,12 +499,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::enemyAI
   numTurrets: 0
   target: {fileID: 0}
+  animTranSpeed: 8
+  anim: {fileID: 2750212073280840834}
   shootPos: {fileID: 6640107793589919657}
   headPos: {fileID: 4842511704334752023}
   bullet: {fileID: 811445109454079216, guid: 29f08eec12a312c4ba15e5f8c16a50e2, type: 3}
+  texture: {fileID: 2100000, guid: abefc0be2cb91d346a86faa98babf397, type: 2}
   HP: 10
-  FOV: 180
-  range: 50
+  FOV: 90
+  range: 30
   shotsPerBurst: 1
   burstFireRate: 0
   fireRate: 2
@@ -567,14 +570,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.25
-  m_Height: 2
+  m_Height: 0.25
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!54 &5376988710309075547
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1010,7 +1013,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 50
+  m_Radius: 30
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4449823827600246681
 GameObject:
@@ -1179,8 +1182,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5719885676188244805}
+  - component: {fileID: 4796515504417137816}
+  - component: {fileID: 9060111721262883137}
   - component: {fileID: 5959083100728295975}
-  m_Layer: 0
+  - component: {fileID: 2256157006846504242}
+  m_Layer: 7
   m_Name: Mesh_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1202,6 +1208,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4508730990042378169}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4796515504417137816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5120906074329448190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7e2a3268e8709b45943e279b1ad571e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinnedCollisionUpdater
+  updatesPerSecond: 5
+  detectionRadius: 30
+  detectionLayers:
+    serializedVersion: 2
+    m_Bits: 4104
+--- !u!33 &9060111721262883137
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5120906074329448190}
+  m_Mesh: {fileID: 5461320835613783329, guid: 071035919658fc84e8be0710bb62c512, type: 3}
 --- !u!137 &5959083100728295975
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -1315,6 +1346,28 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0692679, y: -0.19885272, z: -0.0012552291}
     m_Extent: {x: 0.5678036, y: 1.1076992, z: 0.39224756}
   m_DirtyAABB: 0
+--- !u!64 &2256157006846504242
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5120906074329448190}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5461320835613783329, guid: 071035919658fc84e8be0710bb62c512, type: 3}
 --- !u!1 &5406233670067384207
 GameObject:
   m_ObjectHideFlags: 0
