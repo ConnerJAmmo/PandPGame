@@ -20,13 +20,13 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     [Range(8,20)] [SerializeField] int wallJumpSpeed;
     [Range(1,4)]  [SerializeField] int wallJumpPush;
     [Range(1,4)]  [SerializeField] int wallJumpMax;
-    [Range(1,2)]  [SerializeField] float wallCheckDis;
+    [SerializeField] float wallCheckDis;
     
     [Header("---- Physics ----")]
     [Range(1,100)][SerializeField] int gravity;
     
     [Header("---- Resources ----")]
-    [Range(1,4)]  [SerializeField] float mineRate;
+    [SerializeField] float mineRate;
     [Range(5,15)] [SerializeField] int mineDist;
     [Range(1,4)]  [SerializeField] int mineDamage;
 

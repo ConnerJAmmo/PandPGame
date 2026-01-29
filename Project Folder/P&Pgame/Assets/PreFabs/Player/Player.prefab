@@ -341,18 +341,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   HP: 100
-  speed: 7
-  slopeSlideSpeed: 10
+  speed: 6
+  slopeSlideSpeed: 8
   sprintMod: 3
   jumpSpeed: 12
   jumpMax: 2
   wallJumpSpeed: 16
   wallJumpPush: 1
   wallJumpMax: 2
-  wallCheckDis: 2
+  wallCheckDis: 0.5
   gravity: 35
-  mineRate: 1
-  mineDist: 5
+  mineRate: 0.5
+  mineDist: 8
   mineDamage: 1
   woodCount: 0
   stoneCount: 0
