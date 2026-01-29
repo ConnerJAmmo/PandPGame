@@ -45,6 +45,19 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     [SerializeField] public float shootRate;
     [SerializeField] public int shootDist;
     [SerializeField] public int shootDamage;
+
+    [Header("--------Audio---------")]
+    [SerializeField] AudioSource aud;
+    [SerializeField] AudioClip[] jumpAud;
+    [SerializeField] float jumpAudVol;
+    [SerializeField] AudioClip[] shootAud;
+    [SerializeField] float shootAudVol;
+    [SerializeField] AudioClip[] hurtAud;
+    [SerializeField] float hurtAudVol;
+    [SerializeField] AudioClip[] reloadAud;
+    [SerializeField] float reloadAudVol;
+
+    [Header("--------------------------")]
     public string gunName;
 
     int jumpCount;
@@ -154,6 +167,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     {
         if (Input.GetButtonDown("Reload") && gunList.Count > 0)
         {
+            aud.PlayOneShot(reloadAud[0], reloadAudVol);
             gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
             gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
         }
@@ -218,6 +232,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         {
             playerVel.y = jumpSpeed;
             jumpCount++;
+            aud.PlayOneShot(jumpAud[Random.Range(0, jumpAud.Length)], jumpAudVol);
         }
     }
 
@@ -271,6 +286,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         gunList[gunListPos].ammoCur--;
 
         shootTimer = 0;
+
+        aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, shootAud.Length)]);
        
         Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
 
@@ -389,6 +406,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     public void takeDamage(int amount, DamageType type)
     {
         HP -= amount;
+        aud.PlayOneShot(hurtAud[Random.Range(0, hurtAud.Length)],hurtAudVol);
         updatePlayerUI();
         StartCoroutine(flashDamage());
 

@@ -23,6 +23,11 @@ public class enemyAI : MonoBehaviour, IDamage
     [Range(1, 25)] [SerializeField] public int HP;
     [Range(0, 360)] [SerializeField] public int FOV;
 
+    [Header("---------Audio---------")]
+    [SerializeField] AudioSource aud;
+    [SerializeField] AudioClip shootAud;
+    [SerializeField] float shootAudVol;
+
     [Header("Fire Settings")]
     [Range(1, 1000)] [SerializeField] public int range;
     [Range(1, 5)] [SerializeField] public int shotsPerBurst;
@@ -246,6 +251,9 @@ public class enemyAI : MonoBehaviour, IDamage
             
             // If not using burst fire, fire a single shot exactly as before
             shootTimer = 0; // Reset the timer immediately for the next single shot
+
+            aud.PlayOneShot(shootAud);
+            
             anim.SetTrigger("Shoot");
             FireProjectile(target.transform);
         }
