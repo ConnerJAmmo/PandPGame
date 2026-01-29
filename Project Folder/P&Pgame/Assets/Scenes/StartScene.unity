@@ -567,7 +567,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4717871333419556656, guid: a69966e059c6c584ea43cb20f7a45102, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.9932604
+      value: 7.85
       objectReference: {fileID: 0}
     - target: {fileID: 4717871333419556656, guid: a69966e059c6c584ea43cb20f7a45102, type: 3}
       propertyPath: m_LocalPosition.z
@@ -908,6 +908,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4626459905024072865, guid: 00820390a444c9a4487dc8e711fa3151, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d9191a75e58d785498498aa5070dd40c, type: 2}
+    - target: {fileID: 5732715026127443329, guid: 00820390a444c9a4487dc8e711fa3151, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d9191a75e58d785498498aa5070dd40c, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1951586802507159305, guid: 00820390a444c9a4487dc8e711fa3151, type: 3}
@@ -1713,11 +1721,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4717871333419556656, guid: a69966e059c6c584ea43cb20f7a45102, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5616808
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4717871333419556656, guid: a69966e059c6c584ea43cb20f7a45102, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.306396
+      value: 7.19
       objectReference: {fileID: 0}
     - target: {fileID: 4717871333419556656, guid: a69966e059c6c584ea43cb20f7a45102, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2175,7 +2183,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7828694239916710812, guid: d36a5b27d1e0d04418767aec86a03aa8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.9532604
+      value: 7.855
       objectReference: {fileID: 0}
     - target: {fileID: 7828694239916710812, guid: d36a5b27d1e0d04418767aec86a03aa8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2863,6 +2871,70 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6097880192208175810, guid: da7a35b649d80ae468a5870ac44c2240, type: 3}
   m_PrefabInstance: {fileID: 2107830744}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1461556524
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1461556526}
+  - component: {fileID: 1461556525}
+  m_Layer: 0
+  m_Name: NavMesh Surface (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1461556525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461556524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
+--- !u!4 &1461556526
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461556524}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 230.66957, y: 6.99506, z: 172.42021}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1462401811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4289,3 +4361,4 @@ SceneRoots:
   - {fileID: 355566511}
   - {fileID: 527559999}
   - {fileID: 121911469}
+  - {fileID: 1461556526}
