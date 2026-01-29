@@ -363,6 +363,14 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         }
         else return;
     }
+
+    public void resetGunStats()
+    {
+        gunList[gunListPos].shootDist = gunList[gunListPos].shootDistOrig;
+        gunList[gunListPos].shootDamage = gunList[gunListPos].shootDamageOrig;
+        gunList[gunListPos].shootRate = gunList[gunListPos].shootRateOrig;
+        
+    }
     void SpawnAOETower()
     {
         if(stoneCount >= 5 && goldCount >= 5)
@@ -428,6 +436,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         shootDist = gunList[gunListPos].shootDist;
         shootRate = gunList[gunListPos].shootRate;
         gunName = gunList[gunListPos].gunName;
+        gunList[gunListPos].damageLevel = gameManager.instance.damageLevel;
+        gunList[gunListPos].DistLevel = gameManager.instance.rangeLevel;
+        gunList[gunListPos].fireRateLevel = gameManager.instance.fireRateLevel;
 
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].gunModel.GetComponent<MeshFilter>().sharedMesh;

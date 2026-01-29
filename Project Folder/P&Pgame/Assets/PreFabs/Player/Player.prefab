@@ -340,13 +340,13 @@ MonoBehaviour:
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 8
-  HP: 10
-  speed: 5
+  HP: 100
+  speed: 7
   slopeSlideSpeed: 10
   sprintMod: 3
   jumpSpeed: 12
   jumpMax: 2
-  wallJumpSpeed: 8
+  wallJumpSpeed: 16
   wallJumpPush: 1
   wallJumpMax: 2
   wallCheckDis: 2
@@ -356,16 +356,19 @@ MonoBehaviour:
   mineDamage: 1
   woodCount: 0
   stoneCount: 0
-  goldCount: 0
+  goldCount: 20
   bullet: {fileID: 4359745504029842998, guid: a9bbf3c614848ec4bbc9c1a5fd8ea286, type: 3}
   STTower: {fileID: 1401014823036408, guid: 5040fa77b88ce334da2f3a5ef8e1c20c, type: 3}
-  AOETower: {fileID: 0}
+  AOETower: {fileID: 1361402013487122, guid: 1606b58cd193aa243a22595a9230cc03, type: 3}
   shootPos: {fileID: 2877944076215294254}
   gunList: []
   gunModel: {fileID: 5985920302194669559}
   shootRate: 0
   shootDist: 0
   shootDamage: 0
+  gunName: 
+  gunListPos: 0
+  shootTimer: 0
   HPOrig: 0
 --- !u!23 &6909547586635812801
 MeshRenderer:

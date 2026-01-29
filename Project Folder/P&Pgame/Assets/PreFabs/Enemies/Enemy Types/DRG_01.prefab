@@ -1855,7 +1855,7 @@ Transform:
   m_GameObject: {fileID: 3665422532671339355}
   serializedVersion: 2
   m_LocalRotation: {x: 0.06286321, y: -1.1778196e-16, z: 1.1778196e-16, w: 0.99802214}
-  m_LocalPosition: {x: -0, y: -0.00000047683716, z: 0.00000023841858}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 270.9103, y: 270.9103, z: 270.9103}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2477,7 +2477,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3348458742689736678}
   - component: {fileID: 2756888729996345608}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: DetectRadius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2518,7 +2518,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 100
+  m_Radius: 50
   m_Center: {x: 0, y: 4, z: 0}
 --- !u!1 &4691689004036234786
 GameObject:
@@ -2791,7 +2791,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2485079249426242530}
   - component: {fileID: 4656301829543214305}
-  m_Layer: 0
+  - component: {fileID: 844975684278533558}
+  - component: {fileID: 366655948937594911}
+  m_Layer: 7
   m_Name: DragonMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2806,8 +2808,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5176152467329211321}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000078784346, y: 9.855658e-11, z: -9.855637e-11, w: 1}
-  m_LocalPosition: {x: -4.699549e-17, y: -8.526513e-14, z: -1.0658141e-14}
+  m_LocalRotation: {x: 0.00000008195639, y: 9.855657e-11, z: -9.855637e-11, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 68.56274, y: 68.56274, z: 68.56275}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2987,9 +2989,48 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 5874973580456144158}
   m_AABB:
-    m_Center: {x: 0.00015352666, y: -0.003044542, z: 0.0041985726}
+    m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.05529411, y: 0.07961227, z: 0.029715981}
   m_DirtyAABB: 0
+--- !u!64 &844975684278533558
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5176152467329211321}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: d8dfac883a64fd946918f3302c93bca5, type: 3}
+--- !u!114 &366655948937594911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5176152467329211321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7e2a3268e8709b45943e279b1ad571e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinnedCollisionUpdater
+  updatesPerSecond: 5
+  detectionRadius: 50
+  detectionLayers:
+    serializedVersion: 2
+    m_Bits: 4104
 --- !u!1 &5193892367816308663
 GameObject:
   m_ObjectHideFlags: 0
@@ -4599,7 +4640,7 @@ GameObject:
   - component: {fileID: 1011345925133868797}
   m_Layer: 7
   m_Name: DRG_01
-  m_TagString: Boss
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4617,9 +4658,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5582028114813547739}
-  - {fileID: 2485079249426242530}
   - {fileID: 3348458742689736678}
+  - {fileID: 2485079249426242530}
+  - {fileID: 5582028114813547739}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1962804090028971297
@@ -4648,16 +4689,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::enemyAI
   numTurrets: 0
   target: {fileID: 0}
+  animTranSpeed: 8
+  anim: {fileID: 3860411116311545315}
   shootPos: {fileID: 5048306828572419944}
   headPos: {fileID: 3925539388988733992}
   bullet: {fileID: 3806039598199004532, guid: b228b7bdcc5696f459b973ba416fed5a, type: 3}
-  anim: {fileID: 3860411116311545315}
-  animTranSpeed: 8
+  texture: {fileID: 2100000, guid: 35e5dafa6a479b74bad185881be745cd, type: 2}
   HP: 25
   FOV: 90
-  range: 100
+  range: 50
   shotsPerBurst: 3
-  burstFireRate: 1
+  burstFireRate: 2
   fireRate: 2
 --- !u!195 &6728203352098554522
 NavMeshAgent:
@@ -4678,7 +4720,7 @@ NavMeshAgent:
   m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 5
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!95 &3860411116311545315
@@ -4694,7 +4736,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 35c6d9164b36f844b81d2924f0fa35f4, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
@@ -4718,14 +4760,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3
-  m_Height: 15
+  m_Radius: 2
+  m_Height: 2
   m_Direction: 2
-  m_Center: {x: 0, y: 4, z: 0}
+  m_Center: {x: 0, y: 4, z: 4}
 --- !u!54 &1011345925133868797
 Rigidbody:
   m_ObjectHideFlags: 0
