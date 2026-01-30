@@ -4700,7 +4700,7 @@ MonoBehaviour:
   FOV: 90
   aud: {fileID: 4542384404652275148}
   shootAud: {fileID: 8300000, guid: 96f24f3596be2b0438befde9ba471d1b, type: 3}
-  shootAudVol: 0.5
+  shootAudVol: 0.3
   range: 50
   shotsPerBurst: 3
   burstFireRate: 2

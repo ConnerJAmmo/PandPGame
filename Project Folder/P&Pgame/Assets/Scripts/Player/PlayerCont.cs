@@ -49,23 +49,23 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     [Header("--------Audio---------")]
     [SerializeField] AudioSource aud;
     [SerializeField] AudioClip[] jumpAud;
-    [SerializeField] float jumpAudVol;
+    [Range(0, 1)] [SerializeField] float jumpAudVol;
     [SerializeField] AudioClip[] shootAud;
-    [SerializeField] float shootAudVol;
+    [Range(0, 1)] [SerializeField] float shootAudVol;
     [SerializeField] AudioClip[] hurtAud;
-    [SerializeField] float hurtAudVol;
+    [Range(0, 1)] [SerializeField] float hurtAudVol;
     [SerializeField] AudioClip[] reloadAud;
-    [SerializeField] float reloadAudVol;
+    [Range(0, 1)] [SerializeField] float reloadAudVol;
     [SerializeField] AudioClip[] mineWoodAud;
-    [SerializeField] float mineWoodVol;
+    [Range(0, 1)] [SerializeField] float mineWoodVol;
     [SerializeField] AudioClip[] mineSteelAud;
-    [SerializeField] float mineSteelAudVol;
+    [Range(0, 1)] [SerializeField] float mineSteelAudVol;
     [SerializeField] AudioClip[] mined5Aud;
-    [SerializeField] float mined5AudVol;
+    [Range(0, 1)] [SerializeField] float mined5AudVol;
     [SerializeField] AudioClip[] gunSelectUpAud;
-    [SerializeField] float gunSelectUpAudVol;
+    [Range(0, 1)] [SerializeField] float gunSelectUpAudVol;
     [SerializeField] AudioClip[] gunSelectDownAud;
-    [SerializeField] float gunSelectDownAudVol;
+    [Range(0, 1)] [SerializeField] float gunSelectDownAudVol;
 
     [Header("--------------------------")]
     public string gunName;

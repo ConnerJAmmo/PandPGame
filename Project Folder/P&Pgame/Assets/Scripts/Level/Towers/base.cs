@@ -16,9 +16,9 @@ public class baseDmg : MonoBehaviour, IDamage
 
     [SerializeField] AudioSource aud;
     [SerializeField] AudioClip[] baseTakeDamageAud;
-    [SerializeField] float baseTakeDamageVol;
+    [Range(0, 1)] [SerializeField] float baseTakeDamageVol;
     [SerializeField] AudioClip[] baseDestroyedAud;
-    [SerializeField] float baseDestroyedVol;
+    [Range(0, 1)] [SerializeField] float baseDestroyedVol;
 
 
     Color colorOrigin; 

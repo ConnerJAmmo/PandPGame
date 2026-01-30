@@ -482,7 +482,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::baseDmg
   model: {fileID: 23323348776332894}
-  maxHP: 100
+  maxHP: 500
   bar: {fileID: 9175986808450551291}
   aud: {fileID: 2483671243258568276}
   baseTakeDamageAud:

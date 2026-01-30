@@ -26,7 +26,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [Header("---------Audio---------")]
     [SerializeField] AudioSource aud;
     [SerializeField] AudioClip shootAud;
-    [SerializeField] float shootAudVol;
+    [Range(0, 1)] [SerializeField] float shootAudVol;
 
     [Header("Fire Settings")]
     [Range(1, 1000)] [SerializeField] public int range;
