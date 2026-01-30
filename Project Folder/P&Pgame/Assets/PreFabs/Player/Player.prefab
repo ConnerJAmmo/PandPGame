@@ -350,7 +350,7 @@ MonoBehaviour:
   wallJumpSpeed: 18
   wallJumpPush: 1
   wallJumpMax: 2
-  wallCheckDis: 0.5
+  wallCheckDis: 1
   gravity: 35
   mineRate: 0.5
   mineDist: 8
@@ -387,6 +387,21 @@ MonoBehaviour:
   reloadAud:
   - {fileID: 8300000, guid: 107aa9d08696cfa4b94899303c5a058c, type: 3}
   reloadAudVol: 0.4
+  mineWoodAud:
+  - {fileID: 8300000, guid: 77be57965aa49454aa764a458777c0f3, type: 3}
+  mineWoodVol: 0.5
+  mineSteelAud:
+  - {fileID: 8300000, guid: 4dc63d709f3d6d44396b2f9c94e6e237, type: 3}
+  mineSteelAudVol: 0.4
+  mined5Aud:
+  - {fileID: 8300000, guid: b7086d3869ebde1449efcf65bab85804, type: 3}
+  mined5AudVol: 0.4
+  gunSelectUpAud:
+  - {fileID: 8300000, guid: b9a25f8681c98ab4d849bd5ff41bac58, type: 3}
+  gunSelectUpAudVol: 0.4
+  gunSelectDownAud:
+  - {fileID: 8300000, guid: 4dc63d709f3d6d44396b2f9c94e6e237, type: 3}
+  gunSelectDownAudVol: 0.4
   gunName: 
   gunListPos: 0
   shootTimer: 0
