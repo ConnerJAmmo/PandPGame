@@ -13,7 +13,14 @@ public class baseDmg : MonoBehaviour, IDamage
 
     [Header("Tower Health Bar")]
     [SerializeField] TowerHealth bar;
-    
+
+    [SerializeField] AudioSource aud;
+    [SerializeField] AudioClip[] baseTakeDamageAud;
+    [Range(0, 1)] [SerializeField] float baseTakeDamageVol;
+    [SerializeField] AudioClip[] baseDestroyedAud;
+    [Range(0, 1)] [SerializeField] float baseDestroyedVol;
+
+
     Color colorOrigin; 
     Material dynamicMat; // Store the unique instance material
 
@@ -52,6 +59,7 @@ public class baseDmg : MonoBehaviour, IDamage
         if (hp <= 0)
         {
             gameManager.instance.youLose();
+            
             Destroy(gameObject);
         }
         else
@@ -59,6 +67,11 @@ public class baseDmg : MonoBehaviour, IDamage
             // Stop the specific flash routine so colors don't get stuck
             StopCoroutine("flashRed");
             StartCoroutine(flashRed());
+            if (hp <= 20)
+            {
+                aud.PlayOneShot(baseDestroyedAud[0], baseDestroyedVol);
+            }else
+                aud.PlayOneShot(baseTakeDamageAud[Random.Range(0, baseTakeDamageAud.Length)], baseTakeDamageVol);
             
         }
     }

@@ -80,15 +80,15 @@ MonoBehaviour:
   spawnPoint: {fileID: 370217327937283423}
   waves:
   - enemies:
-    - {fileID: 8936347873949211202, guid: 744e3c38a67315745820a821c68c98af, type: 3}
-    - {fileID: 7340712634118204420, guid: 18a4495349916914c800d5c81dea5789, type: 3}
+    - {fileID: 8272800703947562132, guid: 666de1cac07f6914cb7f1c1aca100775, type: 3}
+    - {fileID: 8272800703947562132, guid: 666de1cac07f6914cb7f1c1aca100775, type: 3}
     timeToNextEnemy: 1
     timeToNextWave: 15
     enemiesLeft: 0
   - enemies:
-    - {fileID: 7340712634118204420, guid: 18a4495349916914c800d5c81dea5789, type: 3}
-    - {fileID: 8936347873949211202, guid: 744e3c38a67315745820a821c68c98af, type: 3}
     - {fileID: 8272800703947562132, guid: 666de1cac07f6914cb7f1c1aca100775, type: 3}
+    - {fileID: 3351877374651842608, guid: a150deac19aec7743a9a37a32cca3370, type: 3}
+    - {fileID: 1974431365477460268, guid: 085ad4823a128104baaf54a2bbadbc25, type: 3}
     timeToNextEnemy: 1
     timeToNextWave: 15
     enemiesLeft: 0

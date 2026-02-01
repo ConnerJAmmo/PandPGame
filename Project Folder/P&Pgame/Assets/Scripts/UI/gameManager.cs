@@ -79,6 +79,15 @@ public class gameManager : MonoBehaviour, goldManage
 
     public GameObject waveSpawner;
 
+    [Header("-------------Audio--------------")]
+    [SerializeField] AudioSource aud;
+    [SerializeField] AudioClip menuInteractionAud;
+    [SerializeField] float menuVol;
+    [SerializeField] AudioClip deathAud;
+    [SerializeField] float deathVol;
+    [SerializeField] AudioClip mainMusic;
+    [SerializeField] float mainMusicVol;
+
     void Awake()
     {
         instance = this;
@@ -86,6 +95,8 @@ public class gameManager : MonoBehaviour, goldManage
 
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerCont>();
+
+        
 
         damageLevel = 0;
         fireRateLevel = 0;
@@ -115,6 +126,7 @@ public class gameManager : MonoBehaviour, goldManage
                 statePause();
                 menuActive = menuPause;
                 menuActive.SetActive(true);
+                aud.PlayOneShot(menuInteractionAud, menuVol);
             }
             else if (menuActive == menuPause) 
             {
@@ -216,6 +228,7 @@ public class gameManager : MonoBehaviour, goldManage
         Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(false);
         menuActive = null;
+        aud.PlayOneShot(menuInteractionAud, menuVol);
     }
 
     public void openPlayerUpgradeMenu()
@@ -251,6 +264,7 @@ public class gameManager : MonoBehaviour, goldManage
     public void youLose()
     {
         newMenu(menuLose);
+        aud.PlayOneShot(deathAud, deathVol);
     }
 
     public void youWin()
