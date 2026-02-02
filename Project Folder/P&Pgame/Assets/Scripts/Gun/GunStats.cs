@@ -17,6 +17,7 @@ public class GunStats : ScriptableObject
     [Range(0.1f, 4)] public float shootRate;
     public float shootRateOrig;
 
+
     public int ammoCur;
     [Range(5, 50)] public int ammoMax;
 
