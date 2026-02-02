@@ -101,6 +101,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         HPOrig = HP;
         gameManager.instance.SetHPOirgUI();
         updatePlayerUI();
+        shootDamage = 0;
+        shootRate = 0;
+        shootDist = 0;
     }
 
     // Update is called once per frame
@@ -396,12 +399,14 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         else return;
     }
 
-    public void resetGunStats()
+    public void resetGunStatsToOrig()
     {
         gunList[gunListPos].shootDist = gunList[gunListPos].shootDistOrig;
         gunList[gunListPos].shootDamage = gunList[gunListPos].shootDamageOrig;
         gunList[gunListPos].shootRate = gunList[gunListPos].shootRateOrig;
-        
+        gunList[gunListPos].damageLevel = 0;
+        gunList[gunListPos].fireRateLevel = 0;
+        gunList[gunListPos].DistLevel = 0;
     }
     void SpawnAOETower()
     {
@@ -470,9 +475,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         shootDist = gunList[gunListPos].shootDist;
         shootRate = gunList[gunListPos].shootRate;
         gunName = gunList[gunListPos].gunName;
-        gunList[gunListPos].damageLevel = gameManager.instance.damageLevel;
-        gunList[gunListPos].DistLevel = gameManager.instance.rangeLevel;
-        gunList[gunListPos].fireRateLevel = gameManager.instance.fireRateLevel;
+        gameManager.instance.damageLevel = gunList[gunListPos].damageLevel;
+        gameManager.instance.rangeLevel = gunList[gunListPos].DistLevel;
+        gameManager.instance.fireRateLevel = gunList[gunListPos].fireRateLevel;
 
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].gunModel.GetComponent<MeshFilter>().sharedMesh;
