@@ -3,7 +3,7 @@ using System.Collections;
 using bullet.fx.pack;
 using System.Collections.Generic;
 
-public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
+public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
@@ -49,6 +49,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     [SerializeField] public int shootDist;
     [SerializeField] public int shootDamage;
 
+    [Header("Keys")]
+    [SerializeField] public List<string> keyRing = new List<string>();
+
     [Header("--------Audio---------")]
     [SerializeField] AudioSource aud;
     [SerializeField] AudioClip[] jumpAud;
@@ -69,6 +72,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     [Range(0, 1)] [SerializeField] float gunSelectUpAudVol;
     [SerializeField] AudioClip[] gunSelectDownAud;
     [Range(0, 1)] [SerializeField] float gunSelectDownAudVol;
+    [SerializeField] AudioClip[] keyGetAud;
+    [Range(0, 1)][SerializeField] float keyGetAudVol;
 
     [Header("--------------------------")]
     public string gunName;
@@ -506,5 +511,13 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
             aud.PlayOneShot(gunSelectDownAud[0], gunSelectDownAudVol);
             ChangeGun();
         }
+    }
+
+    public void getKey(string key)
+    {
+        keyRing.Add(key);
+        aud.PlayOneShot(keyGetAud[0], keyGetAudVol);
+
+        
     }
 }
