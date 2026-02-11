@@ -1508,6 +1508,8 @@ GameObject:
   - component: {fileID: 4482858801191115167}
   - component: {fileID: 3430708196408082808}
   - component: {fileID: 3085627319699222686}
+  - component: {fileID: 5310159686714376812}
+  - component: {fileID: 3344241987938728374}
   m_Layer: 5
   m_Name: Game Manager
   m_TagString: Untagged
@@ -1606,6 +1608,8 @@ MonoBehaviour:
   menuVol: 0.5
   deathAud: {fileID: 8300000, guid: c7c7b485e724f774899105660544b918, type: 3}
   deathVol: 0.2
+  mainMusic: {fileID: 0}
+  mainMusicVol: 0
 --- !u!82 &3085627319699222686
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1703,6 +1707,37 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5310159686714376812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875535621365194673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18602f6ed6711df4ba62c7991eb808c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeleportPostFX
+  volume: {fileID: 0}
+  flashIntensity: 2
+  flashUpTime: 0.05
+  flashDownTime: 0.12
+--- !u!114 &3344241987938728374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875535621365194673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f9bba8c2bec04e49a5b1757554b11a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleCameraShake
+  cam: {fileID: 0}
+  duration: 0.3
+  strength: 0.7
 --- !u!1 &882806650201683770
 GameObject:
   m_ObjectHideFlags: 0
