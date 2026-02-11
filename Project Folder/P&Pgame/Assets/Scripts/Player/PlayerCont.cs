@@ -303,6 +303,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, shootAud.Length)]);
        
         Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
+        Instantiate(gunList[gunListPos].muzzleFlashEffect, shootPos.transform.position, shootPos.transform.rotation);
 
         gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
     }
