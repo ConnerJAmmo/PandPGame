@@ -12,6 +12,12 @@ public class PlayerTeleporter : MonoBehaviour
     [Header("Cooldown (No Instant Re - Teleport")]
     [SerializeField] float coolDown;
 
+    [SerializeField] AudioSource aud;
+    [SerializeField] AudioClip audTeleport;
+
+    [Range(0, 1)] [SerializeField] float teleportVol;
+
+
     Transform cacheDestinationSpawn;
 
 
@@ -57,6 +63,8 @@ public class PlayerTeleporter : MonoBehaviour
             cacheDestination();
             if (cacheDestinationSpawn) return;
         }
+
+        aud.PlayOneShot(audTeleport, teleportVol);
 
         // Cooldown check for Player
         var allowed = other.GetComponent<teleportAllowed>();

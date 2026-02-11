@@ -28,6 +28,18 @@ public class TurretController : MonoBehaviour, IDamage
     [SerializeField] public float scanSpeed;
     [SerializeField] public float scanAngle;
 
+    [Header("---------Audio--------")]
+    [SerializeField] AudioSource aud;
+    [SerializeField] AudioClip[] burstShotAud;
+    [SerializeField] float burstShotVol;
+    [SerializeField] AudioClip[] ShotAud;
+    [SerializeField] float shotVol;
+    [SerializeField] AudioClip[] turretTakeDamageAud;
+    [SerializeField] float turretTakeDamageVol;
+    [SerializeField] AudioClip[] turretDestroyedAud;
+    [SerializeField] float turretDestroyedVol;
+
+
     public TurretFireManager fireManager;
 
     private bool useBurstFire;
@@ -226,11 +238,13 @@ public class TurretController : MonoBehaviour, IDamage
         {
             // If burst fire is enabled for this turret, start the coroutine
             StartCoroutine(FireBurstRoutine());
+            aud.PlayOneShot(burstShotAud[0], burstShotVol);
         }
         else
         {
             // If not using burst fire, fire a single shot
             shootTimer = 0; // Reset the timer immediately for the next single shot
+            aud.PlayOneShot(ShotAud[Random.Range(0, ShotAud.Length)], shotVol);
             FireProjectile();
         }
     }
@@ -298,6 +312,13 @@ public class TurretController : MonoBehaviour, IDamage
             // Stop only the flash coroutine to prevent color getting stuck
             StopCoroutine(flashRed());
             StartCoroutine(flashRed());
+
+            if (HP <= 20)
+            {
+                aud.PlayOneShot(turretDestroyedAud[0], turretDestroyedVol);
+            }
+            else
+                aud.PlayOneShot(turretTakeDamageAud[Random.Range(0, turretTakeDamageAud.Length)], turretTakeDamageVol);
         }
     }
 

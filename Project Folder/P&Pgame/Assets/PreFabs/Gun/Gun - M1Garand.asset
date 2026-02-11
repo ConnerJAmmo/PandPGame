@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GunStats
   gunModel: {fileID: 4698201593948852689, guid: 185ce04d44da342739f0bef843698e6c, type: 3}
   gunName: M1 Grarand
+  DistLevel: 0
   shootDist: 1200
   shootDistOrig: 1200
+  damageLevel: 0
   shootDamage: 15
   shootDamageOrig: 15
+  fireRateLevel: 0
   shootRate: 1.2
   shootRateOrig: 1.2
   ammoCur: 5
   ammoMax: 5
-  hitEffect: {fileID: 0}
-  shootSound: []
-  shootSoundVol: 0
+  hitEffect: {fileID: 8591032446617569335, guid: 4131349b8b5025846a9ecb06b7eb2d73, type: 3}
+  shootSound:
+  - {fileID: 8300000, guid: da90bd48029f96a468136559d95c4e06, type: 3}
+  shootSoundVol: 0.5

@@ -11,15 +11,18 @@ public class buttonFunctions : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        gameManager.instance.playerScript.resetGunStats();
+        gameManager.instance.playerScript.resetGunStatsToOrig();
         gameManager.instance.stateUnpause();
     }
     public void Quit()
     {
 #if UNITY_EDITOR
+        gameManager.instance.playerScript.resetGunStatsToOrig();
         UnityEditor.EditorApplication.isPlaying = false;
 #else
+    gameManager.instance.playerScript.resetGunStatsToOrig();
     Application.Quit();
+
 #endif
     }
 
