@@ -38,6 +38,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     [SerializeField] GameObject STTower;
     [SerializeField] GameObject AOETower;
     [SerializeField] public Transform shootPos;
+    [SerializeField] public Transform machineGunShootPos;
+    [SerializeField] public Transform m1GarandShootPos;
+    [SerializeField] public Transform m1918BarShootPos;
 
     [Header("Guns")]
     [SerializeField] public List<GunStats> gunList = new List<GunStats>();
@@ -308,6 +311,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, shootAud.Length)]);
        
         Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
+        Instantiate(gunList[gunListPos].muzzleFlashEffect, shootPos.transform.position, shootPos.transform.rotation);
 
         gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
     }
@@ -479,6 +483,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         shootDamage = gunList[gunListPos].shootDamage;
         shootDist = gunList[gunListPos].shootDist;
         shootRate = gunList[gunListPos].shootRate;
+        shootPos = gunList[gunListPos].shootPos;
+
         gunName = gunList[gunListPos].gunName;
         gameManager.instance.damageLevel = gunList[gunListPos].damageLevel;
         gameManager.instance.rangeLevel = gunList[gunListPos].DistLevel;

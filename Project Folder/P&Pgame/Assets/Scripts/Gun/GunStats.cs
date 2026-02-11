@@ -21,7 +21,10 @@ public class GunStats : ScriptableObject
     public int ammoCur;
     [Range(5, 50)] public int ammoMax;
 
+    public Transform shootPos;
+
     public ParticleSystem hitEffect;
+    public ParticleSystem muzzleFlashEffect;
     public AudioClip[] shootSound;
     [Range(0, 1)] public float shootSoundVol;
 }
