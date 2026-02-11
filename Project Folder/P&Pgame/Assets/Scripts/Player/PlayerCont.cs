@@ -475,6 +475,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         shootDamage = gunList[gunListPos].shootDamage;
         shootDist = gunList[gunListPos].shootDist;
         shootRate = gunList[gunListPos].shootRate;
+        shootPos = gunList[gunListPos].shootPos;
         gunName = gunList[gunListPos].gunName;
         gameManager.instance.damageLevel = gunList[gunListPos].damageLevel;
         gameManager.instance.rangeLevel = gunList[gunListPos].DistLevel;
