@@ -38,6 +38,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     [SerializeField] GameObject STTower;
     [SerializeField] GameObject AOETower;
     [SerializeField] public Transform shootPos;
+    [SerializeField] public Transform machineGunShootPos;
+    [SerializeField] public Transform m1GarandShootPos;
+    [SerializeField] public Transform m1918BarShootPos;
 
     [Header("Guns")]
     [SerializeField] public List<GunStats> gunList = new List<GunStats>();
@@ -476,6 +479,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         shootDist = gunList[gunListPos].shootDist;
         shootRate = gunList[gunListPos].shootRate;
         shootPos = gunList[gunListPos].shootPos;
+
         gunName = gunList[gunListPos].gunName;
         gameManager.instance.damageLevel = gunList[gunListPos].damageLevel;
         gameManager.instance.rangeLevel = gunList[gunListPos].DistLevel;

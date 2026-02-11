@@ -1,10 +1,11 @@
+using bullet.fx.pack;
 using UnityEngine;
 
 public class pickupGuns : MonoBehaviour
 {
 
     [SerializeField] GunStats gun;
-    [SerializeField] Transform shootPos;
+    
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,8 +14,18 @@ public class pickupGuns : MonoBehaviour
         if(pick != null)
         {
             gun.ammoCur = gun.ammoMax;
-            gameManager.instance.playerScript.shootPos = shootPos;
-            gun.shootPos = shootPos;
+            if (gun.gunName == "Machine Gun")
+            {
+                gun.shootPos = gameManager.instance.playerScript.machineGunShootPos;
+            }
+            else if (gun.gunName == "M1918 Bar")
+            {
+                gun.shootPos = gameManager.instance.playerScript.m1918BarShootPos;
+            }
+            else
+            {
+                gun.shootPos = gameManager.instance.playerScript.m1GarandShootPos;
+            }
             pick.getGunStats(gun);
             Destroy(gameObject);
             gameManager.instance.UpdateAmmoUI(gun.ammoCur, gun.ammoMax);
