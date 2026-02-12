@@ -676,6 +676,18 @@ PrefabInstance:
       propertyPath: shootPos
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3819068153726192362, guid: e8de2c659a0504d4180ea7d3ccef36bc, type: 3}
+      propertyPath: m1918BarShootPos
+      value: 
+      objectReference: {fileID: 1016170560}
+    - target: {fileID: 3819068153726192362, guid: e8de2c659a0504d4180ea7d3ccef36bc, type: 3}
+      propertyPath: m1GarandShootPos
+      value: 
+      objectReference: {fileID: 1267128835}
+    - target: {fileID: 3819068153726192362, guid: e8de2c659a0504d4180ea7d3ccef36bc, type: 3}
+      propertyPath: machineGunShootPos
+      value: 
+      objectReference: {fileID: 1082870560}
     - target: {fileID: 4388233603527997269, guid: e8de2c659a0504d4180ea7d3ccef36bc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.8662

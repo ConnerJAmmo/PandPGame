@@ -111,7 +111,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         //ResetSpeedBoosts();
         baseSpeed = speed;
         HPOrig = HP;
-        gameManager.instance.SetHPOirgUI();
+        gameManager.instance.SetPlayerHPOirgUI();
         updatePlayerUI();
         shootDamage = 0;
         shootRate = 0;
@@ -456,13 +456,13 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         if (HP > 0)
         {
             gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
-            gameManager.instance.SetHPUI();
+            gameManager.instance.SetPlayerHPUI();
         }
         else if (HP < 0)
         {
             HP = 0;
             gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
-            gameManager.instance.SetHPUI();
+            gameManager.instance.SetPlayerHPUI();
         }
     }
 

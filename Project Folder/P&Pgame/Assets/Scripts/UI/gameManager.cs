@@ -9,7 +9,8 @@ using System;
 public class gameManager : MonoBehaviour, goldManage
 {
     public static gameManager instance;
-
+    
+#region Menus
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuLose;
@@ -17,7 +18,11 @@ public class gameManager : MonoBehaviour, goldManage
     [SerializeField] GameObject menuTowerUpgrade;
     [SerializeField] GameObject menuPlayerUpgrade;
     [SerializeField] GameObject needGunText;
-
+    public bool isPause;
+#endregion
+    
+#region Text Fields
+    [Header("Text  Fields")]
     [SerializeField] TMP_Text playerHPText;
     [SerializeField] TMP_Text playerHPTextOrig;
     [SerializeField] TMP_Text enemyCountText;
@@ -38,13 +43,17 @@ public class gameManager : MonoBehaviour, goldManage
     [SerializeField] TMP_Text woodCountText;
     [SerializeField] TMP_Text stoneCountText;
     [SerializeField] TMP_Text ammoCountText;
+    [SerializeField] TMP_Text TowerHPMax;
+    [SerializeField] TMP_Text TowerHP;
     [SerializeField] TMP_Text hintText;
+#endregion
 
     [Header("Notification")]
     [SerializeField] GameObject notificationPanel;
     [SerializeField] TMP_Text notificationText;
     [SerializeField] float notificationDuration = 2f;
 
+#region Gun Upgrade Stats
     [Header("Gun Upgrade Stats")]
     [SerializeField] public int damageUpgradeCost;
     [SerializeField] public int fireRateUpgradeCost;
@@ -58,33 +67,33 @@ public class gameManager : MonoBehaviour, goldManage
     [SerializeField] int rangePreLevel;
     [SerializeField] public int maxLevel;
 
-    [SerializeField] int upgradedis;
-    [SerializeField] LayerMask towerLayer;
+    int initialDamageUpgradeCost = 10;
+    int initalFireRateUpgradeCost = 10;
+    int initialRangeUpgradeCost = 10;
+#endregion
 
-    public bool isPause;
     public bool waveActive;
     public GameObject player;
     public PlayerCont playerScript;
     public GameObject baseTower;
+    public baseDmg baseTowerScript;
     public int startingGold;
     public int enemyCount;
     public int enemyCountOrig;
     public int goldCount;
 
     public Image playerHPBar;
+    public Image towerHPBar;
     public GameObject damageFlash;
 
     float timeScaleOrig;
-    int initialDamageUpgradeCost = 10;
-    int initalFireRateUpgradeCost = 10;
-    int initialRangeUpgradeCost = 10;
 
     string baseHint;
     string interactionHint;
-    
 
     public GameObject waveSpawner;
 
+#region Audio
     [Header("-------------Audio--------------")]
     [SerializeField] AudioSource aud;
     [SerializeField] AudioClip menuInteractionAud;
@@ -93,7 +102,8 @@ public class gameManager : MonoBehaviour, goldManage
     [SerializeField] float deathVol;
     [SerializeField] AudioClip mainMusic;
     [SerializeField] float mainMusicVol;
-
+#endregion
+    
     void Awake()
     {
         instance = this;
@@ -101,6 +111,8 @@ public class gameManager : MonoBehaviour, goldManage
 
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerCont>();
+        baseTower = GameObject.FindWithTag("Base");
+        baseTowerScript = baseTower.GetComponent<baseDmg>();
 
         damageLevel = 0;
         fireRateLevel = 0;
@@ -114,8 +126,6 @@ public class gameManager : MonoBehaviour, goldManage
 
         waveSpawner = GameObject.FindWithTag("WaveSpawner");
         SetActiveWaveUI(1);
-
-        baseTower = GameObject.FindWithTag("Base");
 
         updateResourcesUI();
     }
@@ -156,14 +166,23 @@ public class gameManager : MonoBehaviour, goldManage
         enemyCountText.text = enemyCount.ToString("F0");
     }
 
-    public void SetHPOirgUI()
+    public void SetPlayerHPOirgUI()
     {
         playerHPTextOrig.text = playerScript.HPOrig.ToString("F0");
     }
 
-    public void SetHPUI()
+    public void SetPlayerHPUI()
     {
         playerHPText.text = playerScript.HP.ToString("F0");
+    }
+    public void SetTowerHPUI()
+    {
+        TowerHP.text = baseTowerScript.hp.ToString("F0");
+    }
+
+    public void SetTowerHPOirgUI()
+    {
+        TowerHPMax.text = baseTowerScript.maxHP.ToString("F0");
     }
 
     public void SetWaveCountUI(int waveCounts)
