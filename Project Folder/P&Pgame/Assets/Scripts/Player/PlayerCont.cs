@@ -3,7 +3,7 @@ using System.Collections;
 using bullet.fx.pack;
 using System.Collections.Generic;
 
-public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
+public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
@@ -24,6 +24,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     
     [Header("---- Physics ----")]
     [Range(1,100)][SerializeField] int gravity;
+    private int speedBoostTotal = 0;
+    private int baseSpeed;
     
     [Header("---- Resources ----")]
     [SerializeField] float mineRate;
@@ -38,6 +40,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     [SerializeField] GameObject STTower;
     [SerializeField] GameObject AOETower;
     [SerializeField] public Transform shootPos;
+    [SerializeField] public Transform machineGunShootPos;
+    [SerializeField] public Transform m1GarandShootPos;
+    [SerializeField] public Transform m1918BarShootPos;
 
     [Header("Guns")]
     [SerializeField] public List<GunStats> gunList = new List<GunStats>();
@@ -45,6 +50,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     [SerializeField] public float shootRate;
     [SerializeField] public int shootDist;
     [SerializeField] public int shootDamage;
+
+    [Header("Keys")]
+    [SerializeField] public List<string> keyRing = new List<string>();
 
     [Header("--------Audio---------")]
     [SerializeField] AudioSource aud;
@@ -66,6 +74,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     [Range(0, 1)] [SerializeField] float gunSelectUpAudVol;
     [SerializeField] AudioClip[] gunSelectDownAud;
     [Range(0, 1)] [SerializeField] float gunSelectDownAudVol;
+    [SerializeField] AudioClip[] keyGetAud;
+    [Range(0, 1)][SerializeField] float keyGetAudVol;
 
     [Header("--------------------------")]
     public string gunName;
@@ -98,8 +108,10 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //ResetSpeedBoosts();
+        baseSpeed = speed;
         HPOrig = HP;
-        gameManager.instance.SetHPOirgUI();
+        gameManager.instance.SetPlayerHPOirgUI();
         updatePlayerUI();
         shootDamage = 0;
         shootRate = 0;
@@ -303,6 +315,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, shootAud.Length)]);
        
         Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
+        Instantiate(gunList[gunListPos].muzzleFlashEffect, shootPos.transform.position, shootPos.transform.rotation);
 
         gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
     }
@@ -443,13 +456,13 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         if (HP > 0)
         {
             gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
-            gameManager.instance.SetHPUI();
+            gameManager.instance.SetPlayerHPUI();
         }
         else if (HP < 0)
         {
             HP = 0;
             gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
-            gameManager.instance.SetHPUI();
+            gameManager.instance.SetPlayerHPUI();
         }
     }
 
@@ -474,6 +487,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         shootDamage = gunList[gunListPos].shootDamage;
         shootDist = gunList[gunListPos].shootDist;
         shootRate = gunList[gunListPos].shootRate;
+        shootPos = gunList[gunListPos].shootPos;
+
         gunName = gunList[gunListPos].gunName;
         gameManager.instance.damageLevel = gunList[gunListPos].damageLevel;
         gameManager.instance.rangeLevel = gunList[gunListPos].DistLevel;
@@ -500,5 +515,29 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
             aud.PlayOneShot(gunSelectDownAud[0], gunSelectDownAudVol);
             ChangeGun();
         }
+    }
+
+    public void getKey(string key)
+    {
+        keyRing.Add(key);
+        aud.PlayOneShot(keyGetAud[0], keyGetAudVol);
+    }
+
+    public void ApplySpeedBoost(int boostAmount)
+    {
+        speed += boostAmount;
+        speedBoostTotal += boostAmount;
+    }
+    private void LoadSpeedBoosts()
+    {
+        speedBoostTotal = GameData.instance.PlayerSpeedBoost;
+        speed = baseSpeed + speedBoostTotal;
+    }
+
+    public void ResetSpeedBoosts()
+    {
+        GameData.instance.PlayerSpeedBoost = 0;
+        speed = baseSpeed;
+        speedBoostTotal = 0;
     }
 }
