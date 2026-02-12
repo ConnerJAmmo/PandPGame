@@ -12,13 +12,21 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] public GameObject target;
 
     [Header("Components")]
+    [SerializeField] public float animTranSpeed;
+    [SerializeField] public Animator anim;
     [SerializeField] public Transform shootPos;
     [SerializeField] public Transform headPos;
     [SerializeField] public GameObject bullet;
+    [SerializeField] public Material texture;
 
     [Header("Stats")]
     [Range(1, 25)] [SerializeField] public int HP;
     [Range(0, 360)] [SerializeField] public int FOV;
+
+    [Header("---------Audio---------")]
+    [SerializeField] AudioSource aud;
+    [SerializeField] AudioClip shootAud;
+    [Range(0, 1)] [SerializeField] float shootAudVol;
 
     [Header("Fire Settings")]
     [Range(1, 1000)] [SerializeField] public int range;
@@ -41,7 +49,7 @@ public class enemyAI : MonoBehaviour, IDamage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        dynamicMat = GetComponentInChildren<Renderer>().material;
+        dynamicMat = texture;
         colorOrigin = dynamicMat.color;
         GetComponent<NavMeshAgent>().updateRotation = false;
         gameManager.instance.updateEnemyCount(1);
@@ -98,6 +106,8 @@ public class enemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+        locoAnim();
+
         shootTimer += Time.deltaTime;
         Debug.DrawRay(transform.position, transform.forward * range, Color.blue);
 
@@ -158,6 +168,14 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
+    void locoAnim()
+    {
+        float agentSpeedCur = GetComponent<NavMeshAgent>().velocity.normalized.magnitude;
+        float agentSpeedAnim = anim.GetFloat("Speed");
+
+        anim.SetFloat("Speed", Mathf.MoveTowards(agentSpeedAnim, agentSpeedCur, Time.deltaTime * animTranSpeed));
+    }
+
     bool CanSeePlayer()
     {
         playerDir = (gameManager.instance.player.transform.position - headPos.position);
@@ -172,6 +190,7 @@ public class enemyAI : MonoBehaviour, IDamage
                 GetComponent<NavMeshAgent>().SetDestination(target.transform.position);
 
                 faceTarget(target.transform.GetComponent<Collider>());
+                Debug.Log("Player Seen");
 
                 if (shootTimer >= fireRate)
                 {
@@ -229,8 +248,13 @@ public class enemyAI : MonoBehaviour, IDamage
         }
         else
         {
+            
             // If not using burst fire, fire a single shot exactly as before
             shootTimer = 0; // Reset the timer immediately for the next single shot
+
+            aud.PlayOneShot(shootAud);
+            
+            anim.SetTrigger("Shoot");
             FireProjectile(target.transform);
         }
     }
@@ -242,7 +266,7 @@ public class enemyAI : MonoBehaviour, IDamage
         for (int i = 0; i < shotsPerBurst; i++)
         {
             FireProjectile(target.transform); // Call the helper method to fire the shot
-
+            anim.SetTrigger("Shoot");
             if (i < 2)
             {
                 yield return new WaitForSeconds(burstFireRate);

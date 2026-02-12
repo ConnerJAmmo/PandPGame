@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5537083010433455168}
   - component: {fileID: 899537935904901051}
   - component: {fileID: 7539443543783141499}
-  - component: {fileID: 134687147014982408}
+  - component: {fileID: -2083865106942357448}
   m_Layer: 12
   m_Name: AOE_Tower_LVL1
   m_TagString: Turret
@@ -34,8 +34,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6285756311504191230}
   - {fileID: 517641145143171352}
+  - {fileID: 6285756311504191230}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8497347533726309431
@@ -61,6 +61,22 @@ MonoBehaviour:
   fireRate: 2
   scanSpeed: 0.5
   scanAngle: 45
+  aud: {fileID: -2083865106942357448}
+  burstShotAud: []
+  burstShotVol: 0
+  ShotAud:
+  - {fileID: 8300000, guid: 2009611506d165647be4dcd2888d8e1d, type: 3}
+  - {fileID: 8300000, guid: 5c9845b3a7ab66d4494457e901549d9b, type: 3}
+  - {fileID: 8300000, guid: 3e4314235d0c27c4ab668998bfe7fd1f, type: 3}
+  shotVol: 0.4
+  turretTakeDamageAud:
+  - {fileID: 8300000, guid: a7179560f7f74bb47af123354aacad30, type: 3}
+  - {fileID: 8300000, guid: ad5c5423f36f0bd4981b683eb280f9a2, type: 3}
+  - {fileID: 8300000, guid: 7627083958169cd43bb2f3cafb1d7d85, type: 3}
+  turretTakeDamageVol: 0.4
+  turretDestroyedAud:
+  - {fileID: 8300000, guid: 470ca875f6d904647b496d128409032b, type: 3}
+  turretDestroyedVol: 0.4
   fireManager: {fileID: 5537083010433455168}
 --- !u!114 &5537083010433455168
 MonoBehaviour:
@@ -95,14 +111,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 1
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.7
-  m_Height: 4
+  m_Radius: 1
+  m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: 1.25, z: 0}
+  m_Center: {x: 0, y: 3, z: 0}
 --- !u!54 &7539443543783141499
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -130,27 +146,103 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &134687147014982408
-SphereCollider:
+--- !u!82 &-2083865106942357448
+AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1361402013487122}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.8
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &588428997433313272
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,6 +465,7 @@ GameObject:
   - component: {fileID: 3693289312890039319}
   - component: {fileID: 2271107680641031080}
   - component: {fileID: 3289469430154032307}
+  - component: {fileID: 4562567045605607436}
   m_Layer: 12
   m_Name: Base_RocketTower_L01
   m_TagString: Untagged
@@ -453,6 +546,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4562567045605607436
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6000174963322448358}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 15415230831720501, guid: f2e5d0707d646dd4eb82353dc2059a38, type: 3}
 --- !u!1 &6059334429774980022
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,7 +594,7 @@ Transform:
   m_GameObject: {fileID: 6059334429774980022}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -550,6 +665,7 @@ GameObject:
   - component: {fileID: 814818969609971160}
   - component: {fileID: 4032952320745807231}
   - component: {fileID: 6312730747402279141}
+  - component: {fileID: 398134684006757597}
   m_Layer: 12
   m_Name: Turret_RocketTower_L01
   m_TagString: Untagged
@@ -631,3 +747,25 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &398134684006757597
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8826290110879324668}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 323865420963542671, guid: 7110040412607e2489e6567c72d6aebb, type: 3}

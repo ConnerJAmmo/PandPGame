@@ -3,7 +3,7 @@ using System.Collections;
 using bullet.fx.pack;
 using System.Collections.Generic;
 
-public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
+public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
@@ -20,13 +20,13 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     [Range(8,20)] [SerializeField] int wallJumpSpeed;
     [Range(1,4)]  [SerializeField] int wallJumpPush;
     [Range(1,4)]  [SerializeField] int wallJumpMax;
-    [Range(1,2)]  [SerializeField] float wallCheckDis;
+    [SerializeField] float wallCheckDis;
     
     [Header("---- Physics ----")]
     [Range(1,100)][SerializeField] int gravity;
     
     [Header("---- Resources ----")]
-    [Range(1,4)]  [SerializeField] float mineRate;
+    [SerializeField] float mineRate;
     [Range(5,15)] [SerializeField] int mineDist;
     [Range(1,4)]  [SerializeField] int mineDamage;
 
@@ -34,19 +34,50 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     [SerializeField] public int stoneCount;
     [SerializeField] public int goldCount;
     [Header("---- Tools ----")]
-    [SerializeField] GameObject bullet;
+    [SerializeField] public GameObject bullet;
     [SerializeField] GameObject STTower;
     [SerializeField] GameObject AOETower;
-    [SerializeField] Transform shootPos;
+    [SerializeField] public Transform shootPos;
+    [SerializeField] public Transform machineGunShootPos;
+    [SerializeField] public Transform m1GarandShootPos;
+    [SerializeField] public Transform m1918BarShootPos;
 
     [Header("Guns")]
-    [SerializeField] List<GunStats> gunList = new List<GunStats>();
-    [SerializeField] GameObject gunModel;
+    [SerializeField] public List<GunStats> gunList = new List<GunStats>();
+    [SerializeField] public GameObject gunModel;
     [SerializeField] public float shootRate;
     [SerializeField] public int shootDist;
     [SerializeField] public int shootDamage;
 
-    int gunListPos;
+    [Header("Keys")]
+    [SerializeField] public List<string> keyRing = new List<string>();
+
+    [Header("--------Audio---------")]
+    [SerializeField] AudioSource aud;
+    [SerializeField] AudioClip[] jumpAud;
+    [Range(0, 1)] [SerializeField] float jumpAudVol;
+    [SerializeField] AudioClip[] shootAud;
+    [Range(0, 1)] [SerializeField] float shootAudVol;
+    [SerializeField] AudioClip[] hurtAud;
+    [Range(0, 1)] [SerializeField] float hurtAudVol;
+    [SerializeField] AudioClip[] reloadAud;
+    [Range(0, 1)] [SerializeField] float reloadAudVol;
+    [SerializeField] AudioClip[] mineWoodAud;
+    [Range(0, 1)] [SerializeField] float mineWoodVol;
+    [SerializeField] AudioClip[] mineSteelAud;
+    [Range(0, 1)] [SerializeField] float mineSteelAudVol;
+    [SerializeField] AudioClip[] mined5Aud;
+    [Range(0, 1)] [SerializeField] float mined5AudVol;
+    [SerializeField] AudioClip[] gunSelectUpAud;
+    [Range(0, 1)] [SerializeField] float gunSelectUpAudVol;
+    [SerializeField] AudioClip[] gunSelectDownAud;
+    [Range(0, 1)] [SerializeField] float gunSelectDownAudVol;
+    [SerializeField] AudioClip[] keyGetAud;
+    [Range(0, 1)][SerializeField] float keyGetAudVol;
+
+    [Header("--------------------------")]
+    public string gunName;
+
     int jumpCount;
     int wallJumpCount;
 
@@ -59,7 +90,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
 
     private float _groundRayDis = 1;
 
-    float shootTimer;
+    public int gunListPos;
+    public float shootTimer;
     float mineTimer;
 
     private RaycastHit slopeHit; 
@@ -77,6 +109,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         HPOrig = HP;
         gameManager.instance.SetHPOirgUI();
         updatePlayerUI();
+        shootDamage = 0;
+        shootRate = 0;
+        shootDist = 0;
     }
 
     // Update is called once per frame
@@ -87,7 +122,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         UpdateHints();
     }
 
-     void Movement()
+    void Movement()
     {
         wasGrounded = controller.isGrounded; //storing this at the top to prevent walljumping off the ground
         shootTimer += Time.deltaTime;
@@ -153,6 +188,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     {
         if (Input.GetButtonDown("Reload") && gunList.Count > 0)
         {
+            aud.PlayOneShot(reloadAud[0], reloadAudVol);
             gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
             gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
         }
@@ -217,6 +253,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         {
             playerVel.y = jumpSpeed;
             jumpCount++;
+            aud.PlayOneShot(jumpAud[Random.Range(0, jumpAud.Length)], jumpAudVol);
         }
     }
 
@@ -235,7 +272,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     private void WallCheck()
     {
         wallJumpPosib = Physics.Raycast(transform.position, transform.right, out wallJumpHit, wallCheckDis) ||
-        Physics.Raycast(transform.position, -transform.right, out wallJumpHit, wallCheckDis);
+                        Physics.Raycast(transform.position, -transform.right, out wallJumpHit, wallCheckDis) ||
+                        Physics.Raycast(transform.position, transform.forward, out wallJumpHit, wallCheckDis) ||
+                        Physics.Raycast(transform.position, -transform.forward, out wallJumpHit, wallCheckDis);
     }
 
     private bool OnSteepSlope()
@@ -268,10 +307,13 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         gunList[gunListPos].ammoCur--;
 
         shootTimer = 0;
+
+        aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, shootAud.Length)]);
        
         Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
+        Instantiate(gunList[gunListPos].muzzleFlashEffect, shootPos.transform.position, shootPos.transform.rotation);
 
-         gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
+        gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
     }
 
     void mine()
@@ -294,11 +336,13 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
                 if (matType == "Wood")
                 {
                     woodCount = woodCount + matAmount;
+                    aud.PlayOneShot(mineWoodAud[0], mineWoodVol);
                     changed = true;
                 }
                 else if (matType == "Stone")
                 {
                     stoneCount = stoneCount + matAmount;
+                    aud.PlayOneShot(mineSteelAud[0], mineSteelAudVol);
                     changed = true;
                 }
                 if (changed)
@@ -318,6 +362,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
             if (woodCount >= amount)
             {
                 finalAmount = finalAmount + woodCount;
+                
             }
         }
         else if (type == "Stone")
@@ -325,6 +370,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
             if (stoneCount >= amount)
             {
                 finalAmount = finalAmount + stoneCount;
+              
             }
         }
 
@@ -351,23 +397,35 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         
         if(woodCount >= 5 && goldCount >= 5)
         {
-            Instantiate(STTower, PlayerBodyPos, transform.rotation);
+            Instantiate(STTower, new Vector3(PlayerBodyPos.x + 2, PlayerBodyPos.y, PlayerBodyPos.z - 3), transform.rotation);
             woodCount = woodCount - 5;
             gameManager.instance.removeGold(-5);
             gameManager.instance.updateResourcesUI();
+            aud.PlayOneShot(mined5Aud[0], mined5AudVol);
 
             showSTHint = false; // Hides Z key display after use
         }
         else return;
     }
+
+    public void resetGunStatsToOrig()
+    {
+        gunList[gunListPos].shootDist = gunList[gunListPos].shootDistOrig;
+        gunList[gunListPos].shootDamage = gunList[gunListPos].shootDamageOrig;
+        gunList[gunListPos].shootRate = gunList[gunListPos].shootRateOrig;
+        gunList[gunListPos].damageLevel = 0;
+        gunList[gunListPos].fireRateLevel = 0;
+        gunList[gunListPos].DistLevel = 0;
+    }
     void SpawnAOETower()
     {
         if(stoneCount >= 5 && goldCount >= 5)
         {
-            Instantiate(AOETower, PlayerBodyPos, transform.rotation);
+            Instantiate(AOETower, new Vector3(PlayerBodyPos.x + 2, PlayerBodyPos.y, PlayerBodyPos.z - 3), transform.rotation);
             gameManager.instance.removeGold(-5);
             stoneCount = stoneCount - 5;
             gameManager.instance.updateResourcesUI();
+            aud.PlayOneShot(mined5Aud[0], mined5AudVol);
 
             showSTHint = false; // Hides X key display after use
 
@@ -378,6 +436,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     public void takeDamage(int amount, DamageType type)
     {
         HP -= amount;
+        aud.PlayOneShot(hurtAud[Random.Range(0, hurtAud.Length)],hurtAudVol);
         updatePlayerUI();
         StartCoroutine(flashDamage());
 
@@ -416,32 +475,49 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         gunListPos = gunList.Count - 1;
 
         ChangeGun();
-        
+
     }
 
-    void ChangeGun()
+    public void ChangeGun()
     {
         shootDamage = gunList[gunListPos].shootDamage;
         shootDist = gunList[gunListPos].shootDist;
         shootRate = gunList[gunListPos].shootRate;
+        shootPos = gunList[gunListPos].shootPos;
+
+        gunName = gunList[gunListPos].gunName;
+        gameManager.instance.damageLevel = gunList[gunListPos].damageLevel;
+        gameManager.instance.rangeLevel = gunList[gunListPos].DistLevel;
+        gameManager.instance.fireRateLevel = gunList[gunListPos].fireRateLevel;
+
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[gunListPos].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
-
         gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
+        gameManager.instance.SetGunNameText();
     }
 
     void SelectGun()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") >  0 && gunListPos < gunList.Count - 1)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count - 1)
         {
             gunListPos++;
-            ChangeGun() ;
+            aud.PlayOneShot(gunSelectUpAud[0], gunSelectUpAudVol);
+            ChangeGun();
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
         {
             gunListPos--;
+            aud.PlayOneShot(gunSelectDownAud[0], gunSelectDownAudVol);
             ChangeGun();
         }
+    }
+
+    public void getKey(string key)
+    {
+        keyRing.Add(key);
+        aud.PlayOneShot(keyGetAud[0], keyGetAudVol);
+
+        
     }
 }

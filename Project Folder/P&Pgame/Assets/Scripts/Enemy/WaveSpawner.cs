@@ -12,7 +12,7 @@ public class WaveSpawner : MonoBehaviour
     public int currentWaveIndex = 0;
 
     private bool readyToCountDown;
-    private bool gameWon = false;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,7 +22,6 @@ public class WaveSpawner : MonoBehaviour
         {
             waves[i].enemiesLeft = waves[i].enemies.Length;
         }
-
         gameManager.instance.SetWaveCountUI(waves.Length);
     }
 
@@ -66,19 +65,6 @@ public class WaveSpawner : MonoBehaviour
             yield return new WaitForSeconds(waves[currentWaveIndex].timeToNextEnemy);
         }
     }
-
-    public void SpawnNextWave()
-    {
-        gameManager.instance.SetActiveWaveUI(currentWaveIndex + 1);
-        if (currentWaveIndex >= waveTemplates.Length) return;
-
-        // 1. Instantiate the entire container at the spawner's location
-        GameObject waveInstance = Instantiate(waveTemplates[currentWaveIndex], transform.position, Quaternion.identity);
-
-        currentWaveIndex++;
-    }
-
-    
 }
 
 [System.Serializable]
