@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Globalization;
 using System.Collections;
+using System;
 
 
 public class gameManager : MonoBehaviour, goldManage
@@ -46,6 +47,11 @@ public class gameManager : MonoBehaviour, goldManage
     [SerializeField] TMP_Text TowerHP;
     [SerializeField] TMP_Text hintText;
 #endregion
+
+    [Header("Notification")]
+    [SerializeField] GameObject notificationPanel;
+    [SerializeField] TMP_Text notificationText;
+    [SerializeField] float notificationDuration = 2f;
 
 #region Gun Upgrade Stats
     [Header("Gun Upgrade Stats")]
@@ -404,5 +410,21 @@ public class gameManager : MonoBehaviour, goldManage
         rangeUpgradeCost += upgradeCostPreLevel;
         SetRangeUpgradeText();
         playerScript.ChangeGun();
+    }
+
+    public void ShowNotification(string message)
+    {
+        if (notificationPanel != null && notificationText != null)
+        {
+            StartCoroutine(DisplayNotification(message));
+        }
+    }
+
+    private IEnumerator DisplayNotification(string message)
+    {
+        notificationText.text = message;
+        notificationPanel.SetActive(true);
+        yield return new WaitForSeconds(notificationDuration);
+        notificationPanel.SetActive(false);
     }
 }

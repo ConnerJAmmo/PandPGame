@@ -24,6 +24,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     
     [Header("---- Physics ----")]
     [Range(1,100)][SerializeField] int gravity;
+    private int speedBoostTotal = 0;
+    private int baseSpeed;
     
     [Header("---- Resources ----")]
     [SerializeField] float mineRate;
@@ -106,6 +108,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //ResetSpeedBoosts();
+        baseSpeed = speed;
         HPOrig = HP;
         gameManager.instance.SetPlayerHPOirgUI();
         updatePlayerUI();
@@ -517,7 +521,23 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     {
         keyRing.Add(key);
         aud.PlayOneShot(keyGetAud[0], keyGetAudVol);
+    }
 
-        
+    public void ApplySpeedBoost(int boostAmount)
+    {
+        speed += boostAmount;
+        speedBoostTotal += boostAmount;
+    }
+    private void LoadSpeedBoosts()
+    {
+        speedBoostTotal = GameData.instance.PlayerSpeedBoost;
+        speed = baseSpeed + speedBoostTotal;
+    }
+
+    public void ResetSpeedBoosts()
+    {
+        GameData.instance.PlayerSpeedBoost = 0;
+        speed = baseSpeed;
+        speedBoostTotal = 0;
     }
 }
