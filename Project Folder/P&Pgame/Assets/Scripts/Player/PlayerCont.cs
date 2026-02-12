@@ -24,6 +24,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     
     [Header("---- Physics ----")]
     [Range(1,100)][SerializeField] int gravity;
+    private int speedBoostTotal = 0;
+    private int baseSpeed;
     
     [Header("---- Resources ----")]
     [SerializeField] float mineRate;
@@ -106,8 +108,10 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //ResetSpeedBoosts();
+        baseSpeed = speed;
         HPOrig = HP;
-        gameManager.instance.SetHPOirgUI();
+        gameManager.instance.SetPlayerHPOirgUI();
         updatePlayerUI();
         shootDamage = 0;
         shootRate = 0;
@@ -452,13 +456,13 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         if (HP > 0)
         {
             gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
-            gameManager.instance.SetHPUI();
+            gameManager.instance.SetPlayerHPUI();
         }
         else if (HP < 0)
         {
             HP = 0;
             gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
-            gameManager.instance.SetHPUI();
+            gameManager.instance.SetPlayerHPUI();
         }
     }
 
@@ -517,7 +521,23 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     {
         keyRing.Add(key);
         aud.PlayOneShot(keyGetAud[0], keyGetAudVol);
+    }
 
-        
+    public void ApplySpeedBoost(int boostAmount)
+    {
+        speed += boostAmount;
+        speedBoostTotal += boostAmount;
+    }
+    private void LoadSpeedBoosts()
+    {
+        speedBoostTotal = GameData.instance.PlayerSpeedBoost;
+        speed = baseSpeed + speedBoostTotal;
+    }
+
+    public void ResetSpeedBoosts()
+    {
+        GameData.instance.PlayerSpeedBoost = 0;
+        speed = baseSpeed;
+        speedBoostTotal = 0;
     }
 }

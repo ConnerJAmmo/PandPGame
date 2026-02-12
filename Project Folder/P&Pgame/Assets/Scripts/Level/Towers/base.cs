@@ -8,8 +8,8 @@ public class baseDmg : MonoBehaviour, IDamage
 {
     [Header("Stats")]
     [SerializeField] Renderer model;
-    [Range(1, 1000)][SerializeField] int maxHP = 1000;
-    int hp;
+    [Range(1, 1000)][SerializeField] public int maxHP = 1000;
+    public int hp;
 
     [Header("Tower Health Bar")]
     [SerializeField] TowerHealth bar;
@@ -30,7 +30,8 @@ public class baseDmg : MonoBehaviour, IDamage
     void Start()
     {
         hp = maxHP;
-
+        gameManager.instance.SetTowerHPOirgUI();
+        updateTowerUI();
         dynamicMat = model.material;
         colorOrigin = dynamicMat.color;
 
@@ -49,9 +50,12 @@ public class baseDmg : MonoBehaviour, IDamage
         hp -= amount;
         if (hp < 0)
             hp = 0;
+        
+        updateTowerUI();
 
         if (bar) bar.updateBar((float)hp / maxHP);
         
+    
 
         // Debugging to verify the instance is taking damage
         Debug.Log($"{gameObject.name} (Base) took damage! Remaining HP: {hp}");
@@ -59,7 +63,6 @@ public class baseDmg : MonoBehaviour, IDamage
         if (hp <= 0)
         {
             gameManager.instance.youLose();
-            
             Destroy(gameObject);
         }
         else
@@ -73,6 +76,21 @@ public class baseDmg : MonoBehaviour, IDamage
             }else
                 aud.PlayOneShot(baseTakeDamageAud[Random.Range(0, baseTakeDamageAud.Length)], baseTakeDamageVol);
             
+        }
+    }
+
+    public void updateTowerUI()
+    {
+        if (hp > 0)
+        {
+            gameManager.instance.towerHPBar.fillAmount = (float)hp / maxHP;
+            gameManager.instance.SetTowerHPUI();
+        }
+        else if (hp < 0)
+        {
+            hp = 0;
+            gameManager.instance.towerHPBar.fillAmount = (float)hp / maxHP;
+            gameManager.instance.SetTowerHPUI();
         }
     }
 
