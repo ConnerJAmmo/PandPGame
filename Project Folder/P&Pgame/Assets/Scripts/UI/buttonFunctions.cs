@@ -10,18 +10,43 @@ public class buttonFunctions : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        gameManager.instance.playerScript.resetGunStatsToOrig();
-        gameManager.instance.stateUnpause();
+        if (gameManager.instance.playerScript.gunList.Count != 0)
+        {
+            gameManager.instance.playerScript.resetGunStatsToOrig();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            gameManager.instance.stateUnpause();   
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            gameManager.instance.stateUnpause();   
+        }
     }
     public void Quit()
     {
 #if UNITY_EDITOR
-        gameManager.instance.playerScript.resetGunStatsToOrig();
-        UnityEditor.EditorApplication.isPlaying = false;
+        
+        if (gameManager.instance.playerScript.gunList.Count != 0)
+        {
+            gameManager.instance.playerScript.resetGunStatsToOrig();
+            UnityEditor.EditorApplication.isPlaying = false; 
+        }
+        else
+        {
+            UnityEditor.EditorApplication.isPlaying = false;   
+        }
 #else
-    gameManager.instance.playerScript.resetGunStatsToOrig();
-    Application.Quit();
+        if (gameManager.instance.playerScript.gunList.Count != 0)
+        {
+            gameManager.instance.playerScript.resetGunStatsToOrig();
+            gameManager.instance.playerScript.resetGunStatsToOrig();
+            Application.Quit(); 
+        }
+        else
+        {
+            gameManager.instance.playerScript.resetGunStatsToOrig();
+            Application.Quit();  
+        }
 
 #endif
     }
