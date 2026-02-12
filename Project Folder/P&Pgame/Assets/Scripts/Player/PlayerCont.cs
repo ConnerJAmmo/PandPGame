@@ -1,7 +1,7 @@
-using UnityEngine;
-using System.Collections;
 using bullet.fx.pack;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
 {
@@ -35,8 +35,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
     [SerializeField] public int goldCount;
     [Header("---- Tools ----")]
     [SerializeField] public GameObject bullet;
-    [SerializeField] GameObject STTower;
-    [SerializeField] GameObject AOETower;
+    [Range(5, 15)][SerializeField] int buildDist;
     [SerializeField] public Transform shootPos;
 
     [Header("Guns")]
@@ -157,21 +156,24 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         {
             mine();
         }
-        if(Input.GetButtonDown("z"))
+        if (Input.GetButtonDown("z"))
         {
-            if(wasGrounded)
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, buildDist, ~ignoreLayer))
             {
-                SpawnSTTower();
+                Debug.Log("Raycast hit object: " + hit.collider.gameObject.name, hit.collider.gameObject);
+                hit.collider.gameObject.GetComponentInParent<ITurret>().SpawnTower('z');
+            } 
+        }
+        if (Input.GetButtonDown("x"))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, buildDist, ~ignoreLayer))
+            {
+                Debug.Log("Raycast hit object: " + hit.collider.gameObject.name, hit.collider.gameObject);
+                hit.collider.gameObject.GetComponentInParent<ITurret>().SpawnTower('x');
             }
         }
-        if(Input.GetButtonDown("x"))
-        {
-            if(wasGrounded)
-            {
-                SpawnAOETower();
-            }
-        }
-
         SelectGun();
         reload();
     }
@@ -197,9 +199,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
 
         // This will make our hints stay while we can afford them
         if (wasGrounded && stRemaining > 0 && goldCount >= 5)
-            placeHint += $"Press Z to place ST Turret ({stRemaining} remaining)\n";
+            placeHint += $"Press Z at an empty marker to place ST Turret ({stRemaining} remaining)\n";
         if (wasGrounded && aoeRemaining > 0 && goldCount >= 5)
-            placeHint += $"Press X to place AOE Turret ({aoeRemaining} remaining)\n";
+            placeHint += $"Press X at an empty marker to place AOE Turret ({aoeRemaining} remaining)\n";
 
         string mineHint = GetMineHint(); // I created separate method for minehint
 
@@ -383,22 +385,6 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
             return total;
     }
 
-    void SpawnSTTower()
-    {
-        
-        if(woodCount >= 5 && goldCount >= 5)
-        {
-            Instantiate(STTower, new Vector3(PlayerBodyPos.x + 2, PlayerBodyPos.y, PlayerBodyPos.z - 3), transform.rotation);
-            woodCount = woodCount - 5;
-            gameManager.instance.removeGold(-5);
-            gameManager.instance.updateResourcesUI();
-            aud.PlayOneShot(mined5Aud[0], mined5AudVol);
-
-            showSTHint = false; // Hides Z key display after use
-        }
-        else return;
-    }
-
     public void resetGunStatsToOrig()
     {
         gunList[gunListPos].shootDist = gunList[gunListPos].shootDistOrig;
@@ -407,21 +393,6 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup
         gunList[gunListPos].damageLevel = 0;
         gunList[gunListPos].fireRateLevel = 0;
         gunList[gunListPos].DistLevel = 0;
-    }
-    void SpawnAOETower()
-    {
-        if(stoneCount >= 5 && goldCount >= 5)
-        {
-            Instantiate(AOETower, new Vector3(PlayerBodyPos.x + 2, PlayerBodyPos.y, PlayerBodyPos.z - 3), transform.rotation);
-            gameManager.instance.removeGold(-5);
-            stoneCount = stoneCount - 5;
-            gameManager.instance.updateResourcesUI();
-            aud.PlayOneShot(mined5Aud[0], mined5AudVol);
-
-            showSTHint = false; // Hides X key display after use
-
-        }
-        else return;
     }
 
     public void takeDamage(int amount, DamageType type)
