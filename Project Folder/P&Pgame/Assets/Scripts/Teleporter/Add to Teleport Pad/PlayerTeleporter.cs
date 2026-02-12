@@ -15,6 +15,9 @@ public class PlayerTeleporter : MonoBehaviour
     [SerializeField] AudioSource aud;
     [SerializeField] AudioClip audTeleport;
 
+    [SerializeField] PortalVFXController thisPadVFX;
+    [SerializeField] PortalVFXController destinationPadVFX;
+
     [Range(0, 1)] [SerializeField] float teleportVol;
 
 
@@ -61,15 +64,34 @@ public class PlayerTeleporter : MonoBehaviour
         if (!cacheDestinationSpawn)
         {
             cacheDestination();
-            if (cacheDestinationSpawn) return;
+            if (!cacheDestinationSpawn) return;
         }
 
         aud.PlayOneShot(audTeleport, teleportVol);
 
-        // Cooldown check for Player
-        var allowed = other.GetComponent<teleportAllowed>();
+        if (thisPadVFX)
+        {
+            Debug.Log("Enter VFX Called", this);
+            thisPadVFX.PlayEnter();
+        }else
+        {
+            Debug.LogWarning("thisPadVFX is not assigned", this);
+        }
+
+        TeleportPostFX postFX = FindAnyObjectByType<TeleportPostFX>();
+
+        if (postFX)
+            postFX.Flash();
+
+        SimpleCameraShake camShake = FindAnyObjectByType<SimpleCameraShake>();
+        if (camShake)
+            camShake.Shake();
+
+            // Cooldown check for Player
+            var allowed = other.GetComponent<teleportAllowed>();
         if (!allowed) allowed = other.gameObject.AddComponent<teleportAllowed>(); // Just add the teleport allowed script to player if its not there
         if (!allowed.CanTeleport()) return;
+
 
         Vector3 targetPos = cacheDestinationSpawn.position;
 
@@ -88,5 +110,8 @@ public class PlayerTeleporter : MonoBehaviour
 
         allowed.SetCooldown(coolDown);
 
+        if (destinationPadVFX)
+            destinationPadVFX.PlayExit();
+            
     }
 }
