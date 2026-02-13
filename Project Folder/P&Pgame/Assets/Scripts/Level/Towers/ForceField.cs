@@ -5,7 +5,7 @@ using UnityEngine;
 public class ForceField : MonoBehaviour, IDamage
 {
     [Header("Stats")]
-    [Range(1, 1000)][SerializeField] public int HP;
+    [Range(1, 1000)][SerializeField] public int maxHP;
 
     [Header("---------Audio--------")]
     [SerializeField] AudioSource aud;
@@ -13,6 +13,8 @@ public class ForceField : MonoBehaviour, IDamage
     [SerializeField] float takeDamageVol;
     [SerializeField] AudioClip[] destroyedAud;
     [SerializeField] float destroyedVol;
+
+    public int HP;
 
     private Color colorOrigin;
     private Material dynamicMat;
@@ -42,6 +44,7 @@ public class ForceField : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
+            this.gameObject.GetComponentInParent<TurretPlacement>().hasShield = false;
             Destroy(gameObject);
         }
         else
