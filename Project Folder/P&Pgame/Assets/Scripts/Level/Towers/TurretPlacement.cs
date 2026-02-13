@@ -70,18 +70,14 @@ public class TurretPlacement : MonoBehaviour, ITurret
                 Debug.Log("Recording Shield Health: " + shieldHP);
             }
             Destroy(transform.GetChild(1).gameObject);
-            Instantiate(STTowers[turretLevel++], 
-                new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z),
+            GameObject newTower = Instantiate(STTowers[turretLevel++], 
+                new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z), 
                 transform.rotation, transform);
             if (hasShield)
             {
-                Debug.Log("Adding Shield");
-                Transform detectRadius = transform.GetChild(1).GetChild(0);
-                Instantiate(forceField,
-                    new Vector3(detectRadius.position.x, detectRadius.position.y, detectRadius.position.z),
-                    detectRadius.rotation, detectRadius);
-                Debug.Log("Shield Health Restored to: " + shieldHP);
-                detectRadius.GetChild(0).GetComponent<ForceField>().HP = shieldHP;
+                Transform detectRadius = newTower.transform.GetChild(0);
+                GameObject newShield = Instantiate(forceField, detectRadius.position, detectRadius.rotation, detectRadius);
+                newShield.GetComponent<ForceField>().HP = shieldHP;
             }
             player.woodCount = player.woodCount - 5;
             gameManager.instance.removeGold(-10);
@@ -97,16 +93,14 @@ public class TurretPlacement : MonoBehaviour, ITurret
                 Debug.Log("Recording Shield Health: " + shieldHP);
             }
             Destroy(transform.GetChild(1).gameObject);
-            Instantiate(AOETowers[turretLevel++], 
+            GameObject newTower = Instantiate(AOETowers[turretLevel++],
                 new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z),
                 transform.rotation, transform);
             if (hasShield)
             {
-                Transform detectRadius = transform.GetChild(1).GetChild(0);
-                Instantiate(forceField,
-                    new Vector3(detectRadius.position.x, detectRadius.position.y, detectRadius.position.z),
-                    detectRadius.rotation, detectRadius);
-                detectRadius.GetChild(0).GetComponent<ForceField>().HP = shieldHP;
+                Transform detectRadius = newTower.transform.GetChild(0);
+                GameObject newShield = Instantiate(forceField, detectRadius.position, detectRadius.rotation, detectRadius);
+                newShield.GetComponent<ForceField>().HP = shieldHP;
             }
             player.stoneCount = player.stoneCount - 5;
             gameManager.instance.removeGold(-10);
