@@ -303,63 +303,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8de2c659a0504d4180ea7d3ccef36bc, type: 3}
---- !u!1001 &1150462494
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 8023353352980653286, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -6.264373
-      objectReference: {fileID: 0}
-    - target: {fileID: 8023353352980653286, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.050000995
-      objectReference: {fileID: 0}
-    - target: {fileID: 8023353352980653286, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 9.196718
-      objectReference: {fileID: 0}
-    - target: {fileID: 8023353352980653286, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8023353352980653286, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8023353352980653286, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8023353352980653286, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8023353352980653286, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8023353352980653286, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8023353352980653286, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8964853588281247035, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
-      propertyPath: m_Name
-      value: Tower Placement Marker
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
 --- !u!1001 &1388767112
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -465,7 +408,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6829189607914598776, guid: 2fdfdc9f991b59a48892815a9e6f4ebb, type: 3}
   m_PrefabInstance: {fileID: 493780763}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1561384359
+--- !u!1001 &1622642505
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -475,15 +418,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8023353352980653286, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.815557
+      value: -4.6456013
       objectReference: {fileID: 0}
     - target: {fileID: 8023353352980653286, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.050001867
+      value: 0.05000007
       objectReference: {fileID: 0}
     - target: {fileID: 8023353352980653286, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.346467
+      value: 10.651891
       objectReference: {fileID: 0}
     - target: {fileID: 8023353352980653286, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -515,7 +458,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8964853588281247035, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
       propertyPath: m_Name
-      value: Tower Placement Marker (1)
+      value: Tower Placement Marker
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -703,5 +646,4 @@ SceneRoots:
   - {fileID: 1686465602}
   - {fileID: 585863857}
   - {fileID: 2076474427}
-  - {fileID: 1150462494}
-  - {fileID: 1561384359}
+  - {fileID: 1622642505}

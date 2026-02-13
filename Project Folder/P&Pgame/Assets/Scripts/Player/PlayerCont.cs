@@ -186,6 +186,15 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
                 hit.collider.gameObject.GetComponentInParent<ITurret>().SpawnTower('x');
             }
         }
+        if (Input.GetButtonDown("c"))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, buildDist, ~ignoreLayer))
+            {
+                Debug.Log("Raycast hit object: " + hit.collider.gameObject.name, hit.collider.gameObject);
+                hit.collider.gameObject.GetComponentInParent<ITurret>().ShieldGenerator();
+            }
+        }
         SelectGun();
         reload();
     }
