@@ -45,4 +45,14 @@ public class GameSession : MonoBehaviour
         SaveSystem.Save(Data);
     }
 
+    void OnApplicationQuit()
+    {
+        SaveGame();
+    }
+
+    void OnApplicationPause(bool pause)
+    {
+        if (pause) 
+            SaveGame();
+    }
 }
