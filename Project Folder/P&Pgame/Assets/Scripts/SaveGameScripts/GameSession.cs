@@ -39,7 +39,7 @@ public class GameSession : MonoBehaviour
         return false;
     }
 
-    public void SaveGAme()
+    public void SaveGame()
     {
         Data.currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
         SaveSystem.Save(Data);
