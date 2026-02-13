@@ -1,16 +1,13 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class SceneLoader : MonoBehaviour
+public static class SceneLoader
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public static int TargetSceneIndex { get; private set; }
 
-    // Update is called once per frame
-    void Update()
+    public static void load(int tarSceneIndex)
     {
-        
+        TargetSceneIndex = tarSceneIndex;
+        SceneManager.LoadScene(2); // !!TEAM, CHANGE THIS!! if loading screen is not in index 2 
     }
 }

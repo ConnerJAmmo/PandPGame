@@ -9,6 +9,7 @@ using System;
 public class gameManager : MonoBehaviour, goldManage
 {
     public static gameManager instance;
+    [SerializeField] SaveBridge saveBridge;
     
 #region Menus
     [SerializeField] GameObject menuActive;
@@ -25,24 +26,32 @@ public class gameManager : MonoBehaviour, goldManage
     [Header("Text  Fields")]
     [SerializeField] TMP_Text playerHPText;
     [SerializeField] TMP_Text playerHPTextOrig;
+    [Space]
     [SerializeField] TMP_Text enemyCountText;
     [SerializeField] TMP_Text enemyCountTextOrig;
+    [Space]
     [SerializeField] TMP_Text waveCountText;
     [SerializeField] TMP_Text waveCountTextOrig;
+    [Space]
     [SerializeField] TMP_Text goldCountText;
     [SerializeField] TMP_Text gunNameText;
+    [Space]
     [SerializeField] TMP_Text damageCostText;
     [SerializeField] TMP_Text damageText;
     [SerializeField] TMP_Text damageLevelText;
+    [Space]
     [SerializeField] TMP_Text fireRateCostText;
     [SerializeField] TMP_Text fireRateText;
     [SerializeField] TMP_Text fireRateLevelText;
+    [Space]
     [SerializeField] TMP_Text RangeCostText;
     [SerializeField] TMP_Text RangeText;
     [SerializeField] TMP_Text RangeLevelText;
+    [Space]
     [SerializeField] TMP_Text woodCountText;
     [SerializeField] TMP_Text stoneCountText;
     [SerializeField] TMP_Text ammoCountText;
+    [Space]
     [SerializeField] TMP_Text TowerHPMax;
     [SerializeField] TMP_Text TowerHP;
     [SerializeField] TMP_Text hintText;
@@ -129,7 +138,12 @@ public class gameManager : MonoBehaviour, goldManage
 
         updateResourcesUI();
 
-        FindAnyObjectByType<SaveBridge>()?.ApplyLoadedData();
+        // Bridge to connect all the save functions and scripts together
+        if (!saveBridge)
+            saveBridge = FindFirstObjectByType<SaveBridge>();
+
+        // The (?) is a chaining operator so if savebridge is null are game won't crash
+        saveBridge?.ApplyLoadedData();
     }
 
     
@@ -426,7 +440,6 @@ public class gameManager : MonoBehaviour, goldManage
         notificationPanel.SetActive(false);
     }
 
-    // ----------------These Method are used for the saving------------------------//
 
     public int GetGold()
     {
@@ -439,6 +452,21 @@ public class gameManager : MonoBehaviour, goldManage
         goldCount = value; 
         goldCountText.text = goldCount.ToString("F0");
     }
+    
+    // ----------------These Method are used for the advancing------------------------//
+    
+    public void CompleteLevelAndLoadNext(int nextSceneIndex)
+    {
+        if (!saveBridge)
+            saveBridge = FindFirstObjectByType<SaveBridge>();
+        saveBridge?.CollectAndSave();
+
+        // record progress as "next scene" (So Continue resumes next level)
+        GameSession.instance.Data.currentLevelIndex = nextSceneIndex;
+        GameSession.instance.SaveGame();
+
+        SceneLoader.load(nextSceneIndex);
+    } 
     
     // ------------------------------End---------------------------------------//
 

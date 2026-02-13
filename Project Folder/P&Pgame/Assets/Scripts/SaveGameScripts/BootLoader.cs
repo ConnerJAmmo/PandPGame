@@ -14,6 +14,6 @@ public class BootLoader : MonoBehaviour
             go.AddComponent<GameSession>();
         }
 
-        SceneManager.LoadScene(mainMenuSceneIndex);
+        SceneManager.LoadScene(mainMenuSceneIndex); // Which is MainMenu
     }
 }
