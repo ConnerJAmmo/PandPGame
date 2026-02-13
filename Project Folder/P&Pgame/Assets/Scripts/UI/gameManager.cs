@@ -221,11 +221,7 @@ public class gameManager : MonoBehaviour, goldManage
     }
 
 
-    public int GetGold()
-    {
-        return goldCount;
-
-    }
+    
 
     public void newMenu(GameObject menu)
     {
@@ -427,4 +423,26 @@ public class gameManager : MonoBehaviour, goldManage
         yield return new WaitForSeconds(notificationDuration);
         notificationPanel.SetActive(false);
     }
+
+    // ----------------These Method are used for the saving------------------------//
+
+    public int GetGold()
+    {
+        return goldCount;
+    }
+
+
+    public void SetGold(int value)
+    {
+        goldCount = value; 
+        goldCountText.text = goldCount.ToString("F0");
+    }
+    
+    // ------------------------------End---------------------------------------//
+
+
 }
+
+
+
+
