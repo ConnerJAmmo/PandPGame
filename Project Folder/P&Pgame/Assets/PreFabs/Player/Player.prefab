@@ -490,11 +490,15 @@ MonoBehaviour:
   STTower: {fileID: 1401014823036408, guid: 5040fa77b88ce334da2f3a5ef8e1c20c, type: 3}
   AOETower: {fileID: 1361402013487122, guid: 1606b58cd193aa243a22595a9230cc03, type: 3}
   shootPos: {fileID: 2877944076215294254}
+  machineGunShootPos: {fileID: 0}
+  m1GarandShootPos: {fileID: 0}
+  m1918BarShootPos: {fileID: 0}
   gunList: []
   gunModel: {fileID: 5985920302194669559}
   shootRate: 0
   shootDist: 0
   shootDamage: 0
+  keyRing: []
   aud: {fileID: 8259007716321684502}
   jumpAud:
   - {fileID: 8300000, guid: 141a4462e6b8a5346b10d3e7c7efab05, type: 3}
@@ -530,6 +534,8 @@ MonoBehaviour:
   gunSelectDownAud:
   - {fileID: 8300000, guid: 4dc63d709f3d6d44396b2f9c94e6e237, type: 3}
   gunSelectDownAudVol: 0.4
+  keyGetAud: []
+  keyGetAudVol: 0
   gunName: 
   gunListPos: 0
   shootTimer: 0
@@ -652,7 +658,7 @@ AudioSource:
   m_GameObject: {fileID: 6079901626847767107}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3199338399992683612, guid: 770d1133b3bb6be44b84fa29db292852, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0

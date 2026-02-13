@@ -15,6 +15,7 @@ public class gameManager : MonoBehaviour, goldManage
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuWin;
+    [SerializeField] GameObject menuOptions;
     [SerializeField] GameObject menuTowerUpgrade;
     [SerializeField] GameObject menuPlayerUpgrade;
     [SerializeField] GameObject needGunText;
@@ -146,6 +147,12 @@ public class gameManager : MonoBehaviour, goldManage
             {
                  stateUnpause();
             }
+            else if (menuActive == menuOptions)
+            {
+                menuActive.SetActive(false);
+                menuActive = menuPause;
+                menuActive.SetActive(true);
+            }
         }
 
         SetDamageUpgradeText();
@@ -252,6 +259,19 @@ public class gameManager : MonoBehaviour, goldManage
         menuActive.SetActive(false);
         menuActive = null;
         aud.PlayOneShot(menuInteractionAud, menuVol);
+    }
+
+    public void openOptions()
+    {
+        menuActive.SetActive(false);
+        menuActive = menuOptions;
+        menuActive.SetActive(true);
+    }
+    public void openPause()
+    {
+        menuActive.SetActive(false);
+        menuActive = menuPause;
+        menuActive.SetActive(true);
     }
 
     public void openPlayerUpgradeMenu()

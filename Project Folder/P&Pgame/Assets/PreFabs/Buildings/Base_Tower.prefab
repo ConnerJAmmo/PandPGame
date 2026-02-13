@@ -483,6 +483,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::baseDmg
   model: {fileID: 23323348776332894}
   maxHP: 500
+  hp: 0
   bar: {fileID: 9175986808450551291}
   aud: {fileID: 2483671243258568276}
   baseTakeDamageAud:
@@ -566,7 +567,7 @@ AudioSource:
   m_GameObject: {fileID: 1759168881962760}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3199338399992683612, guid: 770d1133b3bb6be44b84fa29db292852, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
