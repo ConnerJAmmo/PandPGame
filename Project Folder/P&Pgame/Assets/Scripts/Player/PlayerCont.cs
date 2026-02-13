@@ -26,6 +26,10 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     [Range(1,100)][SerializeField] int gravity;
     private int speedBoostTotal = 0;
     private int baseSpeed;
+    private int jumpBoostTotal = 0;
+    private int baseJumpMax;
+    private float miningSpeedBoostTotal = 0f;
+    private float baseMineRate;
     
     [Header("---- Resources ----")]
     [SerializeField] float mineRate;
@@ -110,6 +114,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     {
         //ResetSpeedBoosts();
         baseSpeed = speed;
+        baseJumpMax = jumpMax;
+        baseMineRate = mineRate;
         HPOrig = HP;
         gameManager.instance.SetPlayerHPOirgUI();
         updatePlayerUI();
@@ -528,6 +534,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         speed += boostAmount;
         speedBoostTotal += boostAmount;
     }
+    /*
     private void LoadSpeedBoosts()
     {
         speedBoostTotal = GameData.instance.PlayerSpeedBoost;
@@ -539,5 +546,22 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         GameData.instance.PlayerSpeedBoost = 0;
         speed = baseSpeed;
         speedBoostTotal = 0;
+    }*/
+
+    public void ApplyJumpBoost(int jumpAmount)
+    {
+        jumpMax += jumpAmount;
+        jumpBoostTotal += jumpAmount;
+    }
+    
+    public void ApplyMiningSpeedBoost(float miningSpeedBoost)
+    {
+        mineRate -= miningSpeedBoost;
+        miningSpeedBoostTotal += miningSpeedBoost;
+
+        if (mineRate < 0.1f)
+        {
+            mineRate = 0.1f;
+        }
     }
 }
