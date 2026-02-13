@@ -1315,10 +1315,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI Prefab
       objectReference: {fileID: 0}
-    - target: {fileID: 3430708196408082808, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
-      propertyPath: notificationPanel
-      value: 
-      objectReference: {fileID: 1962565554}
     - target: {fileID: 8213066597882219376, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1985,11 +1981,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1906922194}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1962565554 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8181560273990741376, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
-  m_PrefabInstance: {fileID: 1127155939}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6152819916183937225
 PrefabInstance:
   m_ObjectHideFlags: 0
