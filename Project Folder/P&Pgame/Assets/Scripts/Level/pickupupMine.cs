@@ -1,10 +1,10 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class pickupSpeed : MonoBehaviour
+public class pickupMine : MonoBehaviour
 {
     [Header("Speed Boost Settings")]
-    [SerializeField][Range(1,2)] private int speedIncrease;
+    [SerializeField][Range(1,2)] private int miningSpeedIncrease;
 
 
     [Header("Audio")]
@@ -20,8 +20,7 @@ public class pickupSpeed : MonoBehaviour
 
             if (pickup != null)
             {
-                ApplySpeedBoost(other.gameObject);
-
+                ApplyMiningSpeedBoost(other.gameObject);
                 audioSource.PlayOneShot(pickupSound, pickupVolume);
 
                 Destroy(gameObject);
@@ -29,15 +28,15 @@ public class pickupSpeed : MonoBehaviour
         }
     }
 
-    private void ApplySpeedBoost(GameObject player)
+    private void ApplyMiningSpeedBoost(GameObject player)
     {
         PlayerCont playerController = player.GetComponent<PlayerCont>();
 
         if (playerController != null)
         {
-            GameData.instance.PlayerSpeedBoost += speedIncrease;
-            playerController.ApplySpeedBoost(speedIncrease);
-            gameManager.instance.ShowNotification($"Feather of Speed found! \n+{speedIncrease} to speed!");
+            GameData.instance.PlayerMiningSpeedBoost += miningSpeedIncrease;
+            playerController.ApplyMiningSpeedBoost(miningSpeedIncrease);
+            gameManager.instance.ShowNotification($"Rocket Powered Pickaxe found! \nIncrease to  mining speed!");
         }
     }
 }
