@@ -128,6 +128,8 @@ public class gameManager : MonoBehaviour, goldManage
         SetActiveWaveUI(1);
 
         updateResourcesUI();
+
+        FindAnyObjectByType<SaveBridge>()?.ApplyLoadedData();
     }
 
     
