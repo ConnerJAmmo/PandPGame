@@ -30,11 +30,13 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     private int baseJumpMax;
     private float miningSpeedBoostTotal = 0f;
     private float baseMineRate;
-    
+
     [Header("---- Resources ----")]
     [SerializeField] float mineRate;
     [Range(5,15)] [SerializeField] int mineDist;
     [Range(1,4)]  [SerializeField] int mineDamage;
+    [SerializeField] public GameObject pickModel;
+
 
     [SerializeField] public int woodCount;
     [SerializeField] public int stoneCount;
@@ -98,6 +100,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     public int gunListPos;
     public float shootTimer;
     float mineTimer;
+    bool pickRotated;
 
     private RaycastHit slopeHit; 
 
@@ -121,6 +124,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         shootDamage = 0;
         shootRate = 0;
         shootDist = 0;
+        pickRotated = false;
     }
 
     // Update is called once per frame
@@ -142,15 +146,26 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         jump();
         controller.Move(playerVel * Time.deltaTime);
         PlayerBodyPos = transform.position + Vector3.down;
-      
-        if(OnSteepSlope())
+
+        if (pickRotated == false && mineTimer >= mineRate)
+        {
+            //nothing
+        }
+        else if (pickRotated == true && mineTimer >= mineRate)
+        {
+            pickModel.transform.Rotate(-90, 0, 0);
+            pickRotated = false;
+        }
+
+
+        if (OnSteepSlope())
         {
             SteepSlopeMovement();
         }
-        else if(controller.isGrounded)
+        else if (controller.isGrounded)
         {
             slideVel = Vector3.zero;
-            jumpCount = 0;  
+            jumpCount = 0;
             wallJumpCount = 0;
             playerVel.x = 0;
             playerVel.z = 0;
@@ -158,7 +173,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         }
         else
         {
-            if(slideVel.magnitude > 0.1f)
+            if (slideVel.magnitude > 0.1f)
             {
                 controller.Move(slideVel);
                 slideVel = Vector3.Lerp(slideVel, Vector3.zero, 2f * Time.deltaTime);
@@ -172,7 +187,12 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         }
         if (Input.GetButton("Fire2") && mineTimer >= mineRate)
         {
+            pickModel.transform.Rotate(90, 0, 0);
+            pickRotated = true;
             mine();
+            
+            
+
         }
         if (Input.GetButtonDown("z"))
         {
@@ -340,6 +360,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     void mine()
     {
         mineTimer = 0;
+
+        
 
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, mineDist, ~ignoreLayer))
