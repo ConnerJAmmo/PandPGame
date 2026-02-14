@@ -75,9 +75,9 @@ public class enemyAI : MonoBehaviour, IDamage
             Debug.Log("Player Detected");
             playerInTrigger = true;
         }
-        else if (other.CompareTag("Turret"))
+        else if (other.CompareTag("Shield"))
         {
-            Debug.Log("Turret Detected");
+            Debug.Log("Shield Detected");
             turretsInRange.Add(other);
         }
         else if (other.CompareTag("Base"))

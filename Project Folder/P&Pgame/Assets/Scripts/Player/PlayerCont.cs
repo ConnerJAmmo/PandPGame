@@ -1,7 +1,7 @@
-using UnityEngine;
-using System.Collections;
 using bullet.fx.pack;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
 {
@@ -26,6 +26,10 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     [Range(1,100)][SerializeField] int gravity;
     private int speedBoostTotal = 0;
     private int baseSpeed;
+    private int jumpBoostTotal = 0;
+    private int baseJumpMax;
+    private float miningSpeedBoostTotal = 0f;
+    private float baseMineRate;
     
     [Header("---- Resources ----")]
     [SerializeField] float mineRate;
@@ -37,8 +41,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     [SerializeField] public int goldCount;
     [Header("---- Tools ----")]
     [SerializeField] public GameObject bullet;
-    [SerializeField] GameObject STTower;
-    [SerializeField] GameObject AOETower;
+    [Range(5, 15)][SerializeField] int buildDist;
     [SerializeField] public Transform shootPos;
     [SerializeField] public Transform machineGunShootPos;
     [SerializeField] public Transform m1GarandShootPos;
@@ -110,6 +113,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     {
         //ResetSpeedBoosts();
         baseSpeed = speed;
+        baseJumpMax = jumpMax;
+        baseMineRate = mineRate;
         HPOrig = HP;
         gameManager.instance.SetPlayerHPOirgUI();
         updatePlayerUI();
@@ -169,21 +174,33 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         {
             mine();
         }
-        if(Input.GetButtonDown("z"))
+        if (Input.GetButtonDown("z"))
         {
-            if(wasGrounded)
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, buildDist, ~ignoreLayer))
             {
-                SpawnSTTower();
+                Debug.Log("Raycast hit object: " + hit.collider.gameObject.name, hit.collider.gameObject);
+                hit.collider.gameObject.GetComponentInParent<ITurret>().SpawnTower('z');
+            } 
+        }
+        if (Input.GetButtonDown("x"))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, buildDist, ~ignoreLayer))
+            {
+                Debug.Log("Raycast hit object: " + hit.collider.gameObject.name, hit.collider.gameObject);
+                hit.collider.gameObject.GetComponentInParent<ITurret>().SpawnTower('x');
             }
         }
-        if(Input.GetButtonDown("x"))
+        if (Input.GetButtonDown("c"))
         {
-            if(wasGrounded)
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, buildDist, ~ignoreLayer))
             {
-                SpawnAOETower();
+                Debug.Log("Raycast hit object: " + hit.collider.gameObject.name, hit.collider.gameObject);
+                hit.collider.gameObject.GetComponentInParent<ITurret>().ShieldGenerator();
             }
         }
-
         SelectGun();
         reload();
     }
@@ -209,9 +226,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
 
         // This will make our hints stay while we can afford them
         if (wasGrounded && stRemaining > 0 && goldCount >= 5)
-            placeHint += $"Press Z to place ST Turret ({stRemaining} remaining)\n";
+            placeHint += $"Press Z at an empty marker to place ST Turret ({stRemaining} remaining)\n";
         if (wasGrounded && aoeRemaining > 0 && goldCount >= 5)
-            placeHint += $"Press X to place AOE Turret ({aoeRemaining} remaining)\n";
+            placeHint += $"Press X at an empty marker to place AOE Turret ({aoeRemaining} remaining)\n";
 
         string mineHint = GetMineHint(); // I created separate method for minehint
 
@@ -396,22 +413,6 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
             return total;
     }
 
-    void SpawnSTTower()
-    {
-        
-        if(woodCount >= 5 && goldCount >= 5)
-        {
-            Instantiate(STTower, new Vector3(PlayerBodyPos.x + 2, PlayerBodyPos.y, PlayerBodyPos.z - 3), transform.rotation);
-            woodCount = woodCount - 5;
-            gameManager.instance.removeGold(-5);
-            gameManager.instance.updateResourcesUI();
-            aud.PlayOneShot(mined5Aud[0], mined5AudVol);
-
-            showSTHint = false; // Hides Z key display after use
-        }
-        else return;
-    }
-
     public void resetGunStatsToOrig()
     {
         gunList[gunListPos].shootDist = gunList[gunListPos].shootDistOrig;
@@ -420,21 +421,6 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         gunList[gunListPos].damageLevel = 0;
         gunList[gunListPos].fireRateLevel = 0;
         gunList[gunListPos].DistLevel = 0;
-    }
-    void SpawnAOETower()
-    {
-        if(stoneCount >= 5 && goldCount >= 5)
-        {
-            Instantiate(AOETower, new Vector3(PlayerBodyPos.x + 2, PlayerBodyPos.y, PlayerBodyPos.z - 3), transform.rotation);
-            gameManager.instance.removeGold(-5);
-            stoneCount = stoneCount - 5;
-            gameManager.instance.updateResourcesUI();
-            aud.PlayOneShot(mined5Aud[0], mined5AudVol);
-
-            showSTHint = false; // Hides X key display after use
-
-        }
-        else return;
     }
 
     public void takeDamage(int amount, DamageType type)
@@ -528,6 +514,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         speed += boostAmount;
         speedBoostTotal += boostAmount;
     }
+    /*
     private void LoadSpeedBoosts()
     {
         speedBoostTotal = GameData.instance.PlayerSpeedBoost;
@@ -539,5 +526,22 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         GameData.instance.PlayerSpeedBoost = 0;
         speed = baseSpeed;
         speedBoostTotal = 0;
+    }*/
+
+    public void ApplyJumpBoost(int jumpAmount)
+    {
+        jumpMax += jumpAmount;
+        jumpBoostTotal += jumpAmount;
+    }
+    
+    public void ApplyMiningSpeedBoost(float miningSpeedBoost)
+    {
+        mineRate -= miningSpeedBoost;
+        miningSpeedBoostTotal += miningSpeedBoost;
+
+        if (mineRate < 0.1f)
+        {
+            mineRate = 0.1f;
+        }
     }
 }

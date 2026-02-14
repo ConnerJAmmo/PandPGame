@@ -5,7 +5,7 @@ public class pickupSpeed : MonoBehaviour
 {
     [Header("Speed Boost Settings")]
     [SerializeField][Range(1,2)] private int speedIncrease;
-    [SerializeField] private GameObject pickupEffect;
+
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
@@ -21,7 +21,7 @@ public class pickupSpeed : MonoBehaviour
             if (pickup != null)
             {
                 ApplySpeedBoost(other.gameObject);
-                Instantiate(pickupEffect, transform.position, Quaternion.identity);
+
                 audioSource.PlayOneShot(pickupSound, pickupVolume);
 
                 Destroy(gameObject);
