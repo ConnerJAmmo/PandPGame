@@ -153,7 +153,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         }
         else if (pickRotated == true && mineTimer >= mineRate)
         {
-            pickModel.transform.Rotate(-90, 0, 0);
+            pickModel.transform.Rotate(0, 0, 90);
             pickRotated = false;
         }
 
@@ -187,7 +187,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         }
         if (Input.GetButton("Fire2") && mineTimer >= mineRate)
         {
-            pickModel.transform.Rotate(90, 0, 0);
+            pickModel.transform.Rotate(0, 0, -90);
             pickRotated = true;
             mine();
             
