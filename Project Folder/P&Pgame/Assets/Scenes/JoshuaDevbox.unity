@@ -180,6 +180,81 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ada9fb72d3a658e4da23e73806acc3c1, type: 3}
+--- !u!1 &162586334
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 162586335}
+  - component: {fileID: 162586337}
+  - component: {fileID: 162586336}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &162586335
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162586334}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -505.88486, y: 123.93445, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 982551839625689033}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &162586336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162586334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+  m_Actions: {fileID: -944628639613478452, guid: 55581b33257f8aa4c88fe8cd7f7b371a, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &162586337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162586334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11a0cdd0eac405447b3473442df9261a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputManager
 --- !u!1 &325164057
 GameObject:
   m_ObjectHideFlags: 0
@@ -1282,6 +1357,10 @@ PrefabInstance:
     - target: {fileID: 8347591990990009705, guid: 45e14567d86e9c54fbf8b6b6ff6d0fba, type: 3}
       propertyPath: m_Name
       value: UI New_1.4.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8347591990990009705, guid: 45e14567d86e9c54fbf8b6b6ff6d0fba, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2387,6 +2466,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 162586335}
   - {fileID: 5902263682532419742}
   - {fileID: 5036719364483723169}
   - {fileID: 7774200821127947354}
@@ -4123,6 +4203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a6436702abfbba44beea7a0af91d45d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::gameManager
+  saveBridge: {fileID: 0}
   menuActive: {fileID: 0}
   menuPause: {fileID: 8101194441961117044}
   menuLose: {fileID: 649659979533995702}
@@ -4154,6 +4235,9 @@ MonoBehaviour:
   TowerHPMax: {fileID: 5194054552552604558}
   TowerHP: {fileID: 4260577963513588007}
   hintText: {fileID: 0}
+  notificationPanel: {fileID: 0}
+  notificationText: {fileID: 0}
+  notificationDuration: 2
   damageUpgradeCost: 10
   fireRateUpgradeCost: 10
   rangeUpgradeCost: 10
@@ -5503,6 +5587,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5511265270779400724}
+  - component: {fileID: 5511265270779400725}
   m_Layer: 5
   m_Name: Menus
   m_TagString: Untagged
@@ -10717,6 +10802,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5511265270779400725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2488904148907381190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204c0fee343a966488d1bbcf2b4d345c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuManager
 --- !u!114 &5515675155174995427
 MonoBehaviour:
   m_ObjectHideFlags: 0
