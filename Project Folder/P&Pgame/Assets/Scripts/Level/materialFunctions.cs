@@ -3,7 +3,7 @@ using System.Collections;
 
 public class materialFunctions : MonoBehaviour, IMaterial
 {
-    enum materialSelect { Wood, Stone }
+    enum materialSelect { Wood, Stone, Metal }
 
     [SerializeField] materialSelect type;
 
@@ -52,6 +52,10 @@ public class materialFunctions : MonoBehaviour, IMaterial
         else if (type == materialSelect.Stone)
         {
             typer = "Stone";
+        }
+        else if (type == materialSelect.Metal)
+        {
+            typer = "Metal";
         }
 
         return typer;

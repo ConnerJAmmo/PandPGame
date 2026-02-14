@@ -40,6 +40,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
 
     [SerializeField] public int woodCount;
     [SerializeField] public int stoneCount;
+    [SerializeField] public int metalCount;
     [SerializeField] public int goldCount;
     [Header("---- Tools ----")]
     [SerializeField] public GameObject bullet;
@@ -388,6 +389,12 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
                     aud.PlayOneShot(mineSteelAud[0], mineSteelAudVol);
                     changed = true;
                 }
+                else if (matType == "Metal")
+                {
+                    metalCount = metalCount + matAmount;
+                    aud.PlayOneShot(mineSteelAud[0], mineSteelAudVol);
+                    changed = true;
+                }
                 if (changed)
                 {
                     gameManager.instance.updateResourcesUI();
@@ -416,6 +423,14 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
               
             }
         }
+        else if (type == "Metal")
+        {
+            if (stoneCount >= amount)
+            {
+                finalAmount = finalAmount + metalCount;
+
+            }
+        }
 
         return finalAmount;
     }
@@ -432,7 +447,11 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         {
             total = stoneCount;
         }
-            return total;
+        else if (type == "Metal")
+        {
+            total = metalCount;
+        }
+        return total;
     }
 
     public void resetGunStatsToOrig()
