@@ -489,6 +489,7 @@ MonoBehaviour:
   bullet: {fileID: 4359745504029842998, guid: a9bbf3c614848ec4bbc9c1a5fd8ea286, type: 3}
   STTower: {fileID: 1401014823036408, guid: 5040fa77b88ce334da2f3a5ef8e1c20c, type: 3}
   AOETower: {fileID: 1361402013487122, guid: 1606b58cd193aa243a22595a9230cc03, type: 3}
+  buildDist: 8
   shootPos: {fileID: 2877944076215294254}
   gunList: []
   gunModel: {fileID: 5985920302194669559}
