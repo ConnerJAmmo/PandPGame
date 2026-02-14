@@ -37,7 +37,7 @@ public class pickupSpeed : MonoBehaviour
         {
             GameData.instance.PlayerSpeedBoost += speedIncrease;
             playerController.ApplySpeedBoost(speedIncrease);
-            gameManager.instance.ShowNotification($"Feather of Speed found! \n+{speedIncrease} to speed!");
+            gameManager.instance.ShowNotification($"Speed boost found! \n+{speedIncrease} to speed!");
         }
     }
 }

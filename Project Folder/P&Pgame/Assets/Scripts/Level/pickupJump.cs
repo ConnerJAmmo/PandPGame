@@ -36,7 +36,7 @@ public class pickupJump : MonoBehaviour
         {
             GameData.instance.PlayerJumpBoost += jumpIncrease;
             playerController.ApplyJumpBoost(jumpIncrease);
-            gameManager.instance.ShowNotification($"Propulsion boots found! +1 to max jumps!");
+            gameManager.instance.ShowNotification($"Propulsion rocket found! +1 to max jumps!");
         }
     }
 }
