@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7db06ef062633cc45bff798381e50e10
+timeCreated: 1428517011
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 32216
+  packageName: 'Sci-fi Tool: Pickaxe'
+  packageVersion: 1.0
+  assetPath: Assets/3DBSciFiTool/Materials/CF_pickaxe1.mat
+  uploadId: 58637

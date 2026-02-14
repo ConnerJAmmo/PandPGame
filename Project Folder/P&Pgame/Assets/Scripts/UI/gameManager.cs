@@ -4,6 +4,7 @@ using TMPro;
 using System.Globalization;
 using System.Collections;
 using System;
+using UnityEngine.EventSystems;
 
 
 public class gameManager : MonoBehaviour, goldManage
@@ -14,11 +15,20 @@ public class gameManager : MonoBehaviour, goldManage
 #region Menus
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
+    [SerializeField] GameObject menuPauseFristButton;
     [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject menuLoseFristButton;
+
     [SerializeField] GameObject menuWin;
+    [SerializeField] GameObject menuWinFristButton;
+
     [SerializeField] GameObject menuOptions;
     [SerializeField] GameObject menuTowerUpgrade;
+    [SerializeField] GameObject menuTowerUpgradeFristButton;
+
     [SerializeField] GameObject menuPlayerUpgrade;
+    [SerializeField] GameObject menuPlayerUpgradeFristButton;
+    
     [SerializeField] GameObject needGunText;
     public bool isPause;
 #endregion
@@ -157,6 +167,8 @@ public class gameManager : MonoBehaviour, goldManage
                 statePause();
                 menuActive = menuPause;
                 menuActive.SetActive(true);
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(menuPauseFristButton);
                 aud.PlayOneShot(menuInteractionAud, menuVol);
             }
             else if (menuActive == menuPause) 
@@ -260,6 +272,7 @@ public class gameManager : MonoBehaviour, goldManage
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void stateUnpause()
@@ -293,6 +306,8 @@ public class gameManager : MonoBehaviour, goldManage
             if (menuActive == null)
             {
                 newMenu(menuPlayerUpgrade);
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(menuPlayerUpgradeFristButton);
                 SetDamageUpgradeText();
                 SetFireRateUpgradeText();
                 SetRangeUpgradeText();
@@ -319,12 +334,16 @@ public class gameManager : MonoBehaviour, goldManage
     public void youLose()
     {
         newMenu(menuLose);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(menuLoseFristButton);
         aud.PlayOneShot(deathAud, deathVol);
     }
 
     public void youWin()
     {
         newMenu(menuWin);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(menuWinFristButton);
     }
 
     public void updateResourcesUI()
