@@ -51,6 +51,16 @@ public class buttonFunctions : MonoBehaviour
 #endif
     }
 
+    public void Options()
+    {
+        gameManager.instance.openOptions();
+    }
+
+    public void Pause()
+    {
+        gameManager.instance.openPause();
+    }
+
     public void UpgradeDamage()
     {
         if (gameManager.instance.damageLevel != gameManager.instance.maxLevel 

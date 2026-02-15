@@ -16,12 +16,14 @@ public class gameManager : MonoBehaviour, goldManage
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuPauseFristButton;
-    [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject menuPlayerLose;
+    [SerializeField] GameObject menuTowerLose;
     [SerializeField] GameObject menuLoseFristButton;
 
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuWinFristButton;
 
+    [SerializeField] GameObject menuOptions;
     [SerializeField] GameObject menuTowerUpgrade;
     [SerializeField] GameObject menuTowerUpgradeFristButton;
 
@@ -174,6 +176,12 @@ public class gameManager : MonoBehaviour, goldManage
             {
                  stateUnpause();
             }
+            else if (menuActive == menuOptions)
+            {
+                menuActive.SetActive(false);
+                menuActive = menuPause;
+                menuActive.SetActive(true);
+            }
         }
 
         SetDamageUpgradeText();
@@ -279,6 +287,19 @@ public class gameManager : MonoBehaviour, goldManage
         aud.PlayOneShot(menuInteractionAud, menuVol);
     }
 
+    public void openOptions()
+    {
+        menuActive.SetActive(false);
+        menuActive = menuOptions;
+        menuActive.SetActive(true);
+    }
+    public void openPause()
+    {
+        menuActive.SetActive(false);
+        menuActive = menuPause;
+        menuActive.SetActive(true);
+    }
+
     public void openPlayerUpgradeMenu()
     {
         if (Input.GetButtonDown("Player Upgrade Menu"))
@@ -311,9 +332,16 @@ public class gameManager : MonoBehaviour, goldManage
         needGunText.SetActive(false);
     }
 
-    public void youLose()
+    public void youLosePlayer()
     {
-        newMenu(menuLose);
+        newMenu(menuPlayerLose);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(menuLoseFristButton);
+        aud.PlayOneShot(deathAud, deathVol);
+    }
+    public void youLoseTower()
+    {
+        newMenu(menuTowerLose);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(menuLoseFristButton);
         aud.PlayOneShot(deathAud, deathVol);
