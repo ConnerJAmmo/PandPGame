@@ -474,7 +474,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
 
         if (HP <= 0)
         {
-            gameManager.instance.youLose();
+            gameManager.instance.youLosePlayer();
         }
 
     }
