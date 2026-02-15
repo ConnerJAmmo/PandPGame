@@ -16,7 +16,8 @@ public class gameManager : MonoBehaviour, goldManage
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuPauseFristButton;
-    [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject menuPlayerLose;
+    [SerializeField] GameObject menuTowerLose;
     [SerializeField] GameObject menuLoseFristButton;
 
     [SerializeField] GameObject menuWin;
@@ -331,9 +332,16 @@ public class gameManager : MonoBehaviour, goldManage
         needGunText.SetActive(false);
     }
 
-    public void youLose()
+    public void youLosePlayer()
     {
-        newMenu(menuLose);
+        newMenu(menuPlayerLose);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(menuLoseFristButton);
+        aud.PlayOneShot(deathAud, deathVol);
+    }
+    public void youLoseTower()
+    {
+        newMenu(menuTowerLose);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(menuLoseFristButton);
         aud.PlayOneShot(deathAud, deathVol);

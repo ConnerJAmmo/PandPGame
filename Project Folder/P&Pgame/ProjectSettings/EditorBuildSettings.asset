@@ -15,14 +15,20 @@ EditorBuildSettings:
     path: Assets/Scenes/ALL GAME SCENES/Loading.unity
     guid: a2e137bddc8ef8c4e83018c0077620ef
   - enabled: 1
-    path: Assets/Scenes/OutPostScene.unity
-    guid: 63d567d50ce7876408b61a2524b72080
+    path: Assets/Scenes/ALL GAME SCENES/OutPost.unity
+    guid: 510a51599320310448a57f28b67bb0b8
   - enabled: 1
     path: Assets/Scenes/ALL GAME SCENES/Gorge.unity
     guid: 906c273b58a113d4aa55b1034ed4c76e
   - enabled: 1
     path: Assets/Scenes/ALL GAME SCENES/Mothership.unity
     guid: 507d8c73ee527bc41bd441a14afb02a8
+  - enabled: 1
+    path: Assets/Scenes/ALL GAME SCENES/OptionsMenu.unity
+    guid: b0805c23af400ed4d963cdf4f7ee35ad
+  - enabled: 1
+    path: Assets/Scenes/ALL GAME SCENES/Credits.unity
+    guid: 945057adb87e9184aa33ca6091c1fea3
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
