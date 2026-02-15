@@ -62,7 +62,7 @@ public class baseDmg : MonoBehaviour, IDamage
         Debug.Log("Basedmg hit by: " + type);
         if (hp <= 0)
         {
-            gameManager.instance.youLose();
+            gameManager.instance.youLoseTower();
             Destroy(gameObject);
         }
         else
