@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
+public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, IPickupGeneric
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
@@ -42,6 +42,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     [SerializeField] public int stoneCount;
     [SerializeField] public int metalCount;
     [SerializeField] public int goldCount;
+    [SerializeField] public int powerCrystals;
     [Header("---- Tools ----")]
     [SerializeField] public GameObject bullet;
     [Range(5, 15)][SerializeField] int buildDist;
@@ -583,6 +584,14 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         if (mineRate < 0.1f)
         {
             mineRate = 0.1f;
+        }
+    }
+
+    public void getGeneric(string name, int amount)
+    {
+        if (name == "Power Crystal")
+        {
+            powerCrystals = powerCrystals + amount;
         }
     }
 }
