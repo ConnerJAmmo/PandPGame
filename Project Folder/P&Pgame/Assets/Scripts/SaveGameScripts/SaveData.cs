@@ -18,8 +18,19 @@ public class SaveData // Not derived from MonoBehaviour
     public int stone = 0;
 
     // These are future-proof buckets (add later without breaking anything)
+
+    // If we want to save unlocked upgrades later
     public List<string> unlockedUpgrades = new List<string>();
+
+    // if we want to save stats later
     public Dictionary<string, int> stats = new Dictionary<string, int>();
+
+    // if we want to save xp (experience points) later
+    public int xp;
+
+    // if we want to save inventory later
+
+    public string[] inventory;
     
 
 
