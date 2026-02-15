@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using System.Threading.Tasks;
 using bullet.fx.pack;
 
-public class TurretController : MonoBehaviour, IDamage
+public class TurretController : MonoBehaviour
 {
     [Header("Debug")]
     [SerializeField] public int numEnemies;
@@ -14,9 +14,6 @@ public class TurretController : MonoBehaviour, IDamage
     [Header("Components")]
     [SerializeField] public GameObject turret;
     [SerializeField] public GameObject bulletPrefab;
-
-    [Header("Stats")]
-    [Range(1, 1000)] [SerializeField] public int HP;
 
     [Header("Fire Settings")]
     [Range(1, 1000)] [SerializeField] public int range;
@@ -34,10 +31,6 @@ public class TurretController : MonoBehaviour, IDamage
     [SerializeField] float burstShotVol;
     [SerializeField] AudioClip[] ShotAud;
     [SerializeField] float shotVol;
-    [SerializeField] AudioClip[] turretTakeDamageAud;
-    [SerializeField] float turretTakeDamageVol;
-    [SerializeField] AudioClip[] turretDestroyedAud;
-    [SerializeField] float turretDestroyedVol;
 
 
     public TurretFireManager fireManager;
@@ -45,10 +38,8 @@ public class TurretController : MonoBehaviour, IDamage
     private bool useBurstFire;
     private float shootTimer;
     private float bulletSpeed;
-    private Color colorOrigin;
     private Quaternion forward;
     private Vector3 fullDirection;
-    private Material dynamicMat;
     private Transform firePoint;
     private List<Collider> enemiesInRange = new List<Collider>();
 
@@ -56,8 +47,6 @@ public class TurretController : MonoBehaviour, IDamage
     void Start()
     {
         forward = Quaternion.LookRotation(turret.transform.forward);
-        dynamicMat = GetComponentInChildren<Renderer>().material;
-        colorOrigin = dynamicMat.color;
         damage dmgScript = bulletPrefab.GetComponentInChildren<damage>();
         if (dmgScript != null)
         {
@@ -294,38 +283,5 @@ public class TurretController : MonoBehaviour, IDamage
                 yield return new WaitForSeconds(burstFireRate);
             }
         }
-    }
-
-    public void takeDamage(int amount, DamageType type)
-    {
-        HP -= amount;
-
-        // Debug to prove it's this specific instance
-        Debug.Log($"{gameObject.name} took {amount} damage. HP left: {HP}");
-
-        if (HP <= 0)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            // Stop only the flash coroutine to prevent color getting stuck
-            StopCoroutine(flashRed());
-            StartCoroutine(flashRed());
-
-            if (HP <= 20)
-            {
-                aud.PlayOneShot(turretDestroyedAud[0], turretDestroyedVol);
-            }
-            else
-                aud.PlayOneShot(turretTakeDamageAud[Random.Range(0, turretTakeDamageAud.Length)], turretTakeDamageVol);
-        }
-    }
-
-    IEnumerator flashRed()
-    {
-        dynamicMat.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        dynamicMat.color = colorOrigin;
     }
 }

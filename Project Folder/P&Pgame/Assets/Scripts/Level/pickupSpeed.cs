@@ -5,7 +5,7 @@ public class pickupSpeed : MonoBehaviour
 {
     [Header("Speed Boost Settings")]
     [SerializeField][Range(1,2)] private int speedIncrease;
-    [SerializeField] private GameObject pickupEffect;
+
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
@@ -21,7 +21,7 @@ public class pickupSpeed : MonoBehaviour
             if (pickup != null)
             {
                 ApplySpeedBoost(other.gameObject);
-                Instantiate(pickupEffect, transform.position, Quaternion.identity);
+
                 audioSource.PlayOneShot(pickupSound, pickupVolume);
 
                 Destroy(gameObject);
@@ -37,7 +37,7 @@ public class pickupSpeed : MonoBehaviour
         {
             GameData.instance.PlayerSpeedBoost += speedIncrease;
             playerController.ApplySpeedBoost(speedIncrease);
-            gameManager.instance.ShowNotification($"Feather of Speed found! \n+{speedIncrease} to speed!");
+            gameManager.instance.ShowNotification($"Speed boost found! \n+{speedIncrease} to speed!");
         }
     }
 }

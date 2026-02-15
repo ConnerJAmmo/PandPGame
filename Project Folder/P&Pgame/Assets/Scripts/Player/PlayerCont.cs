@@ -1,7 +1,7 @@
-using UnityEngine;
-using System.Collections;
 using bullet.fx.pack;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
 {
@@ -26,19 +26,25 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     [Range(1,100)][SerializeField] int gravity;
     private int speedBoostTotal = 0;
     private int baseSpeed;
-    
+    private int jumpBoostTotal = 0;
+    private int baseJumpMax;
+    private float miningSpeedBoostTotal = 0f;
+    private float baseMineRate;
+
     [Header("---- Resources ----")]
     [SerializeField] float mineRate;
     [Range(5,15)] [SerializeField] int mineDist;
     [Range(1,4)]  [SerializeField] int mineDamage;
+    [SerializeField] public GameObject pickModel;
+
 
     [SerializeField] public int woodCount;
     [SerializeField] public int stoneCount;
+    [SerializeField] public int metalCount;
     [SerializeField] public int goldCount;
     [Header("---- Tools ----")]
     [SerializeField] public GameObject bullet;
-    [SerializeField] GameObject STTower;
-    [SerializeField] GameObject AOETower;
+    [Range(5, 15)][SerializeField] int buildDist;
     [SerializeField] public Transform shootPos;
     [SerializeField] public Transform machineGunShootPos;
     [SerializeField] public Transform m1GarandShootPos;
@@ -95,6 +101,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     public int gunListPos;
     public float shootTimer;
     float mineTimer;
+    bool pickRotated;
 
     private RaycastHit slopeHit; 
 
@@ -110,12 +117,15 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     {
         //ResetSpeedBoosts();
         baseSpeed = speed;
+        baseJumpMax = jumpMax;
+        baseMineRate = mineRate;
         HPOrig = HP;
         gameManager.instance.SetPlayerHPOirgUI();
         updatePlayerUI();
         shootDamage = 0;
         shootRate = 0;
         shootDist = 0;
+        pickRotated = false;
     }
 
     // Update is called once per frame
@@ -137,15 +147,26 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         jump();
         controller.Move(playerVel * Time.deltaTime);
         PlayerBodyPos = transform.position + Vector3.down;
-      
-        if(OnSteepSlope())
+
+        if (pickRotated == false && mineTimer >= mineRate)
+        {
+            //nothing
+        }
+        else if (pickRotated == true && mineTimer >= mineRate)
+        {
+            pickModel.transform.Rotate(0, 0, 90);
+            pickRotated = false;
+        }
+
+
+        if (OnSteepSlope())
         {
             SteepSlopeMovement();
         }
-        else if(controller.isGrounded)
+        else if (controller.isGrounded)
         {
             slideVel = Vector3.zero;
-            jumpCount = 0;  
+            jumpCount = 0;
             wallJumpCount = 0;
             playerVel.x = 0;
             playerVel.z = 0;
@@ -153,7 +174,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         }
         else
         {
-            if(slideVel.magnitude > 0.1f)
+            if (slideVel.magnitude > 0.1f)
             {
                 controller.Move(slideVel);
                 slideVel = Vector3.Lerp(slideVel, Vector3.zero, 2f * Time.deltaTime);
@@ -167,23 +188,40 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         }
         if (Input.GetButton("Fire2") && mineTimer >= mineRate)
         {
+            pickModel.transform.Rotate(0, 0, -90);
+            pickRotated = true;
             mine();
-        }
-        if(Input.GetButtonDown("z"))
-        {
-            if(wasGrounded)
-            {
-                SpawnSTTower();
-            }
-        }
-        if(Input.GetButtonDown("x"))
-        {
-            if(wasGrounded)
-            {
-                SpawnAOETower();
-            }
-        }
+            
+            
 
+        }
+        if (Input.GetButtonDown("z"))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, buildDist, ~ignoreLayer))
+            {
+                Debug.Log("Raycast hit object: " + hit.collider.gameObject.name, hit.collider.gameObject);
+                hit.collider.gameObject.GetComponentInParent<ITurret>().SpawnTower('z');
+            } 
+        }
+        if (Input.GetButtonDown("x"))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, buildDist, ~ignoreLayer))
+            {
+                Debug.Log("Raycast hit object: " + hit.collider.gameObject.name, hit.collider.gameObject);
+                hit.collider.gameObject.GetComponentInParent<ITurret>().SpawnTower('x');
+            }
+        }
+        if (Input.GetButtonDown("c"))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, buildDist, ~ignoreLayer))
+            {
+                Debug.Log("Raycast hit object: " + hit.collider.gameObject.name, hit.collider.gameObject);
+                hit.collider.gameObject.GetComponentInParent<ITurret>().ShieldGenerator();
+            }
+        }
         SelectGun();
         reload();
     }
@@ -209,9 +247,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
 
         // This will make our hints stay while we can afford them
         if (wasGrounded && stRemaining > 0 && goldCount >= 5)
-            placeHint += $"Press Z to place ST Turret ({stRemaining} remaining)\n";
+            placeHint += $"Press Z at an empty marker to place ST Turret ({stRemaining} remaining)\n";
         if (wasGrounded && aoeRemaining > 0 && goldCount >= 5)
-            placeHint += $"Press X to place AOE Turret ({aoeRemaining} remaining)\n";
+            placeHint += $"Press X at an empty marker to place AOE Turret ({aoeRemaining} remaining)\n";
 
         string mineHint = GetMineHint(); // I created separate method for minehint
 
@@ -324,6 +362,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     {
         mineTimer = 0;
 
+        
+
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, mineDist, ~ignoreLayer))
         {
@@ -346,6 +386,12 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
                 else if (matType == "Stone")
                 {
                     stoneCount = stoneCount + matAmount;
+                    aud.PlayOneShot(mineSteelAud[0], mineSteelAudVol);
+                    changed = true;
+                }
+                else if (matType == "Metal")
+                {
+                    metalCount = metalCount + matAmount;
                     aud.PlayOneShot(mineSteelAud[0], mineSteelAudVol);
                     changed = true;
                 }
@@ -377,6 +423,14 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
               
             }
         }
+        else if (type == "Metal")
+        {
+            if (stoneCount >= amount)
+            {
+                finalAmount = finalAmount + metalCount;
+
+            }
+        }
 
         return finalAmount;
     }
@@ -393,23 +447,11 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         {
             total = stoneCount;
         }
-            return total;
-    }
-
-    void SpawnSTTower()
-    {
-        
-        if(woodCount >= 5 && goldCount >= 5)
+        else if (type == "Metal")
         {
-            Instantiate(STTower, new Vector3(PlayerBodyPos.x + 2, PlayerBodyPos.y, PlayerBodyPos.z - 3), transform.rotation);
-            woodCount = woodCount - 5;
-            gameManager.instance.removeGold(-5);
-            gameManager.instance.updateResourcesUI();
-            aud.PlayOneShot(mined5Aud[0], mined5AudVol);
-
-            showSTHint = false; // Hides Z key display after use
+            total = metalCount;
         }
-        else return;
+        return total;
     }
 
     public void resetGunStatsToOrig()
@@ -421,21 +463,6 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         gunList[gunListPos].fireRateLevel = 0;
         gunList[gunListPos].DistLevel = 0;
     }
-    void SpawnAOETower()
-    {
-        if(stoneCount >= 5 && goldCount >= 5)
-        {
-            Instantiate(AOETower, new Vector3(PlayerBodyPos.x + 2, PlayerBodyPos.y, PlayerBodyPos.z - 3), transform.rotation);
-            gameManager.instance.removeGold(-5);
-            stoneCount = stoneCount - 5;
-            gameManager.instance.updateResourcesUI();
-            aud.PlayOneShot(mined5Aud[0], mined5AudVol);
-
-            showSTHint = false; // Hides X key display after use
-
-        }
-        else return;
-    }
 
     public void takeDamage(int amount, DamageType type)
     {
@@ -446,7 +473,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
 
         if (HP <= 0)
         {
-            gameManager.instance.youLose();
+            gameManager.instance.youLosePlayer();
         }
 
     }
@@ -528,6 +555,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         speed += boostAmount;
         speedBoostTotal += boostAmount;
     }
+    /*
     private void LoadSpeedBoosts()
     {
         speedBoostTotal = GameData.instance.PlayerSpeedBoost;
@@ -539,5 +567,22 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         GameData.instance.PlayerSpeedBoost = 0;
         speed = baseSpeed;
         speedBoostTotal = 0;
+    }*/
+
+    public void ApplyJumpBoost(int jumpAmount)
+    {
+        jumpMax += jumpAmount;
+        jumpBoostTotal += jumpAmount;
+    }
+    
+    public void ApplyMiningSpeedBoost(float miningSpeedBoost)
+    {
+        mineRate -= miningSpeedBoost;
+        miningSpeedBoostTotal += miningSpeedBoost;
+
+        if (mineRate < 0.1f)
+        {
+            mineRate = 0.1f;
+        }
     }
 }

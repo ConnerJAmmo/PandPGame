@@ -10,6 +10,7 @@ TagManager:
   - Boss
   - Turret
   - Guns
+  - Shield
   layers:
   - Default
   - TransparentFX
