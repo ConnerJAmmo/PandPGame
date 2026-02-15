@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,10 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] int outpostScene = 3;
     [SerializeField] int gorgeScene = 4;
     [SerializeField] int mothershipScene = 5;
+    [SerializeField] int optionsMenu = 6;
+    [SerializeField] int creditsScene = 7;
+
+
   
     public void Continue()
     {
@@ -34,10 +39,18 @@ public class MainMenuUI : MonoBehaviour
     {
         SceneLoader.load(outpostScene);
     }
+
+    public void LoadCredits()
+    {
+        SceneLoader.load(creditsScene);
+    }
     public void Quit()
     {
         Application.Quit();
     }
 
-
+    public void OptionsMenu()
+    {
+        SceneLoader.load(optionsMenu);
+    }
 }
