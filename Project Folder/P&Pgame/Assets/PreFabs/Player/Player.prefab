@@ -575,9 +575,10 @@ MonoBehaviour:
   mineRate: 0.5
   mineDist: 8
   mineDamage: 1
-  pickModel: {fileID: 0}
+  pickModel: {fileID: 3168171924296237641}
   woodCount: 0
   stoneCount: 0
+  metalCount: 0
   goldCount: 20
   bullet: {fileID: 4359745504029842998, guid: a9bbf3c614848ec4bbc9c1a5fd8ea286, type: 3}
   buildDist: 8
@@ -852,15 +853,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: da88eae1ed4cdbe4797606e5304184ca, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.2666273
+      value: -0.76
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: da88eae1ed4cdbe4797606e5304184ca, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.24
+      value: 0.21
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: da88eae1ed4cdbe4797606e5304184ca, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.01187
+      value: -0.11
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: da88eae1ed4cdbe4797606e5304184ca, type: 3}
       propertyPath: m_LocalRotation.w
@@ -895,6 +896,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da88eae1ed4cdbe4797606e5304184ca, type: 3}
+--- !u!1 &3168171924296237641 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: da88eae1ed4cdbe4797606e5304184ca, type: 3}
+  m_PrefabInstance: {fileID: 3168171924296205545}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3168171924296343145 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: da88eae1ed4cdbe4797606e5304184ca, type: 3}
