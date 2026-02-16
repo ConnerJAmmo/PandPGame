@@ -53,4 +53,12 @@ public class MainMenuUI : MonoBehaviour
     {
         SceneLoader.load(optionsMenu);
     }
+
+    public void OnContinue()
+    {
+        if(GameSession.instance.LoadGame())
+        {
+            SceneManager.LoadScene(GameSession.instance.Data.currentLevelIndex);
+        }
+    }
 }
