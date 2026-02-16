@@ -37,8 +37,8 @@ public class PortalVisualController : MonoBehaviour
         if (portalSurfaceRenderer) portalSurfaceRenderer.enabled = true;
         if (portalCamera) portalCamera.enabled = true;
        
-        StartFade(1f, fadeInTime, disableCamAfter: true);
-
+        StartFade(1f, fadeInTime, disableCamAfter: false);
+        Debug.Log($"TurnOn -> {name}", this);
 
     }
 
@@ -81,7 +81,7 @@ public class PortalVisualController : MonoBehaviour
         {
             if (portalCamera) portalCamera.enabled = false;
 
-            if (portalSurfaceRenderer) portalSurfaceRenderer.enabled = false;
+            //if (portalSurfaceRenderer) portalSurfaceRenderer.enabled = false;
         }
 
         fadeRoutine = null;

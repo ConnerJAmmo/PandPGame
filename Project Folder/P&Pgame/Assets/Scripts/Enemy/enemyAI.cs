@@ -115,6 +115,14 @@ public class enemyAI : MonoBehaviour, IDamage
         turretsInRange.RemoveAll(t => t == null);
         numTurrets = turretsInRange.Count;
 
+        if(HP <= 0) 
+        {
+            gameManager.instance.updateEnemyCount(-1);
+            waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
+            gameManager.instance.addGold(maxHP);
+            Destroy(gameObject);
+        }
+
         // PRIORITY 1: PLAYER (Check CanSeePlayer first as it handles its own movement/shooting)
         if (playerInTrigger && CanSeePlayer())
         {
@@ -295,18 +303,7 @@ public class enemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount, DamageType type)
     {
         HP -= amount;
-
-        if(HP <= 0) 
-        {
-            gameManager.instance.updateEnemyCount(-1);
-            waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
-            gameManager.instance.addGold(maxHP);
-            Destroy(gameObject);
-        }
-        else
-        {
-            StartCoroutine(flashRed());
-        }
+        StartCoroutine(flashRed());
     }
 
     IEnumerator flashRed()
