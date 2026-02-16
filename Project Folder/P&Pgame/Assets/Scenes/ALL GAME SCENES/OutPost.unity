@@ -38743,6 +38743,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI Prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 4944989924011970610, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
+      propertyPath: testSource
+      value: 
+      objectReference: {fileID: 2049296064}
     - target: {fileID: 8213066597882219376, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -55854,6 +55858,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8de2c659a0504d4180ea7d3ccef36bc, type: 3}
+--- !u!82 &2049296064 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8259007716321684502, guid: e8de2c659a0504d4180ea7d3ccef36bc, type: 3}
+  m_PrefabInstance: {fileID: 2049296063}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2062526355
 PrefabInstance:
   m_ObjectHideFlags: 0
