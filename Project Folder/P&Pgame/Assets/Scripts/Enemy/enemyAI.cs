@@ -72,7 +72,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player Detected");
+            //Debug.Log("Player Detected");
             playerInTrigger = true;
         }
         else if (other.CompareTag("Shield"))
@@ -82,7 +82,7 @@ public class enemyAI : MonoBehaviour, IDamage
         }
         else if (other.CompareTag("Base"))
         {
-            Debug.Log("Base Detected");
+            //Debug.Log("Base Detected");
             baseInTrigger = true;
         }
     }
@@ -190,7 +190,7 @@ public class enemyAI : MonoBehaviour, IDamage
                 GetComponent<NavMeshAgent>().SetDestination(target.transform.position);
 
                 faceTarget(target.transform.GetComponent<Collider>());
-                Debug.Log("Player Seen");
+                //Debug.Log("Player Seen");
 
                 if (shootTimer >= fireRate)
                 {
