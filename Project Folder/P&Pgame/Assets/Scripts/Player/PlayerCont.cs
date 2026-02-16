@@ -3,15 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
+public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, IPickupGeneric
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
 
     [Header("---- Stats ----")]
     [Range(1,100)] [SerializeField] public int HP;
-    [Range(1,10)]  [SerializeField] int speed;
-    [Range(1,10)]  [SerializeField] int slopeSlideSpeed;
+    [Range(5,10)]  [SerializeField] int speed;
+    [Range(3,10)]  [SerializeField] int slopeSlideSpeed;
     [Range(2,5)]   [SerializeField] int sprintMod;
     
     [Header("---- Jump ----")]
@@ -42,6 +42,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     [SerializeField] public int stoneCount;
     [SerializeField] public int metalCount;
     [SerializeField] public int goldCount;
+    [SerializeField] public int powerCrystals;
     [Header("---- Tools ----")]
     [SerializeField] public GameObject bullet;
     [Range(5, 15)][SerializeField] int buildDist;
@@ -583,6 +584,14 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         if (mineRate < 0.1f)
         {
             mineRate = 0.1f;
+        }
+    }
+
+    public void getGeneric(string name, int amount)
+    {
+        if (name == "Power Crystal")
+        {
+            powerCrystals = powerCrystals + amount;
         }
     }
 }
