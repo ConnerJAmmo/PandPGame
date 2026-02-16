@@ -580,12 +580,13 @@ MonoBehaviour:
   stoneCount: 0
   metalCount: 0
   goldCount: 20
+  powerCrystals: 0
   bullet: {fileID: 4359745504029842998, guid: a9bbf3c614848ec4bbc9c1a5fd8ea286, type: 3}
   buildDist: 8
   shootPos: {fileID: 2877944076215294254}
-  machineGunShootPos: {fileID: 0}
-  m1GarandShootPos: {fileID: 0}
-  m1918BarShootPos: {fileID: 0}
+  machineGunShootPos: {fileID: 2558603166697145873}
+  m1GarandShootPos: {fileID: 2054165153407507741}
+  m1918BarShootPos: {fileID: 823025240098091677}
   gunList: []
   gunModel: {fileID: 5985920302194669559}
   shootRate: 0
