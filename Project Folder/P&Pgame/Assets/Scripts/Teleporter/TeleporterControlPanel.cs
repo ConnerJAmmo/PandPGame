@@ -4,12 +4,13 @@ using UnityEngine;
 public class TeleporterControlPanel : MonoBehaviour
 {
     [Header("Setup")]
-    [SerializeField] PlayerTeleporter teleporterToActivate;
+    [SerializeField] string padAId = "PadA";
+    [SerializeField] string padBId = "PadB";
     [SerializeField] int requiredCrystals;
 
     [Header("Message")]
     [SerializeField] string msgNotEnough = "Collect and enter 6 crystals to activate teleporter";
-    [SerializeField] string msgReady = "Press E to insert crystals";
+    [SerializeField] string msgReady = "Press F to insert crystals";
     [SerializeField] string msgActivated = "Teleporter activated";
 
     [Header("Audio")]
@@ -17,19 +18,17 @@ public class TeleporterControlPanel : MonoBehaviour
     [SerializeField] AudioClip activateSfx;
     [Range(0, 1)][SerializeField] float vol = 0.9f;
 
+    [Header("Panel Visuals")]
+    [SerializeField] PanelDoor door;
+    [SerializeField] PanelScreenUI screen;
+
     bool playerInRange;
     Transform player;
     PlayerCrystalInventory inv;
 
     private void Update()
     {
-        if (!playerInRange || !player || !teleporterToActivate) return;
-
-        if (teleporterToActivate.IsActive)
-        {
-            gameManager.instance.SetInteractionHint("Teleporter online");
-            return;
-        }
+        if (!playerInRange || !player) return;
 
         if (!inv) inv = player.GetComponent<PlayerCrystalInventory>();
         int count;
@@ -39,24 +38,32 @@ public class TeleporterControlPanel : MonoBehaviour
         else
             count = 0;
 
-        if (count < requiredCrystals)
+        bool bothActive = PlayerTeleporter.AreBothActive(padAId, padBId);
+        if (bothActive)
         {
-            gameManager.instance.SetInteractionHint($"{msgNotEnough} ({count}/{requiredCrystals})");
+            screen?.SetText("Teleporter online");
             return;
         }
 
-        gameManager.instance.SetInteractionHint($"{msgReady} ({count}/{requiredCrystals}");
+        if (count < requiredCrystals)
+        {
+            screen?.SetText($"{msgNotEnough} ({count}/{requiredCrystals})");
+            return;
+        }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        screen?.SetText($"{msgReady} ({count}/{requiredCrystals})");
+
+        if (Input.GetKeyDown(KeyCode.F))
         {
             if (inv && inv.ConsumeCrystals(requiredCrystals))
             {
-                teleporterToActivate.Activate();
-
+                //teleporterToActivate.Activate();
+                PlayerTeleporter.ActivatePair(padAId, padBId);
+                
                 if (aud && activateSfx)
                     aud.PlayOneShot(activateSfx, vol);
 
-                gameManager.instance.SetInteractionHint(msgActivated);
+                screen?.SetText(msgActivated);
             }
         }
     }
@@ -75,7 +82,8 @@ public class TeleporterControlPanel : MonoBehaviour
             count = inv.Crystals;
         else
             count = 0;
-        gameManager.instance.SetInteractionHint($"{msgNotEnough} ({count}/{requiredCrystals})");
+        door?.Open();
+        screen?.SetText($"{msgNotEnough} ({count}/{requiredCrystals})");
     }
 
     private void OnTriggerExit(Collider other)
@@ -86,6 +94,8 @@ public class TeleporterControlPanel : MonoBehaviour
         player = null;
         inv = null;
 
+        door?.Close();
+        screen?.Clear();
         gameManager.instance.ClearInteractionHint();
     }
 

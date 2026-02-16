@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -33,7 +34,10 @@ public class PlayerTeleporter : MonoBehaviour
 
     private void Awake()
     {
-        visuals = GetComponentInParent<PortalVisualController>();
+        if (!visuals) visuals = GetComponent<PortalVisualController>();
+        if (!visuals) visuals = GetComponentInChildren<PortalVisualController>(true);
+        if (!visuals) visuals = GetComponentInParent<PortalVisualController>();
+
         IsActive = startsActive;
 
         if (visuals)
@@ -141,5 +145,38 @@ public class PlayerTeleporter : MonoBehaviour
         if (destinationPadVFX)
             destinationPadVFX.PlayExit();
             
+    }
+
+    public static void ActivatePair(string padAId, string padBId)
+    {
+        var pads = Object.FindObjectsByType<PlayerTeleporter>(FindObjectsSortMode.None);
+
+        foreach (var pad in pads)
+        {
+            if (pad == null) continue;
+
+            if (pad.padId == padAId || pad.padId == padBId)
+            {
+                pad.Activate();
+            }
+        }
+    }
+
+    public static bool AreBothActive(string padAId, string padBId)
+    {
+        bool a = false, b = false;
+
+        var pads = Object.FindObjectsByType<PlayerTeleporter>(FindObjectsSortMode.None);
+        foreach (var pad in pads)
+        {
+            if (!pad) 
+            {
+                continue;
+            }
+            if (pad.padId == padAId) a = pad.IsActive;
+            if (pad.padId == padBId) b = pad.IsActive;
+        }
+
+        return a && b;
     }
 }
