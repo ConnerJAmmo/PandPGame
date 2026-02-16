@@ -9,7 +9,7 @@ public class PlayerTeleporter : MonoBehaviour
     [SerializeField] string destinationPadId = "PadB"; // Pad 2 destination
 
     [Header("Spawnpoint On THIS pad (optional)")]
-    //[SerializeField] Transform destinationPoint;
+    [SerializeField] Transform destinationPoint;
 
     [Header("Cooldown (No Instant Re - Teleport")]
     [SerializeField] float coolDown;

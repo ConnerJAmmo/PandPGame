@@ -10217,7 +10217,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5503105186508466867}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 205.25645, y: 2.44143, z: -84.940765}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10250,9 +10250,9 @@ MonoBehaviour:
   portalCam: {fileID: 0}
   thisAnchor: {fileID: 9115494922609535621}
   destinationAnchor: {fileID: 0}
-  player: {fileID: 0}
+  player: {fileID: 4388233603527997269, guid: e8de2c659a0504d4180ea7d3ccef36bc, type: 3}
   enableDistance: 0
-  teleporter: {fileID: 0}
+  teleporter: {fileID: 3433263531718934991}
 --- !u!114 &3690136694117040519
 MonoBehaviour:
   m_ObjectHideFlags: 0

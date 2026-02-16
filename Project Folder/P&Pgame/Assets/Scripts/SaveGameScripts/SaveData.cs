@@ -9,7 +9,8 @@ public class SaveData // Not derived from MonoBehaviour
     public int version = 1;
 
     // Progress of levels
-    public int currentLevelIndex = 0;
+    public int lastUnlockedLevel = 3;
+    public int currentLevelIndex = 3;
 
     // Player stats/resources
     public int playerHp = 100;

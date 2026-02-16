@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Data;
+using UnityEngine.SceneManagement;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -44,7 +45,8 @@ public class WaveSpawner : MonoBehaviour
         {
             if (currentWaveIndex >= waves.Length -1)
             {
-                gameManager.instance.youWin();
+                //gameManager.instance.youWin();
+                LevelComplete();
             }
             else
             {
@@ -52,6 +54,22 @@ public class WaveSpawner : MonoBehaviour
             currentWaveIndex++;
             }
         }
+    }
+
+    void LevelComplete()
+    {
+        int current = SceneManager.GetActiveScene().buildIndex;
+
+        int next;
+
+        if (current == 3) //Outpost
+        {
+            next = 4;     //Gorge
+        }
+        else if (current == 4)//Gorge
+            next = 5;     //Mothership
+        else
+            next = 1;     // Back to mainmenu
     }
 
     private IEnumerator SpawnWave()
