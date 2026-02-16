@@ -10,8 +10,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
 
     [Header("---- Stats ----")]
     [Range(1,100)] [SerializeField] public int HP;
-    [Range(1,10)]  [SerializeField] int speed;
-    [Range(1,10)]  [SerializeField] int slopeSlideSpeed;
+    [Range(5,10)]  [SerializeField] int speed;
+    [Range(3,10)]  [SerializeField] int slopeSlideSpeed;
     [Range(2,5)]   [SerializeField] int sprintMod;
     
     [Header("---- Jump ----")]
