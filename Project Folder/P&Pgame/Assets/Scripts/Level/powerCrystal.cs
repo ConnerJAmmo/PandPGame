@@ -24,6 +24,7 @@ public class powerCrystal : MonoBehaviour
             pickerUpper.getGeneric("Power Crystal", amount);
 
             audioSource.PlayOneShot(pickupSound);
+            gameManager.instance.ShowNotification("Power Crystal found! Bring it to the Spire to swiftly eradicate foes!");
 
             Destroy(gameObject);
 
