@@ -45,7 +45,7 @@ public class WaveSpawner : MonoBehaviour
         {
             if (currentWaveIndex >= waves.Length -1)
             {
-                //gameManager.instance.youWin();
+                gameManager.instance.youWin();
                 LevelComplete();
             }
             else
