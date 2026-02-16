@@ -17,8 +17,12 @@ public class PortalLink : MonoBehaviour
     [Header("Performance")]
     [SerializeField] float enableDistance;
 
+    [SerializeField] PlayerTeleporter teleporter;
+
     private void LateUpdate()
     {
+        if (teleporter && !teleporter.IsActive) return;
+
         if (!player || !destinationPortal || !portalCam)
             { return; }
 

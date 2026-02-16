@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerTeleporter : MonoBehaviour
@@ -7,7 +9,7 @@ public class PlayerTeleporter : MonoBehaviour
     [SerializeField] string destinationPadId = "PadB"; // Pad 2 destination
 
     [Header("Spawnpoint On THIS pad (optional)")]
-    [SerializeField] Transform destinationPoint;
+    //[SerializeField] Transform destinationPoint;
 
     [Header("Cooldown (No Instant Re - Teleport")]
     [SerializeField] float coolDown;
@@ -18,6 +20,11 @@ public class PlayerTeleporter : MonoBehaviour
     [SerializeField] PortalVFXController thisPadVFX;
     [SerializeField] PortalVFXController destinationPadVFX;
 
+    [Header("Activation")]
+    [SerializeField] bool startsActive = false;
+    PortalVisualController visuals;
+    public bool IsActive { get; private set; } 
+
     [Range(0, 1)] [SerializeField] float teleportVol;
 
 
@@ -26,7 +33,27 @@ public class PlayerTeleporter : MonoBehaviour
 
     private void Awake()
     {
+        visuals = GetComponentInParent<PortalVisualController>();
+        IsActive = startsActive;
+
+        if (visuals)
+        {
+            if (IsActive)
+                visuals.TurnOn();
+            else
+                visuals.TurnOff();
+        }
+
         cacheDestination();
+
+    }
+
+    public void Activate()
+    {
+        IsActive = true;
+        visuals?.TurnOn();
+        // turnOn portal visuals
+        GetComponentInParent<PortalVFXController>()?.PlayOn();
     }
 
     void cacheDestination()
@@ -59,6 +86,7 @@ public class PlayerTeleporter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!IsActive) return;
         if (!other.CompareTag("Player")) return;
 
         if (!cacheDestinationSpawn)
@@ -88,7 +116,7 @@ public class PlayerTeleporter : MonoBehaviour
             camShake.Shake();
 
             // Cooldown check for Player
-            var allowed = other.GetComponent<teleportAllowed>();
+        var allowed = other.GetComponent<teleportAllowed>();
         if (!allowed) allowed = other.gameObject.AddComponent<teleportAllowed>(); // Just add the teleport allowed script to player if its not there
         if (!allowed.CanTeleport()) return;
 
