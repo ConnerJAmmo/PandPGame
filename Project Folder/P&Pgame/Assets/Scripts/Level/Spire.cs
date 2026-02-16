@@ -41,13 +41,11 @@ public class Spire : MonoBehaviour
         {
             if (gameManager.instance.playerScript.powerCrystals >= 1)
             {
-
                 gameManager.instance.playerScript.powerCrystals = gameManager.instance.playerScript.powerCrystals - 1;
 
                 AOE.SetActive(true);
 
                 kaboom = true;
-                
             }
         }
     }
