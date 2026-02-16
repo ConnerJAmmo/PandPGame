@@ -1800,14 +1800,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::gameManager
   saveBridge: {fileID: 2253177103318143716}
   menuActive: {fileID: 0}
-  menuPause: {fileID: 6576164406722462057}
+  menuPause: {fileID: 676450950847943753}
   menuPauseFristButton: {fileID: 0}
   menuPlayerLose: {fileID: 3064678444018208750}
   menuTowerLose: {fileID: 7909489097127289404}
   menuLoseFristButton: {fileID: 0}
   menuWin: {fileID: 642353192098087554}
   menuWinFristButton: {fileID: 0}
-  menuOptions: {fileID: 0}
+  menuOptions: {fileID: 4059142464621673058}
   menuTowerUpgrade: {fileID: 416696538348638758}
   menuTowerUpgradeFristButton: {fileID: 0}
   menuPlayerUpgrade: {fileID: 3163269378039445827}
@@ -6670,7 +6670,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4681766328059422394}
         m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
         m_MethodName: Quit
         m_Mode: 1
@@ -8322,7 +8322,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4681766328059422394}
         m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
         m_MethodName: Options
         m_Mode: 1
@@ -11539,7 +11539,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4681766328059422394}
         m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
         m_MethodName: Restart
         m_Mode: 1
@@ -18940,7 +18940,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4681766328059422394}
         m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
         m_MethodName: Resume
         m_Mode: 1
