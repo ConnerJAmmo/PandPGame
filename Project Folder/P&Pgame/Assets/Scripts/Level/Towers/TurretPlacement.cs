@@ -79,7 +79,6 @@ public class TurretPlacement : MonoBehaviour, ITurret
                 GameObject newShield = Instantiate(forceField, detectRadius.position, detectRadius.rotation, detectRadius);
                 newShield.GetComponent<ForceField>().HP = shieldHP;
             }
-            player.woodCount = player.woodCount - 5;
             gameManager.instance.removeGold(-10);
             gameManager.instance.updateResourcesUI();
             //aud.PlayOneShot(mined5Aud[0], mined5AudVol);
