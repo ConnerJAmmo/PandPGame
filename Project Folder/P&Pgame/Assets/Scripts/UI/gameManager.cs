@@ -512,7 +512,7 @@ public class gameManager : MonoBehaviour, goldManage
         GameSession.instance.Data.currentLevelIndex = nextSceneIndex;
         GameSession.instance.SaveGame();
 
-        SceneLoader.load(nextSceneIndex);
+        LevelLoader.instance.LoadLevel(nextSceneIndex);
     } 
     
     // ------------------------------End---------------------------------------//

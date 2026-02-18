@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class OptionsMenu : MonoBehaviour
 {
-    [SerializeField] int mainMenu = 1;
+    [SerializeField] string mainMenu;
 
     [SerializeField] GameObject optionsMenuFirstButton;
     [SerializeField] GameObject activeMenu;
@@ -15,6 +15,8 @@ public class OptionsMenu : MonoBehaviour
     [SerializeField] GameObject controlsMenuFirstButton;
     [SerializeField] GameObject audioMenu;
     [SerializeField] GameObject audioMenuFirstButton;
+
+    
 
 
     public void newMenu(GameObject menu, GameObject firstButton)
@@ -41,7 +43,7 @@ public class OptionsMenu : MonoBehaviour
 
     public void ExitToMainMenu()
     {
-        SceneManager.LoadScene(mainMenu);
+        LevelLoader.instance.LoadLevel(mainMenu);
     }
 
     public void Video()
