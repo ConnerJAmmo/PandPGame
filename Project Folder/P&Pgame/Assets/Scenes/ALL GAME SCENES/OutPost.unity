@@ -55874,6 +55874,14 @@ PrefabInstance:
       propertyPath: pickModel
       value: 
       objectReference: {fileID: 982231480}
+    - target: {fileID: 3819068153726192362, guid: e8de2c659a0504d4180ea7d3ccef36bc, type: 3}
+      propertyPath: regenRate
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3819068153726192362, guid: e8de2c659a0504d4180ea7d3ccef36bc, type: 3}
+      propertyPath: regenAmount
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4388233603527997269, guid: e8de2c659a0504d4180ea7d3ccef36bc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 282.61
