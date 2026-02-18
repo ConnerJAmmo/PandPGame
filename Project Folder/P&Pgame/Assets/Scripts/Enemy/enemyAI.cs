@@ -72,7 +72,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player Detected");
+            //Debug.Log("Player Detected");
             playerInTrigger = true;
         }
         else if (other.CompareTag("Shield"))
@@ -82,7 +82,7 @@ public class enemyAI : MonoBehaviour, IDamage
         }
         else if (other.CompareTag("Base"))
         {
-            Debug.Log("Base Detected");
+            //Debug.Log("Base Detected");
             baseInTrigger = true;
         }
     }
@@ -114,6 +114,14 @@ public class enemyAI : MonoBehaviour, IDamage
         // Clean up list
         turretsInRange.RemoveAll(t => t == null);
         numTurrets = turretsInRange.Count;
+
+        if(HP <= 0) 
+        {
+            gameManager.instance.updateEnemyCount(-1);
+            waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
+            gameManager.instance.addGold(maxHP);
+            Destroy(gameObject);
+        }
 
         // PRIORITY 1: PLAYER (Check CanSeePlayer first as it handles its own movement/shooting)
         if (playerInTrigger && CanSeePlayer())
@@ -190,7 +198,7 @@ public class enemyAI : MonoBehaviour, IDamage
                 GetComponent<NavMeshAgent>().SetDestination(target.transform.position);
 
                 faceTarget(target.transform.GetComponent<Collider>());
-                Debug.Log("Player Seen");
+                //Debug.Log("Player Seen");
 
                 if (shootTimer >= fireRate)
                 {
@@ -295,18 +303,7 @@ public class enemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount, DamageType type)
     {
         HP -= amount;
-
-        if(HP <= 0) 
-        {
-            gameManager.instance.updateEnemyCount(-1);
-            waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
-            gameManager.instance.addGold(maxHP);
-            Destroy(gameObject);
-        }
-        else
-        {
-            StartCoroutine(flashRed());
-        }
+        StartCoroutine(flashRed());
     }
 
     IEnumerator flashRed()
