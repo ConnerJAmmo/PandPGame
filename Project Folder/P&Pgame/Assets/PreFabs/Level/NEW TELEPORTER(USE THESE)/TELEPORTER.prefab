@@ -15983,6 +15983,9 @@ MonoBehaviour:
   msgActivated: Teleporter activated
   aud: {fileID: 2946574289679275369}
   activateSfx: {fileID: 8300000, guid: b7086d3869ebde1449efcf65bab85804, type: 3}
+  audActivateVol: 0.5
+  audDoorOpen: {fileID: 8300000, guid: 21758cc74f2fff646b40ebe913dd99ae, type: 3}
+  audDoorOpenVol: 0.5
   vol: 0.9
   door: {fileID: 3253638461729818914}
   screen: {fileID: 8244303777847849428}
