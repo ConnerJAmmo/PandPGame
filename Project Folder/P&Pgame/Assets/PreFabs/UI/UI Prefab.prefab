@@ -2002,6 +2002,11 @@ MonoBehaviour:
   rangeLevel: 1
   rangePreLevel: 10
   maxLevel: 5
+  towerStoneCost: 10
+  towerWoodCost: 10
+  towerGoldCost: 20
+  towerUpgradeCost: 30
+  towerShieldCost: 10
   waveActive: 0
   player: {fileID: 0}
   playerScript: {fileID: 0}
