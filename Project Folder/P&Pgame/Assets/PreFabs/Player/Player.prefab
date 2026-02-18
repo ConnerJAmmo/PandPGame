@@ -560,7 +560,7 @@ MonoBehaviour:
   controller: {fileID: 4206666397110022022}
   ignoreLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 8200
   HP: 100
   speed: 8
   slopeSlideSpeed: 8
