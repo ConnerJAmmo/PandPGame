@@ -10,8 +10,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
 
     [Header("---- Stats ----")]
     [Range(1,100)] [SerializeField] public int HP;
-    [Range(1,10)]  [SerializeField] int speed;
-    [Range(1,10)]  [SerializeField] int slopeSlideSpeed;
+    [Range(5,10)]  [SerializeField] int speed;
+    [Range(3,10)]  [SerializeField] int slopeSlideSpeed;
     [Range(2,5)]   [SerializeField] int sprintMod;
     
     [Header("---- Jump ----")]
@@ -243,13 +243,13 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
         string placeHint = "";
 
         // how many can we place
-        int stRemaining = woodCount / 5;
-        int aoeRemaining = stoneCount / 5;
+        int stRemaining = woodCount / gameManager.instance.towerWoodCost;
+        int aoeRemaining = stoneCount / gameManager.instance.towerStoneCost;
 
         // This will make our hints stay while we can afford them
-        if (wasGrounded && stRemaining > 0 && goldCount >= 5)
+        if (wasGrounded && stRemaining > 0 && goldCount >= gameManager.instance.towerGoldCost)
             placeHint += $"Press Z at an empty marker to place ST Turret ({stRemaining} remaining)\n";
-        if (wasGrounded && aoeRemaining > 0 && goldCount >= 5)
+        if (wasGrounded && aoeRemaining > 0 && goldCount >= gameManager.instance.towerGoldCost)
             placeHint += $"Press X at an empty marker to place AOE Turret ({aoeRemaining} remaining)\n";
 
         string mineHint = GetMineHint(); // I created separate method for minehint
