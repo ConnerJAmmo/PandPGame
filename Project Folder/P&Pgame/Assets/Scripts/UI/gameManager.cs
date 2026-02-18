@@ -93,7 +93,16 @@ public class gameManager : MonoBehaviour, goldManage
     int initialDamageUpgradeCost = 10;
     int initalFireRateUpgradeCost = 10;
     int initialRangeUpgradeCost = 10;
-#endregion
+    #endregion
+
+#region Tower Costs
+    [Header("Tower Costs")]
+    [Range(0, 100)][SerializeField] public int towerStoneCost;
+    [Range(0, 100)][SerializeField] public int towerWoodCost;
+    [Range(0, 100)][SerializeField] public int towerGoldCost;
+    [Range(0, 100)][SerializeField] public int towerUpgradeCost;
+    [Range(0, 100)][SerializeField] public int towerShieldCost;
+    #endregion
 
     public bool waveActive;
     public GameObject player;

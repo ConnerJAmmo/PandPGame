@@ -145,6 +145,7 @@ Transform:
   - {fileID: 4160335996009963540}
   - {fileID: 2738377007593338319}
   - {fileID: 1486593154227318471}
+  - {fileID: 3504881814314241269}
   m_Father: {fileID: 8023353352980653286}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1158757046877645225
@@ -177,11 +178,11 @@ Transform:
   m_GameObject: {fileID: 1158757046877645225}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.01, y: 1.5634704, z: -0.02}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.004, y: 1.5634704, z: -0.008}
+  m_LocalScale: {x: 0.4, y: 1, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8023353352980653286}
+  m_Father: {fileID: 3752407298919849833}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8365163895776503092
 MonoBehaviour:
@@ -1011,7 +1012,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3752407298919849833}
-  - {fileID: 3504881814314241269}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4333409935591229238
@@ -1035,6 +1035,11 @@ MonoBehaviour:
   - {fileID: 1361402013487122, guid: d140c16f5f35beb468cf594b2abd8cab, type: 3}
   - {fileID: 1361402013487122, guid: f068dd5a87ce9d542a6b627bced2a7d3, type: 3}
   forceField: {fileID: 6875421355684467005, guid: 3b8fd09b95dde204a80685b917b67f77, type: 3}
+  stoneCost: 10
+  woodCost: 10
+  towerGoldCost: 20
+  upgradeCost: 30
+  shieldCost: 10
   aud: {fileID: 6762427419417871096}
   mined5Aud:
   - {fileID: 8300000, guid: b7086d3869ebde1449efcf65bab85804, type: 3}

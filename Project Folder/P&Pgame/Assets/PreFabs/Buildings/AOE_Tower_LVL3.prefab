@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -4089909296285325185}
   m_Layer: 12
   m_Name: AOE_Tower_LVL3
-  m_TagString: Turret
+  m_TagString: AOE Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,7 +54,6 @@ MonoBehaviour:
   target: {fileID: 0}
   turret: {fileID: 1016345038893127429}
   bulletPrefab: {fileID: 7612802135244751355, guid: 507fb45323d1300469cd075216049836, type: 3}
-  HP: 75
   range: 35
   shotsPerBurst: 4
   burstFireRate: 0.25
@@ -62,21 +61,16 @@ MonoBehaviour:
   scanSpeed: 0.5
   scanAngle: 45
   aud: {fileID: -4089909296285325185}
-  burstShotAud: []
-  burstShotVol: 0
+  burstShotAud:
+  - {fileID: 8300000, guid: 2009611506d165647be4dcd2888d8e1d, type: 3}
+  - {fileID: 8300000, guid: 5c9845b3a7ab66d4494457e901549d9b, type: 3}
+  - {fileID: 8300000, guid: 3e4314235d0c27c4ab668998bfe7fd1f, type: 3}
+  burstShotVol: 0.4
   ShotAud:
   - {fileID: 8300000, guid: 2009611506d165647be4dcd2888d8e1d, type: 3}
   - {fileID: 8300000, guid: 5c9845b3a7ab66d4494457e901549d9b, type: 3}
   - {fileID: 8300000, guid: 3e4314235d0c27c4ab668998bfe7fd1f, type: 3}
   shotVol: 0.4
-  turretTakeDamageAud:
-  - {fileID: 8300000, guid: a7179560f7f74bb47af123354aacad30, type: 3}
-  - {fileID: 8300000, guid: ad5c5423f36f0bd4981b683eb280f9a2, type: 3}
-  - {fileID: 8300000, guid: 7627083958169cd43bb2f3cafb1d7d85, type: 3}
-  turretTakeDamageVol: 0.4
-  turretDestroyedAud:
-  - {fileID: 8300000, guid: 470ca875f6d904647b496d128409032b, type: 3}
-  turretDestroyedVol: 0.4
   fireManager: {fileID: 5198935941902621970}
 --- !u!114 &5198935941902621970
 MonoBehaviour:

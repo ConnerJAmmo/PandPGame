@@ -11,6 +11,8 @@ TagManager:
   - Turret
   - Guns
   - Shield
+  - AOE Turret
+  - ST Turret
   layers:
   - Default
   - TransparentFX
@@ -25,7 +27,7 @@ TagManager:
   - Terrain
   - Wall
   - Towers
-  - 
+  - Shield
   - 
   - 
   - 
