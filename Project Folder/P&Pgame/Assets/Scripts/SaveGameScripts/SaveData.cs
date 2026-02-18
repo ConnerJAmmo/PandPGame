@@ -14,7 +14,7 @@ public class SaveData // Not derived from MonoBehaviour
 
     // Player stats/resources
     public int playerHp = 100;
-    public int gold = 0;
+    public int gold = 50;
     public int wood = 0;
     public int stone = 0;
 
