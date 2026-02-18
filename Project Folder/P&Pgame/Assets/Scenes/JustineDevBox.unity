@@ -127,6 +127,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5399813507678515902, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1133302076}
+    - target: {fileID: 5980838504841933146, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1133302076}
     - target: {fileID: 8023353352980653286, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.61
@@ -171,6 +179,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1133302076}
+    - target: {fileID: 8365163895776503092, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
+      propertyPath: m_VersionIndex
+      value: 2094
+      objectReference: {fileID: 0}
     - target: {fileID: 8964853588281247035, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
       propertyPath: m_Name
       value: Tower Placement Marker (1)
@@ -759,6 +771,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5399813507678515902, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 539147587}
+    - target: {fileID: 5980838504841933146, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 539147587}
     - target: {fileID: 8023353352980653286, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.6456013
@@ -803,6 +823,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 539147587}
+    - target: {fileID: 8365163895776503092, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
+      propertyPath: m_VersionIndex
+      value: 2094
+      objectReference: {fileID: 0}
     - target: {fileID: 8964853588281247035, guid: 103961eddda70db41bd69e63eeb6ef2a, type: 3}
       propertyPath: m_Name
       value: Tower Placement Marker
