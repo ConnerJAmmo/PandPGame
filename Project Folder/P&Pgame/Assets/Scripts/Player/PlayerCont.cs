@@ -581,9 +581,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
         mineRate -= miningSpeedBoost;
         miningSpeedBoostTotal += miningSpeedBoost;
 
-        if (mineRate < 0.1f)
+        if (mineRate < 0.3f)
         {
-            mineRate = 0.1f;
+            mineRate = 0.3f;
         }
     }
 
