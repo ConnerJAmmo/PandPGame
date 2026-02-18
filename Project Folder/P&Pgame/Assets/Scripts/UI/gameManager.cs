@@ -17,13 +17,15 @@ public class gameManager : MonoBehaviour, goldManage
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuPauseFristButton;
     [SerializeField] GameObject menuPlayerLose;
+    [SerializeField] GameObject menuPlayerLoseFristButton;
     [SerializeField] GameObject menuTowerLose;
-    [SerializeField] GameObject menuLoseFristButton;
+    [SerializeField] GameObject menuTowerLoseFristButton;
 
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuWinFristButton;
 
     [SerializeField] GameObject menuOptions;
+    [SerializeField] GameObject menuOptionsFristButton;
     [SerializeField] GameObject menuTowerUpgrade;
     [SerializeField] GameObject menuTowerUpgradeFristButton;
 
@@ -336,14 +338,14 @@ public class gameManager : MonoBehaviour, goldManage
     {
         newMenu(menuPlayerLose);
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(menuLoseFristButton);
+        EventSystem.current.SetSelectedGameObject(menuPlayerLoseFristButton);
         aud.PlayOneShot(deathAud, deathVol);
     }
     public void youLoseTower()
     {
         newMenu(menuTowerLose);
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(menuLoseFristButton);
+        EventSystem.current.SetSelectedGameObject(menuTowerLoseFristButton);
         aud.PlayOneShot(deathAud, deathVol);
     }
 
@@ -512,7 +514,7 @@ public class gameManager : MonoBehaviour, goldManage
         GameSession.instance.Data.currentLevelIndex = nextSceneIndex;
         GameSession.instance.SaveGame();
 
-        SceneLoader.load(nextSceneIndex);
+        LevelLoader.instance.LoadLevel(nextSceneIndex);
     } 
     
     // ------------------------------End---------------------------------------//
