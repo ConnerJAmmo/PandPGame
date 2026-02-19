@@ -224,6 +224,12 @@ MonoBehaviour:
   lockVertMax: 90
   invertY: 0
   player: {fileID: 4388233603527997269}
+  cam: {fileID: 6927690847796494548}
+  defaultFOV: 60
+  sprintFOV: 80
+  fovChangeSpeed: 10
+  wallJumpTiltAngle: 15
+  tiltSpeed: 8
 --- !u!1 &3928694509191902280
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,7 +566,7 @@ MonoBehaviour:
   controller: {fileID: 4206666397110022022}
   ignoreLayer:
     serializedVersion: 2
-    m_Bits: 8200
+    m_Bits: 8
   HP: 100
   speed: 8
   slopeSlideSpeed: 8
@@ -589,6 +595,7 @@ MonoBehaviour:
   machineGunShootPos: {fileID: 2558603166697145873}
   m1GarandShootPos: {fileID: 2054165153407507741}
   m1918BarShootPos: {fileID: 823025240098091677}
+  camScript: {fileID: 3801328978674052806}
   gunList: []
   gunModel: {fileID: 5985920302194669559}
   shootRate: 0

@@ -52,6 +52,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
     [SerializeField] public Transform machineGunShootPos;
     [SerializeField] public Transform m1GarandShootPos;
     [SerializeField] public Transform m1918BarShootPos;
+    [SerializeField] cameraContr camScript;
 
     [Header("Guns")]
     [SerializeField] public List<GunStats> gunList = new List<GunStats>();
@@ -312,6 +313,10 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
                 playerVel.y = wallJumpSpeed;
                 playerVel.x = wallJumpHit.normal.x * wallJumpPush;
                 wallJumpCount++;
+
+                float tiltDir = Vector3.Dot(wallJumpHit.normal, transform.right) > 0 ? -1f : 1f;
+                camScript.SetWallJumpTilt(tiltDir);
+                StartCoroutine(ResetTiltAfterDelay());
                 return;
             }
         }
@@ -325,13 +330,28 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
 
     void sprint()
     {
-        if(Input.GetButtonDown("Sprint"))
+        /*if(Input.GetButtonDown("Sprint"))
         {
             speed *= sprintMod;
+            camScript.SetSprintFOV();
         }
         else if (Input.GetButtonUp("Sprint"))
         {
             speed /= sprintMod;
+            camScript.ResetFOV();
+        } This sprint is for hold to sprint */
+        if(Input.GetButton("Sprint"))
+        {
+            if(speed == baseSpeed)
+            {
+                speed *= sprintMod;
+                camScript.SetSprintFOV();
+            }
+            else
+            {
+               speed /= sprintMod;
+               camScript.ResetFOV(); 
+            }
         }
     }
 
@@ -604,9 +624,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
         mineRate -= miningSpeedBoost;
         miningSpeedBoostTotal += miningSpeedBoost;
 
-        if (mineRate < 0.1f)
+        if (mineRate < 0.3f)
         {
-            mineRate = 0.1f;
+            mineRate = 0.3f;
         }
     }
 
@@ -616,5 +636,11 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
         {
             powerCrystals = powerCrystals + amount;
         }
+    }
+
+    IEnumerator ResetTiltAfterDelay()
+    {
+        yield return new WaitForSeconds(0.15f);
+        camScript.ResetTilt();
     }
 }
