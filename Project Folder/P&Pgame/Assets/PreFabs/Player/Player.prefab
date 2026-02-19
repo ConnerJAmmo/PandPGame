@@ -560,11 +560,13 @@ MonoBehaviour:
   controller: {fileID: 4206666397110022022}
   ignoreLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 8200
   HP: 100
   speed: 8
   slopeSlideSpeed: 8
   sprintMod: 3
+  regenAmount: 5
+  regenRate: 3
   jumpSpeed: 12
   jumpMax: 2
   wallJumpSpeed: 18
@@ -633,6 +635,7 @@ MonoBehaviour:
   gunName: 
   gunListPos: 0
   shootTimer: 0
+  healTimer: 0
   HPOrig: 0
 --- !u!23 &6909547586635812801
 MeshRenderer:
