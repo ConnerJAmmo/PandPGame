@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8796145501635351903}
   - component: {fileID: 2729029693833653453}
   - component: {fileID: 4717021184710792794}
+  - component: {fileID: 6404085575842687324}
   m_Layer: 0
   m_Name: VFX_BulletHit_Ground
   m_TagString: Untagged
@@ -4912,3 +4913,16 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &6404085575842687324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035646035814403078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e2dd5d0210bdeb4ea73213c39c4bedb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoDestroyVFX
+  life: 2
