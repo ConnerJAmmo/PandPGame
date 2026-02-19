@@ -24,7 +24,8 @@ public class CrystalPickup : MonoBehaviour
 
         inv.AddCrystals(amount);
 
-        PlayImpactSound(pickupSfx);
+        aud.PlayOneShot(pickupSfx, crystalAudVol);
+        //PlayImpactSound(pickupSfx);
 
         Destroy(gameObject);
     }
@@ -37,8 +38,8 @@ public class CrystalPickup : MonoBehaviour
         temp.transform.position = transform.position;
 
         AudioSource a = temp.AddComponent<AudioSource>();
-        a.outputAudioMixerGroup = sfxGroup;
 
+        a.outputAudioMixerGroup = sfxGroup;
         a.clip = clip;
         a.spatialBlend = 1f;
         a.volume = crystalAudVol;
