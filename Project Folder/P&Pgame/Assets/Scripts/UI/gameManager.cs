@@ -64,6 +64,7 @@ public class gameManager : MonoBehaviour, goldManage
     [Space]
     [SerializeField] TMP_Text woodCountText;
     [SerializeField] TMP_Text stoneCountText;
+    [SerializeField] TMP_Text metalCountText;
     [SerializeField] TMP_Text ammoCountText;
     [Space]
     [SerializeField] TMP_Text TowerHPMax;
@@ -374,6 +375,7 @@ public class gameManager : MonoBehaviour, goldManage
 
         woodCountText.text = playerScript.woodCount.ToString("F0");
         stoneCountText.text = playerScript.stoneCount.ToString("F0");
+        metalCountText.text = playerScript.metalCount.ToString("F0");
     }
 
     public void RefreshHint()
@@ -447,7 +449,7 @@ public class gameManager : MonoBehaviour, goldManage
     {
         if (ammoCountText != null)
         {
-            ammoCountText.text = currentAmmo.ToString() + " / " + maxAmmo.ToString();
+            ammoCountText.text = currentAmmo.ToString() + " - " + maxAmmo.ToString();
         }
     }
 
