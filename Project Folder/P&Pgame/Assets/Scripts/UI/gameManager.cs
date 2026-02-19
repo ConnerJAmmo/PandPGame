@@ -5,6 +5,8 @@ using System.Globalization;
 using System.Collections;
 using System;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+
 
 
 public class gameManager : MonoBehaviour, goldManage
@@ -511,6 +513,24 @@ public class gameManager : MonoBehaviour, goldManage
     {
         goldCount = value; 
         goldCountText.text = goldCount.ToString("F0");
+    }
+
+    public void LevelComplete()
+    {
+        int current = SceneManager.GetActiveScene().buildIndex;
+
+        int next;
+
+        if (current == 2) //Outpost
+        {
+            next = 3;     //Gorge
+        }
+        else if (current == 3)//Gorge
+            next = 4;     //Mothership
+        else
+            next = 1;     // Back to mainmenu
+
+        gameManager.instance.CompleteLevelAndLoadNext(next);
     }
     
     // ----------------These Method are used for the advancing------------------------//
