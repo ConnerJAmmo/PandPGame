@@ -1,17 +1,17 @@
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 
-public class TeleporterControlPanel : MonoBehaviour
+public class ShipTurretControlPanel : MonoBehaviour
 {
     [Header("Setup")]
-    [SerializeField] string padAId = "PadA";
-    [SerializeField] string padBId = "PadB";
+
+    [SerializeField] ShipTurretController turret;
     [SerializeField] int requiredCrystals;
 
     [Header("Message")]
     [SerializeField] string msgNotEnough = "Collect and enter 6 crystals to activate teleporter";
     [SerializeField] string msgReady = "Press F to insert crystals";
-    [SerializeField] string msgActivated = "Teleporter activated";
+    [SerializeField] string msgActivated = "Ship Turret activated";
 
     [Header("Audio")]
     [SerializeField] AudioSource aud;
@@ -31,7 +31,11 @@ public class TeleporterControlPanel : MonoBehaviour
 
     private void Update()
     {
-        if (!playerInRange || !player) return;
+        if (!playerInRange || !turret) return;
+
+        if (turret.IsActive)
+            { screen?.SetText(msgActivated); return; }
+
 
         if (!inv) inv = player.GetComponent<PlayerCrystalInventory>();
         int count;
@@ -41,12 +45,10 @@ public class TeleporterControlPanel : MonoBehaviour
         else
             count = 0;
 
-        bool bothActive = PlayerTeleporter.AreBothActive(padAId, padBId);
-        if (bothActive)
-        {
-            screen?.SetText("Teleporter online");
-            return;
-        }
+
+        
+
+
 
         if (count < requiredCrystals)
         {
@@ -60,8 +62,9 @@ public class TeleporterControlPanel : MonoBehaviour
         {
             if (inv && inv.ConsumeCrystals(requiredCrystals))
             {
-                //teleporterToActivate.Activate();
-                PlayerTeleporter.ActivatePair(padAId, padBId);
+                turret.Activate();
+
+                screen?.SetText("Turret Online");
                 
                 if (aud && activateSfx)
                     aud.PlayOneShot(activateSfx, vol);
@@ -86,6 +89,7 @@ public class TeleporterControlPanel : MonoBehaviour
         else
             count = 0;
         door?.Open();
+
         if (aud && audDoorOpen)
             aud.PlayOneShot(audDoorOpen, audDoorOpenVol);
         screen?.SetText($"{msgNotEnough} ({count}/{requiredCrystals})");
