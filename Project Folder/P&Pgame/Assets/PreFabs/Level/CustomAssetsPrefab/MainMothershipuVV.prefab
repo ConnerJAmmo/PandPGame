@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: 5398072343466156871}
   - component: {fileID: 5629341061684372112}
   - component: {fileID: 4119513115759565859}
+  - component: {fileID: 3004588381262242328}
   m_Layer: 0
   m_Name: MainMothershipDoors 1
   m_TagString: Untagged
@@ -207,3 +208,25 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3004588381262242328
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3987993645786832642}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4403503948874205534, guid: 41a2d4f1e331a724cb54be6643338a84, type: 3}
