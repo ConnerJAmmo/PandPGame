@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class buttonFunctions : MonoBehaviour
 {
     private static string lastSceneName;
+    [SerializeField] int mainMenuScene;
 
     public void DebugRoom()
     {
@@ -114,5 +115,17 @@ public class buttonFunctions : MonoBehaviour
         {
             gameManager.instance.upgradePlayerShootRange();
         }
+    }
+
+    public void mainMenu()
+    {
+        gameManager.instance.CompleteLevelAndLoadNext(mainMenuScene);
+        gameManager.instance.stateUnpause();
+    }
+
+    public void nextLevel()
+    {
+        gameManager.instance.LevelComplete();
+        gameManager.instance.stateUnpause();
     }
 }
