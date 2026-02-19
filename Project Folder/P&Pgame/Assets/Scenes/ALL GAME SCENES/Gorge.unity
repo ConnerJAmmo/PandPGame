@@ -3313,6 +3313,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI Prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 3450220958240855357, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 06802fc4c89b26542bd2a5d2d70b58a3, type: 2}
+    - target: {fileID: 3450220958240855357, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -1648619827934991540, guid: 06802fc4c89b26542bd2a5d2d70b58a3, type: 2}
+    - target: {fileID: 3450220958240855357, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4653771537162578477, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1076.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6173999092998482915, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 6173999092998482915, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8213066597882219376, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
       propertyPath: m_Pivot.x
       value: 0
