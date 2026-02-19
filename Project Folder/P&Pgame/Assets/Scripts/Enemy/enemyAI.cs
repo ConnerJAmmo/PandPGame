@@ -1,4 +1,5 @@
 using bullet.fx.pack;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [Header("Debug")]
     [SerializeField] public int numTurrets;
     [SerializeField] public GameObject target;
+    [SerializeField] public bool playerDetected;
 
     [Header("Components")]
     [SerializeField] public float animTranSpeed;
@@ -22,6 +24,12 @@ public class enemyAI : MonoBehaviour, IDamage
     [Header("Stats")]
     [Range(1, 25)] [SerializeField] public int HP;
     [Range(0, 360)] [SerializeField] public int FOV;
+    [Range(0,10)] [SerializeField] float persistenceTime; // Seconds to remember player
+    float currentPersistence;
+    bool isPlayerInSight;
+    [SerializeField] bool hasMelee;
+    [Range(0, 10)][SerializeField] float meleeRange;
+    [Range(0, 100)][SerializeField] int meleeDamage;
 
     [Header("---------Audio---------")]
     [SerializeField] AudioSource aud;
@@ -70,21 +78,25 @@ public class enemyAI : MonoBehaviour, IDamage
 
     private void OnTriggerEnter(Collider other)
     {
+        //Debug.Log("Checking Tag of Trigger");
         if (other.CompareTag("Player"))
         {
-            //Debug.Log("Player Detected");
             playerInTrigger = true;
+            playerDetected = true;
+            //Debug.Log("Player Detected");
         }
         else if (other.CompareTag("Shield"))
         {
-            Debug.Log("Shield Detected");
             turretsInRange.Add(other);
+            //Debug.Log("Shield Detected");
         }
         else if (other.CompareTag("Base"))
         {
-            //Debug.Log("Base Detected");
             baseInTrigger = true;
+            //Debug.Log("Base Detected");
         }
+        //else
+            //Debug.Log("No Tag Detected");
     }
 
     private void OnTriggerExit(Collider other)
@@ -92,8 +104,10 @@ public class enemyAI : MonoBehaviour, IDamage
         if (other.CompareTag("Player"))
         {
             playerInTrigger = false;
+            playerDetected = false;
+            //Debug.Log("Player Exit Trigger");
         }
-        else if (other.CompareTag("Turret"))
+        else if (other.CompareTag("Shield"))
         {
             turretsInRange.Remove(other);
         }
@@ -107,110 +121,161 @@ public class enemyAI : MonoBehaviour, IDamage
     void Update()
     {
         locoAnim();
-
         shootTimer += Time.deltaTime;
-        Debug.DrawRay(transform.position, transform.forward * range, Color.blue);
 
-        // Clean up list
+        // 1. CLEANUP & SENSING
         turretsInRange.RemoveAll(t => t == null);
         numTurrets = turretsInRange.Count;
+        isPlayerInSight = CanSeePlayer();
 
-        if(HP <= 0) 
+        // 2. HEALTH CHECK
+        if (HP <= 0)
         {
             gameManager.instance.updateEnemyCount(-1);
             waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
             gameManager.instance.addGold(maxHP);
             Destroy(gameObject);
+            return; // Exit early to prevent logic running on dead enemy
         }
 
-        // PRIORITY 1: PLAYER (Check CanSeePlayer first as it handles its own movement/shooting)
-        if (playerInTrigger && CanSeePlayer())
+        // 3. PERSISTENCE LOGIC
+        if (isPlayerInSight && playerInTrigger)
+            currentPersistence = persistenceTime;
+        else
+            currentPersistence -= Time.deltaTime;
+
+        // 4. PRIORITY DECISION TREE
+        // PRIORITY 1: PLAYER (Sticky persistence)
+        if (currentPersistence > 0)
         {
-            // Logic handled inside CanSeePlayer()
+            TrackAndAttack();
         }
+        // PRIORITY 2: TURRETS (If player is gone, check for turrets)
+        else if (turretsInRange.Count > 0)
+        {
+            target = turretsInRange[0].gameObject;
+            GetComponent<NavMeshAgent>().SetDestination(target.transform.position);
+            faceTarget(turretsInRange[0]);
+
+            TrackAndAttack();
+        }
+        // PRIORITY 3: BASE (Default target)
         else
         {
-            // Default target is the Base
             target = gameManager.instance.baseTower;
 
-            if (target == null)
+            if (target != null)
             {
-                GetComponent<NavMeshAgent>().isStopped = true;
-                return;
-            }
-            GetComponent<NavMeshAgent>().SetDestination(target.transform.position);
+                GetComponent<NavMeshAgent>().isStopped = false;
+                GetComponent<NavMeshAgent>().SetDestination(target.transform.position);
 
-            // PRIORITY 2: BASE (Check if base is in range before turrets)
-            if (baseInTrigger && target != null)
-            {
-                // If the base is right here, focus it
-                faceTarget(target.GetComponent<Collider>());
-
-                if (shootTimer >= fireRate)
+                if (baseInTrigger)
                 {
-                    Shoot();
+                    faceTarget(target.GetComponent<Collider>());
+                    TrackAndAttack();
+                }
+                else
+                {
+                    // Smooth movement rotation toward base
+                    Vector3 moveDirection = GetComponent<NavMeshAgent>().steeringTarget - transform.position;
+                    moveDirection.y = 0;
+                    if (moveDirection.magnitude > 0.1f)
+                    {
+                        Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * GetComponent<NavMeshAgent>().angularSpeed);
+                    }
                 }
             }
-            // PRIORITY 3: TURRETS (Only shoot turrets if base is NOT in range)
-            else if (turretsInRange.Count > 0)
-            {
-                faceTarget(turretsInRange[0]);
-
-                if (shootTimer >= fireRate)
-                {
-                    Shoot();
-                }
-            }
-            // PRIORITY 4: MOVEMENT (Just walk toward base if nothing is in range)
             else
             {
-                Vector3 moveDirection = GetComponent<NavMeshAgent>().steeringTarget - transform.position;
-                moveDirection.y = 0;
-
-                if (moveDirection.magnitude > 0.1f)
-                {
-                    Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * GetComponent<NavMeshAgent>().angularSpeed);
-                }
+                GetComponent<NavMeshAgent>().isStopped = true;
             }
         }
     }
 
     void locoAnim()
     {
+        //Debug.Log("Animating");
         float agentSpeedCur = GetComponent<NavMeshAgent>().velocity.normalized.magnitude;
         float agentSpeedAnim = anim.GetFloat("Speed");
+        //Debug.Log("Speed: " + agentSpeedCur + " Anim Speed: " + agentSpeedAnim);
 
         anim.SetFloat("Speed", Mathf.MoveTowards(agentSpeedAnim, agentSpeedCur, Time.deltaTime * animTranSpeed));
     }
 
     bool CanSeePlayer()
     {
-        playerDir = (gameManager.instance.player.transform.position - headPos.position);
-        angleToPlayer = Vector3.Angle(playerDir, transform.forward);
+        Vector3 playerDir = (gameManager.instance.player.transform.position - headPos.position);
+        float angleToPlayer = Vector3.Angle(playerDir, transform.forward);
 
+        // 1. FOV CHECK FIRST (The "Eyes" check)
+        if (angleToPlayer > FOV)
+        {
+            return false;
+        }
+
+        // 2. RAYCAST CHECK SECOND (The "Wall" check)
         RaycastHit hit;
         if (Physics.Raycast(headPos.position, playerDir, out hit))
         {
-            if (angleToPlayer <= FOV && hit.collider.CompareTag("Player"))
+            // Only return true if the first thing we hit is actually the player
+            if (hit.collider.CompareTag("Player"))
             {
-                target = gameManager.instance.player;
-                GetComponent<NavMeshAgent>().SetDestination(target.transform.position);
-
-                faceTarget(target.transform.GetComponent<Collider>());
-                //Debug.Log("Player Seen");
-
-                if (shootTimer >= fireRate)
-                {
-                    Shoot();
-                }
-
                 return true;
             }
-
         }
 
         return false;
+    }
+
+    void TrackAndAttack()
+    {
+        target = gameManager.instance.player;
+        float dist = Vector3.Distance(transform.position, target.transform.position);
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        Animator anim = GetComponent<Animator>();
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+
+        faceTarget(target.GetComponent<Collider>());
+
+        // 1. MOVEMENT LOGIC
+        if (hasMelee && dist <= meleeRange)
+            agent.isStopped = true;
+        else
+        {
+            agent.isStopped = false;
+            agent.SetDestination(target.transform.position);
+        }
+
+        // 2. COMBAT LOGIC
+        if (shootTimer >= fireRate)
+        {
+            if (hasMelee && dist <= meleeRange)
+            {
+                // Reset the timer IMMEDIATELY when the decision to attack is made
+                shootTimer = 0;
+
+                // Only fire the trigger if the animator isn't already busy punching
+                if (!stateInfo.IsName("Monster01_Attack03_InPlace") && !anim.IsInTransition(0))
+                {
+                    anim.SetTrigger("Melee");
+
+                    StartCoroutine(ClearTriggerAfterFrame("Melee"));
+                }
+            }
+            else if (!hasMelee || dist > meleeRange)
+            {
+                shootTimer = 0;
+                anim.ResetTrigger("Melee");
+                Shoot();
+            }
+        }
+    }
+
+    IEnumerator ClearTriggerAfterFrame(string triggerName)
+    {
+        yield return null; // Wait one frame
+        GetComponent<Animator>().ResetTrigger(triggerName);
     }
 
     void faceTarget(Collider other)
@@ -243,6 +308,19 @@ public class enemyAI : MonoBehaviour, IDamage
                 shootPos.rotation = Quaternion.RotateTowards(shootPos.rotation, verticalRot, Time.deltaTime * 450f);
 
                 Debug.DrawRay(shootPos.position, shootPos.forward * range, Color.red);
+            }
+        }
+    }
+
+    public void MeleeImpact()
+    {
+        // Re-check distance to ensure player didn't dodge mid-animation
+        if (target != null && Vector3.Distance(transform.position, target.transform.position) <= meleeRange)
+        {
+            IDamage hit = target.GetComponent<IDamage>();
+            if (hit != null)
+            {
+                hit.takeDamage(meleeDamage, DamageType.stationary);
             }
         }
     }
