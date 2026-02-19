@@ -120,10 +120,12 @@ public class buttonFunctions : MonoBehaviour
     public void mainMenu()
     {
         gameManager.instance.CompleteLevelAndLoadNext(mainMenuScene);
+        gameManager.instance.stateUnpause();
     }
 
     public void nextLevel()
     {
-        
+        gameManager.instance.LevelComplete();
+        gameManager.instance.stateUnpause();
     }
 }
