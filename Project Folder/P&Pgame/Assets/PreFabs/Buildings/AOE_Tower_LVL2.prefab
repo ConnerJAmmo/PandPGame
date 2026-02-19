@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8649950334401341723}
   m_Layer: 12
   m_Name: AOE_Tower_LVL2
-  m_TagString: Turret
+  m_TagString: AOE Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,7 +54,6 @@ MonoBehaviour:
   target: {fileID: 0}
   turret: {fileID: 5329112234887556657}
   bulletPrefab: {fileID: 7612802135244751355, guid: 9f229454eb031734e9b6ac1cfe9c8240, type: 3}
-  HP: 50
   range: 30
   shotsPerBurst: 3
   burstFireRate: 0.67
@@ -62,21 +61,16 @@ MonoBehaviour:
   scanSpeed: 0.5
   scanAngle: 45
   aud: {fileID: 8649950334401341723}
-  burstShotAud: []
-  burstShotVol: 0
+  burstShotAud:
+  - {fileID: 8300000, guid: 2009611506d165647be4dcd2888d8e1d, type: 3}
+  - {fileID: 8300000, guid: 5c9845b3a7ab66d4494457e901549d9b, type: 3}
+  - {fileID: 8300000, guid: 3e4314235d0c27c4ab668998bfe7fd1f, type: 3}
+  burstShotVol: 0.4
   ShotAud:
   - {fileID: 8300000, guid: 2009611506d165647be4dcd2888d8e1d, type: 3}
   - {fileID: 8300000, guid: 5c9845b3a7ab66d4494457e901549d9b, type: 3}
   - {fileID: 8300000, guid: 3e4314235d0c27c4ab668998bfe7fd1f, type: 3}
   shotVol: 0.4
-  turretTakeDamageAud:
-  - {fileID: 8300000, guid: a7179560f7f74bb47af123354aacad30, type: 3}
-  - {fileID: 8300000, guid: ad5c5423f36f0bd4981b683eb280f9a2, type: 3}
-  - {fileID: 8300000, guid: 7627083958169cd43bb2f3cafb1d7d85, type: 3}
-  turretTakeDamageVol: 0.4
-  turretDestroyedAud:
-  - {fileID: 8300000, guid: 470ca875f6d904647b496d128409032b, type: 3}
-  turretDestroyedVol: 0.4
   fireManager: {fileID: 4341187089283020534}
 --- !u!114 &4341187089283020534
 MonoBehaviour:
@@ -157,7 +151,7 @@ AudioSource:
   m_GameObject: {fileID: 1361402013487122}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3199338399992683612, guid: 770d1133b3bb6be44b84fa29db292852, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1

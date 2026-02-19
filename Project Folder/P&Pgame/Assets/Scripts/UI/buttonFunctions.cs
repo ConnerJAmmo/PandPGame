@@ -3,6 +3,35 @@ using UnityEngine.SceneManagement;
 
 public class buttonFunctions : MonoBehaviour
 {
+    private static string lastSceneName;
+    [SerializeField] int mainMenuScene;
+
+    public void DebugRoom()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        if (currentScene == "DebugRoom")
+        {
+            // If we are already in DebugRoom, go back to where we came from
+            if (!string.IsNullOrEmpty(lastSceneName))
+            {
+                SceneManager.LoadScene(lastSceneName);
+            }
+            else
+            {
+                Debug.LogWarning("No previous scene recorded! Defaulting to Menu.");
+                SceneManager.LoadScene("MainMenu"); // Fallback
+            }
+        }
+        else
+        {
+            // If we are anywhere else, save the current scene and go to DebugRoom
+            lastSceneName = currentScene;
+            SceneManager.LoadScene("DebugRoom");
+        }
+        gameManager.instance.stateUnpause();
+    }
+
     public void Resume()
     {
         gameManager.instance.stateUnpause();
@@ -51,6 +80,16 @@ public class buttonFunctions : MonoBehaviour
 #endif
     }
 
+    public void Options()
+    {
+        gameManager.instance.openOptions();
+    }
+
+    public void Pause()
+    {
+        gameManager.instance.openPause();
+    }
+
     public void UpgradeDamage()
     {
         if (gameManager.instance.damageLevel != gameManager.instance.maxLevel 
@@ -76,5 +115,17 @@ public class buttonFunctions : MonoBehaviour
         {
             gameManager.instance.upgradePlayerShootRange();
         }
+    }
+
+    public void mainMenu()
+    {
+        gameManager.instance.CompleteLevelAndLoadNext(mainMenuScene);
+        gameManager.instance.stateUnpause();
+    }
+
+    public void nextLevel()
+    {
+        gameManager.instance.LevelComplete();
+        gameManager.instance.stateUnpause();
     }
 }

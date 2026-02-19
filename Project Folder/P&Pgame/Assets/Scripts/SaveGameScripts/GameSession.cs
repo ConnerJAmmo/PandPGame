@@ -55,4 +55,20 @@ public class GameSession : MonoBehaviour
         if (pause) 
             SaveGame();
     }
+
+    public void CompleteLevelAndLoadNext(int nextSceneIndex)
+    {
+        if (nextSceneIndex >= 3 && nextSceneIndex <= 5)
+        {
+            Data.lastUnlockedLevel = Mathf.Max(Data.lastUnlockedLevel, nextSceneIndex);
+
+        }
+
+        Data.currentLevelIndex = nextSceneIndex;
+
+        SaveSystem.Save(Data);
+
+        SceneManager.LoadScene(nextSceneIndex);
+    }
+
 }

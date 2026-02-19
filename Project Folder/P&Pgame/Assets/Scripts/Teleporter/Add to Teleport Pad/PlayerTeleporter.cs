@@ -1,3 +1,6 @@
+using System.Runtime.CompilerServices;
+using Unity.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerTeleporter : MonoBehaviour
@@ -18,6 +21,11 @@ public class PlayerTeleporter : MonoBehaviour
     [SerializeField] PortalVFXController thisPadVFX;
     [SerializeField] PortalVFXController destinationPadVFX;
 
+    [Header("Activation")]
+    [SerializeField] bool startsActive = false;
+    PortalVisualController visuals;
+    public bool IsActive { get; private set; } 
+
     [Range(0, 1)] [SerializeField] float teleportVol;
 
 
@@ -26,7 +34,30 @@ public class PlayerTeleporter : MonoBehaviour
 
     private void Awake()
     {
+        if (!visuals) visuals = GetComponent<PortalVisualController>();
+        if (!visuals) visuals = GetComponentInChildren<PortalVisualController>(true);
+        if (!visuals) visuals = GetComponentInParent<PortalVisualController>();
+
+        IsActive = startsActive;
+
+        if (visuals)
+        {
+            if (IsActive)
+                visuals.TurnOn();
+            else
+                visuals.TurnOff();
+        }
+
         cacheDestination();
+
+    }
+
+    public void Activate()
+    {
+        IsActive = true;
+        visuals?.TurnOn();
+        // turnOn portal visuals
+        GetComponentInParent<PortalVFXController>()?.PlayOn();
     }
 
     void cacheDestination()
@@ -59,6 +90,7 @@ public class PlayerTeleporter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!IsActive) return;
         if (!other.CompareTag("Player")) return;
 
         if (!cacheDestinationSpawn)
@@ -88,7 +120,7 @@ public class PlayerTeleporter : MonoBehaviour
             camShake.Shake();
 
             // Cooldown check for Player
-            var allowed = other.GetComponent<teleportAllowed>();
+        var allowed = other.GetComponent<teleportAllowed>();
         if (!allowed) allowed = other.gameObject.AddComponent<teleportAllowed>(); // Just add the teleport allowed script to player if its not there
         if (!allowed.CanTeleport()) return;
 
@@ -113,5 +145,38 @@ public class PlayerTeleporter : MonoBehaviour
         if (destinationPadVFX)
             destinationPadVFX.PlayExit();
             
+    }
+
+    public static void ActivatePair(string padAId, string padBId)
+    {
+        var pads = Object.FindObjectsByType<PlayerTeleporter>(FindObjectsSortMode.None);
+
+        foreach (var pad in pads)
+        {
+            if (pad == null) continue;
+
+            if (pad.padId == padAId || pad.padId == padBId)
+            {
+                pad.Activate();
+            }
+        }
+    }
+
+    public static bool AreBothActive(string padAId, string padBId)
+    {
+        bool a = false, b = false;
+
+        var pads = Object.FindObjectsByType<PlayerTeleporter>(FindObjectsSortMode.None);
+        foreach (var pad in pads)
+        {
+            if (!pad) 
+            {
+                continue;
+            }
+            if (pad.padId == padAId) a = pad.IsActive;
+            if (pad.padId == padBId) b = pad.IsActive;
+        }
+
+        return a && b;
     }
 }

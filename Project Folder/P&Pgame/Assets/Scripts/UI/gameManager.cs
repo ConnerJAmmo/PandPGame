@@ -4,6 +4,9 @@ using TMPro;
 using System.Globalization;
 using System.Collections;
 using System;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+
 
 
 public class gameManager : MonoBehaviour, goldManage
@@ -14,10 +17,23 @@ public class gameManager : MonoBehaviour, goldManage
 #region Menus
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
-    [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject menuPauseFristButton;
+    [SerializeField] GameObject menuPlayerLose;
+    [SerializeField] GameObject menuPlayerLoseFristButton;
+    [SerializeField] GameObject menuTowerLose;
+    [SerializeField] GameObject menuTowerLoseFristButton;
+
     [SerializeField] GameObject menuWin;
+    [SerializeField] GameObject menuWinFristButton;
+
+    [SerializeField] GameObject menuOptions;
+    [SerializeField] GameObject menuOptionsFristButton;
     [SerializeField] GameObject menuTowerUpgrade;
+    [SerializeField] GameObject menuTowerUpgradeFristButton;
+
     [SerializeField] GameObject menuPlayerUpgrade;
+    [SerializeField] GameObject menuPlayerUpgradeFristButton;
+    
     [SerializeField] GameObject needGunText;
     public bool isPause;
 #endregion
@@ -50,6 +66,7 @@ public class gameManager : MonoBehaviour, goldManage
     [Space]
     [SerializeField] TMP_Text woodCountText;
     [SerializeField] TMP_Text stoneCountText;
+    [SerializeField] TMP_Text metalCountText;
     [SerializeField] TMP_Text ammoCountText;
     [Space]
     [SerializeField] TMP_Text TowerHPMax;
@@ -79,7 +96,16 @@ public class gameManager : MonoBehaviour, goldManage
     int initialDamageUpgradeCost = 10;
     int initalFireRateUpgradeCost = 10;
     int initialRangeUpgradeCost = 10;
-#endregion
+    #endregion
+
+#region Tower Costs
+    [Header("Tower Costs")]
+    [Range(0, 100)][SerializeField] public int towerStoneCost;
+    [Range(0, 100)][SerializeField] public int towerWoodCost;
+    [Range(0, 100)][SerializeField] public int towerGoldCost;
+    [Range(0, 100)][SerializeField] public int towerUpgradeCost;
+    [Range(0, 100)][SerializeField] public int towerShieldCost;
+    #endregion
 
     public bool waveActive;
     public GameObject player;
@@ -156,11 +182,19 @@ public class gameManager : MonoBehaviour, goldManage
                 statePause();
                 menuActive = menuPause;
                 menuActive.SetActive(true);
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(menuPauseFristButton);
                 aud.PlayOneShot(menuInteractionAud, menuVol);
             }
             else if (menuActive == menuPause) 
             {
                  stateUnpause();
+            }
+            else if (menuActive == menuOptions)
+            {
+                menuActive.SetActive(false);
+                menuActive = menuPause;
+                menuActive.SetActive(true);
             }
         }
 
@@ -253,6 +287,7 @@ public class gameManager : MonoBehaviour, goldManage
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void stateUnpause()
@@ -266,6 +301,19 @@ public class gameManager : MonoBehaviour, goldManage
         aud.PlayOneShot(menuInteractionAud, menuVol);
     }
 
+    public void openOptions()
+    {
+        menuActive.SetActive(false);
+        menuActive = menuOptions;
+        menuActive.SetActive(true);
+    }
+    public void openPause()
+    {
+        menuActive.SetActive(false);
+        menuActive = menuPause;
+        menuActive.SetActive(true);
+    }
+
     public void openPlayerUpgradeMenu()
     {
         if (Input.GetButtonDown("Player Upgrade Menu"))
@@ -273,6 +321,8 @@ public class gameManager : MonoBehaviour, goldManage
             if (menuActive == null)
             {
                 newMenu(menuPlayerUpgrade);
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(menuPlayerUpgradeFristButton);
                 SetDamageUpgradeText();
                 SetFireRateUpgradeText();
                 SetRangeUpgradeText();
@@ -296,15 +346,26 @@ public class gameManager : MonoBehaviour, goldManage
         needGunText.SetActive(false);
     }
 
-    public void youLose()
+    public void youLosePlayer()
     {
-        newMenu(menuLose);
+        newMenu(menuPlayerLose);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(menuPlayerLoseFristButton);
+        aud.PlayOneShot(deathAud, deathVol);
+    }
+    public void youLoseTower()
+    {
+        newMenu(menuTowerLose);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(menuTowerLoseFristButton);
         aud.PlayOneShot(deathAud, deathVol);
     }
 
     public void youWin()
     {
         newMenu(menuWin);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(menuWinFristButton);
     }
 
     public void updateResourcesUI()
@@ -316,6 +377,7 @@ public class gameManager : MonoBehaviour, goldManage
 
         woodCountText.text = playerScript.woodCount.ToString("F0");
         stoneCountText.text = playerScript.stoneCount.ToString("F0");
+        metalCountText.text = playerScript.metalCount.ToString("F0");
     }
 
     public void RefreshHint()
@@ -389,7 +451,7 @@ public class gameManager : MonoBehaviour, goldManage
     {
         if (ammoCountText != null)
         {
-            ammoCountText.text = currentAmmo.ToString() + " / " + maxAmmo.ToString();
+            ammoCountText.text = currentAmmo.ToString() + " - " + maxAmmo.ToString();
         }
     }
 
@@ -452,6 +514,24 @@ public class gameManager : MonoBehaviour, goldManage
         goldCount = value; 
         goldCountText.text = goldCount.ToString("F0");
     }
+
+    public void LevelComplete()
+    {
+        int current = SceneManager.GetActiveScene().buildIndex;
+
+        int next;
+
+        if (current == 2) //Outpost
+        {
+            next = 3;     //Gorge
+        }
+        else if (current == 3)//Gorge
+            next = 4;     //Mothership
+        else
+            next = 1;     // Back to mainmenu
+
+        gameManager.instance.CompleteLevelAndLoadNext(next);
+    }
     
     // ----------------These Method are used for the advancing------------------------//
     
@@ -465,7 +545,7 @@ public class gameManager : MonoBehaviour, goldManage
         GameSession.instance.Data.currentLevelIndex = nextSceneIndex;
         GameSession.instance.SaveGame();
 
-        SceneLoader.load(nextSceneIndex);
+        LevelLoader.instance.LoadLevel(nextSceneIndex);
     } 
     
     // ------------------------------End---------------------------------------//

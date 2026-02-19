@@ -3,17 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
+public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, IPickupGeneric
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
 
     [Header("---- Stats ----")]
     [Range(1,100)] [SerializeField] public int HP;
-    [Range(1,10)]  [SerializeField] int speed;
-    [Range(1,10)]  [SerializeField] int slopeSlideSpeed;
+    [Range(5,10)]  [SerializeField] int speed;
+    [Range(3,10)]  [SerializeField] int slopeSlideSpeed;
     [Range(2,5)]   [SerializeField] int sprintMod;
-    
+    [SerializeField] public int regenAmount;
+    [SerializeField] public float regenRate;
+
     [Header("---- Jump ----")]
     [Range(8,20)] [SerializeField] int jumpSpeed;
     [Range(1,4)]  [SerializeField] int jumpMax;
@@ -30,15 +32,19 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     private int baseJumpMax;
     private float miningSpeedBoostTotal = 0f;
     private float baseMineRate;
-    
+
     [Header("---- Resources ----")]
     [SerializeField] float mineRate;
     [Range(5,15)] [SerializeField] int mineDist;
     [Range(1,4)]  [SerializeField] int mineDamage;
+    [SerializeField] public GameObject pickModel;
+
 
     [SerializeField] public int woodCount;
     [SerializeField] public int stoneCount;
+    [SerializeField] public int metalCount;
     [SerializeField] public int goldCount;
+    [SerializeField] public int powerCrystals;
     [Header("---- Tools ----")]
     [SerializeField] public GameObject bullet;
     [Range(5, 15)][SerializeField] int buildDist;
@@ -46,6 +52,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     [SerializeField] public Transform machineGunShootPos;
     [SerializeField] public Transform m1GarandShootPos;
     [SerializeField] public Transform m1918BarShootPos;
+    [SerializeField] cameraContr camScript;
 
     [Header("Guns")]
     [SerializeField] public List<GunStats> gunList = new List<GunStats>();
@@ -98,6 +105,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     public int gunListPos;
     public float shootTimer;
     float mineTimer;
+    bool pickRotated;
+    public float healTimer;
 
     private RaycastHit slopeHit; 
 
@@ -121,6 +130,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         shootDamage = 0;
         shootRate = 0;
         shootDist = 0;
+        pickRotated = false;
     }
 
     // Update is called once per frame
@@ -142,15 +152,26 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         jump();
         controller.Move(playerVel * Time.deltaTime);
         PlayerBodyPos = transform.position + Vector3.down;
-      
-        if(OnSteepSlope())
+
+        if (pickRotated == false && mineTimer >= mineRate)
+        {
+            //nothing
+        }
+        else if (pickRotated == true && mineTimer >= mineRate)
+        {
+            pickModel.transform.Rotate(0, 0, 90);
+            pickRotated = false;
+        }
+
+
+        if (OnSteepSlope())
         {
             SteepSlopeMovement();
         }
-        else if(controller.isGrounded)
+        else if (controller.isGrounded)
         {
             slideVel = Vector3.zero;
-            jumpCount = 0;  
+            jumpCount = 0;
             wallJumpCount = 0;
             playerVel.x = 0;
             playerVel.z = 0;
@@ -158,7 +179,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         }
         else
         {
-            if(slideVel.magnitude > 0.1f)
+            if (slideVel.magnitude > 0.1f)
             {
                 controller.Move(slideVel);
                 slideVel = Vector3.Lerp(slideVel, Vector3.zero, 2f * Time.deltaTime);
@@ -166,13 +187,38 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
             playerVel.y -= gravity * Time.deltaTime;
         }
 
-        if(Input.GetButton("Fire1") && gunList.Count > 0 && gunList[gunListPos].ammoCur > 0 && shootTimer >= shootRate)
+        if (HP >= HPOrig)
+        {
+            healTimer = 0;
+        }
+        else if (HP < HPOrig && HP > 0)
+        {
+            healTimer += Time.deltaTime;
+        }
+
+        if (healTimer >= regenRate)
+        {
+            healTimer = 0;
+            HP += regenAmount;
+            if (HP > HPOrig)
+            {
+                HP = HPOrig;
+            }
+            updatePlayerUI();
+        }
+
+        if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[gunListPos].ammoCur > 0 && shootTimer >= shootRate)
         {
             shoot();
         }
         if (Input.GetButton("Fire2") && mineTimer >= mineRate)
         {
+            pickModel.transform.Rotate(0, 0, -90);
+            pickRotated = true;
             mine();
+            
+            
+
         }
         if (Input.GetButtonDown("z"))
         {
@@ -221,13 +267,13 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         string placeHint = "";
 
         // how many can we place
-        int stRemaining = woodCount / 5;
-        int aoeRemaining = stoneCount / 5;
+        int stRemaining = woodCount / gameManager.instance.towerWoodCost;
+        int aoeRemaining = stoneCount / gameManager.instance.towerStoneCost;
 
         // This will make our hints stay while we can afford them
-        if (wasGrounded && stRemaining > 0 && goldCount >= 5)
+        if (wasGrounded && stRemaining > 0 && goldCount >= gameManager.instance.towerGoldCost)
             placeHint += $"Press Z at an empty marker to place ST Turret ({stRemaining} remaining)\n";
-        if (wasGrounded && aoeRemaining > 0 && goldCount >= 5)
+        if (wasGrounded && aoeRemaining > 0 && goldCount >= gameManager.instance.towerGoldCost)
             placeHint += $"Press X at an empty marker to place AOE Turret ({aoeRemaining} remaining)\n";
 
         string mineHint = GetMineHint(); // I created separate method for minehint
@@ -267,6 +313,10 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
                 playerVel.y = wallJumpSpeed;
                 playerVel.x = wallJumpHit.normal.x * wallJumpPush;
                 wallJumpCount++;
+
+                float tiltDir = Vector3.Dot(wallJumpHit.normal, transform.right) > 0 ? -1f : 1f;
+                camScript.SetWallJumpTilt(tiltDir);
+                StartCoroutine(ResetTiltAfterDelay());
                 return;
             }
         }
@@ -280,13 +330,28 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
 
     void sprint()
     {
-        if(Input.GetButtonDown("Sprint"))
+        /*if(Input.GetButtonDown("Sprint"))
         {
             speed *= sprintMod;
+            camScript.SetSprintFOV();
         }
         else if (Input.GetButtonUp("Sprint"))
         {
             speed /= sprintMod;
+            camScript.ResetFOV();
+        } This sprint is for hold to sprint */
+        if(Input.GetButton("Sprint"))
+        {
+            if(speed == baseSpeed)
+            {
+                speed *= sprintMod;
+                camScript.SetSprintFOV();
+            }
+            else
+            {
+               speed /= sprintMod;
+               camScript.ResetFOV(); 
+            }
         }
     }
 
@@ -341,6 +406,8 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
     {
         mineTimer = 0;
 
+        
+
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, mineDist, ~ignoreLayer))
         {
@@ -363,6 +430,12 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
                 else if (matType == "Stone")
                 {
                     stoneCount = stoneCount + matAmount;
+                    aud.PlayOneShot(mineSteelAud[0], mineSteelAudVol);
+                    changed = true;
+                }
+                else if (matType == "Metal")
+                {
+                    metalCount = metalCount + matAmount;
                     aud.PlayOneShot(mineSteelAud[0], mineSteelAudVol);
                     changed = true;
                 }
@@ -394,6 +467,14 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
               
             }
         }
+        else if (type == "Metal")
+        {
+            if (stoneCount >= amount)
+            {
+                finalAmount = finalAmount + metalCount;
+
+            }
+        }
 
         return finalAmount;
     }
@@ -410,7 +491,11 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         {
             total = stoneCount;
         }
-            return total;
+        else if (type == "Metal")
+        {
+            total = metalCount;
+        }
+        return total;
     }
 
     public void resetGunStatsToOrig()
@@ -432,7 +517,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
 
         if (HP <= 0)
         {
-            gameManager.instance.youLose();
+            gameManager.instance.youLosePlayer();
         }
 
     }
@@ -539,9 +624,23 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys
         mineRate -= miningSpeedBoost;
         miningSpeedBoostTotal += miningSpeedBoost;
 
-        if (mineRate < 0.1f)
+        if (mineRate < 0.3f)
         {
-            mineRate = 0.1f;
+            mineRate = 0.3f;
         }
+    }
+
+    public void getGeneric(string name, int amount)
+    {
+        if (name == "Power Crystal")
+        {
+            powerCrystals = powerCrystals + amount;
+        }
+    }
+
+    IEnumerator ResetTiltAfterDelay()
+    {
+        yield return new WaitForSeconds(0.15f);
+        camScript.ResetTilt();
     }
 }

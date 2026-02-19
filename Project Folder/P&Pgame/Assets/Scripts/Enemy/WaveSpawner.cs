@@ -12,6 +12,7 @@ public class WaveSpawner : MonoBehaviour
     public int currentWaveIndex = 0;
 
     private bool readyToCountDown;
+    private bool waveComplete;
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,12 +37,14 @@ public class WaveSpawner : MonoBehaviour
         if (countdown <= 0)
         {
             readyToCountDown = false;
+            waveComplete = false;
             countdown = waves[currentWaveIndex].timeToNextWave;
             StartCoroutine(SpawnWave());
         }
         
-        if (waves[currentWaveIndex].enemiesLeft == 0)
+        if (!waveComplete && waves[currentWaveIndex].enemiesLeft == 0)
         {
+            waveComplete = true;
             if (currentWaveIndex >= waves.Length -1)
             {
                 gameManager.instance.youWin();
