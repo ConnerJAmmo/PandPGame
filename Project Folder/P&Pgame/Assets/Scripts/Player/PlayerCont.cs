@@ -13,7 +13,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
     [Range(5,10)]  [SerializeField] int speed;
     [Range(3,10)]  [SerializeField] int slopeSlideSpeed;
     [Range(2,5)]   [SerializeField] int sprintMod;
-    
+    [SerializeField] public int regenAmount;
+    [SerializeField] public float regenRate;
+
     [Header("---- Jump ----")]
     [Range(8,20)] [SerializeField] int jumpSpeed;
     [Range(1,4)]  [SerializeField] int jumpMax;
@@ -104,6 +106,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
     public float shootTimer;
     float mineTimer;
     bool pickRotated;
+    public float healTimer;
 
     private RaycastHit slopeHit; 
 
@@ -184,7 +187,27 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
             playerVel.y -= gravity * Time.deltaTime;
         }
 
-        if(Input.GetButton("Fire1") && gunList.Count > 0 && gunList[gunListPos].ammoCur > 0 && shootTimer >= shootRate)
+        if (HP >= HPOrig)
+        {
+            healTimer = 0;
+        }
+        else if (HP < HPOrig && HP > 0)
+        {
+            healTimer += Time.deltaTime;
+        }
+
+        if (healTimer >= regenRate)
+        {
+            healTimer = 0;
+            HP += regenAmount;
+            if (HP > HPOrig)
+            {
+                HP = HPOrig;
+            }
+            updatePlayerUI();
+        }
+
+        if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[gunListPos].ammoCur > 0 && shootTimer >= shootRate)
         {
             shoot();
         }
