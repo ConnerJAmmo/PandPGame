@@ -13,6 +13,7 @@ TagManager:
   - Shield
   - AOE Turret
   - ST Turret
+  - Crystal
   layers:
   - Default
   - TransparentFX
@@ -29,7 +30,7 @@ TagManager:
   - Towers
   - Shield
   - Doors
-  - 
+  - Hand
   - 
   - 
   - 

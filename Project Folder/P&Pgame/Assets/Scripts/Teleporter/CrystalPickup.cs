@@ -26,6 +26,7 @@ public class CrystalPickup : MonoBehaviour
 
         
         PlayImpactSound(pickupSfx);
+        gameManager.instance.mothershipCrystalCurrentCount++;
 
         Destroy(gameObject);
     }
