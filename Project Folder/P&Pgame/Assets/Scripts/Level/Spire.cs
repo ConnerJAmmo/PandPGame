@@ -29,6 +29,8 @@ public class Spire : MonoBehaviour
             if (boomTimer >= boomTime)
             {
                 AOE.SetActive(false);
+
+                AOE.GetComponent<SphereCollider>().enabled = false;
             }
             
         }
@@ -44,6 +46,8 @@ public class Spire : MonoBehaviour
                 gameManager.instance.playerScript.powerCrystals = gameManager.instance.playerScript.powerCrystals - 1;
 
                 AOE.SetActive(true);
+
+                AOE.GetComponent<SphereCollider>().enabled = true;
 
                 kaboom = true;
             }
