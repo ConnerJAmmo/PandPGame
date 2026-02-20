@@ -396,12 +396,7 @@ public class gameManager : MonoBehaviour, goldManage
 
         woodCountText.text = playerScript.woodCount.ToString("F0");
         stoneCountText.text = playerScript.stoneCount.ToString("F0");
-        metalCountText.text = playerScript.metalCount.ToString("F0");
-    }
-
-    public void AddCrystalCurrentCount(int crystalCurrentCount)
-    {
-        mothershipCrystalCurrentCount += crystalCurrentCount;
+        //metalCountText.text = playerScript.metalCount.ToString("F0");
     }
 
     public void RefreshHint()
