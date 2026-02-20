@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6240365155715074326}
   m_Layer: 0
   m_Name: Crystal
-  m_TagString: Untagged
+  m_TagString: Crystal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,6 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CrystalPickup
   amount: 1
   aud: {fileID: 534770669004221748}
+  sfxGroup: {fileID: 0}
   pickupSfx: {fileID: 8300000, guid: 1fe16d9645293464ab0fe7b7e8c4f476, type: 3}
   crystalAudVol: 0.5
 --- !u!82 &534770669004221748
