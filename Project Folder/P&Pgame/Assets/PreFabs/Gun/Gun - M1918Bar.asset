@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccf9859619715a24b975da7ed6792259, type: 3}
   m_Name: Gun - M1918Bar
   m_EditorClassIdentifier: Assembly-CSharp::GunStats
-  gunModel: {fileID: 5571641588984482722, guid: c303a18f1cbdd4156b139b9e5b35d6a9, type: 3}
+  gunModel: {fileID: 1671501747581310117, guid: 0b3362b6fed6c704f810ba52ae3e59d8, type: 3}
   gunName: M1918 Bar
   DistLevel: 0
   shootDist: 800
@@ -23,7 +23,7 @@ MonoBehaviour:
   fireRateLevel: 0
   shootRate: 0.5
   shootRateOrig: 0.5
-  ammoCur: 9
+  ammoCur: 20
   ammoMax: 20
   shootPos: {fileID: 0}
   hitEffect: {fileID: 8591032446617569335, guid: 4131349b8b5025846a9ecb06b7eb2d73, type: 3}
