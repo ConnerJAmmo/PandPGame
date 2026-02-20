@@ -6,6 +6,7 @@ using System.Collections;
 using System;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 
 
@@ -68,6 +69,8 @@ public class gameManager : MonoBehaviour, goldManage
     [SerializeField] TMP_Text stoneCountText;
     [SerializeField] TMP_Text metalCountText;
     [SerializeField] TMP_Text ammoCountText;
+    [SerializeField] TMP_Text mothershipAmmoCountText;
+    [SerializeField] TMP_Text mothershipCrystalCountText;
     [Space]
     [SerializeField] TMP_Text TowerHPMax;
     [SerializeField] TMP_Text TowerHP;
@@ -96,6 +99,9 @@ public class gameManager : MonoBehaviour, goldManage
     int initialDamageUpgradeCost = 10;
     int initalFireRateUpgradeCost = 10;
     int initialRangeUpgradeCost = 10;
+    int mothershipCrystalMaxCount;
+    public int mothershipCrystalCurrentCount;
+    GameObject[] crystalInMothership;
     #endregion
 
 #region Tower Costs
@@ -125,6 +131,8 @@ public class gameManager : MonoBehaviour, goldManage
 
     string baseHint;
     string interactionHint;
+
+    Scene currentScene;
 
     public GameObject waveSpawner;
 
@@ -159,8 +167,13 @@ public class gameManager : MonoBehaviour, goldManage
         addGold(startingGold);
         goldCountText.text = goldCount.ToString("F0");
 
+        currentScene = SceneManager.GetActiveScene();
+
         waveSpawner = GameObject.FindWithTag("WaveSpawner");
         SetActiveWaveUI(1);
+
+        crystalInMothership = GameObject.FindGameObjectsWithTag("Crystal");
+        mothershipCrystalMaxCount = crystalInMothership.Count();
 
         updateResourcesUI();
 
@@ -202,7 +215,9 @@ public class gameManager : MonoBehaviour, goldManage
         SetFireRateUpgradeText();
         SetRangeUpgradeText();
         openPlayerUpgradeMenu();
+        SetMothershipCrystalCountText();
     }
+
 
     public void updateEnemyCountTotal(int amount)
     {
@@ -248,7 +263,11 @@ public class gameManager : MonoBehaviour, goldManage
     {
         gunNameText.text = playerScript.gunName;
     }
-
+    
+    public void SetMothershipCrystalCountText()
+    {
+        mothershipCrystalCountText.text = mothershipCrystalCurrentCount.ToString() + " - " + mothershipCrystalMaxCount.ToString();
+    }
 
     public void SetDamageUpgradeText()
     {
@@ -380,6 +399,11 @@ public class gameManager : MonoBehaviour, goldManage
         metalCountText.text = playerScript.metalCount.ToString("F0");
     }
 
+    public void AddCrystalCurrentCount(int crystalCurrentCount)
+    {
+        mothershipCrystalCurrentCount += crystalCurrentCount;
+    }
+
     public void RefreshHint()
     {
         if (!hintText) return;
@@ -451,7 +475,16 @@ public class gameManager : MonoBehaviour, goldManage
     {
         if (ammoCountText != null)
         {
-            ammoCountText.text = currentAmmo.ToString() + " - " + maxAmmo.ToString();
+            // To update the mothership UI for ammo and crystal counts
+            if (currentScene.name == "Mothership")
+            {
+                mothershipAmmoCountText.text = currentAmmo.ToString() + " - " + maxAmmo.ToString(); 
+            }
+            // To update all other UI ammo count
+            else
+            {
+                ammoCountText.text = currentAmmo.ToString() + " - " + maxAmmo.ToString();
+            }
         }
     }
 
