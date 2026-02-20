@@ -24,8 +24,8 @@ public class CrystalPickup : MonoBehaviour
 
         inv.AddCrystals(amount);
 
-        aud.PlayOneShot(pickupSfx, crystalAudVol);
-        //PlayImpactSound(pickupSfx);
+        
+        PlayImpactSound(pickupSfx);
 
         Destroy(gameObject);
     }
