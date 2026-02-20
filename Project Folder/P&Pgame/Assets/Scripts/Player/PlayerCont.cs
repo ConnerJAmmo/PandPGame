@@ -357,10 +357,10 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
 
     private void WallCheck()
     {
-        wallJumpPosib = Physics.Raycast(transform.position, transform.right, out wallJumpHit, wallCheckDis) ||
-                        Physics.Raycast(transform.position, -transform.right, out wallJumpHit, wallCheckDis) ||
-                        Physics.Raycast(transform.position, transform.forward, out wallJumpHit, wallCheckDis) ||
-                        Physics.Raycast(transform.position, -transform.forward, out wallJumpHit, wallCheckDis);
+        wallJumpPosib = Physics.Raycast(transform.position, transform.right, out wallJumpHit, wallCheckDis, ~ignoreLayer) ||
+                        Physics.Raycast(transform.position, -transform.right, out wallJumpHit, wallCheckDis, ~ignoreLayer) ||
+                        Physics.Raycast(transform.position, transform.forward, out wallJumpHit, wallCheckDis, ~ignoreLayer) ||
+                        Physics.Raycast(transform.position, -transform.forward, out wallJumpHit, wallCheckDis, ~ignoreLayer);
     }
 
     private bool OnSteepSlope()
