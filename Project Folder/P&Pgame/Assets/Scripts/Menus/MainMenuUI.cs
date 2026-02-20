@@ -12,8 +12,13 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] string optionsMenu;
     [SerializeField] string creditsScene;
 
+    void Start()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
 
-  
+
     public void Continue()
     {
         if (GameSession.instance.LoadGame())
@@ -51,6 +56,8 @@ public class MainMenuUI : MonoBehaviour
 
     public void OptionsMenu()
     {
+        PlayerPrefs.SetString("PreviousScene", SceneManager.GetActiveScene().name);
+        PlayerPrefs.Save();
         LevelLoader.instance.LoadLevel(optionsMenu);
     }
 
