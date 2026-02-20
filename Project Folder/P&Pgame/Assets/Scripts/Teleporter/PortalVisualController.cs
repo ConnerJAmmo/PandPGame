@@ -21,7 +21,14 @@ public class PortalVisualController : MonoBehaviour
 
     private void Awake()
     {
-        matPB = new MaterialPropertyBlock();
+        if (matPB == null)
+            matPB = new MaterialPropertyBlock();
+
+        if(!portalSurfaceRenderer)
+            portalSurfaceRenderer = GetComponentInChildren<MeshRenderer>(true);
+
+        if(!portalCamera)
+            portalCamera = GetComponentInChildren<Camera>(true);
         
         // keep renderer enable so it exist, just Transparent
         if (portalSurfaceRenderer) portalSurfaceRenderer.enabled = true;
@@ -93,6 +100,9 @@ public class PortalVisualController : MonoBehaviour
         fade = Mathf.Clamp01(v);
 
         if (!portalSurfaceRenderer) return;
+        
+        if(matPB == null)
+            matPB = new MaterialPropertyBlock();
 
         portalSurfaceRenderer.GetPropertyBlock(matPB);
         matPB.SetFloat(fadeProp, fade);

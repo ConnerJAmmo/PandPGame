@@ -16,6 +16,9 @@ public class TeleporterControlPanel : MonoBehaviour
     [Header("Audio")]
     [SerializeField] AudioSource aud;
     [SerializeField] AudioClip activateSfx;
+    [Range(0, 1)][SerializeField] float audActivateVol;
+    [SerializeField] AudioClip audDoorOpen;
+    [Range(0, 1)][SerializeField] float audDoorOpenVol;
     [Range(0, 1)][SerializeField] float vol = 0.9f;
 
     [Header("Panel Visuals")]
@@ -83,6 +86,8 @@ public class TeleporterControlPanel : MonoBehaviour
         else
             count = 0;
         door?.Open();
+        if (aud && audDoorOpen)
+            aud.PlayOneShot(audDoorOpen, audDoorOpenVol);
         screen?.SetText($"{msgNotEnough} ({count}/{requiredCrystals})");
     }
 
