@@ -88,7 +88,7 @@ public class enemyAI : MonoBehaviour, IDamage
         else if (other.CompareTag("Shield"))
         {
             turretsInRange.Add(other);
-            //Debug.Log("Shield Detected");
+            Debug.Log("Shield Detected");
         }
         else if (other.CompareTag("Base"))
         {
@@ -148,6 +148,7 @@ public class enemyAI : MonoBehaviour, IDamage
         // PRIORITY 1: PLAYER (Sticky persistence)
         if (currentPersistence > 0)
         {
+            target = gameManager.instance.player;
             TrackAndAttack();
         }
         // PRIORITY 2: TURRETS (If player is gone, check for turrets)
@@ -155,8 +156,6 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             target = turretsInRange[0].gameObject;
             GetComponent<NavMeshAgent>().SetDestination(target.transform.position);
-            faceTarget(turretsInRange[0]);
-
             TrackAndAttack();
         }
         // PRIORITY 3: BASE (Default target)
@@ -171,7 +170,6 @@ public class enemyAI : MonoBehaviour, IDamage
 
                 if (baseInTrigger)
                 {
-                    faceTarget(target.GetComponent<Collider>());
                     TrackAndAttack();
                 }
                 else
@@ -230,7 +228,6 @@ public class enemyAI : MonoBehaviour, IDamage
 
     void TrackAndAttack()
     {
-        target = gameManager.instance.player;
         float dist = Vector3.Distance(transform.position, target.transform.position);
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
         Animator anim = GetComponent<Animator>();

@@ -39,12 +39,6 @@ public class baseDmg : MonoBehaviour, IDamage
         if (bar) bar.updateBar(1f);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void takeDamage(int amount, DamageType type)
     {
         hp -= amount;
@@ -58,8 +52,8 @@ public class baseDmg : MonoBehaviour, IDamage
     
 
         // Debugging to verify the instance is taking damage
-        Debug.Log($"{gameObject.name} (Base) took damage! Remaining HP: {hp}");
-        Debug.Log("Basedmg hit by: " + type);
+        //Debug.Log($"{gameObject.name} (Base) took damage! Remaining HP: {hp}");
+        //Debug.Log("Basedmg hit by: " + type);
         if (hp <= 0)
         {
             gameManager.instance.youLoseTower();
