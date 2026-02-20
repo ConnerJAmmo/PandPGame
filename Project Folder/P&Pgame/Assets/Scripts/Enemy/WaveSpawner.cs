@@ -1,18 +1,20 @@
 using UnityEngine;
+using UnityEngine.AI;
 using System.Collections;
 using System.Data;
 
 public class WaveSpawner : MonoBehaviour
 {
     [SerializeField] private float countdown;
-    [SerializeField] private GameObject spawnPoint;
+    [SerializeField] private GameObject[] spawnPoints;
 
     public Wave[] waves;
-    [SerializeField] private GameObject[] waveTemplates;
     public int currentWaveIndex = 0;
 
     private bool readyToCountDown;
     private bool waveComplete;
+    private enemyAI[] preloadedEnemies;
+    private int spawnPointIndex = 0;
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -24,6 +26,7 @@ public class WaveSpawner : MonoBehaviour
             waves[i].enemiesLeft = waves[i].enemies.Length;
         }
         gameManager.instance.SetWaveCountUI(waves.Length);
+        StartCoroutine(PreloadWave(currentWaveIndex));
     }
 
     // Update is called once per frame
@@ -53,7 +56,26 @@ public class WaveSpawner : MonoBehaviour
             {
             readyToCountDown = true;
             currentWaveIndex++;
+            StartCoroutine(PreloadWave(currentWaveIndex));
             }
+        }
+    }
+
+    private IEnumerator PreloadWave(int waveIndex)
+    {
+        preloadedEnemies = new enemyAI[waves[waveIndex].enemies.Length];
+
+        for (int i = 0; i < waves[waveIndex].enemies.Length; i++)
+        {
+            GameObject spawnPoint = spawnPoints[spawnPointIndex % spawnPoints.Length];
+            spawnPointIndex++;
+            var asyncOp = InstantiateAsync(waves[waveIndex].enemies[i], spawnPoint.transform);
+            yield return asyncOp;
+
+            preloadedEnemies[i] = asyncOp.Result[0];
+            preloadedEnemies[i].transform.position = spawnPoint.transform.position;
+            preloadedEnemies[i].transform.rotation = spawnPoint.transform.rotation;
+            preloadedEnemies[i].gameObject.SetActive(false);
         }
     }
 
@@ -61,10 +83,7 @@ public class WaveSpawner : MonoBehaviour
     {
         for (int i = 0; i < waves[currentWaveIndex].enemies.Length; i++)
         {
-            enemyAI Enemy = Instantiate(waves[currentWaveIndex].enemies[i], spawnPoint.transform);
-
-            Enemy.transform.SetParent(spawnPoint.transform);
-
+            preloadedEnemies[i].gameObject.SetActive(true);
             yield return new WaitForSeconds(waves[currentWaveIndex].timeToNextEnemy);
         }
     }

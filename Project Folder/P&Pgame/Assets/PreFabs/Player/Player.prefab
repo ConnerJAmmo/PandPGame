@@ -860,7 +860,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9005881163720741447}
   - component: {fileID: 7172951811048864214}
-  - component: {fileID: 3916856251260068452}
   - component: {fileID: 4252726624835298093}
   m_Layer: 15
   m_Name: HandCam
@@ -937,14 +936,6 @@ Camera:
   m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &3916856251260068452
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8359370618192010095}
-  m_Enabled: 1
 --- !u!114 &4252726624835298093
 MonoBehaviour:
   m_ObjectHideFlags: 0
