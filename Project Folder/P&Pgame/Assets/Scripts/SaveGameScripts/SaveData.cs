@@ -18,6 +18,11 @@ public class SaveData // Not derived from MonoBehaviour
     public int wood = 0;
     public int stone = 0;
 
+    public int PlayerJumpBoost = 0;
+
+    public int PlayerSpeedBoost = 0;
+    public float PlayerMiningSpeedBoost = 0f;
+
     // These are future-proof buckets (add later without breaking anything)
 
     // If we want to save unlocked upgrades later
@@ -33,6 +38,7 @@ public class SaveData // Not derived from MonoBehaviour
 
     public string[] inventory;
     
+
 
 
 }
