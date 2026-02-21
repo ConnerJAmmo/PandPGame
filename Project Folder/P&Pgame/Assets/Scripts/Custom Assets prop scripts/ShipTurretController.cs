@@ -74,30 +74,39 @@ public class ShipTurretController : MonoBehaviour
 
         fireTimer = 0f;
 
-        if (!muzzle) return;
+        if (!muzzle || !currentTarget) return;
 
         // muzzleFlash + sound
         if (muzzleFlash) muzzleFlash.Play();
         if (aud && shotSfx) aud.PlayOneShot(shotSfx, shotVol);
 
+        Vector3 aimPoint = currentTarget.position + Vector3.up * aimHeight;
+
         Vector3 start = muzzle.position;
-        Vector3 dir = muzzle.forward;
+        Vector3 dir = (aimPoint - start).normalized;
+
+        int combineMask = enemyMask.value | blockMask.value;
 
         Vector3 end = start + dir * hitRange;
 
-        if (Physics.Raycast(muzzle.position, muzzle.forward, out RaycastHit hit, hitRange, enemyMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(start, dir, out RaycastHit hit, hitRange, combineMask, QueryTriggerInteraction.Ignore))
         {
             end = hit.point;
 
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
-            if (dmg == null) dmg = hit.collider.GetComponentInParent<IDamage>();
+            bool hitIsEnemy = (enemyMask.value & (1 << hit.collider.gameObject.layer)) != 0;
 
-            if (dmg != null)
+            if (hitIsEnemy)
             {
-                dmg.takeDamage(damage, damageType);
+                IDamage dmg = hit.collider.GetComponent<IDamage>();
+                if (dmg == null) dmg = hit.collider.GetComponentInParent<IDamage>();
 
-                if (hitVfxEnemy)
-                    Instantiate(hitVfxEnemy, hit.point, Quaternion.LookRotation(hit.normal));
+                if (dmg != null)
+                {
+                    dmg.takeDamage(damage, damageType);
+
+                    if (hitVfxEnemy)
+                        Instantiate(hitVfxEnemy, hit.point, Quaternion.LookRotation(hit.normal));
+                }
             }
             else
             {
@@ -108,7 +117,7 @@ public class ShipTurretController : MonoBehaviour
 
         if (tracerPrefab)
         {
-            var tr = Instantiate(tracerPrefab, Vector3.zero, Quaternion.identity);
+            var tr = Instantiate(tracerPrefab);
             tr.positionCount = 2;
             tr.SetPosition(0, start);
             tr.SetPosition(1, end);
