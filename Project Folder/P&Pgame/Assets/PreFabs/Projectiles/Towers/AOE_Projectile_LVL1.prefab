@@ -24347,7 +24347,7 @@ MonoBehaviour:
   damageAmount: 1
   dotDamageRate: 0
   leavesDotZone: 1
-  enableHoming: 0
+  enableHoming: 1
   createHitEffect: 0
   groundedHitEffect: 0
   destroyOnHit: 1

@@ -603,6 +603,7 @@ GameObject:
   - component: {fileID: 2586729896174226079}
   - component: {fileID: 2561707210960974789}
   - component: {fileID: 2568350129341831885}
+  - component: {fileID: 8948028838738007453}
   - component: {fileID: 8411419364261663934}
   m_Layer: 11
   m_Name: Base_MachineGun_L03
@@ -684,6 +685,22 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &8948028838738007453
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2590564863620363611}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.01, y: 0.007, z: 0.01}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.007, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!64 &8411419364261663934
 MeshCollider:
   m_ObjectHideFlags: 0
