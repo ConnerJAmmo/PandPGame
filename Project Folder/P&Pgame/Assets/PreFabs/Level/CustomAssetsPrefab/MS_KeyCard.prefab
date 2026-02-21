@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2410789586349486617
+--- !u!1 &4198026830849315826
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,78 +8,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1648402100230153855}
+  - component: {fileID: 9015241527609044063}
+  - component: {fileID: 4075421704169881618}
+  - component: {fileID: 1432343149384760566}
+  - component: {fileID: 2970496873777967118}
   m_Layer: 0
-  m_Name: BillboardExportHoudini
+  m_Name: MS_KeyCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1648402100230153855
+--- !u!4 &9015241527609044063
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2410789586349486617}
+  m_GameObject: {fileID: 4198026830849315826}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 93.30039, y: 15.499997, z: 204.99576}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7318601373055647231}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8649250787354212449
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7318601373055647231}
-  - component: {fileID: 8063368433993542579}
-  - component: {fileID: 7139128120314170283}
-  m_Layer: 0
-  m_Name: BothObjectsWithAutoUv
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7318601373055647231
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8649250787354212449}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: 0.4604191, y: -0, z: -0, w: 0.88770175}
+  m_LocalPosition: {x: 511.06128, y: 1.15, z: 614.5724}
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 1648402100230153855}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8063368433993542579
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 54.828, y: 0, z: 0}
+--- !u!33 &4075421704169881618
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8649250787354212449}
-  m_Mesh: {fileID: 8506442113980863520, guid: af509958728ddb443b89d01727844e9f, type: 3}
---- !u!23 &7139128120314170283
+  m_GameObject: {fileID: 4198026830849315826}
+  m_Mesh: {fileID: -5546940888850326318, guid: 233a773473a738a40823ff0df747ae1a, type: 3}
+--- !u!23 &1432343149384760566
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8649250787354212449}
+  m_GameObject: {fileID: 4198026830849315826}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -98,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed700afcbf0b4b54eb45d576d70a76fb, type: 2}
+  - {fileID: 2100000, guid: d169b99792618b94889669d298bfe7ae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -122,3 +91,16 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2970496873777967118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4198026830849315826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4787418c24298345b6d5d7a401fce6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::pickupKeys
+  keyName: ShipKey
