@@ -40,13 +40,16 @@ public class enemyAI : MonoBehaviour, IDamage
     [Range(1, 1000)] [SerializeField] public int range;
     [Range(1, 5)] [SerializeField] public int shotsPerBurst;
     [Range(0, 2)] [SerializeField] public float burstFireRate;
-    [Range(0.01f, 2)] [SerializeField] public float fireRate;
+
+    [Header("Attack Speeds")]
+    [Range(0.1f, 5f)][SerializeField] float meleeAttackRate;
+    [Range(0.1f, 5f)][SerializeField] float rangedAttackRate;
 
     private bool playerInTrigger;
     private bool baseInTrigger;
     private bool useBurstFire;
     private int maxHP;
-    private float shootTimer;
+    private float attackTimer;
     private float angleToPlayer;
     private Color colorOrigin;
     private Vector3 playerDir;
@@ -121,7 +124,7 @@ public class enemyAI : MonoBehaviour, IDamage
     void Update()
     {
         locoAnim();
-        shootTimer += Time.deltaTime;
+        attackTimer += Time.deltaTime;
 
         // 1. CLEANUP & SENSING
         turretsInRange.RemoveAll(t => t == null);
@@ -139,34 +142,45 @@ public class enemyAI : MonoBehaviour, IDamage
         }
 
         // 3. PERSISTENCE LOGIC
-        if (isPlayerInSight && playerInTrigger)
+        isPlayerInSight = CanSeePlayer(); // This must be the only way to "start" seeing
+
+        if (isPlayerInSight)
+        {
             currentPersistence = persistenceTime;
-        else
+        }
+        else if (playerInTrigger && currentPersistence > 0)
+        {
+            // They only stay "interested" if they already saw you or you're touching them
             currentPersistence -= Time.deltaTime;
+        }
+        else
+        {
+            currentPersistence -= Time.deltaTime;
+        }
 
         // 4. PRIORITY DECISION TREE
         // PRIORITY 1: PLAYER (Sticky persistence)
         if (currentPersistence > 0)
         {
             target = gameManager.instance.player;
+            GetComponent<NavMeshAgent>().SetDestination(target.transform.position); // Set destination here
             TrackAndAttack();
         }
         // PRIORITY 2: TURRETS (If player is gone, check for turrets)
         else if (turretsInRange.Count > 0)
         {
             target = turretsInRange[0].gameObject;
-            GetComponent<NavMeshAgent>().SetDestination(target.transform.position);
+            GetComponent<NavMeshAgent>().SetDestination(target.transform.position); // Set destination here
             TrackAndAttack();
         }
         // PRIORITY 3: BASE (Default target)
         else
         {
             target = gameManager.instance.baseTower;
-
             if (target != null)
             {
-                GetComponent<NavMeshAgent>().isStopped = false;
-                GetComponent<NavMeshAgent>().SetDestination(target.transform.position);
+                // Remove agent.isStopped = false; it's handled in TrackAndAttack movement logic
+                GetComponent<NavMeshAgent>().SetDestination(target.transform.position); // Set destination here
 
                 if (baseInTrigger)
                 {
@@ -174,7 +188,7 @@ public class enemyAI : MonoBehaviour, IDamage
                 }
                 else
                 {
-                    // Smooth movement rotation toward base
+                    // The movement/rotation logic here can stay for smooth base approach
                     Vector3 moveDirection = GetComponent<NavMeshAgent>().steeringTarget - transform.position;
                     moveDirection.y = 0;
                     if (moveDirection.magnitude > 0.1f)
@@ -203,32 +217,37 @@ public class enemyAI : MonoBehaviour, IDamage
 
     bool CanSeePlayer()
     {
-        Vector3 playerDir = (gameManager.instance.player.transform.position - headPos.position);
-        float angleToPlayer = Vector3.Angle(playerDir, transform.forward);
+        // Use headPos for the direction and origin
+        Vector3 playerDir = (gameManager.instance.player.transform.position - headPos.position).normalized;
 
-        // 1. FOV CHECK FIRST (The "Eyes" check)
-        if (angleToPlayer > FOV)
+        // Check against the HEAD'S forward direction, not the body's
+        float angleToPlayer = Vector3.Angle(playerDir, headPos.forward);
+
+        // DOT PRODUCT CHECK (using headPos.forward)
+        float dotProduct = Vector3.Dot(playerDir, headPos.forward);
+
+        if (dotProduct < 0 || angleToPlayer > FOV)
         {
             return false;
         }
 
-        // 2. RAYCAST CHECK SECOND (The "Wall" check)
+        // RAYCAST CHECK
         RaycastHit hit;
-        if (Physics.Raycast(headPos.position, playerDir, out hit))
+        if (Physics.Raycast(headPos.position, playerDir, out hit, range))
         {
-            // Only return true if the first thing we hit is actually the player
             if (hit.collider.CompareTag("Player"))
             {
                 return true;
             }
         }
-
         return false;
     }
 
     void TrackAndAttack()
     {
-        float dist = Vector3.Distance(transform.position, target.transform.position);
+        Vector3 closestPoint = target.GetComponent<Collider>().ClosestPoint(transform.position);
+        float dist = Vector3.Distance(transform.position, closestPoint);
+
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
         Animator anim = GetComponent<Animator>();
         AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
@@ -239,91 +258,93 @@ public class enemyAI : MonoBehaviour, IDamage
         if (hasMelee && dist <= meleeRange)
             agent.isStopped = true;
         else
-        {
             agent.isStopped = false;
-            agent.SetDestination(target.transform.position);
-        }
 
         // 2. COMBAT LOGIC
-        if (shootTimer >= fireRate)
+        if (hasMelee && dist <= meleeRange)
         {
-            if (hasMelee && dist <= meleeRange)
+            if (attackTimer >= meleeAttackRate)
             {
-                // Reset the timer IMMEDIATELY when the decision to attack is made
-                shootTimer = 0;
-
-                // Only fire the trigger if the animator isn't already busy punching
-                if (!stateInfo.IsName("Monster01_Attack03_InPlace") && !anim.IsInTransition(0))
-                {
-                    anim.SetTrigger("Melee");
-
-                    StartCoroutine(ClearTriggerAfterFrame("Melee"));
-                }
-            }
-            else if (!hasMelee || dist > meleeRange)
-            {
-                shootTimer = 0;
-                anim.ResetTrigger("Melee");
-                Shoot();
+                attackTimer = 0;
+                anim.SetTrigger("Melee");
+                // Debug.Log("Melee Triggered");
             }
         }
-    }
-
-    IEnumerator ClearTriggerAfterFrame(string triggerName)
-    {
-        yield return null; // Wait one frame
-        GetComponent<Animator>().ResetTrigger(triggerName);
+        else if (dist <= range) // ONLY shoot if not in melee range
+        {
+            if (attackTimer >= rangedAttackRate)
+            {
+                attackTimer = 0;
+                anim.SetTrigger("Shoot");
+            }
+        }
     }
 
     void faceTarget(Collider other)
     {
-        // 1. Calculate the base direction to the target's center
+        if (other == null) return;
+
+        // 1. Get the target's center for precision
         Vector3 targetCenter = other.bounds.center;
-        Vector3 fullDirection = targetCenter - transform.position;
+        Vector3 directionToTarget = targetCenter - transform.position;
 
-        if (fullDirection.sqrMagnitude > 0.01f)
+        if (directionToTarget.sqrMagnitude > 0.01f)
         {
-            // --- HORIZONTAL ROTATION (Main Model) ---
-            // Flatten the direction by removing the Y difference
-            Vector3 horizontalDirection = new Vector3(fullDirection.x, 0, fullDirection.z);
-            if (horizontalDirection != Vector3.zero)
+            // --- HORIZONTAL ROTATION (Body) ---
+            // We only want the body to rotate on the Y-axis (left/right)
+            Vector3 horizontalDir = new Vector3(directionToTarget.x, 0, directionToTarget.z);
+            if (horizontalDir != Vector3.zero)
             {
-                Quaternion horizontalRot = Quaternion.LookRotation(horizontalDirection);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, horizontalRot, Time.deltaTime * 450f);
+                Quaternion bodyRotation = Quaternion.LookRotation(horizontalDir);
+                transform.rotation = Quaternion.Slerp(transform.rotation, bodyRotation, Time.deltaTime * 5f);
             }
 
-            // --- VERTICAL ROTATION (shootPos) ---
-            if (shootPos != null)
+            // --- VERTICAL ROTATION (Head/ShootPos) ---
+            if (headPos != null)
             {
-                // Direction from shootPos specifically to the target
-                Vector3 relativeDir = targetCenter - shootPos.position;
+                // Calculate direction from the head to the target
+                Vector3 verticalDir = targetCenter - headPos.position;
 
-                // LookRotation towards the target, but keep shootPos upright relative to parent
-                Quaternion verticalRot = Quaternion.LookRotation(relativeDir);
+                if (verticalDir != Vector3.zero)
+                {
+                    // Create a rotation that looks at the target
+                    Quaternion lookAtTarget = Quaternion.LookRotation(verticalDir);
 
-                // Smoothly rotate the shootPos
-                shootPos.rotation = Quaternion.RotateTowards(shootPos.rotation, verticalRot, Time.deltaTime * 450f);
+                    // Slerp the head/shootPos independently to look up or down
+                    // Adjust '10f' to change how "snappy" the head tracking is
+                    headPos.rotation = Quaternion.Slerp(headPos.rotation, lookAtTarget, Time.deltaTime * 10f);
 
-                Debug.DrawRay(shootPos.position, shootPos.forward * range, Color.red);
+                    // Ensure shootPos stays aligned with head tracking
+                    if (shootPos != null)
+                    {
+                        shootPos.rotation = headPos.rotation;
+                    }
+                }
             }
         }
     }
 
-    public void MeleeImpact()
+    public void Melee()
     {
-        // Re-check distance to ensure player didn't dodge mid-animation
-        if (target != null && Vector3.Distance(transform.position, target.transform.position) <= meleeRange)
+        if (target != null)
         {
-            IDamage hit = target.GetComponent<IDamage>();
-            if (hit != null)
+            Vector3 closestPoint = target.GetComponent<Collider>().ClosestPoint(transform.position);
+            if (Vector3.Distance(transform.position, closestPoint) <= meleeRange)
             {
-                hit.takeDamage(meleeDamage, DamageType.stationary);
+                IDamage hit = target.GetComponent<IDamage>();
+                if (hit != null)
+                {
+                    hit.takeDamage(meleeDamage, DamageType.stationary);
+                }
             }
         }
     }
 
-    void Shoot()
+    public void Shoot()
     {
+        // Ensure we are aiming perfectly right now
+        AimShootPosAtTarget(target.transform);
+
         if (useBurstFire)
         {
             // If burst fire is enabled for this enemy, start the coroutine
@@ -331,25 +352,19 @@ public class enemyAI : MonoBehaviour, IDamage
         }
         else
         {
-            
-            // If not using burst fire, fire a single shot exactly as before
-            shootTimer = 0; // Reset the timer immediately for the next single shot
-
             aud.PlayOneShot(shootAud);
-            
-            anim.SetTrigger("Shoot");
             FireProjectile(target.transform);
         }
     }
 
     IEnumerator FireBurstRoutine()
     {
-        shootTimer = 0; // Reset timer here to define delay between bursts
-
         for (int i = 0; i < shotsPerBurst; i++)
         {
-            FireProjectile(target.transform); // Call the helper method to fire the shot
-            anim.SetTrigger("Shoot");
+            // Aim immediately before each shot within the burst
+            AimShootPosAtTarget(target.transform);
+
+            FireProjectile(target.transform);
             if (i < 2)
             {
                 yield return new WaitForSeconds(burstFireRate);
@@ -357,6 +372,23 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
+    void AimShootPosAtTarget(Transform targetTransform)
+    {
+        if (shootPos == null || targetTransform == null) return;
+
+        // Calculate the direction from the gun barrel position to the target's center
+        Vector3 targetCenter = targetTransform.GetComponent<Collider>().bounds.center;
+        Vector3 directionToTarget = targetCenter - shootPos.position;
+
+        // Create the rotation needed to look along that direction
+        Quaternion requiredRotation = Quaternion.LookRotation(directionToTarget);
+
+        // Apply the rotation instantly to override the animation's influence
+        shootPos.rotation = requiredRotation;
+
+        // Optional: Draw a debug ray right before the shot fires to verify aim
+        Debug.DrawRay(shootPos.position, shootPos.forward * range, Color.green, 1f);
+    }
 
     // Helper method to handle the actual instantiation of the bullet
     void FireProjectile(Transform currentTarget)

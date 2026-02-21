@@ -166,11 +166,11 @@ PrefabInstance:
     - target: {fileID: 3551249246838891559, guid: 2fdfdc9f991b59a48892815a9e6f4ebb, type: 3}
       propertyPath: 'waves.Array.data[0].enemies.Array.data[0]'
       value: 
-      objectReference: {fileID: -2083157248834706628, guid: 35f6a773a088ef64088b083ae5a2122a, type: 3}
+      objectReference: {fileID: 2260181477733362687, guid: 91fe4eba0aa50e7458c92e0aa6df6db8, type: 3}
     - target: {fileID: 3551249246838891559, guid: 2fdfdc9f991b59a48892815a9e6f4ebb, type: 3}
       propertyPath: 'waves.Array.data[0].enemies.Array.data[1]'
       value: 
-      objectReference: {fileID: 2079683794918739316, guid: 48fe2e05a83d25947a792d596f044f7b, type: 3}
+      objectReference: {fileID: 2260181477733362687, guid: 91fe4eba0aa50e7458c92e0aa6df6db8, type: 3}
     - target: {fileID: 3551249246838891559, guid: 2fdfdc9f991b59a48892815a9e6f4ebb, type: 3}
       propertyPath: 'waves.Array.data[0].enemies.Array.data[2]'
       value: 
@@ -1026,7 +1026,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4388233603527997269, guid: e8de2c659a0504d4180ea7d3ccef36bc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 48.78
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 4388233603527997269, guid: e8de2c659a0504d4180ea7d3ccef36bc, type: 3}
       propertyPath: m_LocalPosition.y

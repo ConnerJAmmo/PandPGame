@@ -1,13 +1,12 @@
 fileFormatVersion: 2
-guid: 0392ad5188ec61545b5b7f77789a7dfb
+guid: 071035919658fc84e8be0710bb62c512
 AssetOrigin:
   serializedVersion: 1
-  productId: 322588
-  packageName: "[FREE] Fantasy Monster 01 (Rework) \u2013 Game Ready (Rig + Animation)
-    \u2013 PixeliusVita"
-  packageVersion: 2.0
-  assetPath: Assets/Stylized3DMonster/Monster01/Monster01_AllAnim.fbx
-  uploadId: 832882
+  productId: 336904
+  packageName: Fantasy Monster 3D Model 05 - Game Ready - PixeliusVita
+  packageVersion: 1.0
+  assetPath: Assets/Stylized3DMonster/Monster05/Monster05_AllAnim.fbx
+  uploadId: 800224
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -15,8 +14,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material
-    second: {fileID: 2100000, guid: ccc24bae7b8239146826593eab59e41e, type: 2}
+      name: Material.001
+    second: {fileID: 2100000, guid: 4409ccd40b7df014c85734828b102b94, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -28,7 +27,7 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
-    motionNodeName: root
+    motionNodeName: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -44,11 +43,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Monster01_Attack01
-      takeName: Monster01_Attack01
-      internalID: -304819389825454689
+      name: Monster05_Attack01
+      takeName: Monster05_Attack01
+      internalID: 1197469380428245051
       firstFrame: 0
-      lastFrame: 60
+      lastFrame: 70
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -57,12 +56,12 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
+      keepOriginalPositionXZ: 1
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
@@ -73,96 +72,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Monster01_Attack01_InPlace
-      takeName: Monster01_Attack01_InPlace
-      internalID: 165201159042120590
-      firstFrame: 0
-      lastFrame: 60
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Monster01_Attack02
-      takeName: Monster01_Attack02
-      internalID: 2538265998220997932
-      firstFrame: 0
-      lastFrame: 60
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Monster01_Attack02_InPlace
-      takeName: Monster01_Attack02_InPlace
-      internalID: -880140053597506102
-      firstFrame: 0
-      lastFrame: 60
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Monster01_Attack03
-      takeName: Monster01_Attack03
-      internalID: 1609715895198182266
+      name: Monster05_Attack02
+      takeName: Monster05_Attack02
+      internalID: -3139470851920289419
       firstFrame: 0
       lastFrame: 70
       wrapMode: 0
@@ -189,19 +101,19 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Monster01_Attack03_InPlace
-      takeName: Monster01_Attack03_InPlace
-      internalID: -1845753943073101568
-      firstFrame: 37
-      lastFrame: 70
+      name: Monster05_Attack03
+      takeName: Monster05_Attack03
+      internalID: -3763460786594528814
+      firstFrame: 20
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -213,7 +125,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.40583548
+      - time: 0.08930156
         functionName: Melee
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -225,11 +137,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Monster01_Die
-      takeName: Monster01_Die
-      internalID: -2587339704355898
+      name: Monster05_Die
+      takeName: Monster05_Die
+      internalID: 1022330966478271460
       firstFrame: 0
-      lastFrame: 30
+      lastFrame: 33
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -254,38 +166,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Monster01_Die_InPlace
-      takeName: Monster01_Die_InPlace
-      internalID: 1865361057468392452
-      firstFrame: 0
-      lastFrame: 30
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Monster01_GetHit
-      takeName: Monster01_GetHit
-      internalID: 1754010458576217132
+      name: Monster05_GetHit
+      takeName: Monster05_GetHit
+      internalID: -4025460563635356346
       firstFrame: 0
       lastFrame: 20
       wrapMode: 0
@@ -312,9 +195,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Monster01_Idle
-      takeName: Monster01_Idle
-      internalID: 833247595064248142
+      name: Monster05_Idle
+      takeName: Monster05_Idle
+      internalID: 5051153843234253332
       firstFrame: 0
       lastFrame: 89
       wrapMode: 0
@@ -341,9 +224,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Monster01_Idle_v02
-      takeName: Monster01_Idle_v02
-      internalID: -159245728245943870
+      name: Monster05_Idle_v02
+      takeName: Monster05_Idle_v02
+      internalID: -5940660592794892372
       firstFrame: 0
       lastFrame: 180
       wrapMode: 0
@@ -370,38 +253,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Monster01_Run
-      takeName: Monster01_Run
-      internalID: -5007087177635026528
-      firstFrame: 0
-      lastFrame: 20
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Monster01_Run_InPlace
-      takeName: Monster01_Run_InPlace
-      internalID: 8750682839232828028
+      name: Monster05_Run
+      takeName: Monster05_Run
+      internalID: -8167155689886659855
       firstFrame: 0
       lastFrame: 20
       wrapMode: 0
@@ -411,13 +265,13 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
+      keepOriginalPositionXZ: 1
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
@@ -428,11 +282,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Monster01_Shoot
-      takeName: Monster01_Shoot
-      internalID: 2350722091203344393
-      firstFrame: 0
-      lastFrame: 70
+      name: Monster05_Shoot
+      takeName: Monster05_Shoot
+      internalID: -428835777619045749
+      firstFrame: 20
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -452,7 +306,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.44120246
+      - time: 0.19893909
         functionName: Shoot
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -464,9 +318,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Monster01_Stunned
-      takeName: Monster01_Stunned
-      internalID: 623936680247502007
+      name: Monster05_Stunned
+      takeName: Monster05_Stunned
+      internalID: 5023603229383048735
       firstFrame: 0
       lastFrame: 89
       wrapMode: 0
@@ -493,38 +347,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Monster01_Walk
-      takeName: Monster01_Walk
-      internalID: 5019908392226729737
-      firstFrame: 0
-      lastFrame: 40
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Monster01_Walk_InPlace
-      takeName: Monster01_Walk_InPlace
-      internalID: 2245565933525412577
+      name: Monster05_Walk
+      takeName: Monster05_Walk
+      internalID: -6851452830490591434
       firstFrame: 0
       lastFrame: 40
       wrapMode: 0
