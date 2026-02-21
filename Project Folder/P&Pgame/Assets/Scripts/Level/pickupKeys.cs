@@ -9,11 +9,14 @@ public class pickupKeys : MonoBehaviour
     {
         IPickupKeys pick = other.GetComponent<IPickupKeys>();
 
-        if(pick != null)
-        {
-            pick.getKey(keyName);
-            Destroy(gameObject);
-            
+        if (other.CompareTag("Player"))
+{
+            if (pick != null)
+            {
+                pick.getKey(keyName);
+                Destroy(gameObject);
+
+            }
         }
     }
 

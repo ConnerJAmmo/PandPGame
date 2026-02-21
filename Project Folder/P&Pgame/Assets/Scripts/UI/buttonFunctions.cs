@@ -82,7 +82,9 @@ public class buttonFunctions : MonoBehaviour
 
     public void Options()
     {
-        gameManager.instance.openOptions();
+        PlayerPrefs.SetString("PreviousScene", SceneManager.GetActiveScene().name);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("OptionsMenu", LoadSceneMode.Additive);
     }
 
     public void Pause()
@@ -120,7 +122,8 @@ public class buttonFunctions : MonoBehaviour
     public void mainMenu()
     {
         gameManager.instance.CompleteLevelAndLoadNext(mainMenuScene);
-        gameManager.instance.stateUnpause();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void nextLevel()
