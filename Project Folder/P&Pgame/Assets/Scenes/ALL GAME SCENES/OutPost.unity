@@ -17358,39 +17358,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4269682990540992, guid: f7968a2e493ab01448ea52078fa8a896, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 18.036009
+      value: 17.962751
       objectReference: {fileID: 0}
     - target: {fileID: 4269682990540992, guid: f7968a2e493ab01448ea52078fa8a896, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 65.526245
+      value: 66.070435
       objectReference: {fileID: 0}
     - target: {fileID: 4269682990540992, guid: f7968a2e493ab01448ea52078fa8a896, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8496273
+      value: 0.8476688
       objectReference: {fileID: 0}
     - target: {fileID: 4269682990540992, guid: f7968a2e493ab01448ea52078fa8a896, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.16844752
+      value: -0.17804116
       objectReference: {fileID: 0}
     - target: {fileID: 4269682990540992, guid: f7968a2e493ab01448ea52078fa8a896, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.4902172
+      value: 0.4890872
       objectReference: {fileID: 0}
     - target: {fileID: 4269682990540992, guid: f7968a2e493ab01448ea52078fa8a896, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.09719068
+      value: -0.10272601
       objectReference: {fileID: 0}
     - target: {fileID: 4269682990540992, guid: f7968a2e493ab01448ea52078fa8a896, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -11.008
+      value: -11.616
       objectReference: {fileID: 0}
     - target: {fileID: 4269682990540992, guid: f7968a2e493ab01448ea52078fa8a896, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 61.881
+      value: 62.11
       objectReference: {fileID: 0}
     - target: {fileID: 4269682990540992, guid: f7968a2e493ab01448ea52078fa8a896, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -19.663
+      value: -20.83
       objectReference: {fileID: 0}
     - target: {fileID: 4500529609975914655, guid: f7968a2e493ab01448ea52078fa8a896, type: 3}
       propertyPath: m_LODs.Array.data[2].screenRelativeHeight
