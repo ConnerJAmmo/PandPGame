@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccf9859619715a24b975da7ed6792259, type: 3}
   m_Name: Gun - CustomRifle
   m_EditorClassIdentifier: Assembly-CSharp::GunStats
-  gunModel: {fileID: 4669135718247724430, guid: dc1f5a8daf8a4ec45917798d55c6ef91, type: 3}
+  gunModel: {fileID: 3425835552204042209, guid: 9241c2d8d80987947a5fa9ff15f5fbea, type: 3}
   gunName: CustomRifle
   DistLevel: 0
   shootDist: 1200
@@ -23,7 +23,7 @@ MonoBehaviour:
   fireRateLevel: 0
   shootRate: 0.1
   shootRateOrig: 0.1
-  ammoCur: 50
+  ammoCur: 42
   ammoMax: 50
   shootPos: {fileID: 0}
   hitEffect: {fileID: 8591032446617569335, guid: 4131349b8b5025846a9ecb06b7eb2d73, type: 3}

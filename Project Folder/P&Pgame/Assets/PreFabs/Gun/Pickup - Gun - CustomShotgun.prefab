@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1671501747581310117
+--- !u!1 &9011524059904995842
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6808653002949172281}
-  - component: {fileID: 1366498006549662261}
-  - component: {fileID: 6730749679895870956}
-  - component: {fileID: 1919641474376708867}
-  - component: {fileID: 1030124919615982096}
+  - component: {fileID: 8271977725891986746}
+  - component: {fileID: 3629869049662280448}
+  - component: {fileID: 1988276032034428249}
+  - component: {fileID: 95187825934399979}
+  - component: {fileID: 7080965319385799293}
   m_Layer: 0
-  m_Name: Pickup - Gun - CustomRifle
+  m_Name: Pickup - Gun - CustomShotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6808653002949172281
+--- !u!4 &8271977725891986746
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671501747581310117}
+  m_GameObject: {fileID: 9011524059904995842}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 550.1553, y: 0.54046917, z: 607.17847}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 145.26837, y: 1, z: 113.25}
+  m_LocalScale: {x: 2.38, y: 2.38, z: 2.38}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1366498006549662261
+--- !u!33 &3629869049662280448
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671501747581310117}
-  m_Mesh: {fileID: -2737408855757260867, guid: 54e55bf5de155f244a4b505083e96610, type: 3}
---- !u!23 &6730749679895870956
+  m_GameObject: {fileID: 9011524059904995842}
+  m_Mesh: {fileID: 501172728158019765, guid: efa8f110c502bff4c82e9345d253cfad, type: 3}
+--- !u!23 &1988276032034428249
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671501747581310117}
+  m_GameObject: {fileID: 9011524059904995842}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 945025d3372a0ba4aa54fd0b79072bfa, type: 2}
+  - {fileID: 2100000, guid: 49f1cd5fe35d124428109defdf370e8e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,13 +92,13 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &1919641474376708867
+--- !u!135 &95187825934399979
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671501747581310117}
+  m_GameObject: {fileID: 9011524059904995842}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -113,16 +113,16 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.5028949
   m_Center: {x: -0.018376306, y: -0.11330216, z: 0.16474873}
---- !u!114 &1030124919615982096
+--- !u!114 &7080965319385799293
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671501747581310117}
+  m_GameObject: {fileID: 9011524059904995842}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08f67e3d47f22db48b15855bc082ecc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::pickupGuns
-  gun: {fileID: 11400000, guid: 2f6fb1e410ddf1d4d97ff789081797a0, type: 2}
+  gun: {fileID: 11400000, guid: 3e1810c40b64d204f8610cec15bb3756, type: 2}
