@@ -4887,11 +4887,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27036156c63734b4dae0ffd729776b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
+  target: {fileID: 0}
   dotZonePrefab: {fileID: 0}
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
-    m_Bits: 4104
+    m_Bits: 8200
   blockLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -4908,10 +4909,9 @@ MonoBehaviour:
   bulletProjectile: 0
   bulletEffectType: 0
   meshType: 0
-  bulletEndPosition: {fileID: 0}
-  fire2Effect: {fileID: 0}
-  fire3Effect: {fileID: 0}
-  target: {fileID: 0}
+  endPosition: {fileID: 0}
+  fireCylinder: {fileID: 0}
+  fireEffect: {fileID: 0}
 --- !u!198 &4251143904839232142
 ParticleSystem:
   m_ObjectHideFlags: 0

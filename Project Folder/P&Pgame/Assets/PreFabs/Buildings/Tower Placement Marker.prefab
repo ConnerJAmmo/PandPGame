@@ -162,6 +162,7 @@ GameObject:
   - component: {fileID: 6207082154435327072}
   - component: {fileID: 5399813507678515902}
   - component: {fileID: 5980838504841933146}
+  - component: {fileID: 8083011355789198507}
   m_Layer: 0
   m_Name: Cone
   m_TagString: Untagged
@@ -644,6 +645,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!208 &8083011355789198507
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158757046877645225}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 1.4, y: 2.5, z: 1.4}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &3628126270750265803
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,11 +1052,6 @@ MonoBehaviour:
   - {fileID: 1361402013487122, guid: d140c16f5f35beb468cf594b2abd8cab, type: 3}
   - {fileID: 1361402013487122, guid: f068dd5a87ce9d542a6b627bced2a7d3, type: 3}
   forceField: {fileID: 6875421355684467005, guid: 3b8fd09b95dde204a80685b917b67f77, type: 3}
-  stoneCost: 10
-  woodCost: 10
-  towerGoldCost: 20
-  upgradeCost: 30
-  shieldCost: 10
   aud: {fileID: 6762427419417871096}
   mined5Aud:
   - {fileID: 8300000, guid: b7086d3869ebde1449efcf65bab85804, type: 3}

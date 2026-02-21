@@ -88,7 +88,7 @@ public class enemyAI : MonoBehaviour, IDamage
         else if (other.CompareTag("Shield"))
         {
             turretsInRange.Add(other);
-            Debug.Log("Shield Detected");
+            //Debug.Log("Shield Detected");
         }
         else if (other.CompareTag("Base"))
         {

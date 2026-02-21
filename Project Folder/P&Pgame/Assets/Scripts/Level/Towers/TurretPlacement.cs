@@ -31,7 +31,7 @@ public class TurretPlacement : MonoBehaviour, ITurret
 
     void ITurret.SpawnTower(char key)
     {
-        Debug.Log("SpawnTower called with: " + key);
+        //Debug.Log("SpawnTower called with: " + key);
         PlayerCont player = gameManager.instance.player.GetComponent<PlayerCont>();
 
         if (key == 'z')
@@ -48,7 +48,7 @@ public class TurretPlacement : MonoBehaviour, ITurret
             }
             else if (turretLevel != 0 && turretLevel != 3 && player.goldCount >= upgradeCost)
             {
-                Debug.Log("Upgrade Attempt");
+                //Debug.Log("Upgrade Attempt");
                 transform.GetComponent<ITurret>().UpgradeTower(key);
             }
         }
@@ -66,7 +66,7 @@ public class TurretPlacement : MonoBehaviour, ITurret
             }
             else if (turretLevel != 0 && turretLevel != 3 && player.goldCount >= upgradeCost)
             {
-                Debug.Log("Upgrade Attempt");
+                //Debug.Log("Upgrade Attempt");
                 transform.GetComponent<ITurret>().UpgradeTower(key);
             }
         }
@@ -74,16 +74,16 @@ public class TurretPlacement : MonoBehaviour, ITurret
 
     void ITurret.UpgradeTower(char key)
     {
-        Debug.Log("Upgrade Registered");
+        //Debug.Log("Upgrade Registered");
         PlayerCont player = gameManager.instance.player.GetComponent<PlayerCont>();
 
         if (key == 'z' && transform.GetChild(1).gameObject.CompareTag("ST Turret"))
         {
-            Debug.Log("Upgrading Gun");
+            //Debug.Log("Upgrading Gun");
             if (hasShield)
             {
                 shieldHP = transform.GetComponentInChildren<ForceField>().HP;
-                Debug.Log("Recording Shield Health: " + shieldHP);
+                //Debug.Log("Recording Shield Health: " + shieldHP);
             }
             Destroy(transform.GetChild(1).gameObject);
             GameObject newTower = Instantiate(STTowers[turretLevel++], 
@@ -101,11 +101,11 @@ public class TurretPlacement : MonoBehaviour, ITurret
         }
         else if (key == 'x' && transform.GetChild(1).gameObject.CompareTag("AOE Turret"))
         {
-            Debug.Log("Upgrading Rocket");
+            //Debug.Log("Upgrading Rocket");
             if (hasShield)
             {
                 shieldHP = transform.GetComponentInChildren<ForceField>().HP;
-                Debug.Log("Recording Shield Health: " + shieldHP);
+                //Debug.Log("Recording Shield Health: " + shieldHP);
             }
             Destroy(transform.GetChild(1).gameObject);
             GameObject newTower = Instantiate(AOETowers[turretLevel++],
@@ -125,7 +125,7 @@ public class TurretPlacement : MonoBehaviour, ITurret
 
     void ITurret.ShieldGenerator()
     {
-        Debug.Log("Key Registered: c");
+        //Debug.Log("Key Registered: c");
         PlayerCont player = gameManager.instance.player.GetComponent<PlayerCont>();
         Transform detectRadius = transform.GetChild(1).GetChild(0);
 
@@ -164,7 +164,7 @@ public class TurretPlacement : MonoBehaviour, ITurret
                 gameManager.instance.removeGold(goldToSpend);
                 gameManager.instance.updateResourcesUI();
 
-                Debug.Log($"Spent {goldToSpend} gold to repair {goldToSpend * hpPerGold} HP.");
+                //Debug.Log($"Spent {goldToSpend} gold to repair {goldToSpend * hpPerGold} HP.");
             }
         }
     }

@@ -352,7 +352,7 @@ MonoBehaviour:
   FOV: 90
   persistenceTime: 1
   hasMelee: 1
-  meleeRange: 2
+  meleeRange: 3
   meleeDamage: 2
   aud: {fileID: 1475651035050248472}
   shootAud: {fileID: 8300000, guid: 96f24f3596be2b0438befde9ba471d1b, type: 3}
@@ -424,10 +424,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.1
-  m_Height: 0.1
+  m_Radius: 0.4
+  m_Height: 1.5
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!54 &5313913192904492935
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -454,7 +454,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 1
 --- !u!82 &1475651035050248472
 AudioSource:
   m_ObjectHideFlags: 0

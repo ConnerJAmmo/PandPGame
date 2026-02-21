@@ -238,7 +238,7 @@ MonoBehaviour:
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
-    m_Bits: 4104
+    m_Bits: 8200
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
@@ -709,7 +709,7 @@ MonoBehaviour:
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
-    m_Bits: 4104
+    m_Bits: 8200
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
