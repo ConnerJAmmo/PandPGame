@@ -216,9 +216,6 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
             pickModel.transform.Rotate(0, 0, -90);
             pickRotated = true;
             mine();
-            
-            
-
         }
         if (Input.GetButtonDown("z"))
         {
@@ -343,7 +340,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
             speed /= sprintMod;
             camScript.ResetFOV();
         } This sprint is for hold to sprint */
-        if(Input.GetButton("Sprint"))
+        if(Input.GetButtonDown("Sprint"))
         {
             if(speed == baseSpeed)
             {
