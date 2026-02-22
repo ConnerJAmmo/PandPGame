@@ -4690,6 +4690,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::enemyAI
   numTurrets: 0
   target: {fileID: 0}
+  playerDetected: 0
   animTranSpeed: 8
   anim: {fileID: 3860411116311545315}
   shootPos: {fileID: 5048306828572419944}
@@ -4698,13 +4699,20 @@ MonoBehaviour:
   texture: {fileID: 2100000, guid: 35e5dafa6a479b74bad185881be745cd, type: 2}
   HP: 25
   FOV: 90
-  aud: {fileID: 4542384404652275148}
-  shootAud: {fileID: 8300000, guid: 96f24f3596be2b0438befde9ba471d1b, type: 3}
-  shootAudVol: 0.3
+  persistenceTime: 0
+  hasShoot: 0
   range: 50
   shotsPerBurst: 3
   burstFireRate: 2
-  fireRate: 2
+  rangedAttackRate: 0.1
+  hasMelee: 0
+  meleeRange: 0
+  meleeDamage: 0
+  meleeAttackRate: 0.1
+  baseFocus: 0
+  aud: {fileID: 4542384404652275148}
+  shootAud: {fileID: 8300000, guid: 96f24f3596be2b0438befde9ba471d1b, type: 3}
+  shootAudVol: 0.3
 --- !u!195 &6728203352098554522
 NavMeshAgent:
   m_ObjectHideFlags: 0
