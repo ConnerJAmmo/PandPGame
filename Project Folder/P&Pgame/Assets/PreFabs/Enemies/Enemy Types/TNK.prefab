@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: -3434738756516685806}
   - component: {fileID: -5426190677328703018}
   - component: {fileID: -4897624049635759312}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TNK
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
