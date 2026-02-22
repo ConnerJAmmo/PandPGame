@@ -60,20 +60,22 @@ MonoBehaviour:
   headPos: {fileID: 2622595232636146285}
   bullet: {fileID: 7983933263039930371, guid: 75027b776d6373842a94bb2aaaf2c716, type: 3}
   texture: {fileID: 2100000, guid: f41b86ad68e0b8f488d8df0350bfc69b, type: 2}
-  HP: 5
+  HP: 25
   FOV: 90
   persistenceTime: 1
+  hasShoot: 1
+  range: 15
+  shotsPerBurst: 1
+  burstFireRate: 0
+  rangedAttackRate: 5
   hasMelee: 1
   meleeRange: 3
-  meleeDamage: 2
+  meleeDamage: 5
+  meleeAttackRate: 5
+  baseFocus: 0
   aud: {fileID: -4897624049635759312}
   shootAud: {fileID: 8300000, guid: 96f24f3596be2b0438befde9ba471d1b, type: 3}
   shootAudVol: 0.3
-  range: 25
-  shotsPerBurst: 1
-  burstFireRate: 0
-  meleeAttackRate: 0.1
-  rangedAttackRate: 0.1
 --- !u!195 &1391411154320851751
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -84,7 +86,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 4.5
+  m_Speed: 1.5
   m_Acceleration: 16
   avoidancePriority: 50
   m_AngularSpeed: 600
@@ -106,7 +108,7 @@ Animator:
   m_GameObject: {fileID: 4787734284849576031}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: d7c24074d0e0a9e42ae9913f93d6a65e, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1dec998d3bb486b41b3b38f72a095307, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -369,7 +371,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 25
+  m_Radius: 15
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &8198302746323613321
 PrefabInstance:
