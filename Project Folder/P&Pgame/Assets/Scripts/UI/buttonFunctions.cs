@@ -39,17 +39,19 @@ public class buttonFunctions : MonoBehaviour
 
     public void Restart()
     {
+        
         if (gameManager.instance.playerScript.gunList.Count != 0)
         {
             gameManager.instance.playerScript.resetGunStatsToOrig();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            gameManager.instance.stateUnpause();   
+            gameManager.instance.CompleteLevelAndLoadNext(SceneManager.GetActiveScene().buildIndex);
+           //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         else
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            gameManager.instance.stateUnpause();   
+            gameManager.instance.CompleteLevelAndLoadNext(SceneManager.GetActiveScene().buildIndex);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+        gameManager.instance.stateUnpause();
     }
     public void Quit()
     {
@@ -68,12 +70,10 @@ public class buttonFunctions : MonoBehaviour
         if (gameManager.instance.playerScript.gunList.Count != 0)
         {
             gameManager.instance.playerScript.resetGunStatsToOrig();
-            gameManager.instance.playerScript.resetGunStatsToOrig();
             Application.Quit(); 
         }
         else
         {
-            gameManager.instance.playerScript.resetGunStatsToOrig();
             Application.Quit();  
         }
 
@@ -85,11 +85,6 @@ public class buttonFunctions : MonoBehaviour
         PlayerPrefs.SetString("PreviousScene", SceneManager.GetActiveScene().name);
         PlayerPrefs.Save();
         SceneManager.LoadScene("OptionsMenu", LoadSceneMode.Additive);
-    }
-
-    public void Pause()
-    {
-        gameManager.instance.openPause();
     }
 
     public void UpgradeDamage()
@@ -122,8 +117,7 @@ public class buttonFunctions : MonoBehaviour
     public void mainMenu()
     {
         gameManager.instance.CompleteLevelAndLoadNext(mainMenuScene);
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        gameManager.instance.stateUnpause();
     }
 
     public void nextLevel()

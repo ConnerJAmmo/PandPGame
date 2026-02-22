@@ -152,6 +152,8 @@ public class gameManager : MonoBehaviour, goldManage
         instance = this;
         timeScaleOrig = Time.timeScale;
 
+        
+
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerCont>();
         baseTower = GameObject.FindWithTag("Base");
@@ -176,6 +178,8 @@ public class gameManager : MonoBehaviour, goldManage
         mothershipCrystalMaxCount = crystalInMothership.Count();
 
         updateResourcesUI();
+        updateEnemyCount(0);
+        updateEnemyCountTotal(0);
 
         // Bridge to connect all the save functions and scripts together
         if (!saveBridge)
@@ -188,6 +192,12 @@ public class gameManager : MonoBehaviour, goldManage
     
     void Update()
     {
+        if (menuActive == null)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
         if (Input.GetButtonDown("Cancel"))
         {
             if (menuActive == null)
@@ -203,12 +213,12 @@ public class gameManager : MonoBehaviour, goldManage
             {
                  stateUnpause();
             }
-            else if (menuActive == menuOptions)
-            {
-                menuActive.SetActive(false);
-                menuActive = menuPause;
-                menuActive.SetActive(true);
-            }
+            // else if (menuActive == menuOptions)
+            // {
+            //     menuActive.SetActive(false);
+            //     menuActive = menuPause;
+            //     menuActive.SetActive(true);
+            // }
         }
 
         SetDamageUpgradeText();
@@ -317,7 +327,7 @@ public class gameManager : MonoBehaviour, goldManage
         Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(false);
         menuActive = null;
-        aud.PlayOneShot(menuInteractionAud, menuVol);
+        //aud.PlayOneShot(menuInteractionAud, menuVol);
     }
 
     public void openOptions()
@@ -565,15 +575,22 @@ public class gameManager : MonoBehaviour, goldManage
     
     public void CompleteLevelAndLoadNext(int nextSceneIndex)
     {
+
         if (!saveBridge)
             saveBridge = FindFirstObjectByType<SaveBridge>();
         saveBridge?.CollectAndSave();
 
+    
         // record progress as "next scene" (So Continue resumes next level)
         GameSession.instance.Data.currentLevelIndex = nextSceneIndex;
         GameSession.instance.SaveGame();
 
+        
+
         LevelLoader.instance.LoadLevel(nextSceneIndex);
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     } 
     
     // ------------------------------End---------------------------------------//
