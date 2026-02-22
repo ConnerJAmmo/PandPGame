@@ -68,9 +68,9 @@ GameObject:
   - component: {fileID: -7359764510051901809}
   - component: {fileID: 2546566247751135628}
   - component: {fileID: 7220446657859371626}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BFA
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
