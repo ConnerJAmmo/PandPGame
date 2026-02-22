@@ -30,7 +30,7 @@ public class SpireAOE : MonoBehaviour
 
         if (other.CompareTag("Enemy"))
         {
-            Debug.Log("Active");
+            //Debug.Log("Active");
 
             IDamage ouchie = other.GetComponent<IDamage>();
 

@@ -19,7 +19,7 @@ public class buttonFunctions : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("No previous scene recorded! Defaulting to Menu.");
+                //Debug.LogWarning("No previous scene recorded! Defaulting to Menu.");
                 SceneManager.LoadScene("MainMenu"); // Fallback
             }
         }
