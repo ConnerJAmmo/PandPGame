@@ -13,9 +13,9 @@ public class GunStats : ScriptableObject
     public int damageLevel;
     [Range(1, 15)] public int shootDamage;
     public int shootDamageOrig;
-    public int fireRateLevel;
+    public int maxAmmoLevel;
     [Range(0.1f, 4)] public float shootRate;
-    public float shootRateOrig;
+    public int maxAmmoOrig;
 
 
     public int ammoCur;

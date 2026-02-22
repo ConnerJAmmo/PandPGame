@@ -44,12 +44,10 @@ public class buttonFunctions : MonoBehaviour
         {
             gameManager.instance.playerScript.resetGunStatsToOrig();
             gameManager.instance.CompleteLevelAndLoadNext(SceneManager.GetActiveScene().buildIndex);
-           //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         else
         {
             gameManager.instance.CompleteLevelAndLoadNext(SceneManager.GetActiveScene().buildIndex);
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         gameManager.instance.stateUnpause();
     }
@@ -98,10 +96,10 @@ public class buttonFunctions : MonoBehaviour
 
     public void UpgradeFireRate()
     {
-        if (gameManager.instance.fireRateLevel != gameManager.instance.maxLevel
-            && gameManager.instance.goldCount >= gameManager.instance.fireRateUpgradeCost)
+        if (gameManager.instance.maxAmmoLevel != gameManager.instance.maxLevel
+            && gameManager.instance.goldCount >= gameManager.instance.maxAmmoUpgradeCost)
         {
-            gameManager.instance.upgradePlayerShootRate();
+            gameManager.instance.upgradePlayerMaxAmmo();
         }
     }
 

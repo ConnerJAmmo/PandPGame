@@ -20,9 +20,9 @@ MonoBehaviour:
   damageLevel: 0
   shootDamage: 15
   shootDamageOrig: 15
-  fireRateLevel: 0
+  maxAmmoLevel: 0
   shootRate: 0.1
-  shootRateOrig: 0.1
+  maxAmmoLevelOrig: 50
   ammoCur: 44
   ammoMax: 50
   shootPos: {fileID: 0}
