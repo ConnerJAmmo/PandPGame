@@ -60,7 +60,7 @@ public class enemyAI : MonoBehaviour, IDamage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        dynamicMat = texture;
+        dynamicMat = GetComponentInChildren<Renderer>().material;
         colorOrigin = dynamicMat.color;
         GetComponent<NavMeshAgent>().updateRotation = false;
         gameManager.instance.updateEnemyCount(1);
