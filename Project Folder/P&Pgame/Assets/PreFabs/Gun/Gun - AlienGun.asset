@@ -16,14 +16,17 @@ MonoBehaviour:
   gunName: Machine Gun
   DistLevel: 0
   shootDist: 1200
+  rangeUpgradeCost: 10
   shootDistOrig: 1200
-  damageLevel: 0
-  shootDamage: 15
+  damageLevel: 1
+  shootDamage: 20
+  damageUpgradeCost: 20
   shootDamageOrig: 15
   maxAmmoLevel: 0
   shootRate: 0.1
-  maxAmmoLevelOrig: 50
-  ammoCur: 41
+  maxAmmoOrig: 50
+  maxAmmoUpgradeCost: 10
+  ammoCur: 50
   ammoMax: 50
   shootPos: {fileID: 0}
   hitEffect: {fileID: 8591032446617569335, guid: 4131349b8b5025846a9ecb06b7eb2d73, type: 3}

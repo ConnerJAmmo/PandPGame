@@ -9,13 +9,16 @@ public class GunStats : ScriptableObject
     public string gunName;
     public int DistLevel;
     [Range(3, 1200)] public int shootDist;
+    public int rangeUpgradeCost;
     public int shootDistOrig;
     public int damageLevel;
     [Range(1, 15)] public int shootDamage;
+    public int damageUpgradeCost;
     public int shootDamageOrig;
     public int maxAmmoLevel;
     [Range(0.1f, 4)] public float shootRate;
     public int maxAmmoOrig;
+    public int maxAmmoUpgradeCost;
 
 
     public int ammoCur;

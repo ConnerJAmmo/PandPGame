@@ -507,7 +507,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
     {
         gunList[gunListPos].shootDist = gunList[gunListPos].shootDistOrig;
         gunList[gunListPos].shootDamage = gunList[gunListPos].shootDamageOrig;
-        gunList[gunListPos].ammoMax = gunList[gunListPos].maxAmmoOrig;
+        gunList[gunListPos].maxAmmoUpgradeCost = gameManager.instance.initalMaxAmmoUpgradeCost;
+        gunList[gunListPos].damageUpgradeCost = gameManager.instance.initialDamageUpgradeCost;
+        gunList[gunListPos].rangeUpgradeCost = gameManager.instance.initialRangeUpgradeCost;
         gunList[gunListPos].damageLevel = 0;
         gunList[gunListPos].maxAmmoLevel = 0;
         gunList[gunListPos].DistLevel = 0;
@@ -565,6 +567,9 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
         shootRate = gunList[gunListPos].shootRate;
         shootPos = gunList[gunListPos].shootPos;
         maxAmmo = gunList[gunListPos].ammoMax;
+        gameManager.instance.rangeUpgradeCost = gunList[gunListPos].rangeUpgradeCost;
+        gameManager.instance.damageUpgradeCost = gunList[gunListPos].damageUpgradeCost;
+        gameManager.instance.maxAmmoUpgradeCost = gunList[gunListPos].maxAmmoUpgradeCost;
 
         gunName = gunList[gunListPos].gunName;
         gameManager.instance.damageLevel = gunList[gunListPos].damageLevel;

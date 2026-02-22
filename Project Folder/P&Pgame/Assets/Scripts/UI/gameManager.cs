@@ -94,9 +94,9 @@ public class gameManager : MonoBehaviour, goldManage
     [SerializeField] int rangePreLevel;
     [SerializeField] public int maxLevel;
 
-    int initialDamageUpgradeCost = 10;
-    int initalMaxAmmoUpgradeCost = 10;
-    int initialRangeUpgradeCost = 10;
+    public int initialDamageUpgradeCost = 10;
+    public int initalMaxAmmoUpgradeCost = 10;
+    public int initialRangeUpgradeCost = 10;
     int mothershipCrystalMaxCount;
     public int mothershipCrystalCurrentCount;
     GameObject[] crystalInMothership;
@@ -457,8 +457,7 @@ public class gameManager : MonoBehaviour, goldManage
 
     public int upgradeMaxAmmo(int baseMaxAmmo)
     {
-        Debug.Log(baseMaxAmmo);
-        int maxAmmo = baseMaxAmmo + maxAmmoPreLevel;
+        int maxAmmo = baseMaxAmmo += maxAmmoPreLevel;
         return maxAmmo;
     }
 
@@ -491,7 +490,7 @@ public class gameManager : MonoBehaviour, goldManage
                 .shootDamage = upgradeDamage(playerScript.gunList[playerScript.gunListPos].shootDamage);
         playerScript.gunList[playerScript.gunListPos].damageLevel++;
         removeGold(damageUpgradeCost);
-        damageUpgradeCost += upgradeCostPreLevel;
+         playerScript.gunList[playerScript.gunListPos].damageUpgradeCost += upgradeCostPreLevel;
         SetDamageUpgradeText();
         playerScript.ChangeGun();
     }
@@ -499,10 +498,9 @@ public class gameManager : MonoBehaviour, goldManage
     {
         playerScript.gunList[playerScript.gunListPos]
             .ammoMax = upgradeMaxAmmo(playerScript.gunList[playerScript.gunListPos].ammoMax);
-        Debug.Log(playerScript.gunList[playerScript.gunListPos].ammoMax);
         playerScript.gunList[playerScript.gunListPos].maxAmmoLevel++;
         removeGold(maxAmmoUpgradeCost);
-        maxAmmoUpgradeCost += upgradeCostPreLevel;
+        playerScript.gunList[playerScript.gunListPos].maxAmmoUpgradeCost += upgradeCostPreLevel;
         SetMaxAmmoUpgradeText();
         UpdateAmmoUI(playerScript.gunList[playerScript.gunListPos].ammoCur, playerScript.gunList[playerScript.gunListPos].ammoMax);
         playerScript.ChangeGun();
@@ -513,7 +511,7 @@ public class gameManager : MonoBehaviour, goldManage
                 .shootDist = upgradeRange(playerScript.shootDist);
         playerScript.gunList[playerScript.gunListPos].DistLevel++;
         removeGold(rangeUpgradeCost);
-        rangeUpgradeCost += upgradeCostPreLevel;
+        playerScript.gunList[playerScript.gunListPos].rangeUpgradeCost += upgradeCostPreLevel;
         SetRangeUpgradeText();
 
         playerScript.ChangeGun();
