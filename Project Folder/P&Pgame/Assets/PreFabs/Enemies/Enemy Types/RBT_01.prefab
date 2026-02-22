@@ -1436,13 +1436,20 @@ MonoBehaviour:
   texture: {fileID: 2100000, guid: 98ec97c496fac904a811768eda3cc3f2, type: 2}
   HP: 20
   FOV: 90
-  aud: {fileID: 6543536762643622144}
-  shootAud: {fileID: 8300000, guid: 96f24f3596be2b0438befde9ba471d1b, type: 3}
-  shootAudVol: 0.3
+  persistenceTime: 0
+  hasShoot: 0
   range: 50
   shotsPerBurst: 1
   burstFireRate: 0
-  fireRate: 2
+  rangedAttackRate: 0.1
+  hasMelee: 0
+  meleeRange: 0
+  meleeDamage: 0
+  meleeAttackRate: 0.1
+  baseFocus: 0
+  aud: {fileID: 6543536762643622144}
+  shootAud: {fileID: 8300000, guid: 96f24f3596be2b0438befde9ba471d1b, type: 3}
+  shootAudVol: 0.3
 --- !u!195 &3588389157018784022
 NavMeshAgent:
   m_ObjectHideFlags: 0
