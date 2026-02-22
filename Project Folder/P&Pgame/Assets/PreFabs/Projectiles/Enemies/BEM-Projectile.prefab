@@ -75,7 +75,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 997d519d76335e148acf27725a8512fd, type: 2}
+  - {fileID: 2100000, guid: d93414a5118691e428b14cc5ab3fdd9f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -129,8 +129,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.043376923, g: 0, b: 1, a: 1}
-      key1: {r: 0, g: 0.59607846, b: 0.58463895, a: 0.5882353}
+      key0: {r: 0.9450981, g: 0.16470589, b: 0.16470589, a: 1}
+      key1: {r: 0.59607846, g: 0, b: 0.13385099, a: 0.5882353}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -154,7 +154,7 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -233,11 +233,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27036156c63734b4dae0ffd729776b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
+  target: {fileID: 0}
   dotZonePrefab: {fileID: 0}
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
-    m_Bits: 4104
+    m_Bits: 8200
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
@@ -254,10 +255,9 @@ MonoBehaviour:
   bulletProjectile: 0
   bulletEffectType: 0
   meshType: 0
-  bulletEndPosition: {fileID: 0}
-  fire2Effect: {fileID: 0}
-  fire3Effect: {fileID: 0}
-  target: {fileID: 0}
+  endPosition: {fileID: 0}
+  fireCylinder: {fileID: 0}
+  fireEffect: {fileID: 0}
 --- !u!135 &7285310559510226164
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -305,7 +305,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 997d519d76335e148acf27725a8512fd, type: 2}
+  - {fileID: 2100000, guid: d93414a5118691e428b14cc5ab3fdd9f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -359,8 +359,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.043376923, g: 0, b: 1, a: 1}
-      key1: {r: 0, g: 0.59607846, b: 0.58463895, a: 0.5882353}
+      key0: {r: 0.9450981, g: 0.16470589, b: 0.16470589, a: 1}
+      key1: {r: 0.59607846, g: 0, b: 0.13385099, a: 0.5882353}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -500,7 +500,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 997d519d76335e148acf27725a8512fd, type: 2}
+  - {fileID: 2100000, guid: d93414a5118691e428b14cc5ab3fdd9f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -554,8 +554,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.043376923, g: 0, b: 1, a: 1}
-      key1: {r: 0, g: 0.59607846, b: 0.58463895, a: 0.5882353}
+      key0: {r: 0.9450981, g: 0.16470589, b: 0.16470589, a: 1}
+      key1: {r: 0.59607846, g: 0, b: 0.13385099, a: 0.5882353}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -704,11 +704,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27036156c63734b4dae0ffd729776b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::damage
+  target: {fileID: 0}
   dotZonePrefab: {fileID: 0}
   hitEffectPrefab: {fileID: 0}
   damageLayers:
     serializedVersion: 2
-    m_Bits: 4104
+    m_Bits: 8200
   blockLayers:
     serializedVersion: 2
     m_Bits: 3584
@@ -725,10 +726,9 @@ MonoBehaviour:
   bulletProjectile: 0
   bulletEffectType: 0
   meshType: 0
-  bulletEndPosition: {fileID: 0}
-  fire2Effect: {fileID: 0}
-  fire3Effect: {fileID: 0}
-  target: {fileID: 0}
+  endPosition: {fileID: 0}
+  fireCylinder: {fileID: 0}
+  fireEffect: {fileID: 0}
 --- !u!135 &7257798564168716066
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -776,7 +776,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 997d519d76335e148acf27725a8512fd, type: 2}
+  - {fileID: 2100000, guid: d93414a5118691e428b14cc5ab3fdd9f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -830,8 +830,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.043376923, g: 0, b: 1, a: 1}
-      key1: {r: 0, g: 0.59607846, b: 0.58463895, a: 0.5882353}
+      key0: {r: 0.9450981, g: 0.16470589, b: 0.16470589, a: 1}
+      key1: {r: 0.59607846, g: 0, b: 0.13385099, a: 0.5882353}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}

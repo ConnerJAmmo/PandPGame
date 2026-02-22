@@ -40,7 +40,7 @@ public class ForceField : MonoBehaviour, IDamage
         HP -= amount;
 
         // Debug to prove it's this specific instance
-        Debug.Log($"{gameObject.name} took {amount} damage. HP left: {HP}");
+        //Debug.Log($"{gameObject.name} took {amount} damage. HP left: {HP}");
 
         if (HP <= 0)
         {
