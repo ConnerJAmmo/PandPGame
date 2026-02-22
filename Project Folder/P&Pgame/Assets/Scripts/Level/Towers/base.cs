@@ -7,7 +7,8 @@ using UnityEngine.AI;
 public class baseDmg : MonoBehaviour, IDamage
 {
     [Header("Stats")]
-    [SerializeField] Renderer model;
+    [SerializeField] Renderer modelTurret;
+    [SerializeField] Renderer modelBase;
     [Range(1, 1000)][SerializeField] public int maxHP = 1000;
     public int hp;
 
@@ -21,8 +22,10 @@ public class baseDmg : MonoBehaviour, IDamage
     [Range(0, 1)] [SerializeField] float baseDestroyedVol;
 
 
-    Color colorOrigin; 
-    Material dynamicMat; // Store the unique instance material
+    Color colorOriginTurret; 
+    Color colorOriginBase; 
+    Material dynamicMatTurret;
+    Material dynamicMatBase;
 
 
 
@@ -32,17 +35,13 @@ public class baseDmg : MonoBehaviour, IDamage
         hp = maxHP;
         gameManager.instance.SetTowerHPOirgUI();
         updateTowerUI();
-        dynamicMat = model.material;
-        colorOrigin = dynamicMat.color;
+        dynamicMatTurret = modelTurret.material;
+        colorOriginTurret = dynamicMatTurret.color;
+        dynamicMatBase = modelBase.material;
+        colorOriginBase = dynamicMatBase.color;
 
         if (!bar) bar = GetComponent<TowerHealth>();
         if (bar) bar.updateBar(1f);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void takeDamage(int amount, DamageType type)
@@ -58,8 +57,8 @@ public class baseDmg : MonoBehaviour, IDamage
     
 
         // Debugging to verify the instance is taking damage
-        Debug.Log($"{gameObject.name} (Base) took damage! Remaining HP: {hp}");
-        Debug.Log("Basedmg hit by: " + type);
+        //Debug.Log($"{gameObject.name} (Base) took damage! Remaining HP: {hp}");
+        //Debug.Log("Basedmg hit by: " + type);
         if (hp <= 0)
         {
             gameManager.instance.youLoseTower();
@@ -96,9 +95,10 @@ public class baseDmg : MonoBehaviour, IDamage
 
     IEnumerator flashRed()
     {
-        // Use the dynamicMat reference
-        dynamicMat.color = Color.red;
+        dynamicMatTurret.color = Color.red;
+        dynamicMatBase.color = Color.red;
         yield return new WaitForSeconds(0.1f);
-        dynamicMat.color = colorOrigin;
+        dynamicMatTurret.color = colorOriginTurret;
+        dynamicMatBase.color = colorOriginBase;
     }
 }

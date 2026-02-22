@@ -17,12 +17,22 @@ public class SaveBridge : MonoBehaviour
             ps.HP = data.playerHp;
             ps.woodCount = data.wood;
             ps.stoneCount = data.stone;
+            ps.ApplyMiningSpeedBoost(data.PlayerMiningSpeedBoost);
+            ps.ApplySpeedBoost(data.PlayerSpeedBoost);
+            ps.ApplyJumpBoost(data.PlayerJumpBoost);
             ps.updatePlayerUI();
             gameManager.instance.updateResourcesUI();
         }
 
         //Gold
         gameManager.instance.SetGold(data.gold);
+
+        GameData.instance.PlayerJumpBoost = data.PlayerJumpBoost;
+
+        GameData.instance.PlayerSpeedBoost = data.PlayerSpeedBoost;
+
+        GameData.instance.PlayerMiningSpeedBoost = data.PlayerMiningSpeedBoost;
+
 
     }
 
@@ -43,6 +53,9 @@ public class SaveBridge : MonoBehaviour
         }
 
         data.gold = gameManager.instance.GetGold();
+        data.PlayerJumpBoost = GameData.instance.PlayerJumpBoost;
+        data.PlayerSpeedBoost = GameData.instance.PlayerSpeedBoost;
+        data.PlayerMiningSpeedBoost = GameData.instance.PlayerMiningSpeedBoost;
 
         GameSession.instance.SaveGame();
     }
