@@ -14,17 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GunStats
   gunModel: {fileID: 3425835552204042209, guid: 9241c2d8d80987947a5fa9ff15f5fbea, type: 3}
   gunName: CustomRifle
-  DistLevel: 0
-  shootDist: 1200
+  DistLevel: 1
+  shootDist: 1210
+  rangeUpgradeCost: 20
   shootDistOrig: 1200
-  damageLevel: 0
-  shootDamage: 15
+  damageLevel: 1
+  shootDamage: 20
+  damageUpgradeCost: 20
   shootDamageOrig: 15
-  fireRateLevel: 0
+  maxAmmoLevel: 1
   shootRate: 0.1
-  shootRateOrig: 0.1
-  ammoCur: 42
-  ammoMax: 50
+  maxAmmoOrig: 50
+  maxAmmoUpgradeCost: 20
+  ammoCur: 50
+  ammoMax: 60
   shootPos: {fileID: 0}
   hitEffect: {fileID: 8591032446617569335, guid: 4131349b8b5025846a9ecb06b7eb2d73, type: 3}
   muzzleFlashEffect: {fileID: 5536912010621684408, guid: 3c31d5354985a144a809bade8e9c0bc7, type: 3}

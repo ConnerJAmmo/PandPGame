@@ -27,23 +27,23 @@ public class enemyAI : MonoBehaviour, IDamage
     [Range(0,10)] [SerializeField] float persistenceTime; // Seconds to remember player
     float currentPersistence;
     bool isPlayerInSight;
+
+    [Header("Attack Settings")]
+    [SerializeField] bool hasShoot;
+    [Range(1, 1000)][SerializeField] public int range;
+    [Range(1, 5)][SerializeField] public int shotsPerBurst;
+    [Range(0f, 5f)][SerializeField] public float burstFireRate;
+    [Range(0.1f, 5f)][SerializeField] float rangedAttackRate;
     [SerializeField] bool hasMelee;
     [Range(0, 10)][SerializeField] float meleeRange;
     [Range(0, 100)][SerializeField] int meleeDamage;
+    [Range(0.1f, 5f)][SerializeField] float meleeAttackRate;
+    [SerializeField] bool baseFocus;
 
     [Header("---------Audio---------")]
     [SerializeField] AudioSource aud;
     [SerializeField] AudioClip shootAud;
     [Range(0, 1)] [SerializeField] float shootAudVol;
-
-    [Header("Fire Settings")]
-    [Range(1, 1000)] [SerializeField] public int range;
-    [Range(1, 5)] [SerializeField] public int shotsPerBurst;
-    [Range(0, 2)] [SerializeField] public float burstFireRate;
-
-    [Header("Attack Speeds")]
-    [Range(0.1f, 5f)][SerializeField] float meleeAttackRate;
-    [Range(0.1f, 5f)][SerializeField] float rangedAttackRate;
 
     private bool playerInTrigger;
     private bool baseInTrigger;
@@ -60,7 +60,7 @@ public class enemyAI : MonoBehaviour, IDamage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        dynamicMat = texture;
+        dynamicMat = GetComponentInChildren<Renderer>().material;
         colorOrigin = dynamicMat.color;
         GetComponent<NavMeshAgent>().updateRotation = false;
         gameManager.instance.updateEnemyCount(1);
@@ -144,11 +144,11 @@ public class enemyAI : MonoBehaviour, IDamage
         // 3. PERSISTENCE LOGIC
         isPlayerInSight = CanSeePlayer(); // This must be the only way to "start" seeing
 
-        if (isPlayerInSight)
+        if (isPlayerInSight && !baseFocus)
         {
             currentPersistence = persistenceTime;
         }
-        else if (playerInTrigger && currentPersistence > 0)
+        else if (playerInTrigger && currentPersistence > 0 && !baseFocus)
         {
             // They only stay "interested" if they already saw you or you're touching them
             currentPersistence -= Time.deltaTime;
@@ -160,14 +160,14 @@ public class enemyAI : MonoBehaviour, IDamage
 
         // 4. PRIORITY DECISION TREE
         // PRIORITY 1: PLAYER (Sticky persistence)
-        if (currentPersistence > 0)
+        if (currentPersistence > 0 && !baseFocus)
         {
             target = gameManager.instance.player;
             GetComponent<NavMeshAgent>().SetDestination(target.transform.position); // Set destination here
             TrackAndAttack();
         }
         // PRIORITY 2: TURRETS (If player is gone, check for turrets)
-        else if (turretsInRange.Count > 0)
+        else if (turretsInRange.Count > 0 && !baseFocus)
         {
             target = turretsInRange[0].gameObject;
             GetComponent<NavMeshAgent>().SetDestination(target.transform.position); // Set destination here
@@ -270,7 +270,7 @@ public class enemyAI : MonoBehaviour, IDamage
                 // Debug.Log("Melee Triggered");
             }
         }
-        else if (dist <= range) // ONLY shoot if not in melee range
+        else if (hasShoot && dist <= range) // ONLY shoot if not in melee range
         {
             if (attackTimer >= rangedAttackRate)
             {

@@ -60,6 +60,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
     [SerializeField] public float shootRate;
     [SerializeField] public int shootDist;
     [SerializeField] public int shootDamage;
+    [SerializeField] public int maxAmmo;
 
     [Header("Keys")]
     [SerializeField] public List<string> keyRing = new List<string>();
@@ -130,6 +131,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
         shootDamage = 0;
         shootRate = 0;
         shootDist = 0;
+
         pickRotated = false;
     }
 
@@ -390,16 +392,19 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
 
     void shoot()
     {
-        gunList[gunListPos].ammoCur--;
+        if (!gameManager.instance.isPause)
+        {
+            gunList[gunListPos].ammoCur--;
 
-        shootTimer = 0;
+            shootTimer = 0;
 
-        aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, shootAud.Length)]);
-       
-        Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
-        Instantiate(gunList[gunListPos].muzzleFlashEffect, shootPos.transform.position, shootPos.transform.rotation);
+            aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, shootAud.Length)]);
+        
+            Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
+            Instantiate(gunList[gunListPos].muzzleFlashEffect, shootPos.transform.position, shootPos.transform.rotation);
 
-        gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
+            gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
+        }
     }
 
     void mine()
@@ -502,9 +507,11 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
     {
         gunList[gunListPos].shootDist = gunList[gunListPos].shootDistOrig;
         gunList[gunListPos].shootDamage = gunList[gunListPos].shootDamageOrig;
-        gunList[gunListPos].shootRate = gunList[gunListPos].shootRateOrig;
+        gunList[gunListPos].maxAmmoUpgradeCost = gameManager.instance.initalMaxAmmoUpgradeCost;
+        gunList[gunListPos].damageUpgradeCost = gameManager.instance.initialDamageUpgradeCost;
+        gunList[gunListPos].rangeUpgradeCost = gameManager.instance.initialRangeUpgradeCost;
         gunList[gunListPos].damageLevel = 0;
-        gunList[gunListPos].fireRateLevel = 0;
+        gunList[gunListPos].maxAmmoLevel = 0;
         gunList[gunListPos].DistLevel = 0;
     }
 
@@ -559,11 +566,15 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
         shootDist = gunList[gunListPos].shootDist;
         shootRate = gunList[gunListPos].shootRate;
         shootPos = gunList[gunListPos].shootPos;
+        maxAmmo = gunList[gunListPos].ammoMax;
+        gameManager.instance.rangeUpgradeCost = gunList[gunListPos].rangeUpgradeCost;
+        gameManager.instance.damageUpgradeCost = gunList[gunListPos].damageUpgradeCost;
+        gameManager.instance.maxAmmoUpgradeCost = gunList[gunListPos].maxAmmoUpgradeCost;
 
         gunName = gunList[gunListPos].gunName;
         gameManager.instance.damageLevel = gunList[gunListPos].damageLevel;
         gameManager.instance.rangeLevel = gunList[gunListPos].DistLevel;
-        gameManager.instance.fireRateLevel = gunList[gunListPos].fireRateLevel;
+        gameManager.instance.maxAmmoLevel = gunList[gunListPos].maxAmmoLevel;
 
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].gunModel.GetComponent<MeshFilter>().sharedMesh;

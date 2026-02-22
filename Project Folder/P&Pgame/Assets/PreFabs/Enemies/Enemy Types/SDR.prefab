@@ -68,9 +68,9 @@ GameObject:
   - component: {fileID: -8989609035932247387}
   - component: {fileID: -6919347829373932764}
   - component: {fileID: -1550902907304828027}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SDR
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,20 +113,22 @@ MonoBehaviour:
   headPos: {fileID: 6970969642529457294}
   bullet: {fileID: 7983933263039930371, guid: 75027b776d6373842a94bb2aaaf2c716, type: 3}
   texture: {fileID: 2100000, guid: e4f540775b3b30d4b9e4e7a1ba5fef6c, type: 2}
-  HP: 5
+  HP: 15
   FOV: 90
   persistenceTime: 1
-  hasMelee: 1
-  meleeRange: 3
-  meleeDamage: 2
-  aud: {fileID: -1550902907304828027}
-  shootAud: {fileID: 8300000, guid: 96f24f3596be2b0438befde9ba471d1b, type: 3}
-  shootAudVol: 0.3
+  hasShoot: 0
   range: 25
   shotsPerBurst: 1
   burstFireRate: 0
-  meleeAttackRate: 0.1
   rangedAttackRate: 0.1
+  hasMelee: 1
+  meleeRange: 3
+  meleeDamage: 5
+  meleeAttackRate: 2
+  baseFocus: 1
+  aud: {fileID: -1550902907304828027}
+  shootAud: {fileID: 8300000, guid: 96f24f3596be2b0438befde9ba471d1b, type: 3}
+  shootAudVol: 0.3
 --- !u!195 &2915377323521041128
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -159,7 +161,7 @@ Animator:
   m_GameObject: {fileID: 4787734284849576031}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 3055d99bbf787104885352b99c4e8355, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 28ad7159232de3745a20996d4191196a, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
