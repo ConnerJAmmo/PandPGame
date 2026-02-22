@@ -39,17 +39,17 @@ public class buttonFunctions : MonoBehaviour
 
     public void Restart()
     {
+        
         if (gameManager.instance.playerScript.gunList.Count != 0)
         {
             gameManager.instance.playerScript.resetGunStatsToOrig();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            gameManager.instance.stateUnpause();   
+            gameManager.instance.CompleteLevelAndLoadNext(SceneManager.GetActiveScene().buildIndex);
         }
         else
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            gameManager.instance.stateUnpause();   
+            gameManager.instance.CompleteLevelAndLoadNext(SceneManager.GetActiveScene().buildIndex);
         }
+        gameManager.instance.stateUnpause();
     }
     public void Quit()
     {
@@ -68,12 +68,10 @@ public class buttonFunctions : MonoBehaviour
         if (gameManager.instance.playerScript.gunList.Count != 0)
         {
             gameManager.instance.playerScript.resetGunStatsToOrig();
-            gameManager.instance.playerScript.resetGunStatsToOrig();
             Application.Quit(); 
         }
         else
         {
-            gameManager.instance.playerScript.resetGunStatsToOrig();
             Application.Quit();  
         }
 
@@ -87,11 +85,6 @@ public class buttonFunctions : MonoBehaviour
         SceneManager.LoadScene("OptionsMenu", LoadSceneMode.Additive);
     }
 
-    public void Pause()
-    {
-        gameManager.instance.openPause();
-    }
-
     public void UpgradeDamage()
     {
         if (gameManager.instance.damageLevel != gameManager.instance.maxLevel 
@@ -103,10 +96,10 @@ public class buttonFunctions : MonoBehaviour
 
     public void UpgradeFireRate()
     {
-        if (gameManager.instance.fireRateLevel != gameManager.instance.maxLevel
-            && gameManager.instance.goldCount >= gameManager.instance.fireRateUpgradeCost)
+        if (gameManager.instance.maxAmmoLevel != gameManager.instance.maxLevel
+            && gameManager.instance.goldCount >= gameManager.instance.maxAmmoUpgradeCost)
         {
-            gameManager.instance.upgradePlayerShootRate();
+            gameManager.instance.upgradePlayerMaxAmmo();
         }
     }
 
@@ -122,8 +115,7 @@ public class buttonFunctions : MonoBehaviour
     public void mainMenu()
     {
         gameManager.instance.CompleteLevelAndLoadNext(mainMenuScene);
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        gameManager.instance.stateUnpause();
     }
 
     public void nextLevel()

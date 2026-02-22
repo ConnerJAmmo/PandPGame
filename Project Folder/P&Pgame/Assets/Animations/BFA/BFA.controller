@@ -182,7 +182,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Melee Layer
     m_StateMachine: {fileID: 7864599800655038076}
-    m_Mask: {fileID: 31900000, guid: 5c666a564fa160c4a85e24d95c7b7d4c, type: 2}
+    m_Mask: {fileID: 31900000, guid: ec591f656693f3e4f912a4d55cd6b7d2, type: 2}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0

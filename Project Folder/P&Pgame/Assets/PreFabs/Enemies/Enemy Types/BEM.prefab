@@ -62,18 +62,20 @@ MonoBehaviour:
   texture: {fileID: 2100000, guid: ccc24bae7b8239146826593eab59e41e, type: 2}
   HP: 5
   FOV: 90
-  persistenceTime: 1
+  persistenceTime: 0.5
+  hasShoot: 1
+  range: 15
+  shotsPerBurst: 1
+  burstFireRate: 0
+  rangedAttackRate: 5
   hasMelee: 1
   meleeRange: 2
-  meleeDamage: 2
+  meleeDamage: 1
+  meleeAttackRate: 2
+  baseFocus: 0
   aud: {fileID: 6387408789541205925}
   shootAud: {fileID: 8300000, guid: 96f24f3596be2b0438befde9ba471d1b, type: 3}
   shootAudVol: 0.3
-  range: 25
-  shotsPerBurst: 1
-  burstFireRate: 0
-  meleeAttackRate: 1.5
-  rangedAttackRate: 3
 --- !u!195 &3451001211750165738
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -369,7 +371,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 25
+  m_Radius: 15
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &3009612591452714963
 PrefabInstance:
