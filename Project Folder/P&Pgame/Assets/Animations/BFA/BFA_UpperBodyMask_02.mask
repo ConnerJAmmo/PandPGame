@@ -6,7 +6,7 @@ AvatarMask:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BFA_UpperBodyMask
+  m_Name: BFA_UpperBodyMask_02
   m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000001000000010000000100000001000000
   m_Elements:
   - m_Path: 
@@ -42,11 +42,11 @@ AvatarMask:
   - m_Path: root/root.x/c_tail_00.x/c_tail_01.x/c_tail_02.x/c_tail_03.x/c_tail_04.x/c_tail_05.x/c_tail_06.x/c_tail_07.x/c_tail_08.x/c_tail_09.x
     m_Weight: 0
   - m_Path: root/root.x/spine_01.x
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: root/root.x/spine_01.x/spine_02.x
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: root/root.x/spine_01.x/spine_02.x/spine_03.x
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: root/root.x/spine_01.x/spine_02.x/spine_03.x/neck.x
     m_Weight: 0
   - m_Path: root/root.x/spine_01.x/spine_02.x/spine_03.x/neck.x/head.x
