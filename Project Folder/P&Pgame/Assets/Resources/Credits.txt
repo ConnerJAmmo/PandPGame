@@ -1,4 +1,5 @@
 UI By Joshua Tompson
 
-
+Tower Defense Template by Unity Technologies
+Enemy Models/Animations by PixeliusVita
 Font By 1001 Fonts
