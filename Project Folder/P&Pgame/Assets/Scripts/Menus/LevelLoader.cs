@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using System.Xml.Serialization;
-using NUnit.Framework;
 
 
 public class LevelLoader : MonoBehaviour
@@ -68,6 +67,12 @@ public class LevelLoader : MonoBehaviour
 
             yield return null;
         }
+
+        loadingScreen.SetActive(false);
+        gorgeImage.SetActive(false);
+        mothershipImage.SetActive(false);
+        outpostImage.SetActive(false);
+        backgroundImage.SetActive(false);
     }
 
     public void LoadLevel (int sceneIndex)
@@ -108,5 +113,10 @@ public class LevelLoader : MonoBehaviour
 
             yield return null;
         }
+        loadingScreen.SetActive(false);
+        gorgeImage.SetActive(false);
+        mothershipImage.SetActive(false);
+        outpostImage.SetActive(false);
+        backgroundImage.SetActive(false);
     }
 }

@@ -46,7 +46,6 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
     [SerializeField] public int goldCount;
     [SerializeField] public int powerCrystals;
     [Header("---- Tools ----")]
-    [SerializeField] public GameObject bullet;
     [Range(5, 15)][SerializeField] int buildDist;
     [SerializeField] public Transform shootPos;
     [SerializeField] public Transform machineGunShootPos;
@@ -319,6 +318,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
                 float tiltDir = Vector3.Dot(wallJumpHit.normal, transform.right) > 0 ? -1f : 1f;
                 camScript.SetWallJumpTilt(tiltDir);
                 StartCoroutine(ResetTiltAfterDelay());
+                aud.PlayOneShot(jumpAud[Random.Range(0, jumpAud.Length)], jumpAudVol);
                 return;
             }
         }
@@ -400,7 +400,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
 
             aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, shootAud.Length)]);
         
-            Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
+            Instantiate(gunList[gunListPos].bulletPrefab, shootPos.transform.position, shootPos.transform.rotation);
             Instantiate(gunList[gunListPos].muzzleFlashEffect, shootPos.transform.position, shootPos.transform.rotation);
 
             gameManager.instance.UpdateAmmoUI(gunList[gunListPos].ammoCur, gunList[gunListPos].ammoMax);
