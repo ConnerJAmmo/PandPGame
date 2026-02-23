@@ -3343,6 +3343,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 256673455973577911, guid: e8fbc12e8a0c3d948b852dcdbfb68913, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 496913763784145840, guid: e8fbc12e8a0c3d948b852dcdbfb68913, type: 3}
       propertyPath: m_Name
       value: Loading Screen
@@ -3388,6 +3392,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2949810772984444695, guid: e8fbc12e8a0c3d948b852dcdbfb68913, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7147852654076485778, guid: e8fbc12e8a0c3d948b852dcdbfb68913, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}

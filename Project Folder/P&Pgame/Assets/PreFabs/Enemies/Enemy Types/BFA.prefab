@@ -113,7 +113,7 @@ MonoBehaviour:
   headPos: {fileID: 4962937784893835644}
   bullet: {fileID: 7983933263039930371, guid: 75027b776d6373842a94bb2aaaf2c716, type: 3}
   texture: {fileID: 2100000, guid: 83ce9dab71087c44883b454a78fb39a2, type: 2}
-  HP: 20
+  HP: 35
   FOV: 90
   persistenceTime: 2
   hasShoot: 1
@@ -139,7 +139,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3
+  m_Speed: 4
   m_Acceleration: 16
   avoidancePriority: 50
   m_AngularSpeed: 600

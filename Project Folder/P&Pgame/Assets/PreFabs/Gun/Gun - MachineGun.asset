@@ -20,6 +20,7 @@ MonoBehaviour:
   shootDistOrig: 1200
   damageLevel: 0
   shootDamage: 15
+  bulletPrefab: {fileID: 4359745504029842998, guid: c3867b88251eaf14bbf2089f8d387192, type: 3}
   damageUpgradeCost: 0
   shootDamageOrig: 15
   maxAmmoLevel: 50
