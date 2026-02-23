@@ -58,7 +58,7 @@ public class GameSession : MonoBehaviour
 
     public void CompleteLevelAndLoadNext(int nextSceneIndex)
     {
-        if (nextSceneIndex >= 3 && nextSceneIndex <= 5)
+        if (nextSceneIndex >= 3)
         {
             Data.lastUnlockedLevel = Mathf.Max(Data.lastUnlockedLevel, nextSceneIndex);
 
