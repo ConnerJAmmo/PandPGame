@@ -548,6 +548,7 @@ public class gameManager : MonoBehaviour, goldManage
 
     public void LevelComplete()
     {
+        
         int current = SceneManager.GetActiveScene().buildIndex;
 
         int next;
@@ -560,8 +561,10 @@ public class gameManager : MonoBehaviour, goldManage
             next = 4;     //Mothership
         else
             next = 1;     // Back to mainmenu
+        
+        
+        CompleteLevelAndLoadNext(next);
 
-        gameManager.instance.CompleteLevelAndLoadNext(next);
     }
     
     // ----------------These Method are used for the advancing------------------------//
@@ -580,7 +583,7 @@ public class gameManager : MonoBehaviour, goldManage
 
         
 
-        LevelLoader.instance.LoadLevel(nextSceneIndex);
+        SceneManager.LoadScene(nextSceneIndex);
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
