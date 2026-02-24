@@ -338,7 +338,7 @@ public class gameManager : MonoBehaviour, goldManage
     {
         if (Input.GetButtonDown("Player Upgrade Menu"))
         {
-            if (menuActive == null)
+            if (menuActive == null && playerScript.gunList.Count > 0)
             {
                 newMenu(menuPlayerUpgrade);
                 EventSystem.current.SetSelectedGameObject(null);
