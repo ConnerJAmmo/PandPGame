@@ -61,8 +61,9 @@ MonoBehaviour:
   scanSpeed: 0.5
   scanAngle: 45
   aud: {fileID: 2807689839357593672}
-  burstShotAud: []
-  burstShotVol: 0
+  burstShotAud:
+  - {fileID: 8300000, guid: 438ccbe897175a746bc441f776cb08c4, type: 3}
+  burstShotVol: 0.4
   ShotAud:
   - {fileID: 8300000, guid: 438ccbe897175a746bc441f776cb08c4, type: 3}
   shotVol: 0.4

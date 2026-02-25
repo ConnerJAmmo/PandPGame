@@ -15,22 +15,23 @@ MonoBehaviour:
   gunModel: {fileID: 4065812897376928446, guid: 49e944d897599f04ab028e90d502753f, type: 3}
   gunName: CustomPistol
   DistLevel: 0
-  shootDist: 1200
+  shootDist: 800
   rangeUpgradeCost: 10
-  shootDistOrig: 1200
-  damageLevel: 1
-  shootDamage: 20
-  damageUpgradeCost: 20
-  shootDamageOrig: 15
+  shootDistOrig: 800
+  damageLevel: 0
+  shootDamage: 8
+  bulletPrefab: {fileID: 4359745504029842998, guid: 5679e1ffb7b3c4b47bec4e977374e674, type: 3}
+  damageUpgradeCost: 10
+  shootDamageOrig: 8
   maxAmmoLevel: 0
-  shootRate: 0.20000005
-  maxAmmoOrig: 17
+  shootRate: 0.7
+  maxAmmoOrig: 12
   maxAmmoUpgradeCost: 10
-  ammoCur: 17
-  ammoMax: 17
+  ammoCur: 12
+  ammoMax: 12
   shootPos: {fileID: 0}
   hitEffect: {fileID: 8591032446617569335, guid: 4131349b8b5025846a9ecb06b7eb2d73, type: 3}
   muzzleFlashEffect: {fileID: 5536912010621684408, guid: 3c31d5354985a144a809bade8e9c0bc7, type: 3}
   shootSound:
-  - {fileID: 8300000, guid: da90bd48029f96a468136559d95c4e06, type: 3}
+  - {fileID: 8300000, guid: 089996894a5a87a44bc8c67b2030193c, type: 3}
   shootSoundVol: 0.5

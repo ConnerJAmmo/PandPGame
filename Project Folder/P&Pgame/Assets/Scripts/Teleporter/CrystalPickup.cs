@@ -8,9 +8,9 @@ public class CrystalPickup : MonoBehaviour
     [SerializeField] AudioMixerGroup sfxGroup;
     [SerializeField] AudioClip pickupSfx;
     [Range(0, 1)] [SerializeField] float crystalAudVol = 0.5f;
+
+
     
-
-
 
     private void OnTriggerEnter(Collider other)
     {

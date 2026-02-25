@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: -3434738756516685806}
   - component: {fileID: -5426190677328703018}
   - component: {fileID: -4897624049635759312}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TNK
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,7 +60,7 @@ MonoBehaviour:
   headPos: {fileID: 2622595232636146285}
   bullet: {fileID: 7983933263039930371, guid: 75027b776d6373842a94bb2aaaf2c716, type: 3}
   texture: {fileID: 2100000, guid: f41b86ad68e0b8f488d8df0350bfc69b, type: 2}
-  HP: 25
+  HP: 50
   FOV: 90
   persistenceTime: 1
   hasShoot: 1
@@ -86,7 +86,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 1.5
+  m_Speed: 2
   m_Acceleration: 16
   avoidancePriority: 50
   m_AngularSpeed: 600

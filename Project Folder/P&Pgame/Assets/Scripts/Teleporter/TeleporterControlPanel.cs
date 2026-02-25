@@ -59,7 +59,11 @@ public class TeleporterControlPanel : MonoBehaviour
         int count;
 
         if (inv)
+        { 
             count = inv.Crystals;
+            
+        }
+
         else
             count = 0;
 

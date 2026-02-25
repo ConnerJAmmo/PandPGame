@@ -68,9 +68,9 @@ GameObject:
   - component: {fileID: -8989609035932247387}
   - component: {fileID: -6919347829373932764}
   - component: {fileID: -1550902907304828027}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SDR
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,7 +113,7 @@ MonoBehaviour:
   headPos: {fileID: 6970969642529457294}
   bullet: {fileID: 7983933263039930371, guid: 75027b776d6373842a94bb2aaaf2c716, type: 3}
   texture: {fileID: 2100000, guid: e4f540775b3b30d4b9e4e7a1ba5fef6c, type: 2}
-  HP: 15
+  HP: 22
   FOV: 90
   persistenceTime: 1
   hasShoot: 0
@@ -139,7 +139,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 4.5
+  m_Speed: 6
   m_Acceleration: 16
   avoidancePriority: 50
   m_AngularSpeed: 600

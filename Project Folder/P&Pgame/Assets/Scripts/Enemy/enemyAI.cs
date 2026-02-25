@@ -22,7 +22,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] public Material texture;
 
     [Header("Stats")]
-    [Range(1, 25)] [SerializeField] public int HP;
+    [Range(1, 50)] [SerializeField] public int HP;
     [Range(0, 360)] [SerializeField] public int FOV;
     [Range(0,10)] [SerializeField] float persistenceTime; // Seconds to remember player
     float currentPersistence;
@@ -60,7 +60,7 @@ public class enemyAI : MonoBehaviour, IDamage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        dynamicMat = texture;
+        dynamicMat = GetComponentInChildren<Renderer>().material;
         colorOrigin = dynamicMat.color;
         GetComponent<NavMeshAgent>().updateRotation = false;
         gameManager.instance.updateEnemyCount(1);
