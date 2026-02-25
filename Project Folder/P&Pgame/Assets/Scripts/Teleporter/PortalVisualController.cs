@@ -39,6 +39,13 @@ public class PortalVisualController : MonoBehaviour
         if (portalCamera) portalCamera.enabled = false;
     }
 
+    //private void Start()
+    //{
+    //    if (portalCamera) portalCamera.enabled = true;
+    //    if (portalSurfaceRenderer) portalSurfaceRenderer.enabled = true;
+    //    TurnOn();
+    //}
+
     public void TurnOn()
     {
         if (portalSurfaceRenderer) portalSurfaceRenderer.enabled = true;

@@ -46,7 +46,7 @@ public class KeyCardRotate : MonoBehaviour
             transform.position = startPos + new Vector3(0f, y, 0f);
 
         //rotate
-        transform.Rotate(rotateDegreePerSec * Time.deltaTime, Space.Self);
+        transform.Rotate(rotateDegreePerSec * Time.deltaTime * rotateSpeed, Space.Self);
 
     }
 
