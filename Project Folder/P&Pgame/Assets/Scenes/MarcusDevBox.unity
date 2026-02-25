@@ -618,17 +618,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a69966e059c6c584ea43cb20f7a45102, type: 3}
---- !u!114 &177979399 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2414790364820896662, guid: 417885bfec8d13940ba3fbd5b37331a6, type: 3}
-  m_PrefabInstance: {fileID: 588857269}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a1cd5b5b2db9cd42bc145dc492c41cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PortalVFXController
 --- !u!4 &183513074 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6097880192208175810, guid: da7a35b649d80ae468a5870ac44c2240, type: 3}
@@ -1882,7 +1871,7 @@ PrefabInstance:
     - target: {fileID: 2310771976925256364, guid: 417885bfec8d13940ba3fbd5b37331a6, type: 3}
       propertyPath: destinationPadVFX
       value: 
-      objectReference: {fileID: 878233687}
+      objectReference: {fileID: 0}
     - target: {fileID: 6882863054753557439, guid: 417885bfec8d13940ba3fbd5b37331a6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 228.24
@@ -2450,17 +2439,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ada9fb72d3a658e4da23e73806acc3c1, type: 3}
---- !u!114 &878233687 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1153283256069720242, guid: 90aaf22c0ae44f044991042cee27b5ac, type: 3}
-  m_PrefabInstance: {fileID: 1542808042}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a1cd5b5b2db9cd42bc145dc492c41cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PortalVFXController
 --- !u!4 &888695506 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6097880192208175810, guid: da7a35b649d80ae468a5870ac44c2240, type: 3}
@@ -2934,6 +2912,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f49aa56f0998bc4f8bfd0d9691e976b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCrystalInventory
+  crystalHint: Crystal acquired. Deliver to Teleporter or SpaaceCradt to activate.
+  hintDuration: 4
+  hintCoolDown: 6
 --- !u!1001 &1066466390
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3826,70 +3807,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3894683513741182046, guid: 83fab9e541b2a7146898691de49a8a8f, type: 3}
   m_PrefabInstance: {fileID: 25001007}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1542808042
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 516477514617261877, guid: 90aaf22c0ae44f044991042cee27b5ac, type: 3}
-      propertyPath: destinationPadVFX
-      value: 
-      objectReference: {fileID: 177979399}
-    - target: {fileID: 4450372462725655750, guid: 90aaf22c0ae44f044991042cee27b5ac, type: 3}
-      propertyPath: m_Name
-      value: TELEPORTER
-      objectReference: {fileID: 0}
-    - target: {fileID: 9109560423995531472, guid: 90aaf22c0ae44f044991042cee27b5ac, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 232.58395
-      objectReference: {fileID: 0}
-    - target: {fileID: 9109560423995531472, guid: 90aaf22c0ae44f044991042cee27b5ac, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 9.998161
-      objectReference: {fileID: 0}
-    - target: {fileID: 9109560423995531472, guid: 90aaf22c0ae44f044991042cee27b5ac, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 81.1222
-      objectReference: {fileID: 0}
-    - target: {fileID: 9109560423995531472, guid: 90aaf22c0ae44f044991042cee27b5ac, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9109560423995531472, guid: 90aaf22c0ae44f044991042cee27b5ac, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9109560423995531472, guid: 90aaf22c0ae44f044991042cee27b5ac, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9109560423995531472, guid: 90aaf22c0ae44f044991042cee27b5ac, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9109560423995531472, guid: 90aaf22c0ae44f044991042cee27b5ac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9109560423995531472, guid: 90aaf22c0ae44f044991042cee27b5ac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9109560423995531472, guid: 90aaf22c0ae44f044991042cee27b5ac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9013500116446898814, guid: 90aaf22c0ae44f044991042cee27b5ac, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-  m_SourcePrefab: {fileID: 100100000, guid: 90aaf22c0ae44f044991042cee27b5ac, type: 3}
 --- !u!1001 &1588081371
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5507,7 +5424,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 90aaf22c0ae44f044991042cee27b5ac, type: 3}
 --- !u!4 &1177352928582951536 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 9109560423995531472, guid: 90aaf22c0ae44f044991042cee27b5ac, type: 3}
+  m_CorrespondingSourceObject: {fileID: 963919103187512328, guid: 90aaf22c0ae44f044991042cee27b5ac, type: 3}
   m_PrefabInstance: {fileID: 1177352928582951535}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2171434786666842033
@@ -5756,5 +5673,4 @@ SceneRoots:
   - {fileID: 992543822}
   - {fileID: 2044034450}
   - {fileID: 121504229}
-  - {fileID: 1542808042}
   - {fileID: 1694267478}
