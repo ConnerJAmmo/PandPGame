@@ -19,9 +19,10 @@ MonoBehaviour:
   rangeUpgradeCost: 10
   shootDistOrig: 300
   damageLevel: 0
-  shootDamage: 15
+  shootDamage: 30
+  bulletPrefab: {fileID: 4359745504029842998, guid: f5ba67095cd90474bbf5fb37d4bb3259, type: 3}
   damageUpgradeCost: 10
-  shootDamageOrig: 15
+  shootDamageOrig: 30
   maxAmmoLevel: 0
   shootRate: 1.2
   maxAmmoOrig: 5

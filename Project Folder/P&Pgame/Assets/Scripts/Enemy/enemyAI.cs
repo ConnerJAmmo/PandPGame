@@ -22,7 +22,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] public Material texture;
 
     [Header("Stats")]
-    [Range(1, 25)] [SerializeField] public int HP;
+    [Range(1, 50)] [SerializeField] public int HP;
     [Range(0, 360)] [SerializeField] public int FOV;
     [Range(0,10)] [SerializeField] float persistenceTime; // Seconds to remember player
     float currentPersistence;

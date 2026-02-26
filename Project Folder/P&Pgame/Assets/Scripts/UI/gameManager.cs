@@ -80,6 +80,10 @@ public class gameManager : MonoBehaviour, goldManage
     [SerializeField] TMP_Text notificationText;
     [SerializeField] float notificationDuration = 2f;
 
+    [Header("CutScene")]
+    [SerializeField] EndCutSceneManager endCutScene; //drag our cutscene director here
+    [SerializeField] string mothershipSceneName = "Mothership";
+
 #region Gun Upgrade Stats
     [Header("Gun Upgrade Stats")]
     [SerializeField] public int damageUpgradeCost;
@@ -338,7 +342,7 @@ public class gameManager : MonoBehaviour, goldManage
     {
         if (Input.GetButtonDown("Player Upgrade Menu"))
         {
-            if (menuActive == null)
+            if (menuActive == null && playerScript.gunList.Count > 0)
             {
                 newMenu(menuPlayerUpgrade);
                 EventSystem.current.SetSelectedGameObject(null);
@@ -383,6 +387,17 @@ public class gameManager : MonoBehaviour, goldManage
 
     public void youWin()
     {
+        // if we are in the Mothership (our last level) play cutscene if we win
+        if (SceneManager.GetActiveScene().name == mothershipSceneName && endCutScene != null)
+        {
+            // Make sure game isn't paused
+            if (menuActive != null) stateUnpause();
+
+            endCutScene.StartEndCutscene();
+            return;
+        }
+
+        //Default behavior for other levels
         newMenu(menuWin);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(menuWinFristButton);
@@ -548,6 +563,7 @@ public class gameManager : MonoBehaviour, goldManage
 
     public void LevelComplete()
     {
+        
         int current = SceneManager.GetActiveScene().buildIndex;
 
         int next;
@@ -560,8 +576,10 @@ public class gameManager : MonoBehaviour, goldManage
             next = 4;     //Mothership
         else
             next = 1;     // Back to mainmenu
+        
+        
+        CompleteLevelAndLoadNext(next);
 
-        gameManager.instance.CompleteLevelAndLoadNext(next);
     }
     
     // ----------------These Method are used for the advancing------------------------//
@@ -580,7 +598,7 @@ public class gameManager : MonoBehaviour, goldManage
 
         
 
-        LevelLoader.instance.LoadLevel(nextSceneIndex);
+        SceneManager.LoadScene(nextSceneIndex);
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;

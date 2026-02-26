@@ -1,5 +1,6 @@
 using bullet.fx.pack;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class ShipTurretController : MonoBehaviour
@@ -10,8 +11,8 @@ public class ShipTurretController : MonoBehaviour
     [SerializeField] Transform muzzle;
 
     [Header("Rotation")]
-    [SerializeField] float turnSpeed;
-    [SerializeField] float pitchSpeed;
+    [SerializeField] float turnSpeed = 180;
+    [SerializeField] float pitchSpeed = 140;
     [SerializeField] float minPitch;
     [SerializeField] float maxPitch;
 
@@ -19,7 +20,6 @@ public class ShipTurretController : MonoBehaviour
     [SerializeField] float detectRadius = 35f;
     [SerializeField] LayerMask enemyMask;
     [SerializeField] float fireRate = 8;
-    [SerializeField] float bulletSpeed = 80;
     [SerializeField] float aimHeight = 1.2f;
 
     [Header("Damage")]
@@ -40,8 +40,28 @@ public class ShipTurretController : MonoBehaviour
     [SerializeField] AudioClip shotSfx;
     [Range(0, 1)][SerializeField] float shotVol = 0.5f;
 
+    [Header("Burst")]
+    [SerializeField] int burstCount = 3;
+    [SerializeField] float burstShotInterval = 0.06f; // controls how fast the 3 round burst
+
+    [Header("Heat / Overheat")]
+    [SerializeField] float heatPerShot = 0.12f;   // heat gained per bullet
+    [SerializeField] float coolPerSecond = 0.25f; //cooling rate
+    [SerializeField] float overHeatAt = 1.0f;     //threshold
+    [SerializeField] float resumeAt = 0.35f;      // must cool below this to fire
+
+    [Header("Heat UI")]
+    [SerializeField] GameObject heatBarPrefab;
+    [SerializeField] Vector3 heatBarOffset = new Vector3(0, 5f, 0);
+    TurretHeatUI heatUI;
+    Transform heatBarRoot;
+
     float fireTimer;
     Transform currentTarget;
+
+    float heat01 = 0f;
+    bool overheated;
+    bool burstRunning;
 
     public bool IsActive { get; private set; }
 
@@ -51,29 +71,78 @@ public class ShipTurretController : MonoBehaviour
         fireTimer = 0;
     }
 
+    private void Start()
+    {
+        //Spawn heat UI
+        if(heatBarPrefab)
+        {
+            var go = Instantiate(heatBarPrefab, transform);
+            heatBarRoot = go.transform;
+            heatBarRoot.localPosition = heatBarOffset;
+            heatUI = go.GetComponentInChildren<TurretHeatUI>(true);
+
+        }
+    }
+
     private void Update()
     {
         if (!IsActive) return;
 
-        FindTarget();
+        // Passive cooling
+        CoolDownHeat();
 
+        FindTarget();
         if (!currentTarget) return;
 
         AimAtTarget();
-        Shoot();
+
+        if (overheated) return;
+        if (burstRunning) return;
+
+        fireTimer += Time.deltaTime;
+        float burstInterval = 1f / Mathf.Max(0.01f, fireRate); //burst per second
+        if (fireTimer >= burstInterval)
+        {
+            fireTimer = 0f;
+            StartCoroutine(BurstRoutine());
+        }
+        // Shoot();
     }
 
-    private void Shoot()
+    IEnumerator BurstRoutine()
     {
-        
-        
-        fireTimer += Time.deltaTime;
+        burstRunning = true;
 
-        if (fireTimer < 1f / fireRate)
-            return;
+        for(int i = 0; i < burstCount; i++)
+        {
+            // if target disappears mid-burst, stop
+            if (!currentTarget) break;
 
-        fireTimer = 0f;
+            FireOneShot();
 
+            //heat check
+            heat01 += heatPerShot;
+            if (heat01 >= overHeatAt)
+            {
+                heat01 = overHeatAt;
+                overheated = true;
+                UpdateHeatUI();
+                break;
+            }
+            UpdateHeatUI();
+            yield return new WaitForSeconds(burstShotInterval);
+        }
+
+        burstRunning = false;
+    }
+
+    private void UpdateHeatUI()
+    {
+        if (heatUI) heatUI.SetHeat01(heat01);
+    }
+
+    private void FireOneShot()
+    {
         if (!muzzle || !currentTarget) return;
 
         // muzzleFlash + sound
@@ -124,6 +193,22 @@ public class ShipTurretController : MonoBehaviour
             Destroy(tr.gameObject, tracerLife);
         }
     }
+
+    private void CoolDownHeat()
+    {
+        if (heat01 <= 0f) return;
+
+        heat01 = Mathf.Max(0f, heat01 - coolPerSecond * Time.deltaTime);
+
+        if (overheated && heat01 <= resumeAt)
+            overheated = false;
+
+        UpdateHeatUI();
+    }
+
+    
+
+   
 
     private void AimAtTarget()
     {

@@ -10,12 +10,7 @@ public class CrystalPickup : MonoBehaviour
     [Range(0, 1)] [SerializeField] float crystalAudVol = 0.5f;
 
 
-    private void Update()
-    {
-        var inv = GetComponent<PlayerCrystalInventory>();
-        if (inv)
-            gameManager.instance.SetInteractionHint("Take to control panel to activate Teleporter");
-    }
+    
 
     private void OnTriggerEnter(Collider other)
     {

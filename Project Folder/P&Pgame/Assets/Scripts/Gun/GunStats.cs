@@ -12,7 +12,8 @@ public class GunStats : ScriptableObject
     public int rangeUpgradeCost;
     public int shootDistOrig;
     public int damageLevel;
-    [Range(1, 15)] public int shootDamage;
+    [Range(1, 50)] public int shootDamage;
+    public GameObject bulletPrefab;
     public int damageUpgradeCost;
     public int shootDamageOrig;
     public int maxAmmoLevel;
