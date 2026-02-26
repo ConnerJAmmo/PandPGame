@@ -80,6 +80,10 @@ public class gameManager : MonoBehaviour, goldManage
     [SerializeField] TMP_Text notificationText;
     [SerializeField] float notificationDuration = 2f;
 
+    [Header("CutScene")]
+    [SerializeField] EndCutSceneManager endCutScene; //drag our cutscene director here
+    [SerializeField] string mothershipSceneName = "Mothership";
+
 #region Gun Upgrade Stats
     [Header("Gun Upgrade Stats")]
     [SerializeField] public int damageUpgradeCost;
@@ -383,6 +387,17 @@ public class gameManager : MonoBehaviour, goldManage
 
     public void youWin()
     {
+        // if we are in the Mothership (our last level) play cutscene if we win
+        if (SceneManager.GetActiveScene().name == mothershipSceneName && endCutScene != null)
+        {
+            // Make sure game isn't paused
+            if (menuActive != null) stateUnpause();
+
+            endCutScene.StartEndCutscene();
+            return;
+        }
+
+        //Default behavior for other levels
         newMenu(menuWin);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(menuWinFristButton);
