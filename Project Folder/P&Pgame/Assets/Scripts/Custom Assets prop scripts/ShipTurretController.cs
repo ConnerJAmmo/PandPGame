@@ -65,14 +65,11 @@ public class ShipTurretController : MonoBehaviour
 
     public bool IsActive { get; private set; }
 
-    public void Activate()
-    {
-        IsActive = true;
-        fireTimer = 0;
-    }
+ 
 
     private void Start()
     {
+        //Activate();
         //Spawn heat UI
         if(heatBarPrefab)
         {
@@ -107,6 +104,12 @@ public class ShipTurretController : MonoBehaviour
             StartCoroutine(BurstRoutine());
         }
         // Shoot();
+    }
+
+    public void Activate()
+    {
+        IsActive = true;
+        fireTimer = 0;
     }
 
     IEnumerator BurstRoutine()
@@ -146,7 +149,7 @@ public class ShipTurretController : MonoBehaviour
         if (!muzzle || !currentTarget) return;
 
         // muzzleFlash + sound
-        if (muzzleFlash) muzzleFlash.Play();
+        
         if (aud && shotSfx) aud.PlayOneShot(shotSfx, shotVol);
 
         Vector3 aimPoint = currentTarget.position + Vector3.up * aimHeight;
@@ -158,9 +161,11 @@ public class ShipTurretController : MonoBehaviour
 
         Vector3 end = start + dir * hitRange;
 
-        if (Physics.Raycast(start, dir, out RaycastHit hit, hitRange, combineMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(start, dir, out RaycastHit hit, hitRange, combineMask, QueryTriggerInteraction.Collide))
         {
             end = hit.point;
+            if (muzzleFlash) muzzleFlash.Play();
+            Debug.Log("Hit: " + hit.collider.name);
 
             bool hitIsEnemy = (enemyMask.value & (1 << hit.collider.gameObject.layer)) != 0;
 
@@ -183,10 +188,12 @@ public class ShipTurretController : MonoBehaviour
                     Instantiate(hitVfxGround, hit.point, Quaternion.LookRotation(hit.normal));
             }
         }
+        
 
         if (tracerPrefab)
         {
-            var tr = Instantiate(tracerPrefab);
+            var tr = Instantiate(tracerPrefab, start, Quaternion.identity);
+            tr.useWorldSpace = true;
             tr.positionCount = 2;
             tr.SetPosition(0, start);
             tr.SetPosition(1, end);
@@ -242,7 +249,7 @@ public class ShipTurretController : MonoBehaviour
 
     private void FindTarget()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, detectRadius, enemyMask);
+        Collider[] hits = Physics.OverlapSphere(transform.position, detectRadius, enemyMask, QueryTriggerInteraction.Collide);
 
         float val = float.MaxValue;
         Transform chosen = null;
@@ -261,7 +268,7 @@ public class ShipTurretController : MonoBehaviour
                 chosen = hit.transform;
             }
         }
-
+        Debug.Log("Enemies detected: " + hits.Length);
         currentTarget = chosen;
     }
 }

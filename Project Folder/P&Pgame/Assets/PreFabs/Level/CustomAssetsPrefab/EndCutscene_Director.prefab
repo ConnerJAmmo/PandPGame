@@ -1,0 +1,167 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7282621075960346325
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9181872369348323300}
+  - component: {fileID: 6777349551526194056}
+  - component: {fileID: 4803782099314458088}
+  - component: {fileID: 1829730840151062862}
+  m_Layer: 0
+  m_Name: EndCutscene_Director
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9181872369348323300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7282621075960346325}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 160.71399, y: 39.99268, z: 196.93214}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &6777349551526194056
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7282621075960346325}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 2232d17b6e2dc0c4c939c311d9f9096c, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -5639295806465484530, guid: 2232d17b6e2dc0c4c939c311d9f9096c, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -7064989698405176793, guid: 2232d17b6e2dc0c4c939c311d9f9096c, type: 2}
+    value: {fileID: 1829730840151062862}
+  m_ExposedReferences:
+    m_References:
+    - 5918053fc92636b42a01d5ac280986bf: {fileID: 0}
+    - 79aca543a6ec0944596b513d31a63981: {fileID: 0}
+    - 87b9078dde6cf5d4e9ab1136bbd16d73: {fileID: 0}
+    - be8f54383cc5e1d41a12a4308ca84566: {fileID: 0}
+    - a459396d2f3fb844e9b91c4f7f50da51: {fileID: 0}
+--- !u!114 &4803782099314458088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7282621075960346325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f4d63c0b358322469e8db1fda8ee37a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EndCutSceneManager
+  director: {fileID: 6777349551526194056}
+  cineBrain: {fileID: 0}
+  cutSceneCameraRoot: {fileID: 0}
+  player: {fileID: 0}
+  scriptsToDisableDuringCutScene:
+  - {fileID: 0}
+  missionCompleteUI: {fileID: 0}
+  missionCompleteGroup: {fileID: 0}
+  returnToMenuDelay: 7
+  mainMenuBuildIndex: 1
+  uiFadeTime: 1
+  handCam: {fileID: 0}
+  playerHud: {fileID: 0}
+  shipDoors: {fileID: 0}
+  shipGlow: {fileID: 0}
+  underShipSmoke: []
+  shipRigidbody: {fileID: 0}
+  shipTransform: {fileID: 0}
+--- !u!114 &1829730840151062862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7282621075960346325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Timeline::UnityEngine.Timeline.SignalReceiver
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: a8ff828791328864082afa33bcc7df23, type: 2}
+    - {fileID: 11400000, guid: adc624f2cd08d4546894c629fbfd61c2, type: 2}
+    - {fileID: 11400000, guid: e5beb95fa70a29848bce5589b502b86d, type: 2}
+    - {fileID: 11400000, guid: 4701018da7c145d499b1e21c598ded71, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4803782099314458088}
+          m_TargetAssemblyTypeName: EndCutSceneManager, Assembly-CSharp
+          m_MethodName: GlowOn
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4803782099314458088}
+          m_TargetAssemblyTypeName: EndCutSceneManager, Assembly-CSharp
+          m_MethodName: CloseDoors
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4803782099314458088}
+          m_TargetAssemblyTypeName: EndCutSceneManager, Assembly-CSharp
+          m_MethodName: StartSmoke
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4803782099314458088}
+          m_TargetAssemblyTypeName: EndCutSceneManager, Assembly-CSharp
+          m_MethodName: ShowMissionComplete
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2

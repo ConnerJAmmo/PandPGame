@@ -244,7 +244,7 @@ MonoBehaviour:
     m_Bits: 3584
   type: 0
   lifeTime: 5
-  speed: 5
+  speed: 15
   damageAmount: 1
   dotDamageRate: 0
   leavesDotZone: 0
@@ -715,7 +715,7 @@ MonoBehaviour:
     m_Bits: 3584
   type: 0
   lifeTime: 5
-  speed: 5
+  speed: 15
   damageAmount: 1
   dotDamageRate: 0
   leavesDotZone: 0
