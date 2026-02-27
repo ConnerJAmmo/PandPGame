@@ -58,7 +58,7 @@ MonoBehaviour:
   anim: {fileID: 2623899741337445753}
   shootPos: {fileID: 3328044774638339659}
   headPos: {fileID: 8969643694753759250}
-  bullet: {fileID: 7983933263039930371, guid: 75027b776d6373842a94bb2aaaf2c716, type: 3}
+  bullet: {fileID: 811445109454079216, guid: 29f08eec12a312c4ba15e5f8c16a50e2, type: 3}
   texture: {fileID: 2100000, guid: 4409ccd40b7df014c85734828b102b94, type: 2}
   HP: 17
   FOV: 90
