@@ -11,7 +11,7 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
     [Header("---- Stats ----")]
     [Range(1,100)] [SerializeField] public int HP;
     [Range(5,10)]  [SerializeField] int speed;
-    [Range(3,10)]  [SerializeField] int slopeSlideSpeed;
+    [Range(3,30)]  [SerializeField] int slopeSlideSpeed;
     [Range(2,5)]   [SerializeField] int sprintMod;
     [SerializeField] public int regenAmount;
     [SerializeField] public float regenRate;
@@ -383,9 +383,11 @@ public class PlayerCont : MonoBehaviour, IStore, IDamage, IPickup, IPickupKeys, 
 
     private void SteepSlopeMovement()
     {
-        Vector3 SlopeDirection = Vector3.ProjectOnPlane(Vector3.down, slopeHit.normal).normalized;
-        float slidespeed = (speed + slopeSlideSpeed) * Time.deltaTime;
-        slideVel = SlopeDirection * slidespeed;
+        Vector3 slopeDirection = Vector3.ProjectOnPlane(Vector3.down, slopeHit.normal).normalized;
+        float slopeAngle = Vector3.Angle(slopeHit.normal, Vector3.up);
+        float slopeFactor = Mathf.InverseLerp(controller.slopeLimit, 90f, slopeAngle);
+        float slideSpeed = slopeSlideSpeed * slopeFactor * Time.deltaTime;
+        slideVel = slopeDirection * slideSpeed;
         controller.Move(slideVel);
         moveDir.y = -gravity * Time.deltaTime;
     }
