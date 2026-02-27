@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 822483191718910325}
+  - component: {fileID: 1119919806069807368}
   m_Layer: 0
   m_Name: SC_Turret_HeatBar
   m_TagString: Untagged
@@ -23,19 +24,34 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3829280851699827800}
-  m_LocalRotation: {x: -0, y: -0.6759523, z: -0, w: 0.73694545}
+  m_LocalRotation: {x: 0, y: -0.67595035, z: 0, w: 0.73694724}
   m_LocalPosition: {x: 0, y: 0, z: 552.6658}
-  m_LocalScale: {x: 0.13000003, y: 0.13, z: 0.13000003}
+  m_LocalScale: {x: 0.13000005, y: 0.13, z: 0.13000005}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9137687815224443194}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -85.056, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 415.33798, y: 48.37692}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1119919806069807368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3829280851699827800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac87980ffb8bd7847a07c1a737bfef49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TurretHeatUI
+  fill: {fileID: 5285627459355607599}
+  coolColor: {r: 0, g: 1, b: 1, a: 1}
+  hotColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &4115418882095804190
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,7 +139,7 @@ GameObject:
   - component: {fileID: 3615599130741909445}
   - component: {fileID: 5285627459355607599}
   m_Layer: 0
-  m_Name: HeatBar (1)
+  m_Name: HeatBarfill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,7 +197,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -213,7 +229,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8909363793748710594}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1618.6448}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -223,7 +239,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 190.01065, y: -273.7532}
+  m_AnchoredPosition: {x: 53.3, y: 58.8}
   m_SizeDelta: {x: 17, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6844231115919876265
