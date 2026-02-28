@@ -151,9 +151,9 @@ public class gameManager : MonoBehaviour, goldManage
     
     void Awake()
     {
+
         instance = this;
         timeScaleOrig = Time.timeScale;
-
         
 
         player = GameObject.FindWithTag("Player");
@@ -194,12 +194,6 @@ public class gameManager : MonoBehaviour, goldManage
     
     void Update()
     {
-        if (menuActive == null)
-        {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-
         if (Input.GetButtonDown("Cancel") || Input.GetButtonDown("P"))
         {
             if (menuActive == null)
@@ -318,7 +312,6 @@ public class gameManager : MonoBehaviour, goldManage
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void stateUnpause()
@@ -327,6 +320,7 @@ public class gameManager : MonoBehaviour, goldManage
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        EventSystem.current.SetSelectedGameObject(null);
         menuActive.SetActive(false);
         menuActive = null;
         //aud.PlayOneShot(menuInteractionAud, menuVol);
@@ -599,9 +593,6 @@ public class gameManager : MonoBehaviour, goldManage
         
 
         SceneManager.LoadScene(nextSceneIndex);
-
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
     } 
     
     // ------------------------------End---------------------------------------//

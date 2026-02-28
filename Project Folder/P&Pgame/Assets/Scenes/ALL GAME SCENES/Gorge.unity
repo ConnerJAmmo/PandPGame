@@ -8673,6 +8673,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI Prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 409072104123411110, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 511394109524029895, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1082235590129261862, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.5
@@ -8684,6 +8692,14 @@ PrefabInstance:
     - target: {fileID: 2719152072872489499, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750838732457574732, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3229885487363105249, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
+      propertyPath: m_CursorLockBehavior
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3450220958240855357, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
       propertyPath: m_fontAsset
