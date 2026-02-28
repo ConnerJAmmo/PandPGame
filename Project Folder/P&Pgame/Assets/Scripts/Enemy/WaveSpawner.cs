@@ -56,6 +56,7 @@ public class WaveSpawner : MonoBehaviour
             {
             readyToCountDown = true;
             currentWaveIndex++;
+            gameManager.instance.SetActiveWaveUI(currentWaveIndex + 1);
             StartCoroutine(PreloadWave(currentWaveIndex));
             }
         }
