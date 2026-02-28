@@ -138,6 +138,7 @@ public class OptionsMenu : MonoBehaviour
         }
         else
         {
+            gameManager.instance.isOptionsOpen = false;
             SceneManager.UnloadSceneAsync("OptionsMenu");   
         }
     }

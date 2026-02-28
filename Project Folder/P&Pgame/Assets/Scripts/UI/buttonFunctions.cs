@@ -82,6 +82,7 @@ public class buttonFunctions : MonoBehaviour
     {
         PlayerPrefs.SetString("PreviousScene", SceneManager.GetActiveScene().name);
         PlayerPrefs.Save();
+        gameManager.instance.isOptionsOpen = true;
         SceneManager.LoadScene("OptionsMenu", LoadSceneMode.Additive);
     }
 

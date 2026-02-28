@@ -35,6 +35,7 @@ public class gameManager : MonoBehaviour, goldManage
     
     [SerializeField] GameObject needGunText;
     public bool isPause;
+    public bool isOptionsOpen;
 #endregion
     
 #region Text Fields
@@ -205,15 +206,13 @@ public class gameManager : MonoBehaviour, goldManage
                 EventSystem.current.SetSelectedGameObject(menuPauseFristButton);
                 aud.PlayOneShot(menuInteractionAud, menuVol);
             }
-            else if (menuActive == menuPause) 
+            else if (menuActive == menuPause  && isOptionsOpen != true) 
             {
-                 stateUnpause();
+                stateUnpause();
             }
             else if (menuActive == menuPlayerUpgrade)
             {
-                menuActive.SetActive(false);
-                menuActive = menuPause;
-                menuActive.SetActive(true);
+                stateUnpause();
             }
         }
 
