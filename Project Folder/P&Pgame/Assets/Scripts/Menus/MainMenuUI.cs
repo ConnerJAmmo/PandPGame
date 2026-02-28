@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+
 
 public class MainMenuUI : MonoBehaviour
 {
@@ -15,7 +17,8 @@ public class MainMenuUI : MonoBehaviour
     void Start()
     {
         Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.Confined;
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
 
