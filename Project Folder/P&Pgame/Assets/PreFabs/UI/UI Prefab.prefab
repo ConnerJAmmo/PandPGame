@@ -2058,6 +2058,8 @@ MonoBehaviour:
   notificationPanel: {fileID: 8181560273990741376}
   notificationText: {fileID: 3450220958240855357}
   notificationDuration: 2
+  endCutScene: {fileID: 0}
+  mothershipSceneName: Mothership
   damageUpgradeCost: 10
   maxAmmoUpgradeCost: 10
   rangeUpgradeCost: 10
@@ -6078,14 +6080,14 @@ RectTransform:
   m_GameObject: {fileID: 2874549770736691080}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.12, y: 0.12, z: 0.2}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8213066597882219376}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 12, y: -16}
   m_SizeDelta: {x: 512, y: 512}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2705890204485627731

@@ -14,7 +14,6 @@ public class SaveBridge : MonoBehaviour
         var ps = gameManager.instance.playerScript;
         if (ps)
         {
-            ps.HP = data.playerHp;
             ps.woodCount = data.wood;
             ps.stoneCount = data.stone;
             ps.ApplyMiningSpeedBoost(data.PlayerMiningSpeedBoost);
@@ -47,7 +46,6 @@ public class SaveBridge : MonoBehaviour
 
         if (ps)
         {
-            data.playerHp = ps.HP;
             data.wood = ps.woodCount;
             data.stone = ps.stoneCount;
         }
