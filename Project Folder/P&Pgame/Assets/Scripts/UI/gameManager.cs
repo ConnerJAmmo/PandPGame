@@ -200,7 +200,7 @@ public class gameManager : MonoBehaviour, goldManage
             Cursor.lockState = CursorLockMode.Locked;
         }
 
-        if (Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Cancel") || Input.GetButtonDown("P"))
         {
             if (menuActive == null)
             {
