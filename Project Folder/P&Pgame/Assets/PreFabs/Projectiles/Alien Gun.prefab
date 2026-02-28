@@ -58,7 +58,7 @@ MonoBehaviour:
     m_Bits: 3584
   type: 0
   lifeTime: 5
-  speed: 150
+  speed: 250
   damageAmount: 7
   dotDamageRate: 0
   leavesDotZone: 0
