@@ -32,9 +32,12 @@ public class gameManager : MonoBehaviour, goldManage
 
     [SerializeField] GameObject menuPlayerUpgrade;
     [SerializeField] GameObject menuPlayerUpgradeFristButton;
+    [SerializeField] GameObject debug;
     
     [SerializeField] GameObject needGunText;
     public bool isPause;
+    public bool isOptionsOpen;
+    public bool isDebug;
 #endregion
     
 #region Text Fields
@@ -185,10 +188,16 @@ public class gameManager : MonoBehaviour, goldManage
 
         // Bridge to connect all the save functions and scripts together
         if (!saveBridge)
-            saveBridge = FindFirstObjectByType<SaveBridge>();
+            //don't uncomment it breaks the UI in the temple and Mothership level also breaks the continue button
+            //saveBridge = FindFirstObjectByType<SaveBridge>();
 
         // The (?) is a chaining operator so if savebridge is null are game won't crash
         saveBridge?.ApplyLoadedData();
+
+        if (isDebug == true)
+        {
+            debug.SetActive(true);
+        }
     }
 
     
@@ -205,15 +214,13 @@ public class gameManager : MonoBehaviour, goldManage
                 EventSystem.current.SetSelectedGameObject(menuPauseFristButton);
                 aud.PlayOneShot(menuInteractionAud, menuVol);
             }
-            else if (menuActive == menuPause) 
+            else if (menuActive == menuPause && isOptionsOpen != true) 
             {
-                 stateUnpause();
+                stateUnpause();
             }
             else if (menuActive == menuPlayerUpgrade)
             {
-                menuActive.SetActive(false);
-                menuActive = menuPause;
-                menuActive.SetActive(true);
+                stateUnpause();
             }
         }
 

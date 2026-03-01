@@ -2,14 +2,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UnityEngine.Audio;
-using UnityEngine.UI;
+using TMPro;
+using UnityEngine.UIElements.Experimental;
+
 
 
 public class OptionsMenu : MonoBehaviour
 {
+    
     [SerializeField] string mainMenu;
     string previousScene;
-    bool isSaved;
+    public bool isSaved;
 
     [SerializeField] GameObject notSavedMessage;
     [SerializeField] GameObject notSavedMessageFristButton;
@@ -24,12 +27,8 @@ public class OptionsMenu : MonoBehaviour
     [SerializeField] GameObject audioMenu;
     [SerializeField] GameObject audioMenuFirstButton;
 #region Audio Variables
-    [SerializeField] bool isSFX;
-    [SerializeField] AudioSource testSource;
-
-    [SerializeField] AudioClip[] testAud;
-    float masterValue, musicSliderValue, SFXsilderValue;
-    public Slider masterSlider, musicSlider, SFXsilder;
+    float masterVol, masterVolText, SFXVol, SFXVolText, musicVol, musicVolText;
+    [SerializeField] TMP_Text masterText, SFXText, musicText;
     public AudioMixer mixer;
     #endregion
 
@@ -39,18 +38,20 @@ public class OptionsMenu : MonoBehaviour
         isSaved = true;
 
         if (previousScene == "MainMenu")
-        {
+        {  
             mainMenuExitButton.SetActive(true);
         }
         else
         {
             backToLevelButton.SetActive(true);
         }
+
+        StartAudio();
     }
 
     void Update()
     {
-        UpdateAudio();
+        
     }
 
     public void newMenu(GameObject menu, GameObject firstButton)
@@ -72,7 +73,6 @@ public class OptionsMenu : MonoBehaviour
 
     public void Save()
     {
-        SaveAudioSettings();
         isSaved = true;
     }
 
@@ -99,7 +99,6 @@ public class OptionsMenu : MonoBehaviour
 
     public void NotSavedMessageDontSavedButton()
     {   
-        isSaved = true;
         if (previousScene == "MainMenu")
         {
             ExitToMainMenu();
@@ -124,7 +123,7 @@ public class OptionsMenu : MonoBehaviour
         {
             NotSavedMessage();
         }
-        else
+        else if (isSaved == true)
         {
             LevelLoader.instance.LoadLevel(mainMenu);   
         }
@@ -136,8 +135,9 @@ public class OptionsMenu : MonoBehaviour
         {
             NotSavedMessage();
         }
-        else
+        else if (isSaved == true)
         {
+            gameManager.instance.isOptionsOpen = false;
             SceneManager.UnloadSceneAsync("OptionsMenu");   
         }
     }
@@ -172,50 +172,48 @@ public class OptionsMenu : MonoBehaviour
             
         }
             newMenu(audioMenu, audioMenuFirstButton);
-            StartAudio();
         
     } 
 
     public void StartAudio()
-    {   
-        masterSlider.value = PlayerPrefs.GetFloat("MasterVolume");
-        SFXsilder.value = PlayerPrefs.GetFloat("SFXVolume");
-        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
+    {
+ 
+       masterVol = Mathf.Log10(PlayerPrefs.GetFloat("Master", 1) * 20);
+       masterVolText = PlayerPrefs.GetFloat("Master", 1) * 100;
+       masterText.SetText(masterVolText.ToString("F0") + "%");
+       SFXVol = Mathf.Log10(PlayerPrefs.GetFloat("SFXVol", 1) * 20);
+       SFXVolText = PlayerPrefs.GetFloat("SFXVol", 1) * 100;
+       SFXText.SetText(SFXVolText.ToString("F0") + "%");
+       musicVol = Mathf.Log10(PlayerPrefs.GetFloat("MusicVol", 1) * 20);
+       musicVolText = PlayerPrefs.GetFloat("MusicVol", 1) * 100;
+       musicText.SetText(musicVolText.ToString("F0") + "%");
     }
 
-
-
-    public void UpdateAudio()
+    public void SetMasterLevel (float sliderValue)
     {
-        mixer.SetFloat("Master", masterValue);
-        mixer.SetFloat("SFXVol", SFXsilderValue);
-        mixer.SetFloat("MusicVol", musicSliderValue);
-        isSaved = false;
-    }
-
-    public void SetMaterLevel (float sliderValue)
-    {
-        masterValue = sliderValue;
-
+        masterVolText = sliderValue * 100;
+        masterText.SetText($"{masterVolText.ToString("N0") + "%"}");
+        masterVol = sliderValue;
+        mixer.SetFloat("Master", Mathf.Log10(masterVol) * 20);
+        PlayerPrefs.SetFloat("MasterVol", masterVol);
     }
 
     public void SetSFXLevel (float sliderValue)
     {
-        SFXsilderValue = sliderValue;
-
+        SFXVolText = sliderValue * 100;
+        SFXText.SetText($"{SFXVolText.ToString("N0") + "%"}");
+        SFXVol = sliderValue;
+        mixer.SetFloat("SFXVol", Mathf.Log10(SFXVol) * 20);
+        PlayerPrefs.SetFloat("SFXVol", SFXVol);
     }
 
     public void SetMusicLevel(float sliderValue)
     {
-        musicSliderValue = sliderValue;
-    }
-
-    public void SaveAudioSettings()
-    {
-        PlayerPrefs.SetFloat("MasterVolume", masterValue);
-        PlayerPrefs.SetFloat("SFXVolume", SFXsilderValue);
-        PlayerPrefs.SetFloat("MusicVolume", musicSliderValue);
-        PlayerPrefs.Save();
+        musicVolText = sliderValue * 100;
+        musicText.SetText($"{musicVolText.ToString("N0") + "%"}");
+        musicVol = sliderValue;
+        mixer.SetFloat("MusicVol", Mathf.Log10(musicVol) * 20);
+        PlayerPrefs.SetFloat("MusicVol", musicVol);
     }
 #endregion
 }

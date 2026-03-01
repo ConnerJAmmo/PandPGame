@@ -38165,6 +38165,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI Prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 511394109524029895, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3430708196408082808, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
+      propertyPath: isDebug
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4944989924011970610, guid: d5cb716ce7babcc4bb0c251d2d21a037, type: 3}
       propertyPath: testSource
       value: 
