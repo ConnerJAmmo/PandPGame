@@ -2,26 +2,36 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
-  tags: []
+  serializedVersion: 3
+  tags:
+  - Base
+  - Enemy
+  - WaveSpawner
+  - Boss
+  - Turret
+  - Guns
+  - Shield
+  - AOE Turret
+  - ST Turret
+  - Crystal
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player Bullet
+  - Enemy
+  - Enemy Bullet
+  - Environment
+  - Terrain
+  - Wall
+  - Towers
+  - Shield
+  - Doors
+  - Hand
+  - PlayerHands
   - 
   - 
   - 
@@ -50,27 +60,3 @@ TagManager:
   - Light Layer 5
   - Light Layer 6
   - Light Layer 7
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 

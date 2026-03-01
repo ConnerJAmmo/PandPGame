@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccf9859619715a24b975da7ed6792259, type: 3}
+  m_Name: Gun - CustomRifle
+  m_EditorClassIdentifier: Assembly-CSharp::GunStats
+  gunModel: {fileID: 3425835552204042209, guid: 9241c2d8d80987947a5fa9ff15f5fbea, type: 3}
+  gunName: CustomRifle
+  DistLevel: 1
+  shootDist: 1200
+  rangeUpgradeCost: 20
+  shootDistOrig: 1200
+  damageLevel: 1
+  shootDamage: 20
+  bulletPrefab: {fileID: 4359745504029842998, guid: c3867b88251eaf14bbf2089f8d387192, type: 3}
+  damageUpgradeCost: 20
+  shootDamageOrig: 15
+  maxAmmoLevel: 1
+  shootRate: 0.1
+  maxAmmoOrig: 50
+  maxAmmoUpgradeCost: 20
+  ammoCur: 50
+  ammoMax: 50
+  shootPos: {fileID: 0}
+  hitEffect: {fileID: 8591032446617569335, guid: 4131349b8b5025846a9ecb06b7eb2d73, type: 3}
+  muzzleFlashEffect: {fileID: 5536912010621684408, guid: 3c31d5354985a144a809bade8e9c0bc7, type: 3}
+  shootSound:
+  - {fileID: 8300000, guid: 089996894a5a87a44bc8c67b2030193c, type: 3}
+  shootSoundVol: 0.5
