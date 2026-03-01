@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class cameraContr : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class cameraContr : MonoBehaviour
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        EventSystem.current.SetSelectedGameObject(null);
         targetFOV = defaultFOV;
         cam.fieldOfView = defaultFOV;
 

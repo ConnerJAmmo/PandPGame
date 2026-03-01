@@ -32,9 +32,12 @@ public class gameManager : MonoBehaviour, goldManage
 
     [SerializeField] GameObject menuPlayerUpgrade;
     [SerializeField] GameObject menuPlayerUpgradeFristButton;
+    [SerializeField] GameObject debug;
     
     [SerializeField] GameObject needGunText;
     public bool isPause;
+    public bool isOptionsOpen;
+    public bool isDebug;
 #endregion
     
 #region Text Fields
@@ -151,9 +154,9 @@ public class gameManager : MonoBehaviour, goldManage
     
     void Awake()
     {
+
         instance = this;
         timeScaleOrig = Time.timeScale;
-
         
 
         player = GameObject.FindWithTag("Player");
@@ -185,21 +188,21 @@ public class gameManager : MonoBehaviour, goldManage
 
         // Bridge to connect all the save functions and scripts together
         if (!saveBridge)
-            saveBridge = FindFirstObjectByType<SaveBridge>();
+            //don't uncomment it breaks the UI in the temple and Mothership level also breaks the continue button
+            //saveBridge = FindFirstObjectByType<SaveBridge>();
 
         // The (?) is a chaining operator so if savebridge is null are game won't crash
         saveBridge?.ApplyLoadedData();
+
+        if (isDebug == true)
+        {
+            debug.SetActive(true);
+        }
     }
 
     
     void Update()
     {
-        if (menuActive == null)
-        {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-
         if (Input.GetButtonDown("Cancel") || Input.GetButtonDown("P"))
         {
             if (menuActive == null)
@@ -211,16 +214,14 @@ public class gameManager : MonoBehaviour, goldManage
                 EventSystem.current.SetSelectedGameObject(menuPauseFristButton);
                 aud.PlayOneShot(menuInteractionAud, menuVol);
             }
-            else if (menuActive == menuPause) 
+            else if (menuActive == menuPause && isOptionsOpen != true) 
             {
-                 stateUnpause();
+                stateUnpause();
             }
-            // else if (menuActive == menuOptions)
-            // {
-            //     menuActive.SetActive(false);
-            //     menuActive = menuPause;
-            //     menuActive.SetActive(true);
-            // }
+            else if (menuActive == menuPlayerUpgrade)
+            {
+                stateUnpause();
+            }
         }
 
         SetDamageUpgradeText();
@@ -318,7 +319,6 @@ public class gameManager : MonoBehaviour, goldManage
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void stateUnpause()
@@ -327,6 +327,7 @@ public class gameManager : MonoBehaviour, goldManage
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        EventSystem.current.SetSelectedGameObject(null);
         menuActive.SetActive(false);
         menuActive = null;
         //aud.PlayOneShot(menuInteractionAud, menuVol);
@@ -599,9 +600,6 @@ public class gameManager : MonoBehaviour, goldManage
         
 
         SceneManager.LoadScene(nextSceneIndex);
-
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
     } 
     
     // ------------------------------End---------------------------------------//
