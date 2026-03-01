@@ -161,7 +161,7 @@ public class ShipTurretController : MonoBehaviour
 
         Vector3 end = start + dir * hitRange;
 
-        if (Physics.Raycast(start, dir, out RaycastHit hit, hitRange, combineMask, QueryTriggerInteraction.Collide))
+        if (Physics.Raycast(start, dir, out RaycastHit hit, hitRange, combineMask, QueryTriggerInteraction.Ignore))
         {
             end = hit.point;
             if (muzzleFlash) muzzleFlash.Play();
@@ -249,7 +249,7 @@ public class ShipTurretController : MonoBehaviour
 
     private void FindTarget()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, detectRadius, enemyMask, QueryTriggerInteraction.Collide);
+        Collider[] hits = Physics.OverlapSphere(transform.position, detectRadius, enemyMask, QueryTriggerInteraction.Ignore);
 
         float val = float.MaxValue;
         Transform chosen = null;
