@@ -9,7 +9,7 @@ public class OptionsMenu : MonoBehaviour
 {
     [SerializeField] string mainMenu;
     string previousScene;
-    bool isSaved;
+    public bool isSaved;
 
     [SerializeField] GameObject notSavedMessage;
     [SerializeField] GameObject notSavedMessageFristButton;
@@ -72,8 +72,8 @@ public class OptionsMenu : MonoBehaviour
 
     public void Save()
     {
-        SaveAudioSettings();
         isSaved = true;
+        SaveAudioSettings();
     }
 
 #region NotSavedMessage
@@ -99,7 +99,6 @@ public class OptionsMenu : MonoBehaviour
 
     public void NotSavedMessageDontSavedButton()
     {   
-        isSaved = true;
         if (previousScene == "MainMenu")
         {
             ExitToMainMenu();
@@ -124,7 +123,7 @@ public class OptionsMenu : MonoBehaviour
         {
             NotSavedMessage();
         }
-        else
+        else if (isSaved == true)
         {
             LevelLoader.instance.LoadLevel(mainMenu);   
         }
@@ -136,7 +135,7 @@ public class OptionsMenu : MonoBehaviour
         {
             NotSavedMessage();
         }
-        else
+        else if (isSaved == true)
         {
             gameManager.instance.isOptionsOpen = false;
             SceneManager.UnloadSceneAsync("OptionsMenu");   

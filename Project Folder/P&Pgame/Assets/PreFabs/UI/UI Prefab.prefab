@@ -2027,8 +2027,10 @@ MonoBehaviour:
   menuTowerUpgradeFristButton: {fileID: 3377425513215246868}
   menuPlayerUpgrade: {fileID: 3163269378039445827}
   menuPlayerUpgradeFristButton: {fileID: 6012227541865907578}
+  debug: {fileID: 6414060491256468791}
   needGunText: {fileID: 1609231603255973578}
   isPause: 0
+  isOptionsOpen: 0
   playerHPText: {fileID: 8569709251956951476}
   playerHPTextOrig: {fileID: 8129159608181987826}
   enemyCountText: {fileID: 7900717942057290069}
@@ -15890,7 +15892,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5303746175751276649
 RectTransform:
   m_ObjectHideFlags: 0
