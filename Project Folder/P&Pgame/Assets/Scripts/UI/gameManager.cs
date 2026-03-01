@@ -188,7 +188,8 @@ public class gameManager : MonoBehaviour, goldManage
 
         // Bridge to connect all the save functions and scripts together
         if (!saveBridge)
-            saveBridge = FindFirstObjectByType<SaveBridge>();
+            //don't uncomment it breaks the UI in the temple and Mothership level also breaks the continue button
+            //saveBridge = FindFirstObjectByType<SaveBridge>();
 
         // The (?) is a chaining operator so if savebridge is null are game won't crash
         saveBridge?.ApplyLoadedData();
