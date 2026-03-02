@@ -601,9 +601,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Team Impulse\nConner Ammons, Asher Sykes, Marcus Davis, Justine Malun,
-    Arrowhead Gaming\n\nModels by \nArtistic Mechanics, EmacEArt, Daelonik Artworks,
-    PolyOne Studio, TeKniKo, 3D Bakers, Conner Ammons, Marcus Davis\n\nSkybox by
-    \nDogmatic"
+    Arrowhead Gaming\n\nModels by \nUnity Technologies, PixeliusVita, Artistic Mechanics,
+    EmacEArt, Daelonik Artworks, PolyOne Studio, TeKniKo, 3D Bakers, Conner Ammons,
+    Marcus Davis\n\nSkybox by \nDogmatic"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 06802fc4c89b26542bd2a5d2d70b58a3, type: 2}
   m_sharedMaterial: {fileID: -1648619827934991540, guid: 06802fc4c89b26542bd2a5d2d70b58a3, type: 2}
